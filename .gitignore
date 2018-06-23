@@ -1,0 +1,4 @@
+.uuid
+*.log
+*.db
+secrets.yaml
