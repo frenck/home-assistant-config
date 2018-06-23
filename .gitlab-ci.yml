@@ -8,6 +8,9 @@ stages:
 # Generic preflight template
 .preflight: &preflight
   stage: preflight
+  tags:
+    - preflight
+
 
 # Generic test template
 .test: &test
@@ -21,6 +24,8 @@ stages:
   script:
     - mv config/fake_secrets.yaml config/secrets.yaml
     - python -m homeassistant --config ./config/ --script check_config --info all
+  tags:
+    - test
 
 # Preflight jobs
 shellcheck:
