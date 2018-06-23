@@ -14,11 +14,7 @@ stages:
 # Generic test template
 .test: &test
   stage: test
-  services:
-    - name: docker:dind
-      command: ["--experimental"]
   before_script:
-    - docker info
     - python -m homeassistant --version
   script:
     - mv config/fake_secrets.yaml config/secrets.yaml
