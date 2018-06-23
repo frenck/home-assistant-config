@@ -14,10 +14,12 @@ stages:
 # Generic test template
 .test: &test
   stage: test
+  variables:
+    PYTHONPATH: "/usr/src/app:$PYTHONPATH"
   before_script:
     - python -m homeassistant --version
-  script:
     - mv config/fake_secrets.yaml config/secrets.yaml
+  script:
     - python -m homeassistant --config ./config/ --script check_config --info all
   tags:
     - test
