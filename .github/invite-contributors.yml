@@ -1,0 +1,10 @@
+---
+# If true, this will add new contributors as outside collaborators
+# to the repo their PR was merged in. Team name is ignored if this
+# flag is set to true.
+isOutside: false
+
+# Specify team name to add new contributors to a specific team
+# within your organization.
+# Use team name or team-name-slug
+team: false

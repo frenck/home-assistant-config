@@ -1,0 +1,4 @@
+# Require maintainer's :+1: for changes to the .github/ repo-config files
+# mainly due to https://github.com/probot/settings privilege escalation
+.github/* @frenck
+.gitlab-ci.yml @frenck
