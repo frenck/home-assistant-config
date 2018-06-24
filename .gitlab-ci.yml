@@ -18,9 +18,13 @@ stages:
     PYTHONPATH: "/usr/src/app:$PYTHONPATH"
   before_script:
     - python -m homeassistant --version
-    - mv config/fake_secrets.yaml config/secrets.yaml
+    - cp -R ./.stubs/* ./config
   script:
-    - python -m homeassistant --config ./config/ --script check_config --info all
+    - |
+      python -m homeassistant \
+        --config ./config/ \
+        --script check_config \
+        --info all
   tags:
     - test
 

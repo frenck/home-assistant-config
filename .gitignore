@@ -1,4 +1,4 @@
 .uuid
 *.log
 *.db
-secrets.yaml
+config/secrets.yaml
