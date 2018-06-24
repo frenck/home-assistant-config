@@ -1,4 +1,13 @@
-.uuid
+# Extension ignores
 *.log
 *.db
+
+# Directory (contents) ignores
+config/deps/*
+
+# Specific file ignores
+.uuid
 config/secrets.yaml
+
+# Specific keeps
+!.gitkeep

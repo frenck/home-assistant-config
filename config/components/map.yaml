@@ -1,0 +1,6 @@
+---
+# This offers a map on the frontend to display the location of tracked devices.
+#
+# https://www.home-assistant.io/components/map/
+#
+map:
