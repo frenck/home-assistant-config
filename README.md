@@ -97,5 +97,5 @@ SOFTWARE.
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2018.svg
 [last-commit-shield]: https://img.shields.io/github/last-commit/frenck/home-assistant-config.svg
 [stars-shield]: https://img.shields.io/github/stars/frenck/home-assistant-config.svg?style=social&label=Stars
-[forks-shield]: https://img.shields.io/github/forks/frenck/home-assistant-config.svg?style=social&label=Stars
-[watchers-shield]: https://img.shields.io/github/watchers/frenck/home-assistant-config.svg?style=social&label=Stars
+[forks-shield]: https://img.shields.io/github/forks/frenck/home-assistant-config.svg?style=social&label=Forks
+[watchers-shield]: https://img.shields.io/github/watchers/frenck/home-assistant-config.svg?style=social&label=Watchers
