@@ -11,7 +11,6 @@
 ![GitHub Watchers][watchers-shield]
 ![GitHub Forks][forks-shield]
 
-
 [![Discord][discord-shield]][discord]
 [![Community Forum][forum-shield]][forum]
 
@@ -22,7 +21,7 @@
 This is my personal Home Assistant configuration, running my home automations.
 
 As some of you might know, while I've developed the larger part of the Hass.io
-add-ons, I did not use Home Assistant. 
+add-ons, I did not use Home Assistant.
 I've set up this repository to change that!
 
 Follow me on my journey and be sure to hit the GitHub :star2:
@@ -30,14 +29,14 @@ Follow me on my journey and be sure to hit the GitHub :star2:
 ## Where are all the other docs?
 
 > Yo! Frenck! Bro!
-> 
+>
 > Where are all the other docs? What hardware are you using?
 > What add-ons do you have installed in Hass.io?
 > How is your network set up?
 
 YO! Chill out bro. I've just started my journey.
 Just like the configuration, the documentation needs to be written
-and grow. 
+and grow.
 
 ## Contributing
 
