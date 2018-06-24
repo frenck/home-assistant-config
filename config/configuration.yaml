@@ -2,20 +2,20 @@
 homeassistant:
   # Name of this Home Assistant instance... I've tried to be original... ;)
   name: Home
-  
+
   # Location required to calculate the time the sun rises and sets
   latitude: !secret zone_home_latitude
   longitude: !secret zone_home_longitude
-  
+
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: !secret zone_home_elevation
-  
+
   # metric for Metric, imperial for Imperial
   unit_system: metric
-  
+
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Amsterdam
-  
+
   # Load packages (split-configuration format)
   packages: !include_dir_named components
 

@@ -15,6 +15,6 @@ updater:
   # It will help them to prioritize the development.
   # That why this option is enabled.
   reporting: true
-  
+
   # I'm also reporting a list of components that I'm using.
   include_used_components: true
