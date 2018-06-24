@@ -1,0 +1,11 @@
+---
+# Adds an iframe panel to the Home Assistant frontend for the Terminal add-on.
+# This allows me to access the console straight from Home Asssitant's UI
+#
+# https://github.com/hassio-addons/addon-terminal#embedding-into-home-assistant
+# https://www.home-assistant.io/components/panel_iframe/
+#
+terminal:
+  title: Terminal
+  icon: mdi:console
+  url: !secret panel_iframe_terminal_url
