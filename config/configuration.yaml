@@ -25,6 +25,7 @@ device_tracker: !include_dir_merge_list device_trackers
 group: !include_dir_merge_named groups
 # input_boolean: !include_dir_merge_named input_booleans
 media_player: !include_dir_merge_list media_players
+panel_iframe: !include_dir_merge_named panel_iframes
 script: !include_dir_merge_named scripts
 sensor: !include_dir_merge_list sensors
 switch: !include_dir_merge_list switches
