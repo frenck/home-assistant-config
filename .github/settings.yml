@@ -2,7 +2,7 @@
 repository:
   description: ":house: My Home Assistant config & docs (Hass.io based). Be sure to :star2: this repository for updates!"
   homepage: https://www.frenck.nl
-  topics: homeassistant-config, home-assistant-config, home-assistant, homeassistant, hass, hassio, iot, internetofthings, internet-of-things, automation, homeautomation, home-automation, bigdata, hue, ikea, ikeatradfri, xiaomi, sonoff, unifi, influxdb, grafana, toon, diy, z-wave, zigbee, mqtt, pi-hole
+  topics: homeassistant-config, home-assistant-config, home-assistant, homeassistant, hass, hassio, iot, internetofthings, internet-of-things, automation, homeautomation, home-automation
   private: false
   has_issues: true
   has_projects: true
