@@ -1,0 +1,12 @@
+---
+# The tradfri component supports for the IKEA Trådfri (Tradfri) gateway.
+# The gateway can control lights connected to it.
+#
+# https://www.home-assistant.io/components/tradfri/
+#
+tradfri:
+  # The IP address or hostname of your Trådfri gateway.
+  host: !secret tradfri_host
+
+  # Do not import the groups defined in the Ikea Tradfri bridge
+  allow_tradfri_groups: false

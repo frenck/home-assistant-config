@@ -1,0 +1,80 @@
+light.livingroom_spotlight:
+  config_entry_id:
+  name: Livingroom spotlight
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65541
+light.livingroom_window_1:
+  config_entry_id:
+  name: Livingroom window 1
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65548
+light.livingroom_window_2:
+  config_entry_id:
+  name: Livingroom window 2
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65549
+light.livingroom_window_3:
+  config_entry_id:
+  name: Livingroom window 3
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65550
+light.livingroom_window_4:
+  config_entry_id:
+  name: Livingroom window 4
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65551
+light.livingroom_window_5:
+  config_entry_id:
+  name: Livingroom window 5
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65552
+light.livingroom_window_6:
+  config_entry_id:
+  name: Livingroom window 6
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65553
+light.livingroom_window_7:
+  config_entry_id:
+  name: Livingroom window 7
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65554
+light.toilet_1:
+  config_entry_id:
+  name: Toilet 1
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65555
+light.toilet_2:
+  config_entry_id:
+  name: Toilet 2
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65556
+light.bathroom_ceiling_1:
+  config_entry_id:
+  name: Bathroom ceiling 1
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65558
+light.bathroom_ceiling_2:
+  config_entry_id:
+  name: Bathroom ceiling 2
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65559
+light.bathroom_ceiling_3:
+  config_entry_id:
+  name: Bathroom ceiling 3
+  platform: tradfri
+  unique_id: light-7e1155520440009a-65560
+light.tradfri_group_1:
+  config_entry_id:
+  name:
+  platform: tradfri
+  unique_id: group-7e1155520440009a-143434
+light.tradfri_group_2:
+  config_entry_id:
+  name:
+  platform: tradfri
+  unique_id: group-7e1155520440009a-143433
+light.tradfri_group_3:
+  config_entry_id:
+  name:
+  platform: tradfri
+  unique_id: group-7e1155520440009a-143431
