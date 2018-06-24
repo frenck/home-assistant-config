@@ -1,16 +1,16 @@
 ---
 repository:
-  description: "Octobox - Community Hass.io Add-on for Home Assistant"
-  homepage: https://addons.community
-  topics: octobox, github, github-notification, hassio-addons, hassio, hass, home-assistant, homeassistant
+  description: "🏠 My Home Assistant config & docs (Hass.io based). Be sure to 🌟 this repository for updates!"
+  homepage: https://www.frenck.nl
+  topics: homeassistant-config, home-assistant-config, home-assistant, homeassistant, hass, hassio, iot, internetofthings, internet-of-things, automation, homeautomation, home-automation, bigdata, hue, ikea, ikeatradfri, xiaomi, sonoff, unifi, influxdb, grafana, toon, diy, z-wave, zigbee, mqtt, pi-hole
   private: false
   has_issues: true
-  has_projects: false
+  has_projects: true
   has_wiki: false
   has_downloads: false
   default_branch: master
   allow_squash_merge: true
-  allow_merge_commit: false
+  allow_merge_commit: true
   allow_rebase_merge: true
 labels:
   # Priority labels

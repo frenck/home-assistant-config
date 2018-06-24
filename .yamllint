@@ -51,6 +51,7 @@ rules:
   line-length:
     ignore: |
       .github/support.yml
+      .github/settings.yml
     level: warning
     max: 120
     allow-non-breakable-words: true
