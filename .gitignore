@@ -1,9 +1,11 @@
 # Extension ignores
 *.log
 *.db
+*.pyc
 
 # Directory (contents) ignores
 config/deps/*
+
 
 # Specific file ignores
 .tradfri_psk.conf

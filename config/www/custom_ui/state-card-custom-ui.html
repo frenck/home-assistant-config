@@ -1,0 +1,240 @@
+<script>/*! For license information please see scripts.js.LICENSE */
+!function(t){var e={};function i(a){if(e[a])return e[a].exports;var s=e[a]={i:a,l:!1,exports:{}};return t[a].call(s.exports,s,s.exports,i),s.l=!0,s.exports}i.m=t,i.c=e,i.d=function(t,e,a){i.o(t,e)||Object.defineProperty(t,e,{configurable:!1,enumerable:!0,get:a})},i.r=function(t){Object.defineProperty(t,"__esModule",{value:!0})},i.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return i.d(e,"a",e),e},i.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},i.p="",i(i.s=0)}([function(t,e,i){"use strict";function a(t,e,i){var a=arguments.length>3&&void 0!==arguments[3]&&arguments[3];t._themes||(t._themes={});var s=e.default_theme;("default"===i||i&&e.themes[i])&&(s=i);var n=Object.assign({},t._themes);if("default"!==s){var o=e.themes[s];Object.keys(o).forEach(e=>{var i="--"+e;t._themes[i]="",n[i]=o[e]})}if(t.updateStyles?t.updateStyles(n):window.ShadyCSS&&window.ShadyCSS.styleSubtree(t,n),a){var r=document.querySelector("meta[name=theme-color]");if(r){r.hasAttribute("default-content")||r.setAttribute("default-content",r.getAttribute("content"));var l=n["--primary-color"]||r.getAttribute("default-content");r.setAttribute("content",l)}}}function s(t){return t.substr(0,t.indexOf("."))}function n(t){return t._domain||(t._domain=s(t.entity_id)),t._domain}function o(t,e,i){var a=t,s=void 0;a.lastChild&&a.lastChild.tagName===e?s=a.lastChild:(a.lastChild&&a.removeChild(a.lastChild),s=document.createElement(e.toLowerCase())),s.setProperties?s.setProperties(i):Object.keys(i).forEach(t=>{s[t]=i[t]}),null===s.parentNode&&a.appendChild(s)}i.r(e);var r=["climate","cover","configurator","input_select","input_number","input_text","media_player","scene","script","timer","weblink"];i(1);class l{constructor(t){this.value=t.toString()}toString(){return this.value}}var d=function(t){for(var e=document.createElement("template"),i=arguments.length,a=Array(i>1?i-1:0),s=1;s<i;s++)a[s-1]=arguments[s];return e.innerHTML=a.reduce((e,i,a)=>e+function(t){if(t instanceof HTMLTemplateElement)return t.innerHTML;if(t instanceof l)return function(t){if(t instanceof l)return t.value;throw new Error(`non-literal value passed to Polymer's htmlLiteral function: ${t}`)}(t);throw new Error(`non-template value passed to Polymer's html function: ${t}`)}(i)+t[a+1],t[0]),e},c=t=>(class extends t{fire(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},i=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{},a=new Event(t,{bubbles:void 0===i.bubbles||i.bubbles,cancelable:Boolean(i.cancelable),composed:void 0===i.composed||i.composed});return a.detail=e,(i.node||this).dispatchEvent(a),a}});customElements.define("ha-config-custom-ui",class extends(c(Polymer.Element)){static get template(){return d`
+    <style include="ha-style"></style>
+    <app-header-layout has-scrolling-region>
+      <app-header slot="header" fixed>
+        <app-toolbar>
+          <paper-icon-button
+            icon='mdi:arrow-left'
+            on-click='_backHandler'
+          ></paper-icon-button>
+          <div main-title>Custom UI settings</div>
+        </app-toolbar>
+      </app-header>
+
+      <ha-config-section is-wide='[[isWide]]'>
+        <paper-card heading='Device name'>
+          <div class='card-content'>
+            Set device name so that you can reference it in per-device settings
+            <paper-input
+              label='Name'
+              value='{{name}}'
+            ></paper-input>
+          </div>
+        </paper-card>
+      </ha-config-section>
+    </app-header-layout>
+    `}static get properties(){return{isWide:Boolean,name:{type:String,observer:"nameChanged"}}}ready(){super.ready(),this.name=window.customUI.getName()}nameChanged(t){window.customUI.setName(t)}_backHandler(){window.history.back(),this.fire("location-changed")}});var u={DOMAIN_DEVICE_CLASS:{binary_sensor:["battery","cold","connectivity","door","garage_door","gas","heat","light","lock","moisture","motion","moving","occupancy","opening","plug","power","presence","problem","safety","smoke","sound","vibration","window"],cover:["garage"],sensor:["battery","humidity","illuminance","temperature"]},UNKNOWN_TYPE:"json",ADD_TYPE:"key-value",TYPE_TO_TAG:{string:"ha-customize-string",json:"ha-customize-string",icon:"ha-customize-icon",boolean:"ha-customize-boolean",array:"ha-customize-array","key-value":"ha-customize-key-value"}};u.LOGIC_STATE_ATTRIBUTES=u.LOGIC_STATE_ATTRIBUTES||{entity_picture:void 0,friendly_name:{type:"string",description:"Name"},icon:{type:"icon"},emulated_hue:{type:"boolean",domains:["emulated_hue"]},emulated_hue_name:{type:"string",domains:["emulated_hue"]},haaska_hidden:void 0,haaska_name:void 0,homebridge_hidden:{type:"boolean"},homebridge_name:{type:"string"},supported_features:void 0,attribution:void 0,custom_ui_more_info:{type:"string"},custom_ui_state_card:{type:"string"},device_class:{type:"array",options:u.DOMAIN_DEVICE_CLASS,description:"Device class",domains:["binary_sensor","cover","sensor"]},hidden:{type:"boolean",description:"Hide from UI"},assumed_state:{type:"boolean",domains:["switch","light","cover","climate","fan","group"]},initial_state:{type:"string",domains:["automation"]},unit_of_measurement:{type:"string"}};var m=u;window.hassAttributeUtil=window.hassAttributeUtil||{};var h=["single-line","break-slider","break-slider-toggle","hide-slider","no-slider"],p={group:void 0,device:void 0,templates:void 0,state:void 0,_stateDisplay:void 0,control_element:{type:"string"},state_card_mode:{type:"array",options:{light:h.concat("badges"),cover:h.concat("badges"),climate:h.concat("badges"),"*":["badges"]}},state_card_custom_ui_secondary:{type:"string"},badges_list:{type:"json"},show_last_changed:{type:"boolean"},hide_control:{type:"boolean"},extra_data_template:{type:"string"},extra_badge:{type:"json"},stretch_slider:{type:"boolean"},slider_theme:{type:"json"},theme:{type:"string"},confirm_controls:{type:"boolean"},confirm_controls_show_lock:{type:"boolean"},hide_in_default_view:{type:"boolean"},icon_color:{type:"string"}};window.hassAttributeUtil.LOGIC_STATE_ATTRIBUTES=m.LOGIC_STATE_ATTRIBUTES,window.hassAttributeUtil.UNKNOWN_TYPE=m.UNKNOWN_TYPE,Object.assign(window.hassAttributeUtil.LOGIC_STATE_ATTRIBUTES,p),window.customUI=window.customUI||{SUPPORTED_SLIDER_MODES:["single-line","break-slider","break-slider-toggle","hide-slider","no-slider"],domHost(t){if(t===document)return null;var e=t.getRootNode();return e instanceof DocumentFragment?e.host:e},lightOrShadow:(t,e)=>t.shadowRoot?t.shadowRoot.querySelector(e):t.querySelector(e),getElementHierarchy(t,e){if(null===t)return null;var i=e.shift();return i?window.customUI.getElementHierarchy(window.customUI.lightOrShadow(t,i),e):t},getContext(t){if(void 0===t._context){t._context=[];for(var e="HA-ENTITIES-CARD"===t.tagName?window.customUI.domHost(t):t;e;e=window.customUI.domHost(e))switch(e.tagName){case"HA-ENTITIES-CARD":e.groupEntity?t._context.push(e.groupEntity.entity_id):!1===e.groupEntity&&e.states&&e.states.length&&t._context.push(`group.${n(e.states[0])}`);break;case"MORE-INFO-GROUP":case"STATE-CARD-CONTENT":e.stateObj&&t._context.push(e.stateObj.entity_id);break;case"HA-CARDS":t._context.push(e.getAttribute("data-view")||"default_view")}t._context.reverse()}return t._context},findMatch:(t,e)=>e?e[t]?t:Object.keys(e).find(e=>t.match(`^${e}$`)):null,maybeChangeObjectByDevice(t){var e=window.customUI.getName();if(!e)return t;var i=this.findMatch(e,t.attributes.device);if(!i)return t;var a=Object.assign({},t.attributes.device[i]);return Object.keys(a).length?window.customUI.applyAttributes(t,a):t},maybeChangeObjectByGroup(t,e){var i=window.customUI.getContext(t);if(!i)return e;if(!e.attributes.group)return e;var a={};return i.forEach(t=>{var i=this.findMatch(t,e.attributes.group);e.attributes.group[i]&&Object.assign(a,e.attributes.group[i])}),Object.keys(a).length?window.customUI.applyAttributes(e,a):e},_setKeep(t,e){void 0===t._cui_keep?t._cui_keep=e:t._cui_keep=t._cui_keep&&e},maybeApplyTemplateAttributes(t,e,i,a){if(!a.templates)return window.customUI._setKeep(i,!0),i;var s={},n=!1,o=!1;if(Object.keys(a.templates).forEach(r=>{var l=a.templates[r];l.match(/\b(entities|hass)\b/)&&(n=!0);var d=window.customUI.computeTemplate(l,t,e,i,a,i.untemplated_attributes&&i.untemplated_attributes[r]||a[r],i.untemplated_state||i.state);null!==d&&(s[r]=d,"state"===r?d!==i.state&&(o=!0):"_stateDisplay"===r?d!==i._stateDisplay&&(o=!0):d!==a[r]&&(o=!0))}),window.customUI._setKeep(i,!n),!o)return i;if(i.attributes===a){var r=window.customUI.applyAttributes(i,s);return Object.prototype.hasOwnProperty.call(s,"state")&&null!==s.state&&(r.state=String(s.state),r.untemplated_state=i.state),Object.prototype.hasOwnProperty.call(s,"_stateDisplay")&&(r._stateDisplay=s._stateDisplay,r.untemplated_stateDisplay=i._stateDisplay),window.customUI._setKeep(r,!n),r}return Object.assign({},i)},maybeApplyTemplates(t,e,i){var a=window.customUI.maybeApplyTemplateAttributes(t,e,i,i.attributes),s=a!==i;function n(i){i&&(Object.values(i).forEach(i=>{var n=window.customUI.maybeApplyTemplateAttributes(t,e,a,i);s|=n!==a}),n(i.device),n(i.group))}return n(i.attributes.device),n(i.attributes.group),a!==i?a:s?Object.assign({},i):i},applyAttributes:(t,e)=>({entity_id:t.entity_id,state:t.state,attributes:Object.assign({},t.attributes,e),untemplated_attributes:t.attributes,last_changed:t.last_changed}),maybeChangeObject(t,e,i,a){if(i)return e;var s=window.customUI.maybeChangeObjectByDevice(e);return s=window.customUI.maybeChangeObjectByGroup(t,s),(s=window.customUI.maybeApplyTemplateAttributes(t.hass,t.hass.states,s,s.attributes))!==e&&s.attributes.hidden&&a?null:s},fixGroupTitles(){var t=window.customUI.getElementHierarchy(document,["home-assistant","home-assistant-main"]);if(null!==t){var e=window.customUI.getElementHierarchy(t,["partial-cards","ha-cards[view-visible]"]);null!==e&&(window.customUI.lightOrShadow(e,".main")||e.$.main).querySelectorAll("ha-entities-card").forEach(t=>{if(t.groupEntity){var e=window.customUI.maybeChangeObject(t,t.groupEntity,!1,!1);e!==t.groupEntity&&e.attributes.friendly_name&&(window.customUI.lightOrShadow(t,".name").textContent=e.attributes.friendly_name)}})}else window.setTimeout(window.customUI.fixGroupTitles,1e3)},controlColumns(t){var e=window.customUI.getElementHierarchy(document,["home-assistant","home-assistant-main","partial-cards"]);null!==e?(e.mqls.forEach(t=>{t.removeListener(e.handleWindowChange)}),e.mqls=t.map(t=>{var i=window.matchMedia(`(min-width: ${t}px)`);return i.addListener(e.handleWindowChange),i}),e.handleWindowChange()):window.setTimeout(window.customUI.controlColumns.bind(null,t),1e3)},useCustomizer(){var t=window.customUI.lightOrShadow(document,"home-assistant").hass.states["customizer.customizer"];t&&(t.attributes.columns&&window.customUI.controlColumns(t.attributes.columns),t.attributes.hide_attributes&&window.hassAttributeUtil&&window.hassAttributeUtil.LOGIC_STATE_ATTRIBUTES&&t.attributes.hide_attributes.forEach(t=>{Object.prototype.hasOwnProperty.call(window.hassAttributeUtil.LOGIC_STATE_ATTRIBUTES,t)||(window.hassAttributeUtil.LOGIC_STATE_ATTRIBUTES[t]=void 0)}))},updateConfigPanel(){if(window.location.pathname.startsWith("/config")){var t=window.customUI.getElementHierarchy(document,["home-assistant","home-assistant-main","partial-panel-resolver","ha-panel-config"]);if(t){var e=window.customUI.getElementHierarchy(t,["ha-config-dashboard","ha-config-navigation"]);e&&(e.localize&&!e.cuiPatch&&(e.cuiPatch=!0,e._originalComputeLoaded=e._computeLoaded,e._originalComputeCaption=e._computeCaption,e._originalComputeDescription=e._computeDescription,e._computeLoaded=((t,i)=>"customui"===i||e._originalComputeLoaded(t,i)),e._computeCaption=((t,i)=>"customui"===t?"Custom UI":e._originalComputeCaption(t,i)),e._computeDescription=((t,i)=>"customui"===t?"SetUI tweaks":e._originalComputeDescription(t,i))),e.pages.some(t=>"customui"===t||"customui"===t.domain)||e.push("pages",e.localize?"customui":{domain:"customui",caption:"Custom UI",description:"Set UI tweaks.",loaded:!0}));var i=()=>{var e=document.createElement("ha-config-custom-ui");return e.isWide=t.isWide,e.setAttribute("page-name","customui"),e},a=window.customUI.lightOrShadow(t,"iron-pages");if(a){if("HA-CONFIG-CUSTOM-UI"!==a.lastElementChild.tagName){var s=i();a.appendChild(s),a.addEventListener("iron-items-changed",()=>{window.location.pathname.startsWith("/config/customui")&&a.select("customui")})}}else{var n=t.shadowRoot||t;if("HA-CONFIG-CUSTOM-UI"!==n.lastElementChild.tagName){var o=i();n.appendChild(o)}var r=window.location.pathname.startsWith("/config/customui");n.lastElementChild.style.display=r?"":"none"}}else window.setTimeout(window.customUI.updateConfigPanel,100)}},installStatesHook(){var t=customElements.get("home-assistant");if(t&&t.prototype._updateHass){var e=t.prototype._updateHass;t.prototype._updateHass=function(t){var i=this.hass;t.states&&Object.keys(t.states).forEach(e=>{var a=t.states[e];if(!a._cui_keep){var s=window.customUI.maybeApplyTemplates(i,t.states,a);i.states&&a!==i.states[e]?t.states[e]=s:a!==s&&(t.states[e]=s)}}),e.call(this,t),t.themes&&i._themeWaiters&&(i._themeWaiters.forEach(t=>t.stateChanged(t.state)),i._themeWaiters=void 0)};var i=window.customUI.lightOrShadow(document,"home-assistant");i.hass&&i.hass.states&&i._updateHass({states:i.hass.states})}},installPartialCards(){var t,e=customElements.get("partial-cards");e&&e.prototype._defaultViewFilter&&(e.prototype._defaultViewFilter=((e,i)=>{if(e.states[i].attributes.hidden)return!1;var a={};return Object.values(e.states).forEach(i=>{if(i.attributes&&i.attributes.hide_in_default_view){var n=i.entity_id;if(a[n])return;if(a[n]=i,i.attributes.view){var o=(t=e.states,o={},i.attributes.entity_id.forEach(e=>{var i=t[e];if(i&&!i.attributes.hidden&&(o[i.entity_id]=i,"group"===s(i.entity_id))){var a=function(t,e){var a={};return i.attributes.entity_id.forEach(e=>{var i=t[e];i&&(a[i.entity_id]=i)}),a}(t);Object.keys(a).forEach(t=>{var e=a[t];e.attributes.hidden||(o[t]=e)})}}),o);Object.keys(o).filter(t=>!1!==o[t].attributes.hide_in_default_view).forEach(t=>{a[t]=o[t]})}}}),!a[i]}))},installActionName(t){var e=customElements.get(t);e&&e.prototype&&Object.defineProperty(e.prototype,"localize",{get:()=>(function(t){return this.stateObj&&this.stateObj.attributes&&this.stateObj.attributes.action_name?this.stateObj.attributes.action_name:this.__data.localize(t)}),set(){}})},installHaStateLabelBadge(){var t=customElements.get("ha-state-label-badge");t&&t.prototype.stateChanged&&(t.prototype.stateChanged=function(t){t.attributes.theme&&(null===this.hass.themes?(this.hass._themeWaiters=this.hass._themeWaiters||[],this.hass._themeWaiters.push(this)):a(this,this.hass.themes||{default_theme:"default",themes:{}},t.attributes.theme||"default")),this.updateStyles(),this.startInterval&&this.startInterval(t)})},installStateBadge(){var t=customElements.get("state-badge");if(t&&t.prototype.updateIconAppearance){var e=t.prototype.updateIconAppearance;t.prototype.updateIconAppearance=function(t){t.attributes.icon_color&&!t.attributes.entity_picture?(this.style.backgroundImage="",Object.assign(this.$.icon.style,{display:"inline",color:t.attributes.icon_color,filter:""})):e.call(this,t)}}},installHaAttributes(){var t=customElements.get("ha-attributes");t&&t.prototype.computeFiltersArray&&window.hassAttributeUtil&&(t.prototype.computeFiltersArray=function(t){return Object.keys(window.hassAttributeUtil.LOGIC_STATE_ATTRIBUTES).concat(t?t.split(","):[])})},installHaFormCustomize(){if(window.location.pathname.startsWith("/config")){var t=customElements.get("ha-form-customize");t?window.customUI.haFormCustomizeInitDone||(window.customUI.haFormCustomizeInitDone=!0,window.hassAttributeUtil&&(t.prototype._computeSingleAttribute&&(t.prototype._computeSingleAttribute=function(t,e,i){var a=window.hassAttributeUtil.LOGIC_STATE_ATTRIBUTES[t]||{type:window.hassAttributeUtil.UNKNOWN_TYPE};return this._initOpenObject(t,"json"===a.type?JSON.stringify(e):e,i,a)}),t.prototype.getNewAttributesOptions&&(t.prototype.getNewAttributesOptions=function(t,e,i,a){return Object.keys(window.hassAttributeUtil.LOGIC_STATE_ATTRIBUTES).filter(t=>{var e=window.hassAttributeUtil.LOGIC_STATE_ATTRIBUTES[t];return e&&(!e.domains||!this.entity||e.domains.includes(n(this.entity)))}).filter(this.filterFromAttributes(t)).filter(this.filterFromAttributes(e)).filter(this.filterFromAttributes(i)).filter(this.filterFromAttributes(a)).sort().concat("Other")}))):window.setTimeout(window.customUI.installHaFormCustomize,100)}},installClassHooks(){window.customUI.classInitDone||(window.customUI.classInitDone=!0,window.customUI.installPartialCards(),window.customUI.installStatesHook(),window.customUI.installHaStateLabelBadge(),window.customUI.installStateBadge(),window.customUI.installHaAttributes(),window.customUI.installActionName("state-card-scene"),window.customUI.installActionName("state-card-script"))},init(){if(!window.customUI.initDone){window.customUI.installClassHooks();var t=window.customUI.lightOrShadow(document,"home-assistant");t.hass&&t.hass.states?(window.customUI.initDone=!0,window.customUI.useCustomizer(),window.customUI.runHooks(),window.addEventListener("location-changed",window.setTimeout.bind(null,window.customUI.runHooks,100)),console.log("Loaded CustomUI 20180625"),window.CUSTOM_UI_LIST||(window.CUSTOM_UI_LIST=[]),window.CUSTOM_UI_LIST.push({name:"CustomUI",version:"20180625",url:"https://github.com/andrey-git/home-assistant-custom-ui"})):window.setTimeout(window.customUI.init,1e3)}},runHooks(){window.customUI.fixGroupTitles(),window.customUI.updateConfigPanel(),window.customUI.installHaFormCustomize()},getName:()=>window.localStorage.getItem("ha-device-name")||"",setName(t){window.localStorage.setItem("ha-device-name",t||"")},computeTemplate(t,e,i,a,s,n,o){var r=t.indexOf("return")>=0?t:`return \`${t}\`;`;try{return new Function("hass","entities","entity","attributes","attribute","state",r)(e,i,a,s,n,o)}catch(t){if(t instanceof SyntaxError||t instanceof ReferenceError)return console.warn(`${t.name}: ${t.message} in template ${r}`),null;throw t}}},window.customUI.init();var b=class extends Polymer.Element{static get properties(){return{hass:Object,inDialog:{type:Boolean,value:!1},stateObj:Object,controlElement:String,extra:{type:Array,computed:"computeExtra(hass, stateObj)"}}}computeExtra(t,e){var i=e.attributes.extra_data_template;return i?(Array.isArray(i)||(i=[i]),i.map(i=>window.customUI.computeTemplate(i,t,t.states,e,e.attributes,void 0,e.state)).filter(t=>null!==t)):[]}showLastChanged(t,e,i){return!!e||!i.length&&!!t.attributes.show_last_changed}hasExtra(t){return t.length>0}};customElements.define("dynamic-element",class extends Polymer.Element{static get properties(){return{hass:Object,stateObj:Object,elementName:String,inDialog:{type:Boolean,value:!1}}}static get observers(){return["observerFunc(hass, stateObj, elementName, inDialog)"]}observerFunc(t,e,i,a){o(this,i?i.toUpperCase():"DIV",{hass:t,stateObj:e,inDialog:a})}}),customElements.define("dynamic-with-extra",class extends(customElements.get("state-card-display")){static get template(){return d`
+    <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors"></style>
+    <style>
+      :host {
+        display: inline-block;
+      }
+      .control-wrapper {
+        margin: -4px -16px -4px 0;
+        padding: 4px 16px;
+      }
+      ha-state-label-badge {
+        margin-left: 8px;
+      }
+      dynamic-element {
+        display: block;
+        text-align: right;
+      }
+      #overlay {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        text-align: right;
+        z-index: 1;
+      }
+      #lock {
+        margin-top: 8px;
+        opacity: 0.3;
+        margin-right: 7px;
+      }
+      #lock.ha-cover-controls {
+        margin-right: 52px;
+        background-color: white;
+      }
+      .extra {
+        margin-bottom: -16px;
+        --ha-label-badge-size: 36px;
+        --ha-label-badge-font-size: 1.2em;
+      }
+      .state {
+        @apply --paper-font-body1;
+        color: var(--primary-text-color);
+        margin-left: 16px;
+        text-align: right;
+        line-height: 40px;
+      }
+    </style>
+    <div class$='[[extraClass(extraObjVisible)]] horizontal layout'>
+      <template is='dom-if' if='[[extraObjVisible]]'>
+        <template is='dom-repeat'
+                  items='[[extraObj]]'
+                  on-dom-change='extraDomChanged'>
+          <ha-state-label-badge hass='[[hass]]' state='[[item]]'></ha-state-label-badge>
+        </template>
+      </template>
+      <template is='dom-if' if='[[_showControl(inDialog, stateObj)]]'>
+        <template is='dom-if' if='[[controlElement]]'>
+          <div class="control-wrapper">
+            <dynamic-element
+                class='flex'
+                state-obj="[[stateObj]]"
+                hass='[[hass]]'
+                element-name='[[controlElement]]'>
+            </dynamic-element>
+            <template is='dom-if' if='[[isConfirmControls(stateObj)]]'>
+              <div id="overlay" on-click='clickHandler'>
+                <template is='dom-if' if='[[stateObj.attributes.confirm_controls_show_lock]]'>
+                  <iron-icon id="lock" class$="[[controlElement]]" icon="mdi:lock-outline"></iron-icon>
+                </template>
+              </div>
+            </template>
+          </div>
+        </template>
+        <template is='dom-if' if='[[!controlElement]]'>
+          <div class='state'>[[computeStateDisplay(stateObj)]]</div>
+        </template>
+      </template>
+    </div>
+    `}static get properties(){return{hass:Object,inDialog:{type:Boolean,value:!1},stateObj:Object,controlElement:String,extraObj:{type:Array,computed:"computeExtra(hass, stateObj, _attached)"},_attached:Boolean,extraObjVisible:{type:Boolean,computed:"computeExtraVisible(extraObj, inDialog)"}}}connectedCallback(){super.connectedCallback(),this._attached=!0}disconnectedCallback(){this._isAttached=!1,super.disconnectedCallback()}computeExtra(t,e,i){if(!e.attributes.extra_badge||!i)return[];var a=e.attributes.extra_badge;return Array.isArray(a)||(a=[a]),a.map(i=>{var a=null;if(i.entity_id&&t.states[i.entity_id]?a=Object.assign({},window.customUI.maybeChangeObject(this,t.states[i.entity_id],this.inDialog,!1)):i.attribute&&void 0!==e.attributes[i.attribute]&&(a={state:String(e.attributes[i.attribute]),_domain:"none",entity_id:null,attributes:{unit_of_measurement:i.unit}}),!a)return null;var s=i.blacklist_states;return void 0!==s&&(Array.isArray(s)||(s=[s]),s.some(t=>RegExp(t).test(a.state.toString())))?null:(a._entityDisplay="",a)}).filter(t=>null!=t)}computeExtraVisible(t,e){return!(e||!t)&&0!==t.length}extraClass(t){return t?"extra":""}_showControl(t,e){return!!t||!e.attributes.hide_control}computeStateDisplay(t){return super.computeStateDisplay(this.haLocalize||this.localize,t)}isConfirmControls(t){return t.attributes.confirm_controls||t.attributes.confirm_controls_show_lock}clickHandler(t){this.root.querySelector("#overlay").style.pointerEvents="none";var e=this.root.querySelector("#lock");e&&(e.icon="mdi:lock-open-outline",e.style.opacity="0.1"),window.setTimeout(()=>{this.root.querySelector("#overlay").style.pointerEvents="",e&&(e.icon="mdi:lock-outline",e.style.opacity="")},5e3),t.stopPropagation()}applyThemes(t,e,i){var s=i.attributes.theme||"default";a(e,t.themes||{default_theme:"default",themes:{}},s)}extraDomChanged(){this.root.querySelectorAll("ha-state-label-badge").forEach(t=>{this.applyThemes(this.hass,t,t.state)})}}),customElements.define("ha-themed-slider",class extends Polymer.Element{static get template(){return d`
+    <style>
+      :host {
+        margin: var(--ha-themed-slider-margin, initial);
+      }
+      .disable-off-when-min {
+        --paper-slider-pin-start-color:  var(--paper-slider-pin-color);
+      }
+
+      .disable-off-when-min.is-on {
+        --paper-slider-knob-start-color: var(--paper-slider-knob-color);
+        --paper-slider-knob-start-border-color: var(--paper-slider-knob-color);
+      }
+      paper-slider {
+        margin: 4px 0;
+        max-width: 100%;
+        min-width: 100px;
+        width: var(--ha-paper-slider-width, 200px);
+      }
+    </style>
+
+    <paper-slider
+         min='[[_themedMin]]'
+         max='[[_computeAttribute(theme, "max", max)]]'
+         pin='[[_computeAttribute(theme, "pin", pin)]]'
+         class$='[[computeClass(theme, isOn, _themedMin)]]' value='[[value]]'
+         on-change='valueChanged'>
+    </paper-slider>
+    `}ready(){super.ready(),this.disableOffWhenMin=!this._computeAttribute(this.theme,"off_when_min",!this.disableOffWhenMin),this.computeEnabledThemedReportWhenNotChanged(this.theme,this.disableReportWhenNotChanged)}static get properties(){return{min:{type:Number,value:0},max:{type:Number,value:100},pin:{type:Boolean,value:!1},isOn:{type:Boolean,value:!1},disableOffWhenMin:{type:Boolean,value:!1,notify:!0},disableReportWhenNotChanged:{type:Boolean,value:!1},theme:Object,value:{type:Number,notify:!0},_themedMin:{type:Number,computed:'_computeAttribute(theme, "min", min)'}}}static get observers(){return["computeEnabledThemedReportWhenNotChanged(theme, disableReportWhenNotChanged)"]}computeEnabledThemedReportWhenNotChanged(t,e){this._enabledThemedReportWhenNotChanged=this._computeAttribute(t,"report_when_not_changed",!e)}_computeAttribute(t,e,i){return t&&e in t?t[e]:i}computeClass(t,e,i){var a="";return e&&(a+="is-on "),this._computeAttribute(t,"off_when_min",!this.disableOffWhenMin)||0===i?"":`${a}disable-off-when-min`}valueChanged(t){this._enabledThemedReportWhenNotChanged||this.value!==t.target.value?this.value=t.target.value:t.stopPropagation()}});var g=function(t,e){if(Array.isArray(t))return t;if(Symbol.iterator in Object(t))return function(t,e){var i=[],a=!0,s=!1,n=void 0;try{for(var o,r=t[Symbol.iterator]();!(a=(o=r.next()).done)&&(i.push(o.value),!e||i.length!==e);a=!0);}catch(t){s=!0,n=t}finally{try{!a&&r.return&&r.return()}finally{if(s)throw n}}return i}(t,e);throw new TypeError("Invalid attempt to destructure non-iterable instance")};customElements.define("state-card-with-slider",class extends b{static get template(){return d`
+    <style is="custom-style" include="iron-flex iron-flex-alignment iron-flex-factors"></style>
+    <style>
+      #container {
+        position: relative;
+      }
+      .second-line, .state-and-toggle, .state-info {
+        max-width: 100%;
+      }
+      .nowrap .state-and-toggle {
+        overflow: hidden;
+        flex-grow: 0;
+      }
+      .nowrap .second-line {
+        overflow: hidden;
+      }
+
+      .second-line {
+        padding-top: 20px;
+        padding-bottom: 16px;
+        margin-top: -20px;
+        margin-bottom: -16px;
+      }
+      .stretch .second-line, .stretch ha-themed-slider {
+        width: 100%;
+        --ha-paper-slider-width: 100%;
+      }
+      .nowrap .state-info {
+        min-width: initial;
+      }
+      ha-themed-slider, .top-wrapper {
+        min-width: 100px;
+        max-width: 100%;
+      }
+      .top-wrapper.stretch {
+        display: block;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+
+    <div id='container' class$='horizontal layout flex top-wrapper [[_computeWrapClass(mode, stretchSlider, lineTooLong, inDialog)]]'>
+      <div class='horizontal layout justified flex-auto state-and-toggle'>
+        <state-info
+            class='state-info flex-auto'
+            hass='[[hass]]'
+            state-obj='[[stateObj]]'
+            in-dialog='[[showLastChanged(stateObj, inDialog, extra)]]'
+            secondary-line$='[[hasExtra(extra)]]'
+        >
+          <template is='dom-repeat' items='[[extra]]'>
+            <div>[[item]]</div>
+          </template>
+        </state-info>
+        <template is='dom-if' if='[[breakSlider]]' class='hidden'>
+          <dynamic-with-extra hass='[[hass]]' state-obj='[[stateObj]]' control-element='[[controlElement]]' in-dialog='[[inDialog]]'></dynamic-with-extra>
+        </template>
+      </div>
+      <template is='dom-if' if='[[showSlider]]' restamp>
+        <div class='horizontal layout flex-auto end-justified second-line'>
+          <ha-themed-slider
+            id='slider'
+            max=[[max]]
+            min=[[min]]
+            theme='[[stateObj.attributes.slider_theme]]'
+            is-on='[[isOn(stateObj, nameOn)]]'
+            value='{{sliderValue}}'
+            disable-off-when-min='{{disableOffWhenMin}}'
+            on-change='sliderChanged'
+            on-click='stopPropagation'>
+          </ha-themed-slider>
+          <template is='dom-if' if='[[!breakSlider]]'>
+            <dynamic-with-extra hass='[[hass]]' state-obj='[[stateObj]]' control-element='[[controlElement]]' in-dialog='[[inDialog]]'></dynamic-with-extra>
+          </template>
+        </div>
+      </template>
+    </div>
+    `}static get properties(){return{domain:String,serviceMin:String,serviceMax:String,valueName:String,setValueName:String,nameOn:{type:String,value:"on"},min:{type:Number,value:0},max:{type:Number,value:255},sliderValue:{type:Number,value:0},disableOffWhenMin:Boolean,mode:String,stretchSlider:{type:Boolean,value:!1},breakSlider:{type:Boolean,value:!1},hideSlider:{type:Boolean,value:!1},lineTooLong:{type:Boolean,value:!1},minLineBreak:Number,maxLineBreak:Number,showSlider:{type:Number,computed:"_showSlider(inDialog, stateObj, hideSlider)"}}}ready(){super.ready(),this._onIronResize=this._onIronResize.bind(this)}connectedCallback(){super.connectedCallback(),this._isConnected=!0,window.addEventListener("resize",this._onIronResize),this._waitForLayout()}disconnectedCallback(){window.removeEventListener("resize",this._onIronResize),this._isConnected=!1,super.disconnectedCallback()}static get observers(){return["stateObjChanged(stateObj, nameOn, valueName)"]}_waitForLayout(){this._isConnected&&(this._setMode(),this._frameId||(this.readyToCompute=!1,this._frameId=window.requestAnimationFrame(()=>{this._frameId=null,this.readyToCompute=!0,this._onIronResize()})))}_setMode(){var t={hideSlider:"hide-slider"===this.mode&&this.lineTooLong,breakSlider:("break-slider"===this.mode||"hide-slider"===this.mode)&&this.lineTooLong};this.showSlider||(t.breakSlider=!0),this.setProperties(t)}_onIronResize(){if(this.readyToCompute)if("no-slider"!==this.mode){var t=this.breakSlider,e=this.hideSlider;this.setProperties({lineTooLong:!1,hideSlider:!1,breakSlider:!1});var i=this.$.container,a=i.clientWidth;if(0!==a){if(a<=this.minLineBreak)this.lineTooLong=!0;else if(a>=this.maxLineBreak)this.lineTooLong=!1;else{if(e&&"hide-slider"===this.mode)return void this._waitForLayout();var s=i.clientHeight,n=this.root.querySelector(".state-info").clientHeight;this.lineTooLong=s>1.5*n,this.lineTooLong?this.minLineBreak=a:t||(this.maxLineBreak=a)}this._setMode()}}else this.setProperties({hideSlider:!0,breakSlider:!0})}_computeWrapClass(t,e,i,a){return a?"":"single-line"===t?"nowrap":e&&i?"stretch wrap":"wrap"}_showSlider(t,e,i){return!t&&!i}sliderChanged(t){var e=parseInt(t.target.value,10),i={entity_id:this.stateObj.entity_id};if(!Number.isNaN(e)){var a=this.root.querySelector("#slider");if(t.target!==a)a=t.target;else if(t.path)a=g(t.path,1)[0];else if(t.composedPath){var s=t.composedPath();a=g(s,1)[0]}0===e||e<=a.min&&!this.disableOffWhenMin?this.hass.callService(this.domain,this.serviceMin,i):(i[this.setValueName||this.valueName]=e,this.hass.callService(this.domain,this.serviceMax,i))}}stateObjChanged(t,e,i){var a={sliderValue:this.isOn(t,e)?t.attributes[i]:0};t&&Object.assign(a,{minLineBreak:0,maxLineBreak:999,hideSlider:!1,breakSlider:!1,lineTooLong:!1,mode:t.attributes.state_card_mode,stretchSlider:!!t.attributes.stretch_slider}),this.setProperties(a),t&&this._waitForLayout()}isOn(t,e){return t&&(!e||t.state===e)}stopPropagation(t){t.stopPropagation()}}),customElements.define("state-card-without-slider",class extends b{static get template(){return d`
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style>
+      #container {
+        position: relative;
+      }
+    </style>
+
+    <div id='container' class='horizontal layout justified'>
+      <state-info
+          hass='[[hass]]'
+          class='state-info'
+          state-obj='[[stateObj]]'
+          in-dialog='[[showLastChanged(stateObj, inDialog, extra)]]'
+          secondary-line$='[[hasExtra(extra)]]'>
+        <template is='dom-repeat' items='[[extra]]'>
+          <div>[[item]]</div>
+        </template>
+      </state-info>
+      <dynamic-with-extra
+          hass='[[hass]]'
+          state-obj='[[stateObj]]'
+          control-element='[[controlElement]]'
+          in-dialog='[[inDialog]]'>
+      </dynamic-with-extra>
+    </div>
+    `}});var y=["configurator"],_={light:1,cover:4,climate:1},w={toggle:"ha-entity-toggle",display:"",cover:"ha-cover-controls"};customElements.define("state-card-custom-ui",class extends Polymer.Element{static get properties(){return{hass:Object,inDialog:{type:Boolean,value:!1},stateObj:Object}}static get observers(){return["inputChanged(hass, inDialog, stateObj)"]}connectedCallback(){super.connectedCallback();var t=this.parentNode.parentNode;"DIV"===t.tagName&&(t.classList.contains("state")||t.classList.contains("child-card"))&&(this._container=t,t.style.setProperty("background-color","var(--paper-card-background-color, inherit)"),t.updateStyles||(t.updateStyles=(e=>{Object.keys(e).forEach(i=>{t.style.setProperty(i,e[i])})}))),this._isAttached=!0,this.inputChanged(this.hass,this.inDialog,this.stateObj)}disconnectedCallback(){this._isAttached=!1,this._container&&(this._container.updateStyles({display:"",margin:"",padding:""}),a(this._container,this.hass.themes||{default_theme:"default",themes:{}},"default"),this._container=null),super.disconnectedCallback()}badgeMode(t,e,i){var a=[];if("group"===i)e.attributes.entity_id.forEach(i=>{var s=t.states[i];s?e.attributes.badges_list&&!e.attributes.badges_list.includes(s.entity_id)||a.push(window.customUI.maybeChangeObject(this,s,!1,!1)):console.warn(`Unknown ID ${i} in group ${e.entity_id}`)});else if(a.push(e),this._container){this._container.style.display="inline-block";var s={display:"inline-block"};this._container.classList.contains("state")&&(s.margin="var(--ha-badges-card-margin, 0)"),this.updateStyles(s)}o(this,"HA-BADGES-CARD",{hass:t,states:a}),this._container&&this._container.updateStyles({width:"var(--ha-badges-card-width, initial)","text-align":"var(--ha-badges-card-text-align, initial)"}),this.lastChild.style.fontSize="85%",this.style.setProperty("--ha-state-label-badge-margin-bottom","0")}cleanBadgeStyle(){this._container&&this._container.updateStyles({display:"",width:"","text-align":""}),this.updateStyles({display:"",margin:""})}applyThemes(t,e){var i=this,s="default";this._container&&(i=this._container),e.attributes.theme&&(s=e.attributes.theme),a(i,t.themes||{default_theme:"default",themes:{}},s)}maybeHideEntity(t){return t?(this._container&&this._container.updateStyles({margin:"",padding:""}),!1):(this.lastChild&&this.removeChild(this.lastChild),this._container&&this._container.updateStyles({margin:"0",padding:"0"}),!0)}sliderEligible_(t,e,i){return!i&&_[t]&&_[t]&e.attributes.supported_features&&e.attributes.state_card_mode&&"no-slider"!==e.attributes.state_card_mode}inputChanged(t,e,i){if(i&&t&&this._isAttached){var a=n(i),s=window.customUI.maybeChangeObject(this,i,e,!0);this.maybeHideEntity(s)||(this.applyThemes(t,s),e||"badges"!==s.attributes.state_card_mode?this.regularMode_(t,e,s,a):this.badgeMode(t,s,a))}}regularMode_(t,e,i,a){this.cleanBadgeStyle();var s={hass:t,stateObj:i,inDialog:e},l=function(t,e){if("unavailable"===e.state)return"display";var i=n(e);return r.includes(i)?i:function(t,e){var i=n(e);return"group"===i?"on"===e.state||"off"===e.state:"climate"===i?!!(4096&(e.attributes||{}).supported_features):function(t,e){var i=t.config.services[e];return!!i&&("lock"===e?"lock"in i:"cover"===e?"open_cover"in i:"turn_on"in i)}(t,i)}(t,e)&&"hidden"!==e.attributes.control?"toggle":"display"}(t,i),d=void 0,c=i.attributes.state_card_custom_ui_secondary;"light"===a&&this.sliderEligible_(a,i,e)?(Object.assign(s,{controlElement:"ha-entity-toggle",serviceMin:"turn_off",serviceMax:"turn_on",valueName:"brightness",domain:a}),d="state-card-with-slider"):"cover"===a&&this.sliderEligible_(a,i,e)?(Object.assign(s,{controlElement:"ha-cover-controls",max:100,serviceMin:"close_cover",serviceMax:"set_cover_position",setValueName:"position",valueName:"current_position",nameOn:"open",domain:a}),d="state-card-with-slider"):"climate"===a&&this.sliderEligible_(a,i,e)?(Object.assign(s,{controlElement:"ha-climate-state",min:i.attributes.min_temp||-100,max:i.attributes.max_temp||200,serviceMin:"set_temperature",serviceMax:"set_temperature",valueName:"temperature",nameOn:"",domain:a}),d="state-card-with-slider"):void 0!==w[l]?(s.controlElement=w[l],d="state-card-without-slider"):i.attributes.show_last_changed&&!y.includes(l)&&(s.inDialog=!0),"unavailable"===i.state&&(s.controlElement=""),void 0!==i.attributes.control_element&&(s.controlElement=i.attributes.control_element),o(this,(c||d||`STATE-CARD-${l}`).toUpperCase(),s)}})},function(t,e){window.JSCompiler_renameProperty=function(t){return t}}]);
+//# sourceMappingURL=scripts.js.map</script>
