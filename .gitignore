@@ -8,9 +8,10 @@ config/deps/*
 
 
 # Specific file ignores
-.tradfri_psk.conf
-.uuid
-core
+config/.config_entries.json
+config/.tradfri_psk.conf
+config/.uuid
+config/core
 config/secrets.yaml
 
 # Specific keeps

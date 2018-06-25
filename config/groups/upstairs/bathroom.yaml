@@ -5,5 +5,6 @@
 #
 bathroom_lights:
   name: Bathroom
+  icon: mdi:shower
   entities:
     - light.bathroom_ceiling

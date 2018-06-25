@@ -35,6 +35,8 @@ rules:
   document-start:
     level: error
     present: true
+    ignore: |
+      config/entity_registry.yaml
   empty-lines:
     level: error
     max: 1

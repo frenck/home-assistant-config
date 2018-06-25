@@ -8,4 +8,5 @@ downstairs:
   name: Downstairs
   entities:
     - group.livingroom_lights
+    - group.kitchen_lights
     - group.toilet
