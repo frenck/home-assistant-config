@@ -1,0 +1,10 @@
+---
+# Groups all my livingroom lights
+#
+# https://www.home-assistant.io/components/group/
+#
+livingroom_lights:
+  name: Livingroom
+  entities:
+    - light.livingroom_window
+    - light.livingroom_spotlight

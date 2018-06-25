@@ -1,0 +1,10 @@
+---
+# This view shows all the things we care about on the ground floor
+#
+# https://www.home-assistant.io/components/group/
+#
+upstairs:
+  view: yes
+  name: Upstairs
+  entities:
+    - group.bathroom_lights

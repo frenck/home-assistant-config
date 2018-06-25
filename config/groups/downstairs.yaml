@@ -1,0 +1,11 @@
+---
+# This view shows all the things we care about on the ground floor
+#
+# https://www.home-assistant.io/components/group/
+#
+downstairs:
+  view: yes
+  name: Downstairs
+  entities:
+    - group.livingroom_lights
+    - group.toilet

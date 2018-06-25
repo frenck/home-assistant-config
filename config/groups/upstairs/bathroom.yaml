@@ -1,0 +1,9 @@
+---
+# Groups all bathroom lights
+#
+# https://www.home-assistant.io/components/group/
+#
+bathroom_lights:
+  name: Bathroom
+  entities:
+    - light.bathroom_ceiling

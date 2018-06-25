@@ -1,0 +1,9 @@
+---
+# Groups all toilet devices
+#
+# https://www.home-assistant.io/components/group/
+#
+toilet:
+  name: Toilet
+  entities:
+    - light.toilet
