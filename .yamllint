@@ -1,4 +1,6 @@
 ---
+ignore: |
+  config/custom_components/
 rules:
   braces:
     level: error
