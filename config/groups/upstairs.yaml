@@ -4,7 +4,7 @@
 # https://www.home-assistant.io/components/group/
 #
 upstairs:
-  view: yes
+  view: true
   name: Upstairs
   entities:
     - group.bathroom_lights

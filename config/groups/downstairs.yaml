@@ -4,7 +4,7 @@
 # https://www.home-assistant.io/components/group/
 #
 downstairs:
-  view: yes
+  view: true
   name: Downstairs
   entities:
     - group.livingroom_lights
