@@ -1,0 +1,11 @@
+---
+# Adds an iframe panel to the Home Assistant frontend for the IDE add-on.
+# This allows me to access the Cloud9 IDE straight from Home Asssitant's UI
+#
+# https://github.com/hassio-addons/addon-ide#embedding-into-home-assistant
+# https://www.home-assistant.io/components/panel_iframe/
+#
+ide:
+  title: IDE
+  icon: mdi:code-braces
+  url: !secret panel_iframe_ide_url
