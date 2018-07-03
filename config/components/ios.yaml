@@ -1,0 +1,8 @@
+---
+# The Home Assistant for iOS app offers a companion app for iOS which
+# is deeply integrated into both Home Assistant and iOS.
+#
+# https://www.home-assistant.io/components/ios/
+# https://www.home-assistant.io/docs/ecosystem/ios/
+#
+ios:
