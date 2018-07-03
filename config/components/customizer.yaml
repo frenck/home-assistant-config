@@ -1,8 +1,0 @@
----
-# Activates a companion component for Home Assistant CustomUI
-#
-# https://github.com/andrey-git/home-assistant-custom-ui
-# https://github.com/andrey-git/home-assistant-customizer
-#
-customizer:
-  custom_ui: local
