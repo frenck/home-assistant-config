@@ -12,7 +12,9 @@ http:
   base_url: !secret http_base_url
 
   # Lets Home Assistant only listen on a specific IP/host.
-  server_host: !secret http_server_host
+  # THIS SHOULD NOT BE USED ON HASS.IO!
+  #
+  # server_host: !secret http_server_host
 
   # Sets a port number to use for Home Assistant to use (default 8123).
   server_port: !secret http_server_port
