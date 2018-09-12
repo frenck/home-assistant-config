@@ -1,9 +1,0 @@
----
-# Groups all my kitchen lights
-#
-# https://www.home-assistant.io/components/group/
-#
-kitchen_lights:
-  name: Kitchen Lights
-  entities:
-    - light.kitchen_ceiling
