@@ -36,7 +36,6 @@ rules:
     level: error
     present: true
     ignore: |
-      config/entity_registry.yaml
       config/known_devices.yaml
   empty-lines:
     level: error
