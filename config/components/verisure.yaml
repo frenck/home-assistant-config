@@ -9,3 +9,10 @@
 verisure:
   username: !secret verisure_username
   password: !secret verisure_password
+
+  # Disable the Hygro & Temp sensors, they only update twice a day. Useless.
+  hygrometers: 0
+  thermometers: 0
+
+  # Don't add lock to Home Assistant... EVER.
+  locks: 0
