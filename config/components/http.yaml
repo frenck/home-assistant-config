@@ -29,14 +29,18 @@ http:
   # A list of origin domain names to allow CORS requests from.
   cors_allowed_origins: !secret http_cors_allowed_origins
 
-  # Enable parsing of the X-Forwarded-For header, passing on the client’s
-  # correct IP address, since I'm using a proxied setup.
-  use_x_forwarded_for: true
-
   # List of trusted networks, consisting of IP addresses or networks,
   # that are allowed to bypass password protection when accessing
   # Home Assistant.
   trusted_networks: !secret http_trusted_networks
+
+  # Enable parsing of the X-Forwarded-For header, passing on the client’s
+  # correct IP address, since I'm using a proxied setup.
+  use_x_forwarded_for: true
+
+  # List of trusted proxies, consisting of IP addresses or networks,
+  # that are allowed to set the X-Forwarded-For header.
+  trusted_proxies: !secret http_trusted_proxies
 
   # Enables additional IP filtering.
   ip_ban_enabled: true
