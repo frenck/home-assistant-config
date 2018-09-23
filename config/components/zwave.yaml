@@ -1,0 +1,65 @@
+---
+# Activates the Z-Wave component. I have several Z-Wave based devices in my
+# Home Assistant system. I use a Aeotec Z-Stick (gen 5) as my controller device.
+#
+# https://www.home-assistant.io/docs/z-wave/installation
+#
+zwave:
+  # The USB port where the Aeotech Z-Stick is connected to.
+  usb_path: /dev/ttyACM0
+
+  # I use a custom Open Zwave configuration. This to be able to support
+  # newer Z-Wave devices, like the Eurotronic Spirit Thermostat
+  config_path: /config/open-zwave/config
+
+  # If a Z-Wave devices support it, I will add it as a secure node.
+  # This defines my secure network key
+  network_key: !secret zwave_network_key
+
+  # This will trigger autohealing of the Z-Wave network at midnight.
+  autoheal: true
+
+  # The time period in milliseconds between polls of a nodes value
+  polling_interval: 60000
+
+  # The following contains node-specific override values.
+  # I use this for hiding/ignoring z-wave stuff I don't use.
+  # This should probably be splitted later or moved or something.
+  device_config_glob:
+
+    # We have an dedicated alarm system and not going to use these z-wave
+    # features; ignore.
+    "*_burglar*":
+      ignored: true
+      polling_intensity: 0
+    "*_alarm_type":
+      ignored: true
+      polling_intensity: 0
+    "*_alarm_level":
+      ignored: true
+      polling_intensity: 0
+
+    # Not sure why this is useful... I don't use it; ignore.
+    "*_sourcenodeid":
+      ignored: true
+
+    # Fibaro switches have an exporting sensor... I don't use it; ignore.
+    "sensor.*_exporting":
+      ignored: true
+
+    # Eurotronic devices show up 3 times?
+    "climate.eurotronic_eur_spiritz_wall_radiator_thermostat_furnace":
+      ignored: true
+      polling_intensity: 0
+
+    "climate.eurotronic_eur_spiritz_wall_radiator_thermostat_heat_eco":
+      ignored: true
+      polling_intensity: 0
+
+    "sensor.eurotronic_eur_spiritz_wall_radiator_thermostat_power_management":
+      ignored: true
+      polling_intensity: 0
+
+    "sensor.eurotronic_eur_spiritz_wall_radiator_thermostat_system":
+      ignored: true
+      polling_intensity: 0
