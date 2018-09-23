@@ -1,8 +1,0 @@
----
-# This is for hiding the individual toilet ceiling lights, I prefer to
-# control them in groups.
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-"light.toilet_*":
-  hidden: true

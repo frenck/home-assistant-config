@@ -1,8 +1,0 @@
----
-# This is for hiding the individual livingroom window lights, I prefer to
-# control them in groups.
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-"light.livingroom_window_*":
-  hidden: true

@@ -1,8 +1,0 @@
----
-# This is for hiding the individual bathroom ceiling lights, I prefer to
-# control them in groups.
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-"light.bathroom_ceiling_*":
-  hidden: true
