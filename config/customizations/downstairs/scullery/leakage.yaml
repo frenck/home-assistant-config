@@ -1,0 +1,9 @@
+---
+#
+# Customizes the PIR sensor installed in the restroom
+#
+# https://www.home-assistant.io/docs/configuration/customizing-devices/
+# https://www.home-assistant.io/components/binary_sensor/
+#
+binary_sensor.scullery_leakage:
+  device_class: moisture
