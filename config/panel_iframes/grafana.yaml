@@ -1,0 +1,10 @@
+---
+# Adds an iframe panel to the Home Assistant frontend for the Grafana add-on.
+# This allows me to access Grafana straight from Home Asssitant's UI
+#
+# https://github.com/hassio-addons/addon-grafana#embedding-into-home-assistant
+# https://www.home-assistant.io/components/panel_iframe/
+grafana:
+  title: Grafana
+  icon: mdi:chart-timeline
+  url: !secret panel_iframe_grafana_url
