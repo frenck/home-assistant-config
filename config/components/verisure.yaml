@@ -1,0 +1,11 @@
+---
+# I have a Verisure alarm system which can be used with Home Assistant
+#
+# The alarm system not only exposes the Alarm device itself, but all
+# its sensors as well.
+#
+# https://www.home-assistant.io/components/verisure/
+#
+verisure:
+  username: !secret verisure_username
+  password: !secret verisure_password
