@@ -1,0 +1,17 @@
+---
+# I own a Toon thermostat, which does al kinds of neat things.
+# It speaks openterm, is connected to my gas & main powerlines to get readings
+# and also gets data from my SolarEdge Solar panels (in the near near future).
+#
+# https://www.eneco.nl/energieproducten/toon-thermostaat/
+#
+# I do not use the component supplied by Home Assistant,
+# since that one is just broken. This is a custom component,
+# which is still far from perfect, but it works.
+# See the `custom_components` directory of this repository.
+#
+toon:
+  username: !secret toon_username
+  password: !secret toon_password
+  consumer_key: !secret toon_consumer_key
+  consumer_secret: !secret toon_consumer_secret

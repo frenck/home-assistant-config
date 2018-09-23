@@ -1,0 +1,39 @@
+---
+# My Toon devices spits out a lot of sensors, which most of them,
+# are not that relevant for me.
+#
+# https://www.eneco.nl/energieproducten/toon-thermostaat/
+# https://www.home-assistant.io/docs/configuration/customizing-devices/
+#
+climate.toon_van_eneco:
+  friendly_name: Thermostat
+
+sensor.gas_current:
+  friendly_name: Current gas
+
+sensor.gas_meter_reading:
+  friendly_name: Gas meter
+
+sensor.gas_today:
+  friendly_name: Gas today
+
+sensor.power_current:
+  friendly_name: Current power
+
+sensor.power_today:
+  friendly_name: Power used today
+
+sensor.power_meter_reading:
+  friendly_name: Power IN meter high
+
+sensor.power_meter_reading_low:
+  friendly_name: Power IN meter low
+
+sensor.solar_meter_reading_produced:
+  friendly_name: Power OUT meter high
+
+sensor.solar_meter_reading_low_produced:
+  friendly_name: Power OUT meter low
+
+sensor.burner_status:
+  friendly_name: Burner
