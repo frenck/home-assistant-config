@@ -1,0 +1,10 @@
+---
+# This is my Livingroom Samsung TV.
+#
+# https://www.home-assistant.io/components/media_player.samsungtv/
+#
+- platform: samsungtv
+  name: Livingroom TV
+  host: !secret media_player_samsungtv_livingroom_host
+  port: 8001
+  mac: !secret media_player_samsungtv_livingroom_mac
