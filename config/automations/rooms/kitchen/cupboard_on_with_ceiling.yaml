@@ -1,0 +1,9 @@
+---
+alias: Turn Cupboard light on when ceiling is on
+trigger:
+  platform: state
+  entity_id: light.kitchen_ceiling
+  to: 'on'
+action:
+  service: switch.turn_on
+  entity_id: switch.kitchen_cupboard

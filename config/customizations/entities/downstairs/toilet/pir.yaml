@@ -1,0 +1,12 @@
+---
+#
+# Customizes the PIR sensor installed in the restroom
+#
+# https://www.home-assistant.io/docs/configuration/customizing-devices/
+# https://www.home-assistant.io/components/binary_sensor/
+#
+
+# Changes the device class of the binary sensor
+# and ads a nice icon to it :)
+binary_sensor.toilet_motion:
+  device_class: occupancy

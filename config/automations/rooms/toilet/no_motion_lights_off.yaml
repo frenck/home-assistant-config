@@ -1,0 +1,11 @@
+---
+alias: Turn Toilet lights off when no motion is detected
+trigger:
+  platform: state
+  entity_id: binary_sensor.toilet_motion
+  to: 'off'
+  for:
+    minutes: 1
+action:
+  service: light.turn_off
+  entity_id: light.toilet

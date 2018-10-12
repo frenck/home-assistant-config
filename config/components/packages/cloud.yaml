@@ -1,0 +1,22 @@
+---
+# The Home Assistant Cloud allows you to quickly integrate your local
+# Home Assistant with various cloud services like Amazon Alexa and Google Home.
+#
+# https://www.home-assistant.io/components/cloud/
+#
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - light.kitchen_ceiling
+
+    entity_config:
+      light.kitchen_ceiling:
+        name: Plafond
+        aliases:
+          - keuken platfond
+          - keuken
+          - ceiling
+          - kitchen ceiling
+          - kitchen
+        room: Kitchen

@@ -1,0 +1,13 @@
+---
+# This automation turns off the Thermostat of our bedroom
+# when the window is opened.
+alias: 'Turn off master bedroom thermostat when windows is opened'
+trigger:
+  - platform: state
+    entity_id: binary_sensor.slaapkamer_raam
+    to: 'on'
+action:
+  - service: climate.set_operation_mode
+    entity_id: climate.bedroom_master_thermostat
+    data:
+      operation_mode: false

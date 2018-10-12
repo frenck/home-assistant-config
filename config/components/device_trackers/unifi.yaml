@@ -1,0 +1,72 @@
+---
+# I have 2 UniFi AP's in my home:
+#   - Centrally placed on the ground floor, having awesome coverage downstairs.
+#   - Second is place on the stairway between the first floor and the attic,
+#     giving me plenty of signal upstairs.
+#
+# I have a UniFi controller running 24/7 inside Hass.io,
+# using the Community Hass.io add-on.
+#
+# https://github.com/hassio-addons/addon-unifi
+# https://www.home-assistant.io/components/device_tracker.unifi/
+#
+platform: unifi
+
+# This is the Hass.io add-on slug, allowing a direct connection to the addon.
+host: a0d7b954-unifi
+
+# Since this is an internal connection, the SSL connection won't verify.
+# So lets ignore the fact that the cert is invalid for the above host.
+verify_ssl: false
+
+# Authentication credentials
+username: !secret device_tracker_unifi_username
+password: !secret device_tracker_unifi_password
+
+# I really don't want to track each device that enters my WiFi
+new_device_defaults:
+  track_new_devices: false
+  hide_if_away: false
+
+monitored_conditions:
+  - _id
+  - _is_guest_by_uap
+  - _last_seen_by_uap
+  - _uptime_by_uap
+  - ap_mac
+  - assoc_time
+  - bytes-r
+  - ccq
+  - channel
+  - essid
+  - first_seen
+  - hostname
+  - idletime
+  - ip
+  - is_11r
+  - is_guest
+  - is_wired
+  - last_seen
+  - latest_assoc_time
+  - mac
+  - name
+  - noise
+  - noted
+  - oui
+  - powersave_enabled
+  - qos_policy_applied
+  - radio
+  - radio_proto
+  - rssi
+  - rx_bytes
+  - rx_bytes-r
+  - rx_packets
+  - rx_rate
+  - signal
+  - site_id
+  - tx_bytes
+  - tx_bytes-r
+  - tx_packets
+  - tx_power
+  - tx_rate
+  - uptime

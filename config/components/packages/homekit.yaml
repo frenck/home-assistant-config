@@ -1,0 +1,7 @@
+---
+homekit:
+  auto_start: false
+  name: Home Assistant
+  filter:
+    include_entities:
+      - light.kitchen_ceiling

@@ -1,0 +1,9 @@
+---
+alias: Turn Cupboard light off when no ceiling is off
+trigger:
+  platform: state
+  entity_id: light.kitchen_ceiling
+  to: 'off'
+action:
+  service: switch.turn_off
+  entity_id: switch.kitchen_cupboard

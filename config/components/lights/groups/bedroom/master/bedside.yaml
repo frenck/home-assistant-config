@@ -1,0 +1,13 @@
+---
+# Light group: Master Bedroom Bedside
+# We have 2 Xiaomi Bedside Lamps (Yeelight).
+#
+# This group allows me to handle them both at once
+#
+# https://www.home-assistant.io/components/light.group/
+#
+platform: group
+name: Master Bedroom Bedside
+entities:
+  - light.master_bedroom_bedside_frenck
+  - light.master_bedroom_bedside_daphne

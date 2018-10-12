@@ -1,0 +1,9 @@
+---
+alias: Start HomeKit when z-wave is ready
+trigger:
+  - platform: event
+    event_type: zwave.network_ready
+  - platform: event
+    event_type: zwave.network_complete
+action:
+  - service: homekit.start

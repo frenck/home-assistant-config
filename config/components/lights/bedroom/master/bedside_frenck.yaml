@@ -1,0 +1,8 @@
+---
+platform: yeelight
+devices:
+  !secret light_yeelight_bedroom_master_frenck:
+    name: Master Bedroom Bedside Frenck
+    transition: 1000
+    use_music_mode: true
+    save_on_change: false

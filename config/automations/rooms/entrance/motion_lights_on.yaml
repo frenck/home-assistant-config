@@ -1,0 +1,14 @@
+---
+alias: Turn Entrance lights on when motion is detected
+trigger:
+  platform: state
+  entity_id: binary_sensor.entrance_motion
+  to: 'on'
+action:
+  service: light.turn_on
+  data:
+    transition: 5
+    brightness: 40
+    color_temp: 395
+    entity_id:
+      - light.entrance_ceiling
