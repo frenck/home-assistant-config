@@ -4,12 +4,13 @@
 *.pyc
 
 # Directory (contents) ignores
-config/.cloud/*
-config/.storage/*
-config/deps/*
+config/.cloud
+config/.storage
+config/deps
 
 # Specific file ignores
 config/.config_entries.json
+config/.homekit.state
 config/.ios.conf
 config/.tradfri_psk.conf
 config/.uuid
@@ -22,6 +23,9 @@ config/pyozw.sqlite
 config/secrets.yaml
 config/zwcfg_*
 config/zwscene.xml
+
+# Some other generic stuff
+.vscode
 
 # Specific keeps
 !.gitkeep
