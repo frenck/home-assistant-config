@@ -1,0 +1,15 @@
+---
+platform: template
+lights:
+  kitchen_cupboard:
+    friendly_name: "Keukenkast"
+    entity_id: switch.kitchen_cupboard
+    value_template: "{{ is_state('switch.kitchen_cupboard', 'on') }}"
+    turn_on:
+      service: switch.turn_on
+      data:
+        entity_id: switch.kitchen_cupboard
+    turn_off:
+      service: switch.turn_off
+      data:
+        entity_id: switch.kitchen_cupboard
