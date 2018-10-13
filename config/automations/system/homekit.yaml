@@ -1,9 +1,19 @@
 ---
+# I've disabled auto_start on HomeKit, to prevent
+# HomeKit from starting when Z-Wave isn't ready yet.
+# 
+# This automation wait for a signal from Z-Wave and
+# will start HomeKit.
+#
+# https://www.home-assistant.io/components/homekit/#disable-auto-start
+#
 alias: Start HomeKit when z-wave is ready
 trigger:
   - platform: event
     event_type: zwave.network_ready
   - platform: event
     event_type: zwave.network_complete
+  - platform: event
+    event_type: zwave.network_complete_some_dead
 action:
   - service: homekit.start
