@@ -1,0 +1,8 @@
+---
+# Provides a list of entities to include in Google Assistant.
+#
+# https://www.nabucasa.com/config/google_assistant
+#
+include_entities:
+  - light.kitchen_ceiling
+  - light.kitchen_cupboard

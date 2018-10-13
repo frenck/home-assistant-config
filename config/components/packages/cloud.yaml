@@ -5,18 +5,14 @@
 # https://www.home-assistant.io/components/cloud/
 #
 cloud:
-  google_actions:
-    filter:
-      include_entities:
-        - light.kitchen_ceiling
 
-    entity_config:
-      light.kitchen_ceiling:
-        name: Plafond
-        aliases:
-          - keuken platfond
-          - keuken
-          - ceiling
-          - kitchen ceiling
-          - kitchen
-        room: Kitchen
+  # Customize the Google Assistant integration with the Naby Casa Cloud
+  google_actions:
+
+    # Filters for entities to include/exclude from Google Assistant.
+    # These are loaded from a separate directory.
+    filter: !include_dir_merge_named ../../assistants/google/filters
+
+    # Entity specific configuration for Google Assistant.
+    # These are loaded from a separate directory.
+    entity_config: !include_dir_merge_named ../../assistants/google/entities
