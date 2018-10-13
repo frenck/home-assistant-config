@@ -1,0 +1,8 @@
+---
+# Provides a list of entities to include in HomeKit.
+#
+# https://www.home-assistant.io/components/homekit/#include_entities
+#
+include_entities:
+  - light.kitchen_ceiling
+  - light.kitchen_cupboard
