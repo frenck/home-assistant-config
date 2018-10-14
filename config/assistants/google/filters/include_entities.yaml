@@ -6,3 +6,8 @@
 include_entities:
   - light.kitchen_ceiling
   - light.kitchen_cupboard
+  - light.livingroom_bar
+  - light.livingroom_computer_corner
+  - light.livingroom_desk
+  - light.livingroom_spotlight
+  - light.livingroom_window
