@@ -1,4 +1,44 @@
 ---
+resources:
+  - url: /local/lovelace/cards/thermostat/thermostat-card.js?v=1
+    type: module
+  - url: /local/lovelace/cards/alarm/alarm_control_panel-card.js?v=1
+    type: module
+
 title: Home Control Panel
 views:
-  - title: Home
+  - title: Beneden
+    icon: mdi:sofa
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Woonkamer
+            entities:
+              - light.livingroom_window
+              - light.kitchen_bar
+              - light.livingroom_spotlight
+              - light.livingroom_computer_corner
+              - switch.livingroom_desk_light
+          - type: entities
+            title: Keuken
+            entities:
+              - light.kitchen_ceiling
+              - switch.kitchen_cupboard
+      - type: custom:thermostat-card
+        title: Livingroom
+        entity: climate.toon_van_eneco
+        no_card: true
+  - title: Boven
+    icon: mdi:stairs
+  - title: Buiten
+    icon: mdi:nature-people
+    cards:
+      - type: weather-forecast
+        entity: weather.dark_sky
+  - title: Alarm
+    icon: mdi:security-home
+    cards:
+      - type: custom:alarm_control_panel-card
+        entity: alarm_control_panel.home_alarm
+        title: Alarm System
