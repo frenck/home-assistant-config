@@ -1,7 +1,7 @@
 ---
 # I've disabled auto_start on HomeKit, to prevent
 # HomeKit from starting when Z-Wave isn't ready yet.
-# 
+#
 # This automation wait for a signal from Z-Wave and
 # will start HomeKit.
 #
