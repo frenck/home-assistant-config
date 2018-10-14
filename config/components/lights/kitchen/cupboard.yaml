@@ -1,4 +1,12 @@
 ---
+# My cupboard lights are connected using a z-wave wall switch.
+# This makes the device a "switch" withing Home Assistant and therefore
+# it shows up as a switch in HomeKit and Google Assistant as well.
+#
+# This little light template mimics the behavior of the switch.
+#
+# https://www.home-assistant.io/components/light.template/
+#
 platform: template
 lights:
   kitchen_cupboard:
