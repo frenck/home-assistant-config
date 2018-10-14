@@ -26,7 +26,6 @@ views:
               - light.kitchen_ceiling
               - switch.kitchen_cupboard
       - type: custom:thermostat-card
-        title: Livingroom
         entity: climate.toon_van_eneco
         no_card: true
   - title: Boven

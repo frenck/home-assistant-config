@@ -4,6 +4,7 @@
 # https://www.home-assistant.io/components/homekit/#include_entities
 #
 include_entities:
+  - climate.toon_van_eneco
   - light.kitchen_ceiling
   - light.kitchen_cupboard
   - light.livingroom_bar

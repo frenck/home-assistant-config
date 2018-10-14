@@ -15,3 +15,5 @@ toon:
   password: !secret toon_password
   consumer_key: !secret toon_consumer_key
   consumer_secret: !secret toon_consumer_secret
+  gas: true
+  solar: true

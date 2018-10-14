@@ -4,6 +4,7 @@
 # https://www.nabucasa.com/config/google_assistant
 #
 include_entities:
+  - climate.toon_van_eneco
   - light.kitchen_ceiling
   - light.kitchen_cupboard
   - light.livingroom_bar
