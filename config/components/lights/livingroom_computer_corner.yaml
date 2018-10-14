@@ -10,3 +10,4 @@ name: livingroom_computer_corner
 entities:
   - light.livingroom_window_1
   - light.livingroom_window_2
+  - light.livingroom_window_3
