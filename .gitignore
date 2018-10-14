@@ -16,6 +16,7 @@ config/.tradfri_psk.conf
 config/.uuid
 config/aircast.xml
 config/core
+config/known_devices.yaml
 config/ip_bans.yaml
 config/options.xml
 config/OZW_Log.txt
