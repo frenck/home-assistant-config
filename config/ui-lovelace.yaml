@@ -19,7 +19,7 @@ views:
               - light.livingroom_bar
               - light.livingroom_spotlight
               - light.livingroom_computer_corner
-              - switch.livingroom_desk_light
+              - light.livingroom_desk
           - type: entities
             title: Keuken
             entities:
