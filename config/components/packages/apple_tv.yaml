@@ -1,0 +1,6 @@
+---
+# Allows me to control an Apple TV (3rd and 4th generation)
+#
+# https://www.home-assistant.io/components/apple_tv/
+#
+apple_tv: !include_dir_list ../apple_tvs
