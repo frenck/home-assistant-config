@@ -1,8 +1,12 @@
 ---
+# We own a couple of Xiaomi/Yeelight bedside lamps.
+#
+# https://www.home-assistant.io/components/light.yeelight/
+#
 platform: yeelight
 devices:
   !secret light_yeelight_bedroom_master_frenck:
-    name: Master Bedroom Bedside Frenck
+    name: bedroom_master_bedside_frenck
     transition: 1000
     use_music_mode: true
     save_on_change: false

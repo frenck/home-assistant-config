@@ -5,7 +5,7 @@
 # https://www.home-assistant.io/components/light.group/
 #
 platform: group
-name: Toilet
+name: toilet
 entities:
   - light.toilet_1
   - light.toilet_2
