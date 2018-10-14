@@ -16,7 +16,7 @@ views:
             title: Woonkamer
             entities:
               - light.livingroom_window
-              - light.kitchen_bar
+              - light.livingroom_bar
               - light.livingroom_spotlight
               - light.livingroom_computer_corner
               - switch.livingroom_desk_light
