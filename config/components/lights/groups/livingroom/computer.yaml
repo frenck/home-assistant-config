@@ -6,7 +6,7 @@
 # https://www.home-assistant.io/components/light.group/
 #
 platform: group
-name: Livingroom computer corner
+name: livingroom_computer_corner
 entities:
   - light.livingroom_window_1
   - light.livingroom_window_2
