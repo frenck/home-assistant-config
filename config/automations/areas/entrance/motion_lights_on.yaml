@@ -1,5 +1,8 @@
 ---
-alias: Turn Entrance lights on when motion is detected
+# This automation turns on the ceiling light in our entrance
+# as soon as there is movement detected.
+#
+alias: entrance_motion_lights_on
 trigger:
   platform: state
   entity_id: binary_sensor.entrance_motion
@@ -7,8 +10,8 @@ trigger:
 action:
   service: light.turn_on
   data:
-    transition: 5
-    brightness: 40
+    transition: 3
+    brightness: 45
     color_temp: 395
     entity_id:
       - light.entrance_ceiling

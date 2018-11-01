@@ -1,0 +1,34 @@
+---
+# When the alarm gets armed...
+# Turn down the heating, lights and other devices.
+#
+alias: house_alarm_armed
+initial_state: true
+trigger:
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: 'armed_away'
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: 'armed_home'
+action:
+  - service: climate.set_temperature
+    data:
+      entity_id: climate.toon_van_eneco
+      temperature: 16
+  - service: light.turn_off
+    data:
+      entity_id:
+        - light.kitchen_ceiling
+        - light.kitchen_cupboard
+        - light.livingroom_bar
+        - light.livingroom_computer_corner
+        - light.livingroom_desk
+        - light.livingroom_gateway
+        - light.livingroom_spotlight
+        - light.livingroom_window
+  - service: media_player.turn_off
+    data:
+      entity_id:
+        - media_player.livingroom_tv
+        - media_player.livingroom_appletv

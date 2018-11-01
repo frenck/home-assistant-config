@@ -1,0 +1,27 @@
+---
+# This alers me on my iPhone when a new release
+# of Home Assistant for Hass.io is released.
+#
+alias: system_upgrade_alert
+trigger:
+  platform: state
+  entity_id: sensor.ha_version_hassio_stable
+condition:
+  - condition: template
+    value_template: >-
+      {{
+        states('sensor.ha_version_hassio_stable')
+        !=
+        states('sensor.current_version')
+      }}
+action:
+  - service: notify.ios_francks_iphone
+    data_template:
+      title: Upgrade time!
+      message: >-
+        There is a Home Assistant upgrade for Hass.io is pending!
+        Version {{ states('sensor.ha_version_hassio_stable') }} just got released!
+      data:
+        attachment:
+          content-type: png
+          url: https://png2.kisspng.com/20180504/avq/kisspng-computer-icons-starburst-clip-art-the-store-to-upgrade-kuangshuai-5aecf79d6760f6.2104595515254793254235.png

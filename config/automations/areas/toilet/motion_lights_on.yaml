@@ -1,5 +1,8 @@
 ---
-alias: Turn Toilet lights on when motion is detected
+# Simple automation, that turns the lights on as
+# soon as someone enters our downstairs little room.
+#
+alias: toilet_motion_lights_on
 trigger:
   platform: state
   entity_id: binary_sensor.toilet_motion

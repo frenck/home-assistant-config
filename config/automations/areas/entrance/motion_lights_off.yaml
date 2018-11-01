@@ -1,0 +1,19 @@
+---
+# This automation turns off the ceiling light in our entrance
+# as soon as there was no movement detected after 10 seconds.
+#
+# 10 seconds might seem short, but the sensor has a timeout of
+# a minute as well. These 10 seconds gives it time to retrigger.
+#
+alias: entrance_motion_lights_off
+trigger:
+  platform: state
+  entity_id: binary_sensor.entrance_motion
+  to: 'off'
+  for:
+    seconds: 10
+action:
+  service: light.turn_off
+  data:
+    transition: 15
+    entity_id: light.entrance_ceiling

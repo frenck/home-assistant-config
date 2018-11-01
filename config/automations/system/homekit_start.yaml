@@ -7,7 +7,7 @@
 #
 # https://www.home-assistant.io/components/homekit/#disable-auto-start
 #
-alias: Start HomeKit when z-wave is ready
+alias: system_homekit_start
 trigger:
   - platform: event
     event_type: zwave.network_ready

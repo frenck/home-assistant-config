@@ -4,7 +4,7 @@
 # I use an Xiaomi Switch (the round ones) for this.
 # When pressed, we send out some notifications.
 #
-alias: Doorbell
+alias: outside_doorbell
 trigger:
   - platform: event
     event_type: click
@@ -15,7 +15,7 @@ trigger:
     event_type: click
     event_data:
       entity_id: binary_sensor.doorbell
-      click_type: double
+      click_type: doubled
   - platform: event
     event_type: click
     event_data:

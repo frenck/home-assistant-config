@@ -1,0 +1,24 @@
+---
+# This automation turns on/off the cupboard lights based
+# on the state of the kitchen ceiling light.
+#
+# It is turned on if the kitchen ceiling light is on and
+# at a minimum brightness level. Turned off otherwise.
+#
+alias: kitchen_ceiling_cupboard
+trigger:
+  - platform: state
+    entity_id: light.kitchen_ceiling
+action:
+  service_template: >-
+    {%
+      if (
+        is_state('light.kitchen_ceiling', 'on')
+        and (state_attr('light.kitchen_ceiling', 'brightness_pct')|int) > 45
+      )
+    %}
+      switch.turn_on
+    {% else %}
+      switch.turn_off
+    {% endif %}
+  entity_id: switch.kitchen_cupboard

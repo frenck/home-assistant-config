@@ -1,5 +1,8 @@
 ---
-alias: Turn Toilet lights off when no motion is detected
+# Simple automation, that turns the lights off as
+# soon as someone has left our downstairs little room.
+#
+alias: toilet_motion_lights_off
 trigger:
   platform: state
   entity_id: binary_sensor.toilet_motion
