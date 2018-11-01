@@ -1,0 +1,12 @@
+---
+# Enables a custom component called "versions".
+# It is a sensor that fetches the version number
+# of current Home Assistant releases, including
+# the actual current version of Hass.io.
+#
+# https://github.com/custom-components/sensor.versions
+#
+platform: versions
+installation: hassio
+branch: stable
+image: qemux86-64
