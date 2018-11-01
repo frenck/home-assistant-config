@@ -12,6 +12,7 @@ config/deps
 config/.config_entries.json
 config/.homekit.state
 config/.ios.conf
+config/.spotify-token-cache
 config/.tradfri_psk.conf
 config/.uuid
 config/aircast.xml
