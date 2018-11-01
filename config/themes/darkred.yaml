@@ -20,7 +20,7 @@ darkred:
   sidebar-text_-_background: "#62717b"
 
   # Colors based on variables, see above
-  paper-card-header-color: "var(--paper-item-icon-color)" 
+  paper-card-header-color: "var(--paper-item-icon-color)"
   paper-item-icon-active-color: "var(--primary-color)"
   paper-item-icon_-_color: "var(--primary-text-color)"
   paper-listbox-color: "var(--primary-text-color)"

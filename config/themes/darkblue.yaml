@@ -24,7 +24,7 @@ darkblue:
   sidebar-selected-icon-color: "#6FA6FE"
   sidebar-selected-text-color: var(--sidebar-selected-icon-color)
 
-  #States and Badges
+  # States and Badges
   state-icon-color: "#2F7EFD"
   state-icon-active-color: "#FBCD41"
   state-icon-unavailable-color: var(--disabled-text-color)

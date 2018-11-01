@@ -1,8 +1,8 @@
 ---
 # I have an older UE Smart Radio (Logitech Squeezebox)
-# 
+#
 # https://www.home-assistant.io/components/media_player.ue_smart_radio/
-# 
+#
 platform: ue_smart_radio
 username: !secret ue_smart_radio_username
 password: !secret ue_smart_radio_password
