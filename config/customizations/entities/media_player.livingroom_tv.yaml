@@ -1,0 +1,4 @@
+---
+media_player.livingroom_tv:
+  icon: mdi:television-classic
+  friendly_name: Televisie
