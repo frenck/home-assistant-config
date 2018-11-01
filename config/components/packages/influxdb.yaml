@@ -28,3 +28,8 @@ influxdb:
   include:
     entities:
       - climate.toon_van_eneco
+      - sensor.garden_temperature
+      - sensor.power_current
+      - sensor.power_meter_reading
+      - sensor.power_meter_reading_low
+      - sensor.power_today
