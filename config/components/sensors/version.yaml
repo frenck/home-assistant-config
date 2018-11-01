@@ -1,0 +1,7 @@
+---
+# The version sensor platform is displaying the
+# current version.
+#
+# https://www.home-assistant.io/components/sensor.version/
+#
+platform: version
