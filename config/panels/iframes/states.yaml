@@ -1,0 +1,12 @@
+---
+# I use Lovelace for my UI, but I like to access the old states
+# page from time to time. Especially when I work on my system.
+#
+# Yes, I know Lovelace has an unused entities menu item.
+#
+# https://bonani.tech/lovelace-accessing-home-assistant-states-page-with-just-one-click/
+#
+states:
+  title: States
+  icon: mdi:home-assistant
+  url: !secret panel_iframe_states_url
