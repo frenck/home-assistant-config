@@ -1,4 +1,18 @@
 ---
+# Welcome to my Home Assistant configuration!
+#
+# Don't be scared by the size of my configuration file...
+# It is probably the smallest you've ever seen.
+#
+# My system is very modular and very differently structured
+# compared to other configurations you'll find online.
+#
+# Basically, each file in the repository does 1 (one, uno, eins)
+# thing only! Click through it, you'll get it pretty fast.
+#
+# The configuration.yaml is only used to bootstrap the system
+# and contains some minimal, but vital, settings.
+#
 homeassistant:
   # Name of this Home Assistant instance... I've tried to be original... ;)
   name: Home
@@ -17,14 +31,5 @@ homeassistant:
   # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Amsterdam
 
-  # Load packages (split-configuration format)
+  # Load packages
   packages: !include_dir_named components/packages
-
-  # Lets me customize individual entities
-  customize: !include_dir_merge_named customizations/entities
-
-  # Lets me custimize all entities in a domain
-  customize_domain: !include_dir_merge_named customizations/domains
-
-  # Lets me custimize entities based on a matching pattern
-  customize_glob: !include_dir_merge_named customizations/globs
