@@ -28,6 +28,7 @@ config/zwscene.xml
 
 # Some other generic stuff
 .vscode
+.theia
 
 # Specific keeps
 !.gitkeep
