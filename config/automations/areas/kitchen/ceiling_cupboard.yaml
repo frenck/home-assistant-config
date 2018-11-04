@@ -14,7 +14,7 @@ action:
     {%
       if (
         is_state('light.kitchen_ceiling', 'on')
-        and (state_attr('light.kitchen_ceiling', 'brightness_pct')|int) > 45
+        and (state_attr('light.kitchen_ceiling', 'brightness')|int) > 115
       )
     %}
       switch.turn_on
