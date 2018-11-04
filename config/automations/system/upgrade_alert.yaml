@@ -19,7 +19,7 @@ action:
     data_template:
       title: Upgrade time!
       message: >-
-        There is a Home Assistant upgrade for Hass.io is pending!
+        There is a Home Assistant upgrade for Hass.io pending!
         Version {{ states('sensor.ha_version_hassio_stable') }} just got released!
       data:
         attachment:
