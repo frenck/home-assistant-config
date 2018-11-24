@@ -1,7 +1,11 @@
 ---
 # The version sensor platform is displaying the
-# current version.
+# available version online.
 #
 # https://www.home-assistant.io/components/sensor.version/
 #
 platform: version
+name: version_available
+source: hassio
+branch: stable
+image: qemux86-64

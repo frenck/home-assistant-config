@@ -5,14 +5,14 @@
 alias: system_upgrade_alert
 trigger:
   platform: state
-  entity_id: sensor.ha_version_hassio_stable
+  entity_id: sensor.version_available
 condition:
   - condition: template
     value_template: >-
       {{
-        states('sensor.ha_version_hassio_stable')
+        states('sensor.version_available')
         !=
-        states('sensor.current_version')
+        states('sensor.version_current')
       }}
 action:
   - service: notify.ios_francks_iphone
@@ -20,7 +20,7 @@ action:
       title: Upgrade time!
       message: >-
         There is a Home Assistant upgrade for Hass.io pending!
-        Version {{ states('sensor.ha_version_hassio_stable') }} just got released!
+        Version {{ states('sensor.version_available') }} just got released!
       data:
         attachment:
           content-type: png
@@ -30,5 +30,5 @@ action:
       title: Upgrade time!
       message: >-
         There is a Home Assistant upgrade for Hass.io pending!
-        Version {{ states('sensor.ha_version_hassio_stable') }} just got released!
+        Version {{ states('sensor.version_available') }} just got released!
       notification_id: hassio_upgrade
