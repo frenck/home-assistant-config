@@ -19,6 +19,7 @@ action:
   - service: light.turn_off
     data:
       entity_id:
+        - light.entrance_ceiling
         - light.kitchen_ceiling
         - light.kitchen_cupboard
         - light.livingroom_bar
@@ -27,6 +28,7 @@ action:
         - light.livingroom_gateway
         - light.livingroom_spotlight
         - light.livingroom_window
+        - light.toilet
   - service: media_player.turn_off
     data:
       entity_id:
