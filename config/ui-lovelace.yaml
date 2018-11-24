@@ -30,9 +30,8 @@ views:
               - light.kitchen_ceiling
               - switch.kitchen_cupboard
       - id: downstairs_thermostat
-        type: custom:thermostat-card
+        type: thermostat
         entity: climate.toon_van_eneco
-        no_card: true
       - id: downstairs_tv  # Automatically created id
         type: custom:mini-media-player
         entity: media_player.livingroom_tv
