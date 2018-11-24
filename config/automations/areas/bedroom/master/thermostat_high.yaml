@@ -1,0 +1,14 @@
+---
+# Turns up the bedroom heating at 9PM, to ensure we have a nice temperature
+# in our bedroom when we go to sleep.
+#
+alias: bedroom_master_thermostat_high
+initial_state: true
+trigger:
+  - platform: time
+    at: "21:00:00"
+action:
+  - service: climate.set_temperature
+    data:
+      entity_id: climate.bedroom_master_thermostat
+      temperature: 19

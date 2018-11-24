@@ -1,0 +1,13 @@
+---
+# Turns down bedroom heating on Lilly's room during the day.
+#
+alias: bedroom_lilly_thermostat_low
+initial_state: true
+trigger:
+  - platform: time
+    at: "07:00:00"
+action:
+  - service: climate.set_temperature
+    data:
+      entity_id: climate.bedroom_lilly_thermostat
+      temperature: 17
