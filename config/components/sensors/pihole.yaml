@@ -10,11 +10,6 @@
 # https://www.home-assistant.io/components/sensor.pi_hole/
 #
 
-##
-# The sensor is currently disabled due to a bug
-# https://github.com/home-assistant/home-assistant/issues/16810
-##
-
 platform: pi_hole
 host: localhost:4865
 location: admin
