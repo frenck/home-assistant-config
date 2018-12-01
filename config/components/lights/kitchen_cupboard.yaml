@@ -3,21 +3,10 @@
 # This makes the device a "switch" withing Home Assistant and therefore
 # it shows up as a switch in HomeKit and Google Assistant as well.
 #
-# This little light template mimics the behavior of the switch.
+# This little light switch solves that issue.
 #
-# https://www.home-assistant.io/components/light.template/
+# https://www.home-assistant.io/components/light.switch/
 #
-platform: template
-lights:
-  kitchen_cupboard:
-    friendly_name: "Keukenkast"
-    entity_id: switch.kitchen_cupboard
-    value_template: "{{ is_state('switch.kitchen_cupboard', 'on') }}"
-    turn_on:
-      service: switch.turn_on
-      data:
-        entity_id: switch.kitchen_cupboard
-    turn_off:
-      service: switch.turn_off
-      data:
-        entity_id: switch.kitchen_cupboard
+platform: switch
+name: kitchen_cupboard
+entity_id: switch.kitchen_cupboard
