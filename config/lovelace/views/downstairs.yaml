@@ -1,0 +1,46 @@
+---
+id: downstairs
+title: Beneden
+icon: mdi:sofa
+cards:
+  - id: downstairs_lights
+    type: vertical-stack
+    cards:
+      - id: downstairs_lights_livingroom
+        type: entities
+        title: Woonkamer
+        entities:
+          - type: custom:slider-entity-row
+            entity: light.livingroom_window
+            toggle: true
+          - type: custom:slider-entity-row
+            entity: light.livingroom_bar
+            toggle: true
+          - type: custom:slider-entity-row
+            entity: light.livingroom_spotlight
+            toggle: true
+          - type: custom:slider-entity-row
+            entity: light.livingroom_computer_corner
+            toggle: true
+          - light.livingroom_desk
+      - id: downstairs_lights_kitchen
+        type: entities
+        title: Keuken
+        entities:
+          - type: custom:slider-entity-row
+            entity: light.kitchen_ceiling
+            toggle: true
+          - switch.kitchen_cupboard
+  - id: downstairs_thermostat
+    type: thermostat
+    entity: climate.toon_van_eneco
+  - id: downstairs_tv  # Automatically created id
+    type: custom:mini-media-player
+    entity: media_player.livingroom_tv
+    show_tts: false
+    show_source: true
+    show_progress: false
+    hide_controls: true
+    power_color: true
+    more_info: false
+    volume_stateless: true

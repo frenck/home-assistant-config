@@ -1,67 +1,11 @@
 ---
 resources:
-  - url: /local/lovelace/cards/mini-media-player/mini-media-player.js?v=0.8.5
-    type: module
-  - url: /local/lovelace/cards/thermostat/thermostat-card.js?v=1
-    type: module
+  - !include lovelace/resources/mini_media_player.yaml
+  - !include lovelace/resources/slider_entity_row.yaml
 
 title: Home Control Panel
 views:
-  - id: downstairs
-    title: Beneden
-    icon: mdi:sofa
-    cards:
-      - id: downstairs_lights
-        type: vertical-stack
-        cards:
-          - id: downstairs_lights_livingroom
-            type: entities
-            title: Woonkamer
-            entities:
-              - light.livingroom_window
-              - light.livingroom_bar
-              - light.livingroom_spotlight
-              - light.livingroom_computer_corner
-              - light.livingroom_desk
-          - id: downstairs_lights_kitchen
-            type: entities
-            title: Keuken
-            entities:
-              - light.kitchen_ceiling
-              - switch.kitchen_cupboard
-      - id: downstairs_thermostat
-        type: thermostat
-        entity: climate.toon_van_eneco
-      - id: downstairs_tv  # Automatically created id
-        type: custom:mini-media-player
-        entity: media_player.livingroom_tv
-        show_tts: false
-        show_source: true
-        show_progress: false
-        hide_controls: true
-        power_color: true
-        more_info: false
-        volume_stateless: true
-  - id: upstairs
-    title: Boven
-    icon: mdi:stairs
-    cards: []
-  - id: outside
-    title: Buiten
-    icon: mdi:nature-people
-    cards:
-      - id: outside_weather_forcast
-        type: weather-forecast
-        entity: weather.dark_sky
-  - id: security
-    title: Alarm
-    icon: mdi:security-home
-    cards:
-      - id: security_alarm_panel
-        type: alarm-panel
-        entity: alarm_control_panel.home_alarm
-        title: Alarm System
-  - id: energy
-    title: Energy
-    icon: mdi:flash
-    cards: []
+  - !include lovelace/views/downstairs.yaml
+  - !include lovelace/views/upstairs.yaml
+  - !include lovelace/views/outside.yaml
+  - !include lovelace/views/security.yaml

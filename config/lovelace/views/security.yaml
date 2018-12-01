@@ -1,0 +1,9 @@
+---
+id: security
+title: Alarm
+icon: mdi:security-home
+cards:
+  - id: security_alarm_panel
+    type: alarm-panel
+    entity: alarm_control_panel.home_alarm
+    title: Alarm System

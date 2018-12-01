@@ -1,0 +1,8 @@
+---
+id: outside
+title: Buiten
+icon: mdi:nature-people
+cards:
+  - id: outside_weather_forcast
+    type: weather-forecast
+    entity: weather.dark_sky

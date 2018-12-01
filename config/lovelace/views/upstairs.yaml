@@ -1,0 +1,30 @@
+---
+id: upstairs
+title: Boven
+icon: mdi:stairs
+cards:
+  - id: kjfsaghlasdighfso
+    type: entities
+    tile: Upstrairs
+    entities:
+      - light.bathroom_ceiling
+      - light.bedroom_master_ceiling
+      - light.bedroom_master_bedside
+      - light.bedroom_master_bedside_frenck
+      - light.bedroom_master_bedside_daphne
+      - light.landing_ceiling
+  - id: 8t9yfkdhklhgdjksdg
+    type: glance
+    title: Dunno
+    entities:
+      - binary_sensor.bedroom_flynn_window
+      - binary_sensor.slaapkamer_raam
+  - id: sfsadgasfgfdagd
+    type: thermostat
+    entity: climate.bedroom_flynn_thermostat
+  - id: efdgshjfshgfhfd
+    type: thermostat
+    entity: climate.bedroom_lilly_thermostat
+  - id: gdshrtgfnghffgh
+    type: thermostat
+    entity: climate.bedroom_master_thermostat
