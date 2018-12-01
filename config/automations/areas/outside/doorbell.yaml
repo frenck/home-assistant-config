@@ -7,17 +7,17 @@
 alias: outside_doorbell
 trigger:
   - platform: event
-    event_type: click
+    event_type: xiaomi_aqara.click
     event_data:
       entity_id: binary_sensor.doorbell
       click_type: single
   - platform: event
-    event_type: click
+    event_type: xiaomi_aqara.click
     event_data:
       entity_id: binary_sensor.doorbell
       click_type: doubled
   - platform: event
-    event_type: click
+    event_type: xiaomi_aqara.click
     event_data:
       entity_id: binary_sensor.doorbell
       click_type: long_click_press
