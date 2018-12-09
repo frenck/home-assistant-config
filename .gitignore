@@ -1,6 +1,8 @@
 # Extension ignores
 *.log
 *.db
+*.db-shm
+*.db-wal
 *.pyc
 
 # Directory (contents) ignores
@@ -17,8 +19,9 @@ config/.tradfri_psk.conf
 config/.uuid
 config/aircast.xml
 config/core
-config/known_devices.yaml
 config/ip_bans.yaml
+config/known_devices.yaml
+config/notebooks
 config/options.xml
 config/OZW_Log.txt
 config/pyozw.sqlite
