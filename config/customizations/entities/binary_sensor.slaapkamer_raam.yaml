@@ -1,0 +1,5 @@
+---
+binary_sensor.slaapkamer_raam:
+  friendly_name: Raam
+  icon: mdi:window-closed
+  device_class: window
