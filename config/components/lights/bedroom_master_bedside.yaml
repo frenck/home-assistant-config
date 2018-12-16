@@ -9,5 +9,5 @@
 platform: group
 name: bedroom_master_bedside
 entities:
-  - light.master_bedroom_bedside_frenck
-  - light.master_bedroom_bedside_daphne
+  - light.bedroom_master_bedside_frenck
+  - light.bedroom_master_bedside_daphne
