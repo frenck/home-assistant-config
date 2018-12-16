@@ -3,28 +3,51 @@ id: upstairs
 title: Boven
 icon: mdi:stairs
 cards:
-  - id: kjfsaghlasdighfso
-    type: entities
+  - type: custom:simple-thermostat
+    entity: climate.bedroom_master_thermostat
+    hide:
+      mode: true
+      state: true
+    sensors:
+      - entity: binary_sensor.slaapkamer_raam
+  - type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: light
+            entity: light.bedroom_master_ceiling
+          - type: light
+            entity: light.bedroom_master_bedside
+      - type: horizontal-stack
+        cards:
+          - type: light
+            entity: light.bedroom_master_bedside_frenck
+          - type: light
+            entity: light.bedroom_master_bedside_daphne
+  - type: horizontal-stack
+    cards:
+      - type: glance
+        title: Badkamer
+        show_name: false
+        entities:
+          - sensor.bathroom_temperature
+          - sensor.bathroom_humidity
+      - type: light
+        entity: light.bathroom_ceiling
+        name: Plafond
+  - type: entities
     tile: Upstrairs
     entities:
-      - light.bathroom_ceiling
-      - light.bedroom_master_ceiling
-      - light.bedroom_master_bedside
-      - light.bedroom_master_bedside_frenck
-      - light.bedroom_master_bedside_daphne
       - light.landing_ceiling
-  - id: 8t9yfkdhklhgdjksdg
-    type: glance
-    title: Dunno
-    entities:
-      - binary_sensor.bedroom_flynn_window
-      - binary_sensor.slaapkamer_raam
-  - id: sfsadgasfgfdagd
-    type: thermostat
+  - type: custom:simple-thermostat
     entity: climate.bedroom_flynn_thermostat
-  - id: efdgshjfshgfhfd
-    type: thermostat
+    hide:
+      mode: true
+      state: true
+    sensors:
+      - entity: binary_sensor.bedroom_flynn_window
+  - type: custom:simple-thermostat
     entity: climate.bedroom_lilly_thermostat
-  - id: gdshrtgfnghffgh
-    type: thermostat
-    entity: climate.bedroom_master_thermostat
+    hide:
+      mode: true
+      state: true
