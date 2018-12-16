@@ -1,7 +1,7 @@
 ---
 # Connects to my MQTT broker, for which I use the Community add-on:
 # "MQTT Server & Web Client".
-# 
+#
 # https://github.com/hassio-addons/addon-mqtt/blob/master/README.md
 # https://www.home-assistant.io/docs/mqtt/broker#run-your-own
 # https://www.home-assistant.io/docs/mqtt/birth_will/
