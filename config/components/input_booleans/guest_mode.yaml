@@ -1,0 +1,8 @@
+---
+# This is an input boolean to use with automations
+# in case we have guests over for visit or sleepovers.
+#
+guest_mode:
+  name: Enables Guest Mode
+  initial: off
+  icon: mdi:hotel
