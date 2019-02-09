@@ -1,0 +1,18 @@
+---
+# This automation turns on our central ventilation
+# system, as soon as the bathroom humidity raises
+# above 85%. The speed will be "high" when this
+# happens.
+#
+alias: bathroom_ventilation_high
+trigger:
+  platform: numeric_state
+  entity_id: sensor.bathroom_humidity
+  above: 85
+action:
+  - service: fan.turn_on
+    entity_id: fan.attic_ventilation
+  - service: fan.set_speed
+    entity_id: fan.attic_ventilation
+    data:
+      speed: high
