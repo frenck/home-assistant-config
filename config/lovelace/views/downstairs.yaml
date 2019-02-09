@@ -6,8 +6,10 @@ cards:
   - type: vertical-stack
     cards:
       - type: entities
-        title: Woonkamer
+        title: Verlichting
         entities:
+          - type: section
+            label: Woonkamer
           - type: custom:slider-entity-row
             entity: light.livingroom_window
             toggle: true
@@ -15,12 +17,24 @@ cards:
             entity: light.livingroom_bar
             toggle: true
           - type: custom:slider-entity-row
+            entity: light.livingroom_tv
+            toggle: true
+          - type: custom:slider-entity-row
             entity: light.livingroom_spotlight
             toggle: true
+          - type: section
+            label: Keuken
+          - type: custom:slider-entity-row
+            entity: light.kitchen_ceiling
+            toggle: true
+          - switch.kitchen_cupboard
+          - type: section
+            label: Kantoor
           - type: custom:slider-entity-row
             entity: light.livingroom_computer_corner
             toggle: true
           - light.livingroom_desk
+
       - type: entities
         title: Keuken
         entities:
@@ -28,14 +42,33 @@ cards:
             entity: light.kitchen_ceiling
             toggle: true
           - switch.kitchen_cupboard
-  - type: thermostat
-    entity: climate.toon_van_eneco
+
   - type: custom:mini-media-player
-    entity: media_player.livingroom_tv
-    show_tts: false
-    show_source: true
-    show_progress: false
-    hide_controls: true
-    power_color: true
-    more_info: false
-    volume_stateless: true
+    entity: media_player.livingroom_shield
+    artwork: cover
+    source: icon
+
+  - type: custom:mini-graph-card
+    entities: sensor.livingroom_temperature
+    location_icon: left
+    location_state: center
+    show:
+      fill: false
+      extrema: true
+    height: 75
+    animate: true
+    hour24: true
+    line_color: var(--primary-color)
+    line_color_above:
+      - value: 21
+        color: red
+    line_color_below:
+      - value: 15
+        color: white
+  - type: custom:popup-card
+    entity: sensor.livingroom_temperature
+    title: Woonkamer Thermostaat
+    card:
+      type: thermostat
+      entity: climate.toon_van_eneco
+

@@ -29,10 +29,10 @@ class SliderEntityRow extends Polymer.Element {
           <div class="flex">
         <template is="dom-if" if="{{displaySlider}}">
             <ha-slider
-              min="0"
-              max="100"
+              min="{{min}}"
+              max="{{max}}"
               value="{{value}}"
-              step="5"
+              step="{{step}}"
               pin
               on-change="selectedValue"
               on-click="stopPropagation"
@@ -125,7 +125,7 @@ class SliderEntityRow extends Polymer.Element {
             this._hass.callService('cover', 'close_cover', { entity_id: stateObj.entity_id });
         },
         get: (stateObj) => {
-          return (stateObj.state === 'open')?stateObj.attributes.current_position:0;
+          return (stateObj.state === 'open')?Math.ceil(stateObj.attributes.current_position):0;
         },
         supported: (stateObj) => {
           if('current_position' in stateObj.attributes) return true;
@@ -151,7 +151,12 @@ class SliderEntityRow extends Polymer.Element {
     this.displayRow = !config.full_row;
     this.displayToggle = config.toggle && domain === 'light';
     this.displayValue = !this.displayToggle;
+    if(config.hide_state) this.displayValue = false;
     this.displaySlider = false;
+
+    this.min = config.min || 0;
+    this.max = config.max || 100;
+    this.step = config.step || 5;
   }
 
   statusString(stateObj) {

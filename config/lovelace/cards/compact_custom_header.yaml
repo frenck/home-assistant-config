@@ -1,0 +1,9 @@
+---
+type: custom:compact-custom-header
+dir: /www/lovelace/
+user_agent: Mobile
+voice: false, false
+clock: notification, false
+clock_format: 24, 24
+clock_am_pm: false, false
+options: true, false

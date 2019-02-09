@@ -1,0 +1,24 @@
+---
+id: dashboard
+title: Dashboard
+icon: mdi:home-assistant
+cards:
+  - !include ../cards/compact_custom_header.yaml
+  - type: iframe
+    aspect_ratio: 90%
+    url: 'https://embed.windy.com/embed2.html?lat=52.201&lon=6.805&zoom=11&level=surface&overlay=wind&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&detailLat=52.201&detailLon=6.805&metricWind=default&metricTemp=default&radarRange=-1'
+  - type: entity-filter
+    name: Yard net
+    entities:
+      - light.livingroom_bar
+      - light.livingroom_computer_corner
+      - light.livingroom_desk
+      - light.livingroom_spotlight
+      - light.livingroom_tv
+      - light.livingroom_window
+    show_empty: false
+    card:
+      type: glance
+      show_state: false
+    state_filter:
+      - 'on'

@@ -3,13 +3,7 @@ id: upstairs
 title: Boven
 icon: mdi:stairs
 cards:
-  - type: custom:simple-thermostat
-    entity: climate.bedroom_master_thermostat
-    hide:
-      mode: true
-      state: true
-    sensors:
-      - entity: binary_sensor.slaapkamer_raam
+  - !include ../cards/compact_custom_header.yaml
   - type: vertical-stack
     cards:
       - type: horizontal-stack
@@ -39,15 +33,75 @@ cards:
     tile: Upstrairs
     entities:
       - light.landing_ceiling
-  - type: custom:simple-thermostat
-    entity: climate.bedroom_flynn_thermostat
-    hide:
-      mode: true
-      state: true
-    sensors:
-      - entity: binary_sensor.bedroom_flynn_window
-  - type: custom:simple-thermostat
-    entity: climate.bedroom_lilly_thermostat
-    hide:
-      mode: true
-      state: true
+
+  - type: custom:mini-graph-card
+    entities: sensor.lilly_thermostat_temperature
+    location_icon: left
+    location_state: center
+    show:
+      fill: false
+      extrema: true
+    height: 75
+    animate: true
+    hour24: true
+    line_color: var(--primary-color)
+    line_color_above:
+      - value: 19
+        color: red
+    line_color_below:
+      - value: 15
+        color: white
+  - type: custom:popup-card
+    entity: sensor.lilly_thermostat_temperature
+    title: Thermostaat Lilly
+    card:
+      type: thermostat
+      entity: climate.bedroom_lilly_thermostat
+
+  - type: custom:mini-graph-card
+    entities: sensor.flynn_thermostat_temperature
+    location_icon: left
+    location_state: center
+    show:
+      fill: false
+      extrema: true
+    height: 75
+    animate: true
+    hour24: true
+    line_color: var(--primary-color)
+    line_color_above:
+      - value: 19
+        color: red
+    line_color_below:
+      - value: 15
+        color: white
+  - type: custom:popup-card
+    entity: sensor.flynn_thermostat_temperature
+    title: Thermostaat Flynn
+    card:
+      type: thermostat
+      entity: climate.bedroom_flynn_thermostat
+
+  - type: custom:mini-graph-card
+    entities: sensor.bedroom_master_thermostat_temperature
+    location_icon: left
+    location_state: center
+    show:
+      fill: false
+      extrema: true
+    height: 75
+    animate: true
+    hour24: true
+    line_color: var(--primary-color)
+    line_color_above:
+      - value: 20
+        color: red
+    line_color_below:
+      - value: 15
+        color: white
+  - type: custom:popup-card
+    entity: sensor.bedroom_master_thermostat_temperature
+    title: Thermostaat Masterbedroom
+    card:
+      type: thermostat
+      entity: climate.bedroom_master_thermostat
