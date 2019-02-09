@@ -28,9 +28,11 @@ action:
         - light.livingroom_gateway
         - light.livingroom_spotlight
         - light.livingroom_window
+        - light.livingroom_tv
         - light.toilet
   - service: media_player.turn_off
     data:
       entity_id:
         - media_player.livingroom_tv
         - media_player.livingroom_appletv
+        - media_player.livingroom_shield

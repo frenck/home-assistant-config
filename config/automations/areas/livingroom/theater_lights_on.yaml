@@ -1,0 +1,15 @@
+---
+alias: livingroom_theater_lights_on
+initial_state: true
+trigger:
+  - platform: state
+    entity_id: media_player.livingroom_shield
+    from: 'off'
+action:
+  service: light.turn_on
+  data:
+    transition: 5
+    brightness_pct: 75
+    rgb_color: [255, 255, 255]
+    entity_id:
+      - light.livingroom_tv

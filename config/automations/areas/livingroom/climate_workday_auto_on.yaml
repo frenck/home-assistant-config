@@ -5,7 +5,7 @@ alias: livingroom_climate_workday_auto_on
 initial_state: true
 trigger:
   - platform: time
-    at: "16:30:00"
+    at: "17:00:00"
 condition:
   - condition: state
     entity_id: binary_sensor.workday
@@ -14,4 +14,4 @@ action:
   - service: climate.set_temperature
     data:
       entity_id: climate.toon_van_eneco
-      temperature: 20
+      temperature: 18

@@ -1,0 +1,13 @@
+---
+# Turns off my heating way before bedtime.
+#
+alias: livingroom_climate_late_night_off
+initial_state: true
+trigger:
+  - platform: time
+    at: "22:00:00"
+action:
+  - service: climate.set_temperature
+    data:
+      entity_id: climate.toon_van_eneco
+      temperature: 15
