@@ -1,0 +1,6 @@
+---
+platform: androidtv
+host: !secret media_player_androidtv_livingroom_shield
+name: livingroom_shield
+adb_server_ip: 127.0.0.1
+adb_server_port: 5037
