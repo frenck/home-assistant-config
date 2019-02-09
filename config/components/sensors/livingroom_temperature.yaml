@@ -1,0 +1,7 @@
+---
+platform: template
+sensors:
+  livingroom_temperature:
+    unit_of_measurement: 'C'
+    device_class: temperature
+    value_template: "{{ state_attr('climate.toon_van_eneco', 'current_temperature') }}"
