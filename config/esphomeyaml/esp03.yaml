@@ -1,0 +1,243 @@
+---
+# esp03: Central ventilation system
+#
+# This ESPHome code is used on a Sonoff Dual R2.
+# It controls our central ventilation system.
+#
+# It has 3 power inputs:
+# 1: Should always get 230v (base voltag): Low speed/silent mode.
+# 2: 230v input: Medium speed.
+# 3: 230v input: High speed.
+#
+# 1 is always on, 2 and 3 depends on the speed.
+# Since there are only 2 speeds in that case, a SonOff Dual will do.
+#
+# Code below provides:
+# - Interlocking. Channel 2 & 3 on the ventilator are never on at the same time.
+# - Manual mode. Pushing the button on the Sonoff will force/fix speed/state.
+# - Manual control. Pushing the Sonoff button multple times, changes speed.
+# - LED on the sonoff indicates if manual mode has been switch on.
+#
+esphomeyaml:
+  name: esp03
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: !secret esphome_esp03_static_ip
+    gateway: !secret wifi_gateway
+    subnet: !secret wifi_subnet
+    dns1: !secret wifi_dns1
+    dns2: !secret wifi_dns2
+
+logger:
+
+api:
+  password: !secret esphome_esp03_api_password
+
+ota:
+  password: !secret esphome_esp03_ota_password
+
+sensor:
+  - platform: wifi_signal
+    name: esphome_esp03_wifi_signal
+    update_interval: 10s
+  - platform: uptime
+    name: esphome_esp03_uptime
+
+text_sensor:
+  - platform: version
+    name: esphome_esp03_esphome_version
+
+binary_sensor:
+  # This is the button on the SonOff Dual
+  # It allows override the ventilator by enabling manual mode,
+  # the next pushes will cycle it through medium speed and high speed
+  # the next push will disable manual mode
+  - platform: gpio
+    id: binary_sensor_button
+    pin:
+      number: GPIO10
+      mode: INPUT_PULLUP
+      inverted: true
+    on_press:
+      - lambda: |-
+          if (id(switch_manual_mode).state) {
+            if (id(switch_speed_low).state) {
+              id(switch_speed_medium).turn_on();
+            } else if (id(switch_speed_medium).state) {
+              id(switch_speed_high).turn_on();
+            } else {
+              id(switch_manual_mode).turn_off();
+            }
+          } else {
+            id(switch_manual_mode).turn_on();
+          }
+
+switch:
+  - platform: restart
+    name: attic_ventilation_restart
+  - platform: gpio
+    id: switch_relay1
+    pin: GPIO12
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    id: switch_relay2
+    pin: GPIO5
+    restore_mode: ALWAYS_OFF
+  # Manual mode template, based on the blue LED on the SonOff Dual
+  # When ventilation is manual overridden, all external state changes
+  # are ignored.
+  - platform: template
+    name: attic_ventilation_manual_mode
+    id: switch_manual_mode
+    restore_state: false
+    turn_on_action:
+      - light.turn_on: light_led
+      - switch.turn_on: switch_speed_low
+    turn_off_action:
+      - light.turn_off: light_led
+      - switch.turn_on: switch_speed_low
+    lambda: |-
+      if (id(light_led).get_current_values().is_on()) {
+        return true;
+      }
+      return false;
+  # Exposed switch, shows switch state for low speed
+  # Will ignore changes when ventilation is in manual mode
+  - platform: template
+    name: attic_ventilation_speed_low
+    restore_state: false
+    turn_on_action:
+      if:
+        condition:
+          switch.is_off: switch_manual_mode
+        then:
+          - switch.turn_on: switch_speed_low
+    turn_off_action:
+      if:
+        condition:
+          switch.is_off: switch_manual_mode
+        then:
+          - switch.turn_on: switch_speed_low
+    lambda: |-
+      if (id(switch_speed_low).state) {
+        return true;
+      }
+      return false;
+  # Exposed switch, shows switch state for medium speed
+  # Will ignore changes when ventilation is in manual mode
+  - platform: template
+    name: attic_ventilation_speed_medium
+    restore_state: false
+    turn_on_action:
+      if:
+        condition:
+          switch.is_off: switch_manual_mode
+        then:
+          - switch.turn_on: switch_speed_medium
+    turn_off_action:
+      if:
+        condition:
+          switch.is_off: switch_manual_mode
+        then:
+          - switch.turn_on: switch_speed_low
+    lambda: |-
+      if (id(switch_speed_medium).state) {
+        return true;
+      }
+      return false;
+  # Exposed switch, shows switch state for high speed
+  # Will ignore changes when ventilation is in manual mode
+  - platform: template
+    name: attic_ventilation_speed_high
+    restore_state: false
+    turn_on_action:
+      if:
+        condition:
+          switch.is_off: switch_manual_mode
+        then:
+          - switch.turn_on: switch_speed_high
+    turn_off_action:
+      if:
+        condition:
+          switch.is_off: switch_manual_mode
+        then:
+          - switch.turn_on: switch_speed_medium
+    lambda: |-
+      if (id(switch_speed_high).state) {
+        return true;
+      }
+      return false;
+  # Internal switch, for switching ventilation to low speed.
+  # Uses interlocking, to prevent relay 1 & 2 to be active at the same time.
+  - platform: template
+    id: switch_speed_low
+    restore_state: false
+    turn_on_action:
+      - switch.turn_off: switch_relay1
+      - switch.turn_off: switch_relay2
+    turn_off_action:
+      - switch.turn_off: switch_relay1
+      - switch.turn_off: switch_relay2
+    lambda: |-
+      if (!id(switch_relay1).state && !id(switch_relay2).state) {
+        return true;
+      }
+      return false;
+  # Internal switch, for switching ventilation to medium speed and back to
+  # low speed when turned off.
+  # Uses interlocking, to prevent relay 1 & 2 to be active at the same time.
+  - platform: template
+    id: switch_speed_medium
+    restore_state: false
+    turn_on_action:
+      - switch.turn_off: switch_relay2
+      - if:
+          condition:
+            switch.is_off: switch_relay2
+          then:
+            - switch.turn_on: switch_relay1
+    turn_off_action:
+      - switch.turn_on: switch_speed_low
+    lambda: |-
+      if (id(switch_relay1).state && !id(switch_relay2).state) {
+        return true;
+      }
+      return false;
+  # Internal switch, for switching ventilation to high speed and back to
+  # medium speed when turned off.
+  # Uses interlocking, to prevent relay 1 & 2 to be active at the same time.
+  - platform: template
+    id: switch_speed_high
+    restore_state: false
+    turn_on_action:
+      - switch.turn_off: switch_relay1
+      - if:
+          condition:
+            switch.is_off: switch_relay1
+          then:
+            - switch.turn_on: switch_relay2
+    turn_off_action:
+      - switch.turn_on: switch_speed_medium
+    lambda: |-
+      if (!id(switch_relay1).state && id(switch_relay2).state) {
+        return true;
+      }
+      return false;
+
+output:
+  - platform: esp8266_pwm
+    id: output_led
+    pin:
+      number: GPIO13
+      inverted: true
+
+light:
+  - platform: monochromatic
+    output: output_led
+    id: light_led

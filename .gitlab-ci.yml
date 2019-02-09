@@ -3,7 +3,8 @@ image: docker:latest
 
 stages:
   - preflight
-  - test
+  - homeassistant
+  - esphome
 
 # Generic preflight template
 .preflight: &preflight
@@ -11,9 +12,9 @@ stages:
   tags:
     - preflight
 
-# Generic test template
-.test: &test
-  stage: test
+# Generic Home Assistant template
+.ha: &ha
+  stage: homeassistant
   variables:
     PYTHONPATH: "/usr/src/app:$PYTHONPATH"
   before_script:
@@ -25,6 +26,27 @@ stages:
         --config ./config/ \
         --script check_config \
         --info all
+  tags:
+    - test
+
+# Generic ESPHome template
+.esphome: &esphome
+  stage: esphome
+  variables:
+    PYTHONPATH: "/usr/src/app:$PYTHONPATH"
+  before_script:
+    - esphomeyaml dummy.yaml version
+    - cp -R ./.stubs/* ./config/esphomeyaml/
+  script:
+    - |
+      for file in $(find \
+        ./config/esphomeyaml \
+        -type f \
+        -name "*.yaml"\
+        -not -name "secrets.yaml"
+        ); do
+        esphomeyaml $file config
+      done
   tags:
     - test
 
@@ -90,23 +112,44 @@ markdownlint:
   script:
     - mdl --style all --warnings .
 
-# Test jobs
-latest:
-  <<: *test
+# Home Assistant test jobs
+ha-latest:
+  <<: *ha
   image:
     name: homeassistant/home-assistant:latest
     entrypoint: [""]
 
-rc:
-  <<: *test
+ha-rc:
+  <<: *ha
   image:
     name: homeassistant/home-assistant:rc
     entrypoint: [""]
   allow_failure: true
 
-dev:
-  <<: *test
+ha-dev:
+  <<: *ha
   image:
     name: homeassistant/home-assistant:dev
+    entrypoint: [""]
+  allow_failure: true
+
+# ESPHome test jobs
+esphome-latest:
+  <<: *esphome
+  image:
+    name: ottowinter/esphomeyaml:latest
+    entrypoint: [""]
+
+esphome-rc:
+  <<: *esphome
+  image:
+    name: ottowinter/esphomeyaml:rc
+    entrypoint: [""]
+  allow_failure: true
+
+esphome-dev:
+  <<: *esphome
+  image:
+    name: ottowinter/esphomeyaml:dev
     entrypoint: [""]
   allow_failure: true

@@ -1,0 +1,77 @@
+---
+# esp01: Development / Test chip
+#
+# This is my ESPHome test setup, using an ESP32.
+# Devices in here are not actively used and this file may change
+# a lot.
+#
+esphomeyaml:
+  name: esp01
+  platform: ESP32
+  board: lolin32
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: !secret esphome_esp01_static_ip
+    gateway: !secret wifi_gateway
+    subnet: !secret wifi_subnet
+    dns1: !secret wifi_dns1
+    dns2: !secret wifi_dns2
+
+logger:
+
+api:
+  password: !secret esphome_esp01_api_password
+
+ota:
+  password: !secret esphome_esp01_ota_password
+
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 10s
+  - platform: uptime
+    name: "Uptime"
+  - platform: xiaomi_miflora
+    mac_address: C4:7C:8D:66:49:46
+    temperature:
+      name: "Xiaomi MiFlora Temperature"
+    moisture:
+      name: "Xiaomi MiFlora Moisture"
+    illuminance:
+      name: "Xiaomi MiFlora Illuminance"
+    conductivity:
+      name: "Xiaomi MiFlora Soil Conductivity"
+    battery_level:
+      name: "Xiaomi MiFlora Battery Level"
+
+switch:
+  - platform: restart
+    name: "Restart"
+
+text_sensor:
+  - platform: version
+    name: "ESPHome Version"
+
+light:
+  - platform: neopixelbus
+    type: GRB
+    pin: 32
+    num_leds: 113
+    name: "Ledstrip"
+    effects:
+      - random:
+      - strobe:
+      - flicker:
+      - addressable_rainbow:
+      - addressable_color_wipe:
+      - addressable_scan:
+      - addressable_twinkle:
+      - addressable_random_twinkle:
+      - addressable_fireworks:
+      - addressable_flicker:
+
+esp32_ble_tracker:
+

@@ -1,0 +1,62 @@
+---
+# esp02: Television LED strip
+#
+# This ESPHome code is used on a ESP8266 (Wemos Mini).
+# It controls a WS3813 LED Strip.
+#
+esphomeyaml:
+  name: esp02
+  platform: ESP8266
+  board: d1_mini
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: !secret esphome_esp02_static_ip
+    gateway: !secret wifi_gateway
+    subnet: !secret wifi_subnet
+    dns1: !secret wifi_dns1
+    dns2: !secret wifi_dns2
+
+logger:
+
+api:
+  password: !secret esphome_esp02_api_password
+
+ota:
+  password: !secret esphome_esp02_ota_password
+
+sensor:
+  - platform: wifi_signal
+    name: esphome_esp02_wifi_signal
+    update_interval: 10s
+  - platform: uptime
+    name: esphome_esp02_uptime
+
+switch:
+  - platform: restart
+    name: esphome_esp02_restart
+
+text_sensor:
+  - platform: version
+    name: esphome_esp02_version
+
+light:
+  - platform: fastled_clockless
+    chipset: WS2813
+    pin: GPIO2
+    num_leds: 113
+    rgb_order: GRB
+    name: livingroom_tv
+    effects:
+      - random:
+      - strobe:
+      - flicker:
+      - addressable_rainbow:
+      - addressable_color_wipe:
+      - addressable_scan:
+      - addressable_twinkle:
+      - addressable_random_twinkle:
+      - addressable_fireworks:
+      - addressable_flicker:
