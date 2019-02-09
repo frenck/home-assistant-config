@@ -14,4 +14,5 @@ include_entities:
   - light.livingroom_computer_corner
   - light.livingroom_desk
   - light.livingroom_spotlight
+  - light.livingroom_tv
   - light.livingroom_window
