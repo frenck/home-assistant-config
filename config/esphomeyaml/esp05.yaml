@@ -1,0 +1,101 @@
+---
+# esp05: Yet unused Sonoff POW R2
+#
+# This ESPHome code is used on a Sonoff POW R2.
+# This device is not used yet, but can be used
+# on almost any device to get power readings.
+#
+esphomeyaml:
+  name: esp05
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    static_ip: !secret esphome_esp05_static_ip
+    gateway: !secret wifi_gateway
+    subnet: !secret wifi_subnet
+    dns1: !secret wifi_dns1
+    dns2: !secret wifi_dns2
+
+logger:
+  # Disable the Serial interface on the POW
+  # It is used by the power sensor
+  baud_rate: 0
+
+# Enable UART for the power sensor
+uart:
+  rx_pin: RX
+  baud_rate: 4800
+
+api:
+  password: !secret esphome_esp05_api_password
+
+ota:
+  password: !secret esphome_esp05_ota_password
+
+sensor:
+  - platform: wifi_signal
+    name: esphome_esp05_wifi_signal
+    update_interval: 10s
+  - platform: uptime
+    name: esphome_esp05_uptime
+  - platform: cse7766
+    update_interval: 5s
+    current:
+      name: esphome_esp05_current
+    voltage:
+      name: esphome_esp05_voltage
+    power:
+      name: esphome_esp05_power
+
+text_sensor:
+  - platform: version
+    name: esphome_esp05_esphome_version
+
+switch:
+  - platform: restart
+    name: esphome_esp05_restart
+  - platform: gpio
+    id: relay
+    pin: GPIO12
+  # This is the actual exposed switch
+  - platform: template
+    name: esphome_esp05_switch
+    id: fakebutton
+    lambda: |-
+      if (id(relay).state) {
+        return true;
+      }
+      return false;
+    turn_on_action:
+      - switch.turn_on: relay
+      - light.turn_on: led
+    turn_off_action:
+      - switch.turn_off: relay
+      - light.turn_off: led
+
+binary_sensor:
+  - platform: gpio
+    id: button
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: true
+    on_press:
+      - switch.toggle: fakebutton
+
+output:
+  - platform: esp8266_pwm
+    id: blue_led
+    pin:
+      number: GPIO13
+      inverted: true
+
+light:
+  - platform: monochromatic
+    output: blue_led
+    id: led
