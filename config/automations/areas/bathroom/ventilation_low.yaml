@@ -11,6 +11,8 @@ trigger:
   platform: numeric_state
   entity_id: sensor.bathroom_humidity
   below: 65
+  for:
+    minutes: 10
 action:
   - service: fan.turn_off
     entity_id: fan.attic_ventilation
