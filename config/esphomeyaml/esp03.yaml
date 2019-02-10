@@ -76,6 +76,7 @@ binary_sensor:
             }
           } else {
             id(switch_manual_mode).turn_on();
+            id(switch_speed_low).turn_on();
           }
 
 switch:
@@ -98,10 +99,8 @@ switch:
     restore_state: false
     turn_on_action:
       - light.turn_on: light_led
-      - switch.turn_on: switch_speed_low
     turn_off_action:
       - light.turn_off: light_led
-      - switch.turn_on: switch_speed_low
     lambda: |-
       if (id(light_led).get_current_values().is_on()) {
         return true;
