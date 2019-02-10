@@ -18,17 +18,61 @@ cards:
             entity: light.bedroom_master_bedside_frenck
           - type: light
             entity: light.bedroom_master_bedside_daphne
-  - type: horizontal-stack
+
+  - type: vertical-stack
     cards:
-      - type: glance
-        title: Badkamer
-        show_name: false
-        entities:
-          - sensor.bathroom_temperature
-          - sensor.bathroom_humidity
-      - type: light
-        entity: light.bathroom_ceiling
-        name: Plafond
+      - type: horizontal-stack
+        cards:
+          - type: "custom:button-card"
+            entity: switch.attic_ventilation_speed_low
+            icon: mdi:fan-off
+            action: service
+            service:
+              domain: fan
+              action: turn_off
+              data:
+                entity_id: fan.attic_ventilation
+          - type: "custom:button-card"
+            entity: switch.attic_ventilation_speed_medium
+            icon: mdi:fan
+            action: service
+            service:
+              domain: fan
+              action: set_speed
+              data:
+                entity_id: fan.attic_ventilation
+                speed: medium
+          - type: "custom:button-card"
+            entity: switch.attic_ventilation_speed_high
+            icon: mdi:weather-windy
+            action: service
+            service:
+              domain: fan
+              action: set_speed
+              data:
+                entity_id: fan.attic_ventilation
+                speed: high
+          - type: "custom:button-card"
+            entity: switch.attic_ventilation_manual_mode
+            icon: mdi:lock-open
+            state:
+              - value: 'on'
+                icon: mdi:lock-alert
+                color: orange
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities: sensor.bathroom_temperature
+            line_color: red
+            line_width: 8
+            font_size: 75
+          - type: custom:mini-graph-card
+            entities: sensor.bathroom_humidity
+            line_color: var(--primary-color)
+            line_width: 8
+            font_size: 75
+
   - type: entities
     tile: Upstrairs
     entities:
