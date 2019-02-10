@@ -1,0 +1,18 @@
+---
+# This automation turns off our central ventilation
+# system, as soon as the visit to the toilet has
+# been 5 minutes ago.
+#
+# This automation does not check if the fan was switched
+# on, since that doesn't matter that much.
+#
+alias: toilet_ventilation_off
+trigger:
+  platform: state
+  entity_id: light.toilet
+  to: 'off'
+  for:
+    minutes: 5
+action:
+  - service: fan.turn_off
+    entity_id: fan.attic_ventilation

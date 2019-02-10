@@ -1,0 +1,20 @@
+---
+# This automation turns on our central ventilation
+# system, as soon as the visit to the toilet takes
+# longer then 3 minutes. Assuming this is a number
+# two type of visit in that case ;)
+#
+alias: toilet_ventilation_on
+trigger:
+  platform: state
+  entity_id: light.toilet
+  to: 'on'
+  for:
+    minutes: 3
+action:
+  - service: fan.turn_on
+    entity_id: fan.attic_ventilation
+  - service: fan.set_speed
+    entity_id: fan.attic_ventilation
+    data:
+      speed: medium
