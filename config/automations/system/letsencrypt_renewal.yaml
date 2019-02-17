@@ -1,0 +1,10 @@
+---
+alias: Lets Encrypt Renewal
+trigger:
+- platform: time
+  at: '00:00:00'
+action:
+- data:
+    addon: core_letsencrypt
+  service: hassio.addon_restart
+initial_state: true
