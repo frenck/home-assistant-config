@@ -20,6 +20,7 @@ config/.spotify-token-cache
 config/.tradfri_psk.conf
 config/.uuid
 config/core
+config/html5_push_registrations.conf
 config/ip_bans.yaml
 config/known_devices.yaml
 config/options.xml
