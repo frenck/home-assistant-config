@@ -5,7 +5,7 @@
 # Devices in here are not actively used and this file may change
 # a lot.
 #
-esphomeyaml:
+esphome:
   name: esp01
   platform: ESP32
   board: lolin32

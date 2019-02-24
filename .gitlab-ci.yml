@@ -137,19 +137,19 @@ ha-dev:
 esphome-latest:
   <<: *esphome
   image:
-    name: ottowinter/esphomeyaml:latest
+    name: esphome/esphome:latest
     entrypoint: [""]
 
 esphome-rc:
   <<: *esphome
   image:
-    name: ottowinter/esphomeyaml:rc
+    name: esphome/esphome:rc
     entrypoint: [""]
   allow_failure: true
 
 esphome-dev:
   <<: *esphome
   image:
-    name: ottowinter/esphomeyaml:dev
+    name: esphome/esphome:dev
     entrypoint: [""]
   allow_failure: true

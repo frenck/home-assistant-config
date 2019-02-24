@@ -4,10 +4,11 @@
 # This ESPHome code is used on a ESP8266 (Wemos Mini).
 # It controls a WS3813 LED Strip.
 #
-esphomeyaml:
+esphome:
   name: esp02
   platform: ESP8266
   board: d1_mini
+  esphome_core_version: dev
 
 wifi:
   ssid: !secret wifi_ssid

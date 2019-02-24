@@ -18,7 +18,7 @@
 # - Manual control. Pushing the Sonoff button multple times, changes speed.
 # - LED on the sonoff indicates if manual mode has been switch on.
 #
-esphomeyaml:
+esphome:
   name: esp03
   platform: ESP8266
   board: esp01_1m
