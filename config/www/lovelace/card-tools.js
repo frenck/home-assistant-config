@@ -12,7 +12,7 @@ class {
   }
 
   static litElement() {
-    return Object.getPrototypeOf(customElements.get('hui-error-entity-row'));
+    return Object.getPrototypeOf(customElements.get('home-assistant-main'));
   }
 
   static litHtml() {
@@ -33,15 +33,17 @@ class {
     if(entity) {
       entity.dispatchEvent(ev);
     } else {
-    document
-      .querySelector("home-assistant")
-      .shadowRoot.querySelector("home-assistant-main")
-      .shadowRoot.querySelector("app-drawer-layout partial-panel-resolver")
-      .shadowRoot.querySelector("ha-panel-lovelace")
-      .shadowRoot.querySelector("hui-root")
-      .shadowRoot.querySelector("ha-app-layout #view")
-      .firstElementChild
-      .dispatchEvent(ev);
+      var root = document
+        .querySelector("home-assistant")
+        .shadowRoot.querySelector("home-assistant-main")
+        .shadowRoot.querySelector("app-drawer-layout partial-panel-resolver")
+        .shadowRoot.querySelector("ha-panel-lovelace")
+        .shadowRoot.querySelector("hui-root")
+      if (root)
+        root
+          .shadowRoot.querySelector("ha-app-layout #view")
+          .firstElementChild
+          .dispatchEvent(ev);
     }
   }
 
@@ -181,22 +183,66 @@ class {
     return /\[\[\s+.*\s+\]\]/.test(text);
   }
 
+  static parseTemplateString(str) {
+    if(typeof(str) !== "string") return text;
+    var RE_entity = /^[a-zA-Z0-9_.]+\.[a-zA-Z0-9_]+$/;
+    var RE_if = /^if\(([^,]*),([^,]*),(.*)\)$/;
+    var RE_expr = /([^=<>!]+)\s*(==|<|>|<=|>=|!=)\s*([^=<>!]+)/
+
+    const _parse_entity = (str) => {
+      str = str.trim();
+      const parts = str.split(".");
+      let v = this.hass().states[`${parts.shift()}.${parts.shift()}`];
+      if(!parts.length) return v['state'];
+      parts.forEach(item => v=v[item]);
+      return v;
+    }
+
+    const _parse_expr = (str) => {
+      str = RE_expr.exec(str);
+      if(str === null) return false;
+      const lhs = this.parseTemplateString(str[1]);
+      const rhs = this.parseTemplateString(str[3]);
+      var expr = ''
+      if(!parseFloat(lhs))
+        expr = `"${lhs}" ${str[2]} "${rhs}"`;
+      else
+        expr = `${parseFloat(lhs)} ${str[2]} ${parseFloat(rhs)}`
+      return eval(expr);
+    }
+
+    const _parse_if = (str) => {
+      str = RE_if.exec(str);
+      if(_parse_expr(str[1]))
+        return this.parseTemplateString(str[2]);
+      return this.parseTemplateString(str[3]);
+    }
+
+    try {
+      str = str.trim();
+      if(str.match(RE_if))
+        return _parse_if(str);
+      if(str.match(RE_entity))
+        return _parse_entity(str);
+      if(str.match(/^".*"$/) || str.match(/^'.*'$/))
+        return str.substr(1, str.length-2);
+      if(str.match(/{user}/))
+        return this.hass().user.name;
+      if(str.match(/{browser}/))
+        return this.deviceID();
+      if(str.match(/{hash}/))
+        return location.hash.substr(1);
+      return str;
+    } catch (err) {
+      return `[[ Template matching failed ${str} ]]`;
+    }
+  }
+
   static parseTemplate(text, error) {
     if(typeof(text) !== "string") return text;
-    const _parse = (str) => {
-      try {
-        str = str.replace(/^\[\[\s+|\s+\]\]$/g, '')
-        const parts = str.split(".");
-        let v = this.hass().states[`${parts[0]}.${parts[1]}`];
-        parts.shift();
-        parts.shift();
-        parts.forEach(item => v = v[item]);
-        return v;
-      } catch (err) {
-        return error || `[[ Template matching failed ${str} ]]`;
-      }
-    }
-    text = text.replace(/(\[\[\s.*?\s\]\])/g, (str, p1, offset, s) => _parse(str));
+    // Note: .*? is javascript regex syntax for NON-greedy matching
+    var RE_template = /\[\[\s(.*?)\s\]\]/g;
+    text = text.replace(RE_template, (str, p1, offset, s) => this.parseTemplateString(p1));
     return text;
   }
 

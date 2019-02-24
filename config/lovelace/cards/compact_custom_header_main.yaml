@@ -1,5 +1,5 @@
 type: 'custom:compact-custom-header'
-main_config: false
+main_config: true
 menu: show
 notifications: clock
 voice: hide

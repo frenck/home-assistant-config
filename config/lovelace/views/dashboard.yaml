@@ -3,7 +3,7 @@ id: dashboard
 title: Dashboard
 icon: mdi:home-assistant
 cards:
-  - !include ../cards/compact_custom_header.yaml
+  - !include ../cards/compact_custom_header_main.yaml
   - type: iframe
     aspect_ratio: 90%
     url: 'https://embed.windy.com/embed2.html?lat=52.201&lon=6.805&zoom=11&level=surface&overlay=wind&menu=&message=&marker=&calendar=now&pressure=true&type=map&location=coordinates&detail=&detailLat=52.201&detailLon=6.805&metricWind=default&metricTemp=default&radarRange=-1'
