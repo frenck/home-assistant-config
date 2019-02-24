@@ -35,17 +35,17 @@ stages:
   variables:
     PYTHONPATH: "/usr/src/app:$PYTHONPATH"
   before_script:
-    - esphomeyaml dummy.yaml version
-    - cp -R ./.stubs/* ./config/esphomeyaml/
+    - esphome dummy.yaml version
+    - cp -R ./.stubs/* ./config/esphome/
   script:
     - |
       for file in $(find \
-        ./config/esphomeyaml \
+        ./config/esphome \
         -type f \
         -name "*.yaml"\
         -not -name "secrets.yaml"
         ); do
-        esphomeyaml $file config
+        esphome $file config
       done
   tags:
     - test
@@ -143,7 +143,7 @@ esphome-latest:
 esphome-rc:
   <<: *esphome
   image:
-    name: esphome/esphome:rc
+    name: esphome/esphome:beta
     entrypoint: [""]
   allow_failure: true
 
