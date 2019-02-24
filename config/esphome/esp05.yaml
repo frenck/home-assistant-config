@@ -2,7 +2,7 @@
 # esp05: Yet unused Sonoff POW R2
 #
 # This ESPHome code is used on a Sonoff POW R2.
-# 
+#
 # This ESP chip checks my Washing Machine.
 # Currently it only sends out values to Home Assistant.
 # Before doing anything "smart", I need to know its
