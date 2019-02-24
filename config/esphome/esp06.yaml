@@ -62,23 +62,15 @@ text_sensor:
 switch:
   - platform: restart
     name: esphome_esp06_restart
+  # This is the actual exposed power switch
   - platform: gpio
+    name: scullery_dryer
     id: relay
     pin: GPIO12
-  # This is the actual exposed power switch
-  - platform: template
-    name: scullery_dryer
-    id: powerbutton
-    lambda: |-
-      if (id(relay).state) {
-        return true;
-      }
-      return false;
-    turn_on_action:
-      - switch.turn_on: relay
+    restore_mode: ALWAYS_ON
+    on_turn_on:
       - light.turn_on: led
-    turn_off_action:
-      - switch.turn_off: relay
+    on_turn_off:
       - light.turn_off: led
 
 binary_sensor:
@@ -89,21 +81,21 @@ binary_sensor:
       mode: INPUT_PULLUP
       inverted: true
     on_press:
-      - switch.toggle: powerbutton
+      - switch.toggle: relay
+  # This binary sensor tells if the Dryer is powered on itself (display)
+  - platform: template
+    name: scullery_dryer_on
+    filters:
+      - delayed_off: 10s
+    lambda: |-
+      return id(power).state > 2;
   # This binary sensor tells if the Dryer is running or not
   - platform: template
     name: scullery_dryer_running
     filters:
       - delayed_off: 15s
     lambda: |-
-      if (isnan(id(power).state)) {
-        return {};
-      } else if (id(power).state > 75) {
-        // Running
-        return true;
-      }
-      // Not running
-      return false;
+      return id(power).state > 75;
 
 output:
   - platform: esp8266_pwm

@@ -48,22 +48,12 @@ switch:
   - platform: restart
     name: esphome_esp04_restart
   - platform: gpio
+    name: other_power_bar
     id: relay
     pin: GPIO12
-  # This is the actual exposed switch
-  - platform: template
-    name: other_power_bar
-    id: fakebutton
-    lambda: |-
-      if (id(relay).state) {
-        return true;
-      }
-      return false;
-    turn_on_action:
-      - switch.turn_on: relay
+    on_turn_on:
       - light.turn_on: led
-    turn_off_action:
-      - switch.turn_off: relay
+    on_turn_off:
       - light.turn_off: led
 
 binary_sensor:
@@ -74,7 +64,7 @@ binary_sensor:
       mode: INPUT_PULLUP
       inverted: true
     on_press:
-      - switch.toggle: fakebutton
+      - switch.toggle: relay
 
 output:
   - platform: esp8266_pwm

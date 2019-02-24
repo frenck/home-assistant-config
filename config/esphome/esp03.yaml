@@ -86,10 +86,12 @@ switch:
     id: switch_relay1
     pin: GPIO12
     restore_mode: ALWAYS_OFF
+    interlock: &interlock_group [switch_relay1, switch_relay2]
   - platform: gpio
     id: switch_relay2
     pin: GPIO5
     restore_mode: ALWAYS_OFF
+    interlock: *interlock_group
   # Manual mode template, based on the blue LED on the SonOff Dual
   # When ventilation is manual overridden, all external state changes
   # are ignored.
@@ -102,10 +104,8 @@ switch:
     turn_off_action:
       - light.turn_off: light_led
     lambda: |-
-      if (id(light_led).get_current_values().is_on()) {
-        return true;
-      }
-      return false;
+      return id(light_led).get_current_values().is_on();
+
   # Exposed switch, shows switch state for low speed
   # Will ignore changes when ventilation is in manual mode
   - platform: template
@@ -124,10 +124,8 @@ switch:
         then:
           - switch.turn_on: switch_speed_low
     lambda: |-
-      if (id(switch_speed_low).state) {
-        return true;
-      }
-      return false;
+      return id(switch_speed_low).state;
+
   # Exposed switch, shows switch state for medium speed
   # Will ignore changes when ventilation is in manual mode
   - platform: template
@@ -146,10 +144,8 @@ switch:
         then:
           - switch.turn_on: switch_speed_low
     lambda: |-
-      if (id(switch_speed_medium).state) {
-        return true;
-      }
-      return false;
+      return id(switch_speed_medium).state;
+
   # Exposed switch, shows switch state for high speed
   # Will ignore changes when ventilation is in manual mode
   - platform: template
@@ -168,10 +164,8 @@ switch:
         then:
           - switch.turn_on: switch_speed_medium
     lambda: |-
-      if (id(switch_speed_high).state) {
-        return true;
-      }
-      return false;
+      return id(switch_speed_high).state;
+
   # Internal switch, for switching ventilation to low speed.
   # Uses interlocking, to prevent relay 1 & 2 to be active at the same time.
   - platform: template
@@ -184,10 +178,8 @@ switch:
       - switch.turn_off: switch_relay1
       - switch.turn_off: switch_relay2
     lambda: |-
-      if (!id(switch_relay1).state && !id(switch_relay2).state) {
-        return true;
-      }
-      return false;
+      return !id(switch_relay1).state && !id(switch_relay2).state;
+
   # Internal switch, for switching ventilation to medium speed and back to
   # low speed when turned off.
   # Uses interlocking, to prevent relay 1 & 2 to be active at the same time.
@@ -195,19 +187,12 @@ switch:
     id: switch_speed_medium
     restore_state: false
     turn_on_action:
-      - switch.turn_off: switch_relay2
-      - if:
-          condition:
-            switch.is_off: switch_relay2
-          then:
-            - switch.turn_on: switch_relay1
+      - switch.turn_on: switch_relay1
     turn_off_action:
       - switch.turn_on: switch_speed_low
     lambda: |-
-      if (id(switch_relay1).state && !id(switch_relay2).state) {
-        return true;
-      }
-      return false;
+      return id(switch_relay1).state && !id(switch_relay2).state;
+
   # Internal switch, for switching ventilation to high speed and back to
   # medium speed when turned off.
   # Uses interlocking, to prevent relay 1 & 2 to be active at the same time.
@@ -215,19 +200,11 @@ switch:
     id: switch_speed_high
     restore_state: false
     turn_on_action:
-      - switch.turn_off: switch_relay1
-      - if:
-          condition:
-            switch.is_off: switch_relay1
-          then:
-            - switch.turn_on: switch_relay2
+      - switch.turn_on: switch_relay2
     turn_off_action:
       - switch.turn_on: switch_speed_medium
     lambda: |-
-      if (!id(switch_relay1).state && id(switch_relay2).state) {
-        return true;
-      }
-      return false;
+      return !id(switch_relay1).state && id(switch_relay2).state;
 
 output:
   - platform: esp8266_pwm

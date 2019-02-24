@@ -2,8 +2,11 @@
 # esp05: Yet unused Sonoff POW R2
 #
 # This ESPHome code is used on a Sonoff POW R2.
-# This device is not used yet, but can be used
-# on almost any device to get power readings.
+# 
+# This ESP chip checks my Washing Machine.
+# Currently it only sends out values to Home Assistant.
+# Before doing anything "smart", I need to know its
+# power profile
 #
 esphome:
   name: esp05
@@ -46,11 +49,12 @@ sensor:
   - platform: cse7766
     update_interval: 5s
     current:
-      name: esphome_esp05_current
+      name: scullery_washing_machine_current
     voltage:
-      name: esphome_esp05_voltage
+      name: scullery_washing_machine_voltage
     power:
-      name: esphome_esp05_power
+      id: power
+      name: scullery_washing_machine_power
 
 text_sensor:
   - platform: version
@@ -59,23 +63,15 @@ text_sensor:
 switch:
   - platform: restart
     name: esphome_esp05_restart
+  # This is the actual exposed power switch
   - platform: gpio
+    name: scullery_washing_machine
     id: relay
     pin: GPIO12
-  # This is the actual exposed switch
-  - platform: template
-    name: esphome_esp05_switch
-    id: fakebutton
-    lambda: |-
-      if (id(relay).state) {
-        return true;
-      }
-      return false;
-    turn_on_action:
-      - switch.turn_on: relay
+    restore_mode: ALWAYS_ON
+    on_turn_on:
       - light.turn_on: led
-    turn_off_action:
-      - switch.turn_off: relay
+    on_turn_off:
       - light.turn_off: led
 
 binary_sensor:
@@ -86,7 +82,14 @@ binary_sensor:
       mode: INPUT_PULLUP
       inverted: true
     on_press:
-      - switch.toggle: fakebutton
+      - switch.toggle: relay
+  # This binary sensor tells if the Dryer is powered on itself (display)
+  - platform: template
+    name: scullery_washing_machine_on
+    filters:
+      - delayed_off: 10s
+    lambda: |-
+      return id(power).state > 2;
 
 output:
   - platform: esp8266_pwm

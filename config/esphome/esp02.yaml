@@ -8,7 +8,6 @@ esphome:
   name: esp02
   platform: ESP8266
   board: d1_mini
-  esphome_core_version: dev
 
 wifi:
   ssid: !secret wifi_ssid
