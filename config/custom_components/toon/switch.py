@@ -6,14 +6,14 @@ This provides controls for the z-wave smart plugs Toon can control.
 import logging
 
 from homeassistant.components.switch import SwitchDevice
-import custom_components.toon as toon_main
+from . import TOON_HANDLE
 
 _LOGGER = logging.getLogger(__name__)
 
 
 def setup_platform(hass, config, add_devices_callback, discovery_info=None):
     """Setup discovered Smart Plugs."""
-    _toon_main = hass.data[toon_main.TOON_HANDLE]
+    _toon_main = hass.data[TOON_HANDLE]
     switch_items = []
     for plug in _toon_main.toon.smartplugs:
         switch_items.append(EnecoSmartPlug(hass, plug))
@@ -27,7 +27,7 @@ class EnecoSmartPlug(SwitchDevice):
     def __init__(self, hass, plug):
         """Initialize the Smart Plug."""
         self.smartplug = plug
-        self.toon_data_store = hass.data[toon_main.TOON_HANDLE]
+        self.toon_data_store = hass.data[TOON_HANDLE]
 
     @property
     def should_poll(self):

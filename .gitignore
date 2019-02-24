@@ -30,8 +30,8 @@ config/zwcfg_*
 config/zwscene.xml
 
 # ESPHome ignores
-config/esphomeyaml/secrets.yaml
-config/esphomeyaml/**/
+config/esphome/secrets.yaml
+config/esphome/**/
 
 # Ignore add-on files
 config/aircast.xml

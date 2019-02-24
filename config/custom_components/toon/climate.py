@@ -6,17 +6,12 @@ Eneco.
 """
 
 import logging
-from homeassistant.components.climate import (ClimateDevice,
-                                              ATTR_TEMPERATURE,
-                                              STATE_PERFORMANCE,
-                                              STATE_HEAT,
-                                              STATE_ECO,
-                                              STATE_COOL,
-                                              SUPPORT_TARGET_TEMPERATURE,
-                                              SUPPORT_OPERATION_MODE)
-from homeassistant.const import TEMP_CELSIUS
+from homeassistant.components.climate import (
+    ClimateDevice, STATE_AUTO, STATE_COOL, STATE_ECO, STATE_HEAT,
+    SUPPORT_OPERATION_MODE,  SUPPORT_TARGET_TEMPERATURE)
+from homeassistant.const import TEMP_CELSIUS, ATTR_TEMPERATURE
 
-import custom_components.toon as toon_main
+from . import TOON_HANDLE
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -36,13 +31,13 @@ class ThermostatDevice(ClimateDevice):
         """Initialize the device."""
         self._name = 'Toon van Eneco'
         self.hass = hass
-        self.thermos = hass.data[toon_main.TOON_HANDLE]
+        self.thermos = hass.data[TOON_HANDLE]
 
         # set up internal state vars
         self._state = None
         self._temperature = None
         self._setpoint = None
-        self._operation_list = [STATE_PERFORMANCE,
+        self._operation_list = [STATE_AUTO,
                                 STATE_HEAT,
                                 STATE_ECO,
                                 STATE_COOL]
@@ -95,7 +90,7 @@ class ThermostatDevice(ClimateDevice):
 
     def set_operation_mode(self, operation_mode):
         """Set new operation mode as toonlib requires it."""
-        toonlib_values = {STATE_PERFORMANCE: 'Comfort',
+        toonlib_values = {STATE_AUTO: 'Comfort',
                           STATE_HEAT: 'Home',
                           STATE_ECO: 'Away',
                           STATE_COOL: 'Sleep'}

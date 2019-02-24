@@ -8,8 +8,7 @@ import logging
 import datetime as datetime
 
 from homeassistant.helpers.entity import Entity
-import custom_components.toon as toon_main
-
+from . import TOON_HANDLE
 _LOGGER = logging.getLogger(__name__)
 
 STATE_ATTR_DEVICE_TYPE = "device_type"
@@ -18,7 +17,7 @@ STATE_ATTR_LAST_CONNECTED_CHANGE = "last_connected_change"
 
 def setup_platform(hass, config, add_devices, discovery_info=None):
     """Setup sensors."""
-    _toon_main = hass.data[toon_main.TOON_HANDLE]
+    _toon_main = hass.data[TOON_HANDLE]
 
     sensor_items = []
     sensor_items.extend([ToonSensor(hass,
@@ -97,7 +96,7 @@ class ToonSensor(Entity):
         self._state = None
         self._icon = "mdi:" + icon
         self._unit_of_measurement = unit_of_measurement
-        self.thermos = hass.data[toon_main.TOON_HANDLE]
+        self.thermos = hass.data[TOON_HANDLE]
 
     @property
     def should_poll(self):
@@ -139,7 +138,7 @@ class SmartPlug(Entity):
         self._state = None
         self._icon = "mdi:" + icon
         self._unit_of_measurement = unit_of_measurement
-        self.toon = hass.data[toon_main.TOON_HANDLE]
+        self.toon = hass.data[TOON_HANDLE]
 
     @property
     def should_poll(self):
@@ -181,7 +180,7 @@ class SolarSensor(Entity):
         self._state = None
         self._icon = "mdi:weather-sunny"
         self._unit_of_measurement = unit_of_measurement
-        self.toon = hass.data[toon_main.TOON_HANDLE]
+        self.toon = hass.data[TOON_HANDLE]
 
     @property
     def should_poll(self):
@@ -223,7 +222,7 @@ class SmokeDetector(Entity):
         self._state = None
         self._icon = "mdi:" + icon
         self._unit_of_measurement = unit_of_measurement
-        self.toon = hass.data[toon_main.TOON_HANDLE]
+        self.toon = hass.data[TOON_HANDLE]
 
     @property
     def should_poll(self):
@@ -275,7 +274,7 @@ class Burner(Entity):
         """Initialize the sensor."""
         self._name = "burner_status"
         self._icon = "mdi:fire"
-        self.toon = hass.data[toon_main.TOON_HANDLE]
+        self.toon = hass.data[TOON_HANDLE]
 
     @property
     def should_poll(self):

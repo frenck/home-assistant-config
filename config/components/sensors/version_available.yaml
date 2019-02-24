@@ -7,5 +7,4 @@
 platform: version
 name: version_available
 source: hassio
-branch: stable
 image: qemux86-64
