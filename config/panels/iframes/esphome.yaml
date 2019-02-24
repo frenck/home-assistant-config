@@ -1,0 +1,10 @@
+---
+# Adds an iframe panel to the Home Assistant frontend for the EPHome add-on.
+# This allows me to access ESPHome straight from Home Asssitant's UI
+#
+# https://www.home-assistant.io/components/panel_iframe/
+#
+esphome:
+  title: ESPHome
+  icon: mdi:car-esp
+  url: !secret panel_iframe_esphome_url
