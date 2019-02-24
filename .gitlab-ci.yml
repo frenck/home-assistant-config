@@ -140,7 +140,7 @@ esphome-latest:
     name: esphome/esphome:latest
     entrypoint: [""]
 
-esphome-rc:
+esphome-beta:
   <<: *esphome
   image:
     name: esphome/esphome:beta
