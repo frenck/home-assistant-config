@@ -6,7 +6,7 @@
 #
 cloud:
 
-  # Customize the Google Assistant integration with the Naby Casa Cloud
+  # Customize the Google Assistant integration with the Nabu Casa Cloud
   google_actions:
 
     # Filters for entities to include/exclude from Google Assistant.
