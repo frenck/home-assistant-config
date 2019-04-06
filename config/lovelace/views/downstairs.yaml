@@ -3,6 +3,7 @@ id: downstairs
 title: Beneden
 icon: mdi:sofa
 cards:
+  - !include ../cards/compact_custom_header.yaml
   - type: vertical-stack
     cards:
       - type: entities
