@@ -147,9 +147,3 @@ esphome-beta:
     entrypoint: [""]
   allow_failure: true
 
-esphome-dev:
-  <<: *esphome
-  image:
-    name: esphome/esphome:dev
-    entrypoint: [""]
-  allow_failure: true
