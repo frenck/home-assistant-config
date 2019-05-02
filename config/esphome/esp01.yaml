@@ -10,9 +10,9 @@ esphome:
   platform: ESP32
   board: lolin32
 
-  wifi:
-    ssid: !secret wifi_not_ssid
-    password: !secret wifi_not_password
+wifi:
+  ssid: !secret wifi_not_ssid
+  password: !secret wifi_not_password
 
 logger:
 
