@@ -18,11 +18,6 @@ esphome:
 wifi:
   ssid: !secret wifi_not_ssid
   password: !secret wifi_not_password
-  manual_ip:
-    static_ip: !secret esphome_esp04_static_ip
-    gateway: !secret wifi_not_gateway
-    subnet: !secret wifi_not_subnet
-    dns1: !secret wifi_not_dns
 
 logger:
 
