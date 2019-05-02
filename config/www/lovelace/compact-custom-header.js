@@ -1,4 +1,4 @@
-import "./compact-custom-header-editor.js?v=1.0.1b1";
+import "./compact-custom-header-editor.js?v=1.0.3b1";
 
 export const LitElement = Object.getPrototypeOf(
   customElements.get("ha-panel-lovelace")
@@ -28,11 +28,16 @@ export const defaultConfig = {
   clock_format: 12,
   clock_am_pm: true,
   clock_date: false,
+  date_locale: false,
   disable: false,
-  background_image: false,
   main_config: false,
+  chevrons: false,
+  redirect: true,
+  background: "",
   hide_tabs: [],
-  show_tabs: []
+  show_tabs: [],
+  tab_color: {},
+  button_color: {}
 };
 
 if (!customElements.get("compact-custom-header")) {
@@ -125,7 +130,7 @@ if (!customElements.get("compact-custom-header")) {
       if (window.location.href.includes("clear_cch_cache")) {
         localStorage.removeItem("cchCache");
         window.location.replace(
-          window.location.href.replace("?clear_cch_cache","")
+          window.location.href.replace("?clear_cch_cache", "")
         );
       }
 
@@ -189,27 +194,47 @@ if (!customElements.get("compact-custom-header")) {
     }
 
     run() {
+      const hassVersion = parseFloat(this.hass.config.version.slice(0, 4));
       const root = this.rootElement;
-      this.editMode =
-        root.querySelector("app-toolbar").className == "edit-mode";
+      const header = root.querySelector("app-header");
       const buttons = this.getButtonElements(root);
       const tabContainer = root.querySelector("paper-tabs");
       const tabs = tabContainer
         ? Array.from(tabContainer.querySelectorAll("paper-tab"))
         : [];
+      const view = root
+        .querySelector("ha-app-layout")
+        .querySelector('[id="view"]');
+      this.editMode =
+        root.querySelector("app-toolbar").className == "edit-mode";
+
+      // Add top margin to unused-entities page.
+      if (!view.parentNode.querySelector('[id="cch_unused"]')) {
+        let style = document.createElement("style");
+        style.setAttribute("id", "cch_unused");
+        style.innerHTML = `
+          hui-unused-entities {
+            display: inline-block;
+            padding-top:50px;
+          }
+        `;
+        view.parentNode.appendChild(style);
+      }
+
+      // Get hidden/shown tab config. Invert shown tabs.
       let hidden_tabs = JSON.parse("[" + this.cchConfig.hide_tabs + "]");
       const shown_tabs = JSON.parse("[" + this.cchConfig.show_tabs + "]");
-      // Invert shown_tabs to hidden tabs.
       if (!hidden_tabs.length && shown_tabs.length) {
         let total_tabs = [];
         for (let i = 0; i < tabs.length; i++) {
           total_tabs.push(i);
         }
-        hidden_tabs = total_tabs.filter( ( el ) => !shown_tabs.includes( el ) );
+        hidden_tabs = total_tabs.filter(el => !shown_tabs.includes(el));
       }
+
       if (!this.editMode) this.hideCard();
       if (this.editMode && !this.cchConfig.disable) {
-        this.removeMargin(tabContainer);
+        this.removeStyles(tabContainer, header, view, root, tabs);
         if (buttons.options) {
           this.insertEditMenu(buttons.options, tabs);
         }
@@ -217,9 +242,8 @@ if (!customElements.get("compact-custom-header")) {
         !this.cchConfig.disable &&
         !window.location.href.includes("disable_cch")
       ) {
-        const marginRight = this.marginRight;
-        this.styleHeader(root, tabContainer, marginRight);
-        this.styleButtons(buttons, tabs);
+        this.styleButtons(buttons, tabs, root);
+        this.styleHeader(root, tabContainer, header, view, tabs);
         if (this.cchConfig.hide_tabs && tabContainer) {
           this.hideTabs(tabContainer, tabs, hidden_tabs);
         }
@@ -228,36 +252,90 @@ if (!customElements.get("compact-custom-header")) {
           if (this.cchConfig[button] == "clock") {
             this.insertClock(
               buttons,
-              button == "options"
+              button == "options" || (button == "menu" && hassVersion > 0.88)
                 ? buttons[button]
                 : buttons[button].shadowRoot,
-              tabContainer,
-              marginRight
+              tabContainer
             );
           }
         }
+
+        const conditionals = this.cchConfig.conditional_styles;
+        const monitorNotifications = () => {
+          for (const key in conditionals) {
+            if (conditionals[key].entity == "notifications") return true;
+          }
+          return false;
+        };
+
+        if (conditionals) {
+          this.conditionalStyling(header, buttons, tabs);
+          if (monitorNotifications) this.notifMonitor(header, buttons, tabs);
+          this.hass.connection.socket.addEventListener("message", event => {
+            this.conditionalStyling(header, buttons, tabs);
+          });
+        }
+
+        this.tabMargin(buttons, tabContainer);
+
         fireEvent(this, "iron-resize");
       }
     }
 
-    get marginRight() {
+    tabMargin(buttons, tabContainer) {
       // Add width of all visible elements on right side for tabs margin.
       let marginRight = 0;
-      marginRight += this.cchConfig.notifications == "show" ? 45 : 0;
-      marginRight += this.cchConfig.voice == "show" ? 45 : 0;
-      marginRight += this.cchConfig.options == "show" ? 45 : 0;
-      return marginRight;
+      let marginLeft = 15;
+      for (const button in buttons) {
+        if (
+          this.cchConfig[button] == "show" &&
+          buttons[button].style.display !== "none"
+        ) {
+          if (button == "menu") {
+            marginLeft += 45;
+          } else {
+            marginRight += 45;
+          }
+        } else if (
+          this.cchConfig[button] == "clock" &&
+          buttons[button].style.display !== "none"
+        ) {
+          const clockWidth =
+            (this.cchConfig.clock_format == 12 && this.cchConfig.clock_am_pm) ||
+            this.cchConfig.clock_date
+              ? 90
+              : 80;
+          if (button == "menu") {
+            marginLeft += clockWidth + 15;
+          } else {
+            marginRight += clockWidth;
+          }
+        }
+      }
+      if (tabContainer) {
+        tabContainer.style.marginRight = marginRight + "px";
+        tabContainer.style.marginLeft = marginLeft + "px";
+      }
     }
 
     get rootElement() {
       try {
-        return document
+        let panelResolver = document
           .querySelector("home-assistant")
           .shadowRoot.querySelector("home-assistant-main")
-          .shadowRoot.querySelector("app-drawer-layout partial-panel-resolver")
-          .shadowRoot.querySelector("ha-panel-lovelace")
-          .shadowRoot.querySelector("hui-root").shadowRoot;
-      } catch(e) {
+          .shadowRoot.querySelector("app-drawer-layout partial-panel-resolver");
+        if (panelResolver.shadowRoot) {
+          return panelResolver.shadowRoot
+            .querySelector("ha-panel-lovelace")
+            .shadowRoot.querySelector("hui-root").shadowRoot;
+        } else {
+          return document
+            .querySelector("home-assistant")
+            .shadowRoot.querySelector("home-assistant-main")
+            .shadowRoot.querySelector("ha-panel-lovelace")
+            .shadowRoot.querySelector("hui-root").shadowRoot;
+        }
+      } catch (e) {
         console.log("Can't find 'hui-root', going to walk the DOM to find it.");
       }
       this.recursiveWalk(document, "HUI-ROOT", node => {
@@ -294,50 +372,126 @@ if (!customElements.get("compact-custom-header")) {
       return buttons;
     }
 
-    removeMargin(tabContainer) {
-      // Remove margin from tabs when in edit mode
+    removeStyles(tabContainer, header, view, root, tabs) {
+      let header_colors = root.querySelector('[id="cch_header_colors"]');
       if (tabContainer) {
         tabContainer.style.marginLeft = "";
         tabContainer.style.marginRight = "";
       }
+      header.style.background = null;
+      view.style.marginTop = "0px";
+      view.querySelectorAll("*")[0].style.display = "initial";
+      if (root.querySelector('[id="cch_iron_selected"]')) {
+        root.querySelector('[id="cch_iron_selected"]').outerHTML = "";
+      }
+      if (header_colors) header_colors.parentNode.removeChild(header_colors);
+      if (Object.keys(this.cchConfig.tab_color).length) {
+        for (let i = 0; i < tabs.length; i++) {
+          tabs[i].style.color = "";
+        }
+      }
     }
 
-    styleHeader(root, tabContainer, marginRight) {
-      // Hide header completely if set to false in config.
-      if (!this.cchConfig.header) {
-        root.querySelector("app-header").style.display = "none";
+    styleHeader(root, tabContainer, header, view, tabs) {
+      if (!this.cchConfig.header && !this.editMode) {
+        header.style.display = "none";
+        view.style.minHeight = "100vh";
         return;
+      } else if (!this.editMode) {
+        view.style.minHeight = "100vh";
+        view.style.marginTop = "-48.5px";
+        if (view.querySelector("hui-view")) {
+          view.querySelector("hui-view").style.paddingTop = "55px";
+        } else {
+          view.querySelectorAll("*")[0].style.paddingTop = "55px";
+          view.querySelectorAll("*")[0].style.display = "block";
+        }
+        header.style.background =
+          this.cchConfig.background ||
+          "var(--cch-background), var(--primary-color))";
       }
 
-      root
-        .querySelector("ha-app-layout")
-        .querySelector('[id="view"]').style.paddingBottom = this.cchConfig
-        .background_image
-        ? "64px"
-        : "";
+      // Style header all icons, all tab icons, and selection indicator.
+      let indicator = this.cchConfig.tab_indicator_color;
+      let all_tabs_color =
+        this.cchConfig.all_tabs_color || "var(--cch-all-tabs-color)";
+      if (indicator) {
+        if (!root.querySelector('[id="cch_header_colors"]') && !this.editMode) {
+          let style = document.createElement("style");
+          style.setAttribute("id", "cch_header_colors");
+          style.innerHTML = `
+            paper-tabs {
+              ${
+                indicator
+                  ? `--paper-tabs-selection-bar-color: ${indicator} !important`
+                  : "var(--cch-tab-indicator-color) !important"
+              }
+            }
+          `;
+          root.appendChild(style);
+        }
+      }
+
+      let conditionalTabs;
+      if (this.cchConfig.conditional_styles) {
+        conditionalTabs = JSON.stringify(
+          this.cchConfig.conditional_styles
+        ).includes("tab");
+      }
+
+      if (
+        !root.querySelector('[id="cch_iron_selected"]') &&
+        !this.editMode &&
+        !conditionalTabs &&
+        tabContainer
+      ) {
+        let style = document.createElement("style");
+        style.setAttribute("id", "cch_iron_selected");
+        style.innerHTML = `
+            .iron-selected {
+              ${
+                this.cchConfig.active_tab_color
+                  ? `color: ${this.cchConfig.active_tab_color + " !important"}`
+                  : "var(--cch-active-tab-color)"
+              }
+            }
+          `;
+        tabContainer.appendChild(style);
+      }
+
+      if (Object.keys(this.cchConfig.tab_color).length) {
+        let tab_color = this.cchConfig.tab_color;
+        for (let i = 0; i < tabs.length; i++) {
+          tabs[i].style.color = tab_color[i] || all_tabs_color;
+        }
+      }
 
       if (tabContainer) {
-        // Add margin to left side of tabs for menu buttom.
-        if (this.cchConfig.menu == "show") {
-          tabContainer.style.marginLeft = "60px";
-        }
-        // Add margin to right side of tabs for all buttons on the right.
-        tabContainer.style.marginRight = `${marginRight}px`;
-
         // Shift the header up to hide unused portion.
         root.querySelector("app-toolbar").style.marginTop = "-64px";
 
-        // Hide tab bar scroll arrows to save space since we can still swipe.
-        let chevron = tabContainer.shadowRoot.querySelectorAll(
-          '[icon^="paper-tabs:chevron"]'
-        );
-        chevron[0].style.display = "none";
-        chevron[1].style.display = "none";
+        // Remove space taken up by "not-visible" chevron.
+        let style = document.createElement("style");
+        style.setAttribute("id", "cch_chevron");
+        style.innerHTML = `
+          .not-visible {
+            display:none;
+          }
+        `;
+        tabContainer.shadowRoot.appendChild(style);
+
+        if (!this.cchConfig.chevrons) {
+          let chevron = tabContainer.shadowRoot.querySelectorAll(
+            '[icon^="paper-tabs:chevron"]'
+          );
+          chevron[0].style.display = "none";
+          chevron[1].style.display = "none";
+        }
       }
     }
 
-    styleButtons(buttons, tabs) {
-      let topMargin = tabs.length > 0 ? "margin-top:111px;" : ""
+    styleButtons(buttons, tabs, root) {
+      let topMargin = tabs.length > 0 ? "margin-top:111px;" : "";
       for (const button in buttons) {
         if (button == "options" && this.cchConfig[button] == "overflow") {
           this.cchConfig[button] = "show";
@@ -352,9 +506,9 @@ if (!customElements.get("compact-custom-header")) {
               ${button == "options" ? "margin-right:-5px; padding:0;" : ""}
             `;
         } else if (this.cchConfig[button] == "overflow") {
-          const paperIconButton = buttons[button].shadowRoot.querySelector(
-            "paper-icon-button"
-          );
+          const paperIconButton = buttons[button].shadowRoot
+            ? buttons[button].shadowRoot.querySelector("paper-icon-button")
+            : buttons[button].querySelector("paper-icon-button");
           if (paperIconButton.hasAttribute("hidden")) {
             continue;
           }
@@ -368,11 +522,69 @@ if (!customElements.get("compact-custom-header")) {
             wrapper.addEventListener("click", () => {
               paperIconButton.click();
             });
+            paperIconButton.style.pointerEvents = "none";
             this.insertMenuItem(menu_items, wrapper);
+            if (button == "notifications") {
+              let style = document.createElement("style");
+              style.innerHTML = `
+                .indicator {
+                  top: 5px;
+                  right: 0px;
+                  width: 10px;
+                  height: 10px;
+                  ${
+                    this.cchConfig.notify_indicator_color
+                      ? `background-color:${
+                          this.cchConfig.notify_indicator_color
+                        }`
+                      : ""
+                  }
+                }
+                .indicator > div{
+                  display:none;
+                }
+              `;
+              paperIconButton.parentNode.appendChild(style);
+            }
           }
         } else if (this.cchConfig[button] == "hide") {
           buttons[button].style.display = "none";
         }
+      }
+
+      // Use button colors vars set in HA theme.
+      buttons.menu.style.color = "var(--cch-button-color-menu)";
+      buttons.notifications.style.color =
+        "var(--cch-button-color-notifications)";
+      buttons.voice.style.color = "var(--cch-button-color-voice)";
+      buttons.options.style.color = "var(--cch-button-color-options)";
+
+      if (this.cchConfig.all_buttons_color) {
+        root.querySelector("app-toolbar").style.color =
+          this.cchConfig.all_buttons_color || "var(--cch-all-buttons-color)";
+      }
+
+      // Use button colors set in config.
+      for (const button in buttons) {
+        if (this.cchConfig.button_color[button]) {
+          buttons[button].style.color = this.cchConfig.button_color[button];
+        }
+      }
+
+      if (
+        this.cchConfig.notify_indicator_color &&
+        this.cchConfig.notifications == "show"
+      ) {
+        let style = document.createElement("style");
+        style.innerHTML = `
+          .indicator {
+            background-color:${this.cchConfig.notify_indicator_color ||
+              "var(--cch-notify-indicator-color)"} !important;
+            color: ${this.cchConfig.notify_text_color ||
+              "var(--cch-notify-text-color), var(--primary-text-color)"};
+          }
+        `;
+        buttons.notifications.shadowRoot.appendChild(style);
       }
     }
 
@@ -402,19 +614,21 @@ if (!customElements.get("compact-custom-header")) {
         tabs[tab].style.display = "none";
       }
 
-      // Check if current tab is a hidden tab.
-      const activeTab = tabContainer.querySelector("paper-tab.iron-selected");
-      const activeTabIndex = tabs.indexOf(activeTab);
-      if (
-        hidden_tabs.includes(activeTabIndex) &&
-        hidden_tabs.length != tabs.length
-      ) {
-        let i = 0;
-        // Find first not hidden view
-        while (hidden_tabs.includes(i)) {
-          i++;
+      if (this.cchConfig.redirect) {
+        // Check if current tab is a hidden tab.
+        const activeTab = tabContainer.querySelector("paper-tab.iron-selected");
+        const activeTabIndex = tabs.indexOf(activeTab);
+        if (
+          hidden_tabs.includes(activeTabIndex) &&
+          hidden_tabs.length != tabs.length
+        ) {
+          let i = 0;
+          // Find first not hidden view
+          while (hidden_tabs.includes(i)) {
+            i++;
+          }
+          tabs[i].click();
         }
-        tabs[i].click();
       }
     }
 
@@ -433,46 +647,41 @@ if (!customElements.get("compact-custom-header")) {
       }
     }
 
-    insertClock(buttons, clock_button, tabContainer, marginRight) {
+    insertClock(buttons, clock_button, tabContainer) {
       const clockIcon = clock_button.querySelector("paper-icon-button");
       const clockIronIcon = clockIcon.shadowRoot.querySelector("iron-icon");
       const clockWidth =
-        this.cchConfig.clock_format == 12 &&
-        this.cchConfig.clock_am_pm ||
+        (this.cchConfig.clock_format == 12 && this.cchConfig.clock_am_pm) ||
         this.cchConfig.clock_date
-          ? 110
+          ? 90
           : 80;
 
-      if (this.cchConfig.notifications == "clock") {
-        let style = document.createElement( 'style' );
-        if (this.config.clock_date) {
-          style.innerHTML = `
+      if (
+        this.cchConfig.notifications == "clock" &&
+        this.cchConfig.clock_date &&
+        !buttons.notifications.shadowRoot.querySelector('[id="cch_indicator"]')
+      ) {
+        let style = document.createElement("style");
+        style.setAttribute("id", "cch_indicator");
+        style.innerHTML = `
           .indicator {
             top: unset;
             bottom: -3px;
-            right: -10px;
+            right: 0px;
             width: 90%;
             height: 3px;
             border-radius: 0;
+            ${
+              this.cchConfig.notify_indicator_color
+                ? `background-color:${this.cchConfig.notify_indicator_color}`
+                : ""
+            }
           }
           .indicator > div{
             display:none;
           }
         `;
-        } else {
-          style.innerHTML = `
-          .indicator {
-            top: 5px;
-            right: -10px;
-            width: 10px;
-            height: 10px;
-          }
-          .indicator > div{
-            display:none;
-          }
-        `;
-        }
-        buttons.notifications.shadowRoot.appendChild( style )
+        buttons.notifications.shadowRoot.appendChild(style);
       }
 
       let clockElement = clockIronIcon.parentNode.getElementById("cch_clock");
@@ -485,23 +694,29 @@ if (!customElements.get("compact-custom-header")) {
 
         clockElement = document.createElement("p");
         clockElement.setAttribute("id", "cch_clock");
-        let clockAlign = this.cchConfig.menu == "clock" ? "left" : "right";
-        let marginTop = this.cchConfig.clock_date ? "-6px" : "2px";
+        let clockAlign = "center";
+        let padding = "";
+        let fontSize = "";
+        if (this.cchConfig.clock_date && this.cchConfig.menu == "clock") {
+          clockAlign = "left";
+          padding = "margin-right:-20px";
+          fontSize = "font-size:12pt";
+        } else if (this.cchConfig.clock_date) {
+          clockAlign = "right";
+          padding = "margin-left:-20px";
+          fontSize = "font-size:12pt";
+        }
+        let marginTop = this.cchConfig.clock_date ? "-4px" : "2px";
         clockElement.style.cssText = `
-              width: ${clockWidth}px;
               margin-top: ${marginTop};
-              margin-left: -8px;
               text-align: ${clockAlign};
+              ${padding};
+              ${fontSize};
             `;
         clockIronIcon.parentNode.insertBefore(clockElement, clockIronIcon);
         clockIronIcon.style.display = "none";
       }
 
-      if (this.cchConfig.menu == "clock" && tabContainer) {
-        tabContainer.style.marginLeft = `${clockWidth + 15}px`;
-      } else if (tabContainer) {
-        tabContainer.style.marginRight = `${clockWidth + marginRight}px`;
-      }
       const clockFormat = {
         hour12: this.cchConfig.clock_format != 24,
         hour: "2-digit",
@@ -512,15 +727,15 @@ if (!customElements.get("compact-custom-header")) {
 
     updateClock(clock, clockFormat) {
       let date = new Date();
-      let locale = this.hass.language;
+      let locale = this.cchConfig.date_locale || this.hass.language;
       let time = date.toLocaleTimeString([], clockFormat);
       let options = {
-        "weekday": "short",
-        "month": "2-digit",
-        "day": "2-digit"
-      }
+        weekday: "short",
+        month: "2-digit",
+        day: "2-digit"
+      };
       date = this.cchConfig.clock_date
-        ? `</br>${date.toLocaleDateString( locale, options )}`
+        ? `</br>${date.toLocaleDateString(locale, options)}`
         : "";
       if (!this.cchConfig.clock_am_pm && this.cchConfig.clock_format == 12) {
         clock.innerHTML = time.slice(0, -3) + date;
@@ -528,6 +743,196 @@ if (!customElements.get("compact-custom-header")) {
         clock.innerHTML = time + date;
       }
       window.setTimeout(() => this.updateClock(clock, clockFormat), 60000);
+    }
+
+    conditionalStyling(header, buttons, tabs) {
+      if (window.cchState == undefined) window.cchState = [];
+      if (this.prevColor == undefined) this.prevColor = {};
+      if (this.prevState == undefined) this.prevState = [];
+      const conditional_styles = this.cchConfig.conditional_styles;
+      let tabContainer = tabs[0] ? tabs[0].parentNode : "";
+      let element, color, background, hide, onIcon, offIcon, iconElement;
+
+      const styleElements = (
+        elem,
+        color,
+        hide,
+        background,
+        onIcon,
+        iconElem
+      ) => {
+        if (background && elem == "background") {
+          header.style.background = background;
+        } else if (color) {
+          elem.style.color = color;
+        }
+        if (onIcon && iconElem) iconElem.setAttribute("icon", onIcon);
+        if (hide && elem !== "background" && !this.editMode) {
+          elem.style.display = "none";
+        }
+      };
+
+      const getElements = (key, elemArray, i, obj, styling) => {
+        element = elemArray[key];
+        color = styling[i][obj][key].color;
+        onIcon = styling[i][obj][key].on_icon;
+        offIcon = styling[i][obj][key].off_icon;
+        hide = styling[i][obj][key].hide;
+        if (!this.prevColor[key]) {
+          this.prevColor[key] = window
+            .getComputedStyle(element, null)
+            .getPropertyValue("color");
+        }
+      };
+
+      let styling = [];
+      for (let i = 0; i < conditional_styles.length; i++) {
+        styling.push(Object.assign({}, conditional_styles[i]));
+      }
+
+      for (let i = 0; i < styling.length; i++) {
+        let entity = styling[i].entity;
+        if (
+          !this.editMode &&
+          this.hass.states[entity] == undefined &&
+          entity !== "notifications"
+        ) {
+          throw new Error(`${entity} does not exist.`);
+        }
+        if (entity == "notifications") {
+          window.hassConnection.then(function(result) {
+            window.cchState[i] = !!result.conn._ntf.state.length;
+          });
+        } else {
+          window.hassConnection.then(function(result) {
+            window.cchState[i] = result.conn._ent.state[entity].state;
+          });
+        }
+        if (window.cchState[i] == undefined) {
+          window.setTimeout(() => {
+            this.conditionalStyling(header, buttons, tabs);
+          }, 1);
+          return;
+        }
+
+        if (
+          window.cchState[i] !== this.prevState[i] ||
+          !window.cchState.length
+        ) {
+          this.prevState[i] = window.cchState[i];
+          let above = styling[i].condition.above;
+          let below = styling[i].condition.below;
+          let great = above !== undefined && below == undefined;
+          let less = above == undefined && below !== undefined;
+          let greatless = above !== undefined && below !== undefined;
+
+          for (const obj in styling[i]) {
+            let key = Object.keys(styling[i][obj])[0];
+            if (obj == "background") {
+              element = "background";
+              color = styling[i][obj].color;
+              background = styling[i][obj];
+              iconElement = false;
+              if (!this.prevColor[obj]) {
+                this.prevColor[obj] = window
+                  .getComputedStyle(header, null)
+                  .getPropertyValue("background");
+              }
+            } else if (obj == "button") {
+              getElements(key, buttons, i, obj, styling);
+              if (key == "menu") {
+                iconElement = element
+                  .querySelector("paper-icon-button")
+                  .shadowRoot.querySelector("iron-icon");
+              } else {
+                iconElement = element.shadowRoot
+                  .querySelector("paper-icon-button")
+                  .shadowRoot.querySelector("iron-icon");
+              }
+            } else if (obj == "tab") {
+              getElements(key, tabs, i, obj, styling);
+              iconElement = element.querySelector("ha-icon");
+            }
+
+            if (window.cchState[i] == styling[i].condition.state) {
+              styleElements(
+                element,
+                color,
+                hide,
+                background,
+                onIcon,
+                iconElement
+              );
+            } else if (
+              greatless &&
+              window.cchState[i] > above &&
+              window.cchState[i] < below
+            ) {
+              styleElements(
+                element,
+                color,
+                hide,
+                background,
+                onIcon,
+                iconElement
+              );
+            } else if (great && window.cchState[i] > above) {
+              styleElements(
+                element,
+                color,
+                hide,
+                background,
+                onIcon,
+                iconElement
+              );
+            } else if (less && window.cchState[i] < below) {
+              styleElements(
+                element,
+                color,
+                hide,
+                background,
+                onIcon,
+                iconElement
+              );
+            } else {
+              if (
+                element !== "background" &&
+                hide &&
+                element.style.display == "none"
+              ) {
+                element.style.display = "";
+              }
+              if (background && element == "background") {
+                header.style.background = this.prevColor[obj];
+              } else if (
+                obj !== "background" &&
+                obj !== "entity" &&
+                obj !== "condition"
+              ) {
+                element.style.color = this.prevColor[key];
+              }
+              if (onIcon && offIcon) {
+                iconElement.setAttribute("icon", offIcon);
+              }
+            }
+          }
+        }
+      }
+      this.tabMargin(buttons, tabContainer);
+      fireEvent(this, "iron-resize");
+    }
+
+    notifMonitor(header, buttons, tabs) {
+      let notification = !!buttons.notifications.shadowRoot.querySelector(
+        ".indicator"
+      );
+      if (window.cchNotification == undefined) {
+        window.cchNotification = notification;
+      } else if (notification !== window.cchNotification) {
+        this.conditionalStyling(header, buttons, tabs);
+        window.cchNotification = notification;
+      }
+      window.setTimeout(() => this.notifMonitor(header, buttons, tabs), 1000);
     }
 
     // Walk the DOM to find element.

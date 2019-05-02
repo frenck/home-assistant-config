@@ -1,0 +1,7 @@
+---
+# Binary sensors gather information about the state of devices which have a
+# “digital” return value (either 1 or 0).
+#
+# https://www.home-assistant.io/components/binary_sensor/
+#
+binary_sensor: !include_dir_list ../entities/binary_sensors

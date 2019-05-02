@@ -1,0 +1,12 @@
+---
+# The panel_custom support allows you to add additional panels to your
+# Home Assistant frontend. The panels are listed in the sidebar if
+# wished and can be highly customized.
+#
+# This configration loads up all my custom panels
+#
+# https://www.home-assistant.io/components/panel_custom
+#
+# CURRENTLY DISABLED, because I don't have any at this point.
+#
+# panel_custom: !include_dir_list ../../panels/custom

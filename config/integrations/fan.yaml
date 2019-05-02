@@ -1,0 +1,8 @@
+---
+# The fan component is built for the controlling of fan devices.
+#
+# This loads up my fan configurations
+#
+# https://www.home-assistant.io/components/fan/
+#
+fan: !include_dir_list ../entities/fans

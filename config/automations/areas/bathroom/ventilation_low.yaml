@@ -14,5 +14,5 @@ trigger:
   for:
     minutes: 10
 action:
-  - service: fan.turn_off
-    entity_id: fan.attic_ventilation
+  service: fan.turn_off
+  entity_id: fan.attic_ventilation

@@ -1,0 +1,15 @@
+---
+# Temperature sensor, based on a template.
+#
+# My climate control/thermostat has the current temperature.
+# I use this template to break out the attribute from the thermostat into
+# its own sensor.
+#
+# https://www.home-assistant.io/components/template/
+#
+platform: template
+sensors:
+  living_room_temperature:
+    unit_of_measurement: 'C'
+    device_class: temperature
+    value_template: "{{ state_attr('climate.living_room', 'current_temperature') }}"

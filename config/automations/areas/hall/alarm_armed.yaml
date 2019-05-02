@@ -1,0 +1,17 @@
+---
+# When the alarm gets armed...
+#
+# Turn off the lights.
+#
+alias: hall_alarm_armed
+initial_state: true
+trigger:
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: 'armed_away'
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: 'armed_home'
+action:
+  service: light.turn_off
+  entity_id: light.hall_ceiling

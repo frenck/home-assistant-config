@@ -1,0 +1,20 @@
+---
+# Entity configuration for Google Assistant.
+#
+# I use this to customize how the device shows up in Google Assistant.
+#
+# https://www.home-assistant.io/components/google_assistant/#entity_config
+#
+light.living_room_spotlight:
+  name: Woonkamer Spotlight
+  aliases:
+    - woonkamer spotlight
+    - filmspot
+    - living room moviespot
+    - living room spotlight
+    - movielight
+    - moviespot
+    - spot
+    - spotlight
+    - woonkamer filmspot
+  room: Woonkamer

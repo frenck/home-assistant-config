@@ -25,14 +25,8 @@ esphome:
   board_flash_mode: dout
 
 wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  manual_ip:
-    static_ip: !secret esphome_esp03_static_ip
-    gateway: !secret wifi_gateway
-    subnet: !secret wifi_subnet
-    dns1: !secret wifi_dns1
-    dns2: !secret wifi_dns2
+  ssid: !secret wifi_not_ssid
+  password: !secret wifi_not_password
 
 logger:
 
@@ -41,6 +35,9 @@ api:
 
 ota:
   password: !secret esphome_esp03_ota_password
+
+web_server:
+  port: 80
 
 sensor:
   - platform: wifi_signal

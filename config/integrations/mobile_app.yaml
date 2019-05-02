@@ -1,0 +1,8 @@
+---
+#
+# The Mobile App component allows Home Assistant mobile apps to easily
+# integrate with Home Assistant.
+#
+# https://www.home-assistant.io/components/mobile_app/
+#
+mobile_app:

@@ -1,0 +1,7 @@
+---
+# The camera component allows you to use IP cameras with Home Assistant.
+# This loads up all my camera configurations
+#
+# https://www.home-assistant.io/components/camera/
+#
+camera: !include_dir_list ../entities/cameras

@@ -1,0 +1,11 @@
+---
+# The androidtv platform allows you to control an Android TV device.
+# In this case, a NVidia Shield in our living room.
+#
+# https://www.home-assistant.io/components/androidtv/
+#
+platform: androidtv
+host: !secret media_player_androidtv_living_room_shield
+name: living_room_shield
+adb_server_ip: 127.0.0.1
+adb_server_port: 5037

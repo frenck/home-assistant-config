@@ -1,0 +1,18 @@
+---
+# This automation turns on the ceiling light in our entrance
+# as soon as there is movement detected.
+#
+alias: entrance_motion_lights_on
+trigger:
+  platform: state
+  entity_id: binary_sensor.hall_motion
+  to: 'on'
+action:
+  - service: light.turn_on
+    data:
+      entity_id: light.hall_ceiling
+      brightness: 45
+      color_temp: 395
+      transition: 3
+  - service: switch.turn_on
+    entity_id: switch.circadian_lighting_hall_circadian_lighting

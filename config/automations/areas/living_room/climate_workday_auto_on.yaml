@@ -1,0 +1,17 @@
+---
+# Turns on my heating on workdays, to ensure we get a warm welcome home.
+#
+alias: living_room_climate_workday_auto_on
+initial_state: true
+trigger:
+  platform: time
+  at: "17:00:00"
+condition:
+  condition: state
+  entity_id: binary_sensor.workday
+  state: "on"
+action:
+  service: climate.set_temperature
+  data:
+    entity_id: climate.living_room
+    temperature: 18

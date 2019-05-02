@@ -32,4 +32,4 @@ homeassistant:
   time_zone: Europe/Amsterdam
 
   # Load packages
-  packages: !include_dir_named components/packages
+  packages: !include_dir_named integrations

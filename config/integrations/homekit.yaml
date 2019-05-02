@@ -1,0 +1,34 @@
+---
+# The HomeKit component allows you to forward entities from Home Assistant
+# to Apple HomeKit, so they can be controlled from Apple’s Home app and Siri.
+#
+# https://www.home-assistant.io/components/homekit
+#
+homekit:
+  # Stop the HomeKit Server from starting automatically after the Home Assistant
+  # Core Setup is done. I have a Z-Wave network, which we need to wait for
+  # as well.
+  auto_start: false
+
+  # The default: "Home Assistant Bridge", I like it to be just "Home Assistant"
+  name: Home Assistant
+
+  # Configuration for specific entities. Allows customization of names and types
+  # These are imported from another folder, to decouple them from the packages.
+  entity_config: !include_dir_merge_named ../assistant/siri
+
+  # Filters for entities to be included / excluded from HomeKit.
+  filter:
+    include_entities:
+      - climate.living_room
+      - light.living_room_bar
+      # - climate.bedroom_master_thermostat
+      # - light.bedroom_master_bedside
+      # - light.bedroom_master_ceiling
+      # - light.kitchen_ceiling
+      # - light.kitchen_cupboard
+      # - light.livingroom_computer_corner
+      # - light.livingroom_desk
+      # - light.livingroom_spotlight
+      # - light.livingroom_tv
+      # - light.livingroom_window

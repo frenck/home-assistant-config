@@ -2,6 +2,22 @@
 id: upstairs
 title: Boven
 icon: mdi:stairs
+popup_cards:
+  sensor.bedroom_flynn_temperature:
+    title: Thermostaat Flynn
+    card:
+      type: thermostat
+      entity: climate.bedroom_flynn
+  sensor.bedroom_master_temperature:
+    title: Thermostaat Masterbedroom
+    card:
+      type: thermostat
+      entity: climate.bedroom_master
+  sensor.bedroom_lilly_temperature:
+    title: Thermostaat Lilly
+    card:
+      type: thermostat
+      entity: climate.bedroom_lilly
 cards:
   - !include ../cards/compact_custom_header.yaml
   - type: vertical-stack
@@ -26,6 +42,7 @@ cards:
           - type: "custom:button-card"
             entity: switch.attic_ventilation_speed_low
             icon: mdi:fan-off
+            show_name: false
             action: service
             service:
               domain: fan
@@ -35,6 +52,8 @@ cards:
           - type: "custom:button-card"
             entity: switch.attic_ventilation_speed_medium
             icon: mdi:fan
+            spin: false
+            show_name: false
             action: service
             service:
               domain: fan
@@ -42,9 +61,13 @@ cards:
               data:
                 entity_id: fan.attic_ventilation
                 speed: medium
+            state:
+              - value: "on"
+                spin: true
           - type: "custom:button-card"
             entity: switch.attic_ventilation_speed_high
             icon: mdi:weather-windy
+            show_name: false
             action: service
             service:
               domain: fan
@@ -55,6 +78,7 @@ cards:
           - type: "custom:button-card"
             entity: switch.attic_ventilation_manual_mode
             icon: mdi:lock-open
+            show_name: false
             state:
               - value: 'on'
                 icon: mdi:lock-alert
@@ -79,7 +103,7 @@ cards:
       - light.landing_ceiling
 
   - type: custom:mini-graph-card
-    entities: sensor.lilly_thermostat_temperature
+    entities: sensor.bedroom_lilly_temperature
     location_icon: left
     location_state: center
     show:
@@ -95,15 +119,9 @@ cards:
     line_color_below:
       - value: 15
         color: white
-  - type: custom:popup-card
-    entity: sensor.lilly_thermostat_temperature
-    title: Thermostaat Lilly
-    card:
-      type: thermostat
-      entity: climate.bedroom_lilly_thermostat
 
   - type: custom:mini-graph-card
-    entities: sensor.flynn_thermostat_temperature
+    entities: sensor.bedroom_flynn_temperature
     location_icon: left
     location_state: center
     show:
@@ -119,15 +137,9 @@ cards:
     line_color_below:
       - value: 15
         color: white
-  - type: custom:popup-card
-    entity: sensor.flynn_thermostat_temperature
-    title: Thermostaat Flynn
-    card:
-      type: thermostat
-      entity: climate.bedroom_flynn_thermostat
 
   - type: custom:mini-graph-card
-    entities: sensor.bedroom_master_thermostat_temperature
+    entities: sensor.bedroom_master_temperature
     location_icon: left
     location_state: center
     show:
@@ -143,9 +155,9 @@ cards:
     line_color_below:
       - value: 15
         color: white
-  - type: custom:popup-card
-    entity: sensor.bedroom_master_thermostat_temperature
-    title: Thermostaat Masterbedroom
-    card:
-      type: thermostat
-      entity: climate.bedroom_master_thermostat
+
+  - type: picture-glance
+    title: Bedroom Flynn
+    entities: []
+    camera_image: camera.bedroom_flynn
+    camera_view: live

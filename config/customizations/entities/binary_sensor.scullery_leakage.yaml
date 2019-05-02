@@ -1,9 +1,9 @@
 ---
 #
-# Customizes the PIR sensor installed in the restroom
+# Customizes the water leakage sensor installed in the scullery.
+# It is positioned on the ground next to the washing machine.
 #
 # https://www.home-assistant.io/docs/configuration/customizing-devices/
-# https://www.home-assistant.io/components/binary_sensor/
 #
 binary_sensor.scullery_leakage:
   device_class: moisture

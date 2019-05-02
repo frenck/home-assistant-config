@@ -1,0 +1,20 @@
+---
+# The Google Text-to-Speech platform use Google Text-to-Speech engine to
+# read a text with a natural sounding voice(s).
+#
+# https://www.home-assistant.io/components/google_translate/
+#
+platform: google_translate
+
+# Set the default voice language.
+language: 'en'
+
+# Cache voice files to a local storage.
+cache: true
+
+# Path to a location for caching the tts files.
+cache_dir: /tmp/tts
+
+# Time to hold (in seconds) the voice data inside memory for fast play
+# on a media player. (min 60, max 57600)
+time_memory: 300

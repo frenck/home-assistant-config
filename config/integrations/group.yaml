@@ -1,0 +1,7 @@
+---
+# Groups allow the user to combine multiple entities into one.
+# This loads up my custom created groups
+#
+# https://www.home-assistant.io/components/group/
+#
+group: !include_dir_merge_named ../entities/groups

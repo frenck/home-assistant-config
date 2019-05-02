@@ -1,4 +1,0 @@
----
-# This handles the loading of my weather platforms
-#
-weather: !include_dir_list ../weather

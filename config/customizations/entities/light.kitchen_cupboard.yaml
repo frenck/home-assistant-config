@@ -1,3 +1,8 @@
 ---
-switch.kitchen_cupboard:
+#
+# Customizes the kitchen cupboard light in Home Assistant
+#
+# https://www.home-assistant.io/docs/configuration/customizing-devices/
+#
+light.kitchen_cupboard:
   icon: mdi:file-cabinet

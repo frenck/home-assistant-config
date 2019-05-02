@@ -26,8 +26,9 @@ const defaultConfig = {
   clock_am_pm: true,
   clock_date: false,
   disable: false,
-  background_image: false,
   main_config: false,
+  chevrons: false,
+  redirect: true,
   hide_tabs: [],
   show_tabs: []
 };
@@ -294,10 +295,16 @@ export class CchConfigEditor extends LitElement {
       : this.defaultConfig.header;
   }
 
-  get _background_image() {
-    return this.config.background_image !== undefined
-      ? this.config.background_image
-      : this.defaultConfig.background_image;
+  get _chevrons() {
+    return this.config.chevrons !== undefined
+      ? this.config.chevrons
+      : this.defaultConfig.chevrons;
+  }
+
+  get _redirect() {
+    return this.config.redirect !== undefined
+      ? this.config.redirect
+      : this.defaultConfig.redirect;
   }
 
   get _menu() {
@@ -346,6 +353,17 @@ export class CchConfigEditor extends LitElement {
         : ""}
       ${this.renderStyle()}
       <div class="side-by-side">
+        ${!this.exception
+          ? html`
+              <paper-toggle-button
+                ?checked="${this._main_config !== false}"
+                .configValue="${"main_config"}"
+                @change="${this._valueChanged}"
+              >
+                Main Config
+              </paper-toggle-button>
+            `
+          : ""}
         <paper-toggle-button
           class="${this.exception && this.config.disable === undefined
             ? "inherited"
@@ -366,24 +384,26 @@ export class CchConfigEditor extends LitElement {
         >
           Display Header
         </paper-toggle-button>
-        ${!this.exception
-          ? html`
-              <paper-toggle-button
-                ?checked="${this._main_config !== false}"
-                .configValue="${"main_config"}"
-                @change="${this._valueChanged}"
-              >
-                Main Config
-              </paper-toggle-button>
-              <paper-toggle-button
-                ?checked="${this._background_image !== false}"
-                .configValue="${"background_image"}"
-                @change="${this._valueChanged}"
-              >
-                Background Fix
-              </paper-toggle-button>
-            `
-          : ""}
+        <paper-toggle-button
+          class="${this.exception && this.config.chevrons === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this._chevrons !== false}"
+          .configValue="${"chevrons"}"
+          @change="${this._valueChanged}"
+        >
+          Display Tab Chevrons
+        </paper-toggle-button>
+        <paper-toggle-button
+          class="${this.exception && this.config.redirect === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this._redirect !== false}"
+          .configValue="${"redirect"}"
+          @change="${this._valueChanged}"
+        >
+          Hidden Tab Redirect
+        </paper-toggle-button>
       </div>
 
       <h4>Button Visibility:</h4>

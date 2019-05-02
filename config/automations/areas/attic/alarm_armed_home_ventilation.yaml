@@ -1,0 +1,18 @@
+---
+# When the alarm gets armed home, we've went upstairs.
+#
+# Stop the central ventilation system when it is after 9:00PM and
+# the alarm when armed home. This means, we went to bed: Silence!
+#
+alias: attic_alarm_armed_home_ventilation
+initial_state: true
+trigger:
+  platform: state
+  entity_id: alarm_control_panel.home_alarm
+  to: 'armed_home'
+condition:
+  condition: time
+  after: '21:00:00'
+action:
+  service: fan.turn_off
+  entity_id: fan.attic_ventilation

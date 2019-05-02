@@ -42,6 +42,7 @@ config/notebooks
 # Ignore files created by IDE's
 .vscode
 .theia
+.Trash*
 
 # Specific keeps
 !.gitkeep

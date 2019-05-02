@@ -1,0 +1,111 @@
+---
+# Tuya Converted wallplug, not in use yet.
+esphome:
+  name: esp07
+  platform: ESP8266
+  board: esp8285
+
+wifi:
+  ssid: !secret wifi_not_ssid
+  password: !secret wifi_not_password
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+# Enable Web server
+web_server:
+  port: 80
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+text_sensor:
+  - platform: version
+    name: esphome_esp07_esphome_version
+
+# Extra sensor to keep track of plug uptime
+sensor:
+  - platform: uptime
+    name: esphome_esp07_uptime
+  - platform: wifi_signal
+    name: esphome_esp07_wifi_signal
+    update_interval: 10s
+  - platform: hlw8012
+    sel_pin:
+      number: GPIO12
+      inverted: true
+    cf_pin: GPIO04
+    cf1_pin: GPIO05
+    # Higher value gives lower watt readout
+    # current_resistor: 0.00155
+    # Lower value gives lower voltage readout
+    # voltage_divider: 871
+    current:
+      name: "energy_temp_Amperage"
+      unit_of_measurement: A
+      accuracy_decimals: 3
+      filters:
+        - calibrate_linear:
+            # Map 0.0 (from sensor) to 0.0 (true value)
+            - 0.0 -> 0.0
+            - 0.1 -> 0.055
+            - 0.9 -> 0.749
+    voltage:
+      name: "energy_temp_Voltage"
+      unit_of_measurement: V
+      accuracy_decimals: 3
+      filters:
+        - calibrate_linear:
+            # Map 0.0 (from sensor) to 0.0 (true value)
+            - 0.0 -> 0.0
+            - 610.6 -> 230.3
+    power:
+      name: "energy_temp_Wattage"
+      unit_of_measurement: W
+      accuracy_decimals: 3
+      id: "energy_temp_Wattage"
+      filters:
+        - calibrate_linear:
+            # Map 0.0 (from sensor) to 0.0 (true value)
+            - 0.0 -> 0.0
+            - 51.7 -> 10.05
+            - 1017.8 -> 170.7
+    change_mode_every: 8
+    update_interval: 5s
+  - platform: total_daily_energy
+    name: "energy_temp_Total Daily Energy"
+    power_id: "energy_temp_Wattage"
+    filters:
+      # Multiplication factor from W to kW is 0.001
+      - multiply: 0.001
+    unit_of_measurement: kWh
+
+binary_sensor:
+  - platform: gpio
+    name: "energy_temp_button"
+    pin:
+      number: GPIO3
+      inverted: true
+
+switch:
+  - platform: gpio
+    name: "energy_temp_Relay"
+    pin: GPIO14
+    restore_mode: ALWAYS_ON
+  - platform: gpio
+    name: "energy_temp_LED_Blue"
+    pin: GPIO1
+    inverted: true
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    name: "energy_temp_LED_Red"
+    pin: GPIO13
+    inverted: true
+    restore_mode: ALWAYS_OFF
+

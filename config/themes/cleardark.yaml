@@ -1,0 +1,63 @@
+---
+# Clear Theme Dark by naofireblade
+#
+# https://community.home-assistant.io/t/clear-theme-dark/100960
+#
+cleardark:
+  # Colors
+  text-color: '#DADADB'
+  text-medium-light-color: '#A0A2A8'
+  text-medium-color: '#80828A'
+  text-dark-color: '#6A6B74'
+  accent-color: '#008bef'
+  accent-medium-color: '#2686c1'
+  background-color: '#3b4049'
+  background-color-2: '#484E59'
+  background-card-color: '#434952'
+  border-color: '#383C46'
+
+  # Header
+  primary-color: '#363941'
+  text-primary-color: 'var(--text-color)'
+
+  # Left Menu
+  paper-listbox-background-color: 'var(--background-color)'
+  sidebar-icon-color: 'var(--text-medium-color)'
+  sidebar-selected-icon-color: 'var(--text-medium-light-color)'
+  sidebar-selected-text-color: 'var(--text-color)'
+
+  # UI
+  paper-card-header-color: 'var(--text-color)'
+  primary-background-color: 'var(--background-color)'
+  mdc-theme-primary: 'var(--accent-medium-color)'
+
+  # Card
+  paper-card-background-color: 'var(--background-card-color)'
+  dark-primary-color: 'var(--text-color)'
+  primary-text-color: 'var(--text-color)'
+  paper-listbox-color: 'var(--text-color)'
+  light-primary-color: 'var(--text-dark-color)'
+  secondary-text-color: 'var(--text-medium-color)'
+  disabled-text-color: 'var(--text-dark-color)'
+  paper-dialog-button-color: 'var(--text-color)'
+  secondary-background-color: 'var(--background-color-2)'
+
+  # Icons
+  paper-item-icon-color: 'var(--text-dark-color)'
+  paper-item-icon-active-color: 'var(--accent-color)'
+
+  # Switches
+  paper-toggle-button-checked-button-color: 'var(--text-medium-light-color)'
+  paper-toggle-button-checked-bar-color: '#009FFF'
+  paper-toggle-button-unchecked-button-color: 'var(--text-medium-light-color)'
+  paper-toggle-button-unchecked-bar-color: '#767682'
+
+  # Shadows
+  shadow-elevation-2dp_-_box-shadow: 'inset 0px 0px 0px 1px var(--border-color)'
+  shadow-elevation-4dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-6dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-8dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-10dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-12dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-14dp_-_box-shadow: 'var(--shadow-elevation-2dp_-_box-shadow)'
+  shadow-elevation-16dp_-_box-shadow: '0px 0px 0px 3px var(--text-dark-color)'

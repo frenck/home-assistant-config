@@ -1,0 +1,33 @@
+---
+# The Home Assistant Cloud allows you to quickly integrate your local
+# Home Assistant with various cloud services like Amazon Alexa and Google Home.
+#
+# https://www.home-assistant.io/components/cloud/
+#
+cloud:
+
+  # Customize the Google Assistant integration with the Naby Casa Cloud
+  google_actions:
+
+    # Entity specific configuration for Google Assistant.
+    # These are loaded from a separate directory.
+    entity_config: !include_dir_merge_named ../assistants/google
+
+    # Filters for entities to include/exclude from Google Assistant.
+    # These are loaded from a separate directory.
+    filter:
+      include_entities:
+        - climate.bedroom_master
+        - climate.living_room
+        - fan.attic_ventilation
+        - light.bedroom_master_ceiling
+        - light.kitchen_ceiling
+        - light.kitchen_cupboard
+        - light.living_room_bar
+        - light.living_room_spotlight
+        - light.living_room_television
+        - light.living_room_window
+        - light.office_desk
+        - light.office_window
+        - vacuum.living_room
+        # - light.bedroom_master_bedside

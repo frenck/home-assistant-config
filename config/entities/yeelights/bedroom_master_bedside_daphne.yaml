@@ -1,0 +1,10 @@
+---
+# We own a couple of Xiaomi/Yeelight bedside lamps.
+#
+# https://www.home-assistant.io/components/light.yeelight/
+#
+!secret yeelight_bedroom_master_bedside_daphne_host:
+  name: bedroom_master_bedside_daphne
+  transition: 2500
+  use_music_mode: false
+  save_on_change: false

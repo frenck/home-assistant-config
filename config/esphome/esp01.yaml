@@ -10,15 +10,10 @@ esphome:
   platform: ESP32
   board: lolin32
 
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  manual_ip:
-    static_ip: !secret esphome_esp01_static_ip
-    gateway: !secret wifi_gateway
-    subnet: !secret wifi_subnet
-    dns1: !secret wifi_dns1
-    dns2: !secret wifi_dns2
+  wifi:
+    ssid: !secret wifi_not_ssid
+    password: !secret wifi_not_password
+  
 
 logger:
 
@@ -34,18 +29,6 @@ sensor:
     update_interval: 10s
   - platform: uptime
     name: "Uptime"
-  - platform: xiaomi_miflora
-    mac_address: C4:7C:8D:66:49:46
-    temperature:
-      name: "Xiaomi MiFlora Temperature"
-    moisture:
-      name: "Xiaomi MiFlora Moisture"
-    illuminance:
-      name: "Xiaomi MiFlora Illuminance"
-    conductivity:
-      name: "Xiaomi MiFlora Soil Conductivity"
-    battery_level:
-      name: "Xiaomi MiFlora Battery Level"
 
 switch:
   - platform: restart
@@ -56,4 +39,4 @@ text_sensor:
     name: "ESPHome Version"
 
 esp32_ble_tracker:
-
+  scan_interval: 300s

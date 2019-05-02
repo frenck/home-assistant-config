@@ -1,0 +1,24 @@
+---
+# This automation turns off our central ventilation
+# system, as soon as the visit to the toilet has
+# been 5 minutes ago.
+#
+# This automation does not check if the fan was switched
+# on, since that doesn't matter that much.
+# However, it must not be running because of a high humidity
+# in our bathroom.
+#
+alias: restroom_ventilation_off
+trigger:
+  platform: state
+  entity_id: light.restroom
+  to: 'off'
+  for:
+    minutes: 5
+condition:
+  condition: numeric_state
+  entity_id: sensor.bathroom_humidity
+  below: 65
+action:
+  - service: fan.turn_off
+    entity_id: fan.attic_ventilation

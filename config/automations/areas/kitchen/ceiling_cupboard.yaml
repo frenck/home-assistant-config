@@ -7,8 +7,8 @@
 #
 alias: kitchen_ceiling_cupboard
 trigger:
-  - platform: state
-    entity_id: light.kitchen_ceiling
+  platform: state
+  entity_id: light.kitchen_ceiling
 action:
   service_template: >-
     {%

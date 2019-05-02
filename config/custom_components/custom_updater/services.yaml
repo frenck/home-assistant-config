@@ -1,0 +1,10 @@
+check_all:
+  description: Check the status of all custom elements
+install:
+  description: Installs a new element
+  fields:
+    element:
+      description: Name(s) of the element to install
+      example: 'sensor.authenticated'
+update_all:
+  description: Updates all currently installed elements

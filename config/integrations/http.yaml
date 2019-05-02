@@ -1,0 +1,47 @@
+---
+# The http component serves all files and data required for the
+# Home Assistant frontend.
+#
+# https://www.home-assistant.io/components/http/
+#
+http:
+  # Contains the URL that Home Assistant is available on the internet.
+  base_url: !secret http_base_url
+
+  # Lets Home Assistant only listen on a specific IP/host.
+  # THIS SHOULD NOT BE USED ON HASS.IO!
+  #
+  # server_host: !secret http_server_host
+
+  # Sets a port number to use for Home Assistant to use (default 8123).
+  server_port: !secret http_server_port
+
+  # Home Assistant does not use SSL, I use a reverse proxy to handle that.
+  # The advantage of this method is that this allows me to access HA
+  # without SSL on my internal network, thus avoiding SSL warning.
+  #
+  # ssl_certificate: !secret http_ssl_certificate
+  # ssl_key: !secret http_ssl_key
+
+  # A list of origin domain names to allow CORS requests from.
+  cors_allowed_origins: !secret http_cors_allowed_origins
+
+  # List of trusted networks, consisting of IP addresses or networks,
+  # that are allowed to bypass password protection when accessing
+  # Home Assistant.
+  trusted_networks: !secret http_trusted_networks
+
+  # Enable parsing of the X-Forwarded-For header, passing on the client’s
+  # correct IP address, since I'm using a proxied setup.
+  use_x_forwarded_for: true
+
+  # List of trusted proxies, consisting of IP addresses or networks,
+  # that are allowed to set the X-Forwarded-For header.
+  trusted_proxies: !secret http_trusted_proxies
+
+  # Enables additional IP filtering.
+  ip_ban_enabled: true
+
+  # Number of failed login attempts from a single IP after which it will
+  # be automatically banned.
+  login_attempts_threshold: 5

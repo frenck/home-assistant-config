@@ -1,5 +1,0 @@
----
-platform: html5
-name: html5
-gcm_api_key: !secret notify_html5_gcm_api_key
-gcm_sender_id: !secret notify_html5_gcm_sender_id

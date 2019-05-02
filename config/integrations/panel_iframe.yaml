@@ -1,0 +1,11 @@
+---
+# The panel_iframe support allows you to add additional panels to your
+# Home Assistant frontend. The panels are listed in the sidebar and can
+# contain external resources like the web frontend of your router,
+# your monitoring system, or your media server.
+#
+# This configration loads up all my panels
+#
+# https://www.home-assistant.io/components/panel_iframe/
+#
+panel_iframe: !include_dir_merge_named ../panels/iframes

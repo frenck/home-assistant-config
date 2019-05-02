@@ -1,0 +1,11 @@
+---
+#
+# The yeelight component allows you to control your Yeelight Wifi
+# bulbs with Home Assistant.
+#
+# This loads up my bulbs.
+#
+# https://www.home-assistant.io/components/yeelight/
+#
+yeelight:
+  devices: !include_dir_merge_named ../entities/yeelights

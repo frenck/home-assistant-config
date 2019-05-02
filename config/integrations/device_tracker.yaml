@@ -1,0 +1,9 @@
+---
+# Home Assistant can get information from various devices. These can be used,
+# for example, to track the location of your mobile phone.
+#
+# This configuration loads up my device trackers
+#
+# https://www.home-assistant.io/components/device_tracker/
+#
+device_tracker: !include_dir_list ../entities/device_trackers

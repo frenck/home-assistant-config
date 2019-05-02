@@ -1,0 +1,27 @@
+---
+# When the alarm gets armed home, we've went upstairs.
+#
+# Run the vacuum cleaner if it has not ran the past 4 hours.
+# Since we are home, set the fan speed of the vacuum to quiet.
+#
+alias: living_room_alarm_armed_home_vacuum
+initial_state: true
+trigger:
+  platform: state
+  entity_id: alarm_control_panel.home_alarm
+  to: 'armed_home'
+  for:
+    minutes: 15
+condition:
+  condition: state
+  entity_id: vacuum.living_room
+  state: 'docked'
+  for:
+    hours: 4
+action:
+  - service: vacuum.start
+    entity_id: vacuum.living_room
+  - service: vacuum.set_fan_speed
+    data:
+      entity_id: vacuum.living_room
+      fan_speed: 'Quiet'

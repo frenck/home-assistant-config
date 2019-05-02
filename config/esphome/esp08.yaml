@@ -1,0 +1,91 @@
+---
+# Tuya Converted wallplug, not in use yet.
+esphome:
+  name: esp08
+  platform: ESP8266
+  board: esp8285
+
+wifi:
+  ssid: !secret wifi_not_ssid
+  password: !secret wifi_not_password
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+# Enable Web server
+web_server:
+  port: 80
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+text_sensor:
+  - platform: version
+    name: esphome_esp08_esphome_version
+
+# Extra sensor to keep track of plug uptime
+sensor:
+  - platform: uptime
+    name: esphome_esp08_uptime
+  - platform: wifi_signal
+    name: esphome_esp08_wifi_signal
+    update_interval: 10s
+  - platform: hlw8012
+    sel_pin:
+      number: GPIO12
+      inverted: true
+    cf_pin: GPIO04
+    cf1_pin: GPIO05
+    # Higher value gives lower watt readout
+    current_resistor: 0.00155
+    # Lower value gives lower voltage readout
+    voltage_divider: 871
+    current:
+      name: "energy_temp_Amperage"
+      unit_of_measurement: A
+    voltage:
+      name: "energy_temp_Voltage"
+      unit_of_measurement: V
+    power:
+      name: "energy_temp_Wattage"
+      unit_of_measurement: W
+      id: "energy_temp_Wattage"
+    change_mode_every: 8
+    update_interval: 10s
+  - platform: total_daily_energy
+    name: "energy_temp_Total Daily Energy"
+    power_id: "energy_temp_Wattage"
+    filters:
+      # Multiplication factor from W to kW is 0.001
+      - multiply: 0.001
+    unit_of_measurement: kWh
+
+binary_sensor:
+  - platform: gpio
+    name: "energy_temp_button"
+    pin:
+      number: GPIO3
+      inverted: true
+
+switch:
+  - platform: gpio
+    name: "energy_temp_Relay"
+    pin: GPIO14
+    restore_mode: ALWAYS_ON
+  - platform: gpio
+    name: "energy_temp_LED_Blue"
+    pin: GPIO1
+    inverted: true
+    restore_mode: ALWAYS_OFF
+  - platform: gpio
+    name: "energy_temp_LED_Red"
+    pin: GPIO13
+    inverted: true
+    restore_mode: ALWAYS_OFF
+
