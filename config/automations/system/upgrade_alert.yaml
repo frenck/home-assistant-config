@@ -1,5 +1,5 @@
 ---
-# This alers me on my iPhone when a new release
+# This alerts me on my iPhone when a new release
 # of Home Assistant for Hass.io is released.
 #
 alias: system_upgrade_alert
