@@ -13,7 +13,6 @@ esphome:
   wifi:
     ssid: !secret wifi_not_ssid
     password: !secret wifi_not_password
-  
 
 logger:
 
