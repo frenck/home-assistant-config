@@ -15,7 +15,7 @@ homekit:
 
   # Configuration for specific entities. Allows customization of names and types
   # These are imported from another folder, to decouple them from the packages.
-  entity_config: !include_dir_merge_named ../assistant/siri
+  entity_config: !include_dir_merge_named ../assistants/siri
 
   # Filters for entities to be included / excluded from HomeKit.
   filter:
