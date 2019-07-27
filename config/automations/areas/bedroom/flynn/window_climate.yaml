@@ -11,7 +11,7 @@ trigger:
   platform: state
   entity_id: binary_sensor.bedroom_flynn_window
 action:
-  service: climate.set_operation_mode
+  service: climate.set_hvac_mode
   data_template:
     entity_id: climate.bedroom_flynn
     operation_mode: >-
