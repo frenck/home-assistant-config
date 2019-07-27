@@ -27,52 +27,91 @@ uart:
   rx_pin: RX
   baud_rate: 4800
 
+# Enable Home Assistant API
 api:
   password: !secret esphome_esp06_api_password
 
+# Enable over-the-air updates
 ota:
   password: !secret esphome_esp06_ota_password
 
+# Enable Web server
 web_server:
   port: 80
 
+# Sync time with Home Assistant
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+# Text sensors with general information
+text_sensor:
+  - platform: version
+    name: esphome_esp06_version
+  - platform: wifi_info
+    ip_address:
+      name: esphome_esp06_ip
+    ssid:
+      name: esphome_esp06_ssid
+    bssid:
+      name: esphome_esp06_bssid
+
 sensor:
+  # Uptime sensor
+  - platform: uptime
+    name: esphome_esp06_uptime
+  # WiFi Signal sensor
   - platform: wifi_signal
     name: esphome_esp06_wifi_signal
     update_interval: 10s
-  - platform: uptime
-    name: esphome_esp06_uptime
   - platform: cse7766
     update_interval: 5s
+    # Current sensor
     current:
-      name: scullery_dryer_current
+      name: esphome_esp06_current
+      unit_of_measurement: A
+      accuracy_decimals: 3
+      filters:
+        # Make everything below 0.01A appear as just 0A.
+        - lambda: if (x < 0.01) return 0; else return x;
+    # Voltage sensor
     voltage:
-      name: scullery_dryer_voltage
+      name: esphome_esp06_voltage
+      unit_of_measurement: V
+      accuracy_decimals: 1
+    # Power sensor
     power:
       id: power
-      name: scullery_dryer_power
-
-text_sensor:
-  - platform: version
-    name: esphome_esp06_esphome_version
+      name: esphome_esp06_power
+      unit_of_measurement: W
+      accuracy_decimals: 0
+      filters:
+        # Make everything below 1W appear as just 0W.
+        - lambda: if (x < 2) return 0; else return x;
+  # Total daily energy sensor
+  - platform: total_daily_energy
+    name: esphome_esp06_daily_energy
+    power_id: power
+    filters:
+      # Multiplication factor from W to kW is 0.001
+      - multiply: 0.001
+    unit_of_measurement: kWh
 
 switch:
+  # Switch to restart the plug
   - platform: restart
     name: esphome_esp06_restart
-  # This is the actual exposed power switch
+  # Switch to toggle the relay
   - platform: gpio
-    name: scullery_dryer
     id: relay
+    name: esphome_esp06_switch
     pin: GPIO12
-    restore_mode: ALWAYS_ON
-    on_turn_on:
-      - light.turn_on: led
-    on_turn_off:
-      - light.turn_off: led
 
 binary_sensor:
+  # Binary sensor for the button press
   - platform: gpio
     id: button
+    name: esphome_esp06_button
     pin:
       number: GPIO0
       mode: INPUT_PULLUP
@@ -81,27 +120,21 @@ binary_sensor:
       - switch.toggle: relay
   # This binary sensor tells if the Dryer is powered on itself (display)
   - platform: template
-    name: scullery_dryer_on
+    name: esphome_esp06_on
     filters:
       - delayed_off: 10s
     lambda: |-
       return id(power).state > 2;
   # This binary sensor tells if the Dryer is running or not
   - platform: template
-    name: scullery_dryer_running
+    name: esphome_esp06_running
     filters:
       - delayed_off: 15s
     lambda: |-
       return id(power).state > 75;
 
-output:
-  - platform: esp8266_pwm
-    id: blue_led
-    pin:
-      number: GPIO13
-      inverted: true
-
-light:
-  - platform: monochromatic
-    output: blue_led
-    id: led
+# Uses the blue LED as status indicator
+status_led:
+  pin:
+    number: GPIO13
+    inverted: true

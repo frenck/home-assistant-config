@@ -22,20 +22,48 @@ api:
 ota:
   password: !secret esphome_esp01_ota_password
 
+web_server:
+  port: 80
+
 sensor:
   - platform: wifi_signal
-    name: "WiFi Signal"
+    name: esphome_esp01_wifi_signal
     update_interval: 10s
   - platform: uptime
-    name: "Uptime"
+    name: esphome_esp01_uptime
+  - platform: dht
+    pin: 23
+    model: DHT22
+    temperature:
+      name: esphome_esp01_temperature
+    humidity:
+      name: esphome_esp01_humidity
+    update_interval: 10s
 
 switch:
   - platform: restart
-    name: "Restart"
+    name: esphome_esp01_restart
+
+output:
+  - platform: ledc
+    pin: 13
+    inverted: true
+    id: esphome_esp01_light_ledc
+
+light:
+  - platform: monochromatic
+    output: esphome_esp01_light_ledc
+    name: esphome_esp01_light
+
+binary_sensor:
+  - platform: gpio
+    pin: 12
+    name: esphome_esp01_light_motion
+    device_class: motion
 
 text_sensor:
   - platform: version
-    name: "ESPHome Version"
+    name: esphome_esp01_version
 
 esp32_ble_tracker:
   scan_interval: 300s
