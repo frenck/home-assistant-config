@@ -1,9 +1,8 @@
 ---
-id: outside
+path: outside
 title: Buiten
 icon: mdi:nature-people
 cards:
-  - !include ../cards/compact_custom_header.yaml
   - type: custom:weather-card
     entity: weather.dark_sky
-    icons: "/local/lovelace/icons/"
+    icons: "/community_plugin/weather-card/icons/"

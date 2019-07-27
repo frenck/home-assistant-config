@@ -1,5 +1,5 @@
 ---
-id: upstairs
+path: upstairs
 title: Boven
 icon: mdi:stairs
 popup_cards:
@@ -19,7 +19,6 @@ popup_cards:
       type: thermostat
       entity: climate.bedroom_lilly
 cards:
-  - !include ../cards/compact_custom_header.yaml
   - type: vertical-stack
     cards:
       - type: horizontal-stack
@@ -87,12 +86,14 @@ cards:
       - type: horizontal-stack
         cards:
           - type: custom:mini-graph-card
-            entities: sensor.bathroom_temperature
+            entities: 
+              - sensor.bathroom_temperature
             line_color: red
             line_width: 8
             font_size: 75
           - type: custom:mini-graph-card
-            entities: sensor.bathroom_humidity
+            entities: 
+              - sensor.bathroom_humidity
             line_color: var(--primary-color)
             line_width: 8
             font_size: 75
@@ -103,56 +104,56 @@ cards:
       - light.landing_ceiling
 
   - type: custom:mini-graph-card
-    entities: sensor.bedroom_lilly_temperature
+    entities: 
+      - sensor.bedroom_lilly_temperature
     location_icon: left
     location_state: center
     show:
-      fill: false
+      fill: fade
       extrema: true
     height: 75
     animate: true
     hour24: true
     line_color: var(--primary-color)
-    line_color_above:
+    color_thresholds:
       - value: 19
         color: red
-    line_color_below:
       - value: 15
         color: white
 
   - type: custom:mini-graph-card
-    entities: sensor.bedroom_flynn_temperature
+    entities: 
+      - sensor.bedroom_flynn_temperature
     location_icon: left
     location_state: center
     show:
-      fill: false
+      fill: fade
       extrema: true
     height: 75
     animate: true
     hour24: true
     line_color: var(--primary-color)
-    line_color_above:
+    color_thresholds:
       - value: 19
         color: red
-    line_color_below:
       - value: 15
         color: white
 
   - type: custom:mini-graph-card
-    entities: sensor.bedroom_master_temperature
+    entities: 
+      - sensor.bedroom_master_temperature
     location_icon: left
     location_state: center
     show:
-      fill: false
+      fill: fade
       extrema: true
     height: 75
     animate: true
     hour24: true
     line_color: var(--primary-color)
-    line_color_above:
+    color_thresholds:
       - value: 20
         color: red
-    line_color_below:
       - value: 15
         color: white
 

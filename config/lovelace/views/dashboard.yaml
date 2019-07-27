@@ -1,21 +1,5 @@
 ---
-id: dashboard
+path: dashboard
 title: Dashboard
 icon: mdi:home-assistant
-cards:
-  - !include ../cards/compact_custom_header_main.yaml
-  - type: entity-filter
-    name: Yard net
-    entities:
-      - light.livingroom_bar
-      - light.livingroom_computer_corner
-      - light.livingroom_desk
-      - light.livingroom_spotlight
-      - light.livingroom_tv
-      - light.livingroom_window
-    show_empty: false
-    card:
-      type: glance
-      show_state: false
-    state_filter:
-      - 'on'
+cards: []

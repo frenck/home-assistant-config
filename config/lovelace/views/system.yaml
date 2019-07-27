@@ -1,0 +1,30 @@
+---
+path: system
+title: System
+icon: mdi:lan
+cards:
+  - type: custom:vertical-stack-in-card
+    cards:
+      - type: custom:mini-graph-card
+        name: Processing speed
+        entities:
+          - sensor.adguard_average_processing_speed
+        location_icon: left
+        location_state: center
+        show:
+          fill: fade
+          extrema: true
+        height: 75
+        animate: true
+        hour24: true
+        # line_color: var(--primary-color)
+        color_thresholds:
+          - value: 10
+            color: '#FF0000'
+          - value: 20
+            color: '#00FF00'
+          - value: 25
+            color: '#0000FF'
+          - value: 30
+            color: '#EEEEEE'
+

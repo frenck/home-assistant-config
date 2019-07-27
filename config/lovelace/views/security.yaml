@@ -1,9 +1,8 @@
 ---
-id: security
+path: security
 title: Alarm
-icon: mdi:security-home
+icon: mdi:shield-home
 cards:
-  - !include ../cards/compact_custom_header.yaml
   - type: alarm-panel
     entity: alarm_control_panel.home_alarm
     title: Alarm System
