@@ -2,7 +2,6 @@
 # Turns down bedroom heating on Lilly's room during the day.
 #
 alias: bedroom_lilly_climate_low
-initial_state: true
 trigger:
   platform: time
   at: "07:00:00"

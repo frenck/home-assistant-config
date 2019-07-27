@@ -2,7 +2,6 @@
 # When it is getting dark outside...
 #
 alias: living_room_sunset
-initial_state: true
 trigger:
   platform: sun
   event: sunset

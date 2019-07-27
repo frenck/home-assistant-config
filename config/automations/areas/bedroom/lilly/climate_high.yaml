@@ -3,7 +3,6 @@
 # goes to bed at 7PM.
 #
 alias: bedroom_lilly_climate_high
-initial_state: true
 trigger:
   platform: time
   at: "17:30:00"

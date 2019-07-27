@@ -6,7 +6,6 @@
 # on other days, we might stay in bed a little longer, so 10AM in that case.
 #
 alias: bedroom_master_climate_low
-initial_state: true
 trigger:
   - platform: time
     at: "07:00:00"

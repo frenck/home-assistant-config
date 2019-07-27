@@ -5,7 +5,6 @@
 # manually (e.g., using Google Home).
 #
 alias: living_room_vacuum_docked
-initial_state: true
 trigger:
   platform: state
   entity_id: vacuum.living_room

@@ -3,7 +3,6 @@
 # Turn down the heating, lights and other devices.
 #
 alias: living_room_alarm_armed
-initial_state: true
 trigger:
   - platform: state
     entity_id: alarm_control_panel.home_alarm

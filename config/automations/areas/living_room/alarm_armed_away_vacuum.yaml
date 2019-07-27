@@ -4,7 +4,6 @@
 # Run the vacuum cleaner if it has not ran the past 4 hours
 #
 alias: living_room_alarm_armed_away_vacuum
-initial_state: true
 trigger:
   platform: state
   entity_id: alarm_control_panel.home_alarm

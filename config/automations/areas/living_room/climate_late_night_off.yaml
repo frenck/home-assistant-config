@@ -2,7 +2,6 @@
 # Turns off my heating way before bedtime.
 #
 alias: living_room_climate_late_night_off
-initial_state: true
 trigger:
   platform: time
   at: "22:00:00"

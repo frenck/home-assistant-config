@@ -6,7 +6,6 @@
 # device to trigger on.
 #
 alias: livingroom_theater_lights_on
-initial_state: true
 trigger:
   - platform: state
     entity_id: media_player.livingroom_shield

@@ -4,7 +4,6 @@
 # We don't want that thing to be in our way when home.
 #
 alias: living_room_alarm_disarmed_vacuum
-initial_state: true
 trigger:
   platform: state
   entity_id: alarm_control_panel.home_alarm

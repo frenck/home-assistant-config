@@ -5,7 +5,6 @@
 # Since we are home, set the fan speed of the vacuum to quiet.
 #
 alias: living_room_alarm_armed_home_vacuum
-initial_state: true
 trigger:
   platform: state
   entity_id: alarm_control_panel.home_alarm

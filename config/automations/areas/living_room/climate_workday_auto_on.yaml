@@ -2,7 +2,6 @@
 # Turns on my heating on workdays, to ensure we get a warm welcome home.
 #
 alias: living_room_climate_workday_auto_on
-initial_state: true
 trigger:
   platform: time
   at: "17:00:00"

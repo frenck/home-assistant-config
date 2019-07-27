@@ -5,7 +5,6 @@
 # the alarm when armed home. This means, we went to bed: Silence!
 #
 alias: attic_alarm_armed_home_ventilation
-initial_state: true
 trigger:
   platform: state
   entity_id: alarm_control_panel.home_alarm
