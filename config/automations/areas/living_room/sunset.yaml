@@ -1,0 +1,14 @@
+---
+# When it is getting dark outside...
+#
+alias: living_room_sunset
+initial_state: true
+trigger:
+  platform: sun
+  event: sunset
+  offset: '-00:15:00'
+action:
+  - service: light.turn_on
+    entity_id: light.livingroom_window
+  - service: switch.turn_on
+    entity_id: switch.circadian_lighting_living_room_circadian_lighting
