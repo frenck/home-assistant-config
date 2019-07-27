@@ -1,0 +1,14 @@
+---
+# Light group: Office
+#
+# This light controls all the other lights in my office
+#
+# https://www.home-assistant.io/components/light.group/
+#
+platform: group
+name: office
+entities:
+  - light.office_desk
+  - light.office_window_1
+  - light.office_window_2
+  - light.office_window_3
