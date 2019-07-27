@@ -86,13 +86,13 @@ cards:
       - type: horizontal-stack
         cards:
           - type: custom:mini-graph-card
-            entities: 
+            entities:
               - sensor.bathroom_temperature
             line_color: red
             line_width: 8
             font_size: 75
           - type: custom:mini-graph-card
-            entities: 
+            entities:
               - sensor.bathroom_humidity
             line_color: var(--primary-color)
             line_width: 8
@@ -104,7 +104,7 @@ cards:
       - light.landing_ceiling
 
   - type: custom:mini-graph-card
-    entities: 
+    entities:
       - sensor.bedroom_lilly_temperature
     location_icon: left
     location_state: center
@@ -122,7 +122,7 @@ cards:
         color: white
 
   - type: custom:mini-graph-card
-    entities: 
+    entities:
       - sensor.bedroom_flynn_temperature
     location_icon: left
     location_state: center
@@ -140,7 +140,7 @@ cards:
         color: white
 
   - type: custom:mini-graph-card
-    entities: 
+    entities:
       - sensor.bedroom_master_temperature
     location_icon: left
     location_state: center
