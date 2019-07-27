@@ -1,0 +1,14 @@
+---
+# When it is getting dark outside...
+#
+alias: garden_sunset
+initial_state: true
+trigger:
+  platform: sun
+  event: sunset
+  offset: '-00:15:00'
+action:
+  - service: light.turn_on
+    entity_id: light.garden_wall
+  - service: switch.turn_on
+    entity_id: switch.circadian_lighting_garden_circadian_lighting
