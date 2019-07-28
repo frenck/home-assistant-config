@@ -13,19 +13,28 @@ influxdb:
   host: a0d7b954-influxdb
   port: 8086
 
-  # The database name to store all the metrics in
+  # The database name to store all the metrics in.
   database: homeassistant
 
-  # Authentication credentials
+  # Authentication credentials.
   username: !secret influxdb_username
   password: !secret influxdb_password
 
   # Max number of retries in case of a failure
   max_retries: 3
 
+  # The list of attribute names which should be reported as tags
+  # and not fields to InfluxDB.
+  # I've added `device_class` tag and the Z-Wave `node_id`
+  tags_attributes:
+    - "device_class"
+    - "node_id"
+
   # I like to specify (whitelist) each thing I'd like to put
   # into InfluxDB, to keep the database as clean as possible.
   include:
     entities:
-      - sensor.bathroom_humidity
-      - sensor.bathroom_temperature
+      - climate.bedroom_flynn
+      - climate.bedroom_lilly
+      - climate.bedroom_master
+      - climate.living_room
