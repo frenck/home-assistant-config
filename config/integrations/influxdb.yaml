@@ -35,10 +35,34 @@ influxdb:
   include:
     entities:
       # Climate
+      - binary_sensor.attic_boiler_burner
+      - binary_sensor.attic_boiler_preheating
       - climate.bedroom_flynn
       - climate.bedroom_lilly
       - climate.bedroom_master
       - climate.living_room
+      - sensor.attic_boiler_modulation_level
+      - sensor.bathroom_humidity
+      - sensor.bathroom_temperature
+
+      # Energy
+      - sensor.house_average_daily_gas_usage
+      - sensor.house_average_daily_power_usage
+      - sensor.house_average_gas_usage
+      - sensor.house_average_power_usage
+      - sensor.house_average_solar_production_to_grid
+      - sensor.house_current_gas_usage
+      - sensor.house_current_power_usage
+      - sensor.house_current_solar_production
+      - sensor.house_gas_meter
+      - sensor.house_gas_usage_today
+      - sensor.house_max_solar_production
+      - sensor.house_power_meter_feed_in_tariff_1
+      - sensor.house_power_meter_feed_in_tariff_2
+      - sensor.house_power_meter_feed_out_tariff_1
+      - sensor.house_power_meter_feed_out_tariff_2
+      - sensor.house_power_usage_today
+      - sensor.house_solar_production_to_grid
 
       # Infrastructure
       - sensor.infrastructure_adguard_average_processing_speed
@@ -48,3 +72,6 @@ influxdb:
       - sensor.infrastructure_adguard_parental_control_blocked
       - sensor.infrastructure_adguard_rules_count
       - sensor.infrastructure_adguard_safe_browsing_blocked
+
+      # Other
+      - binary_sensor.bathroom_hot_tap_water
