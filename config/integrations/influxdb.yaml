@@ -20,12 +20,12 @@ influxdb:
   username: !secret influxdb_username
   password: !secret influxdb_password
 
-  # Max number of retries in case of a failure
+  # Max number of retries in case of a failure.
   max_retries: 3
 
   # The list of attribute names which should be reported as tags
   # and not fields to InfluxDB.
-  # I've added `device_class` tag and the Z-Wave `node_id`
+  # I've added `device_class` tag and the Z-Wave `node_id`.
   tags_attributes:
     - "device_class"
     - "node_id"
@@ -34,7 +34,17 @@ influxdb:
   # into InfluxDB, to keep the database as clean as possible.
   include:
     entities:
+      # Climate
       - climate.bedroom_flynn
       - climate.bedroom_lilly
       - climate.bedroom_master
       - climate.living_room
+
+      # Infrastructure
+      - sensor.infrastructure_adguard_average_processing_speed
+      - sensor.infrastructure_adguard_dns_queries
+      - sensor.infrastructure_adguard_dns_queries_blocked
+      - sensor.infrastructure_adguard_dns_queries_blocked_ratio
+      - sensor.infrastructure_adguard_parental_control_blocked
+      - sensor.infrastructure_adguard_rules_count
+      - sensor.infrastructure_adguard_safe_browsing_blocked
