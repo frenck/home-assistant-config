@@ -1,5 +1,10 @@
 ---
-# Tuya Converted wallplug, not in use yet.
+# Tuya Converted wallplug: Gosund SP1
+# https://frenck.link/gosund-sp1
+#
+# This plug is connected to our kitchen fridge
+# and is mainly used for power monitoring.
+#
 esphome:
   name: esp07
   platform: ESP8266
@@ -133,6 +138,7 @@ switch:
   - platform: gpio
     id: relay
     name: esphome_esp07_switch
+    restore_mode: ALWAYS_ON
     pin: GPIO14
     on_turn_on:
       - light.turn_on: led
