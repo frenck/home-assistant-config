@@ -1,5 +1,10 @@
 ---
-# Tuya Converted wallplug, not in use yet.
+# Tuya Converted wallplug: Gosund SP1
+# https://frenck.link/gosund-sp1
+#
+# This plug is connected to our freezer and is
+# mainly used for power monitoring.
+#
 esphome:
   name: esp08
   platform: ESP8266
@@ -135,6 +140,7 @@ switch:
     id: relay
     name: esphome_esp08_switch
     pin: GPIO14
+    restore_mode: ALWAYS_ON
     on_turn_on:
       - light.turn_on: led
     on_turn_off:
