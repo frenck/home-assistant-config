@@ -1,5 +1,10 @@
 ---
-# Tuya Converted wallplug, not in use yet.
+# Tuya Converted wallplug: Gosund SP1
+# https://frenck.link/gosund-sp1
+#
+# This plug is connected to our boiler and is
+# mainly used for power monitoring.
+#
 esphome:
   name: esp09
   platform: ESP8266
@@ -132,6 +137,7 @@ switch:
   - platform: gpio
     id: relay
     name: esphome_esp09_switch
+    restore_mode: RESTORE_DEFAULT_ON
     pin: GPIO14
     on_turn_on:
       - light.turn_on: led
