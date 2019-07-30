@@ -1,0 +1,8 @@
+---
+# These are the entities from Flynn's bedroom that I want
+# to store into InfluxDB.
+#
+# I like to specify (whitelist) each entity to store,
+# since that keeps my InfluxDB clean and small.
+#
+- climate.bedroom_flynn

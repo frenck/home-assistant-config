@@ -1,0 +1,14 @@
+---
+# These are the infrastructure entities that I want
+# to store into InfluxDB.
+#
+# I like to specify (whitelist) each entity to store,
+# since that keeps my InfluxDB clean and small.
+#
+- sensor.infrastructure_adguard_average_processing_speed
+- sensor.infrastructure_adguard_dns_queries
+- sensor.infrastructure_adguard_dns_queries_blocked
+- sensor.infrastructure_adguard_dns_queries_blocked_ratio
+- sensor.infrastructure_adguard_parental_control_blocked
+- sensor.infrastructure_adguard_rules_count
+- sensor.infrastructure_adguard_safe_browsing_blocked

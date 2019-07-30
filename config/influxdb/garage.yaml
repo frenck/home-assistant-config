@@ -1,0 +1,13 @@
+---
+# These are the entities from my garage that I want
+# to store into InfluxDB.
+#
+# I like to specify (whitelist) each entity to store,
+# since that keeps my InfluxDB clean and small.
+#
+- sensor.garage_freezer_current
+- sensor.garage_freezer_daily_energy
+- sensor.garage_freezer_power
+- sensor.garage_freezer_uptime
+- sensor.garage_freezer_voltage
+- sensor.garage_freezer_wifi_signal
