@@ -1,10 +1,10 @@
-export const LitElement = Object.getPrototypeOf(
+const LitElement = Object.getPrototypeOf(
   customElements.get("ha-panel-lovelace")
 );
-export const html = LitElement.prototype.html;
-export const hass = document.querySelector("home-assistant").hass;
+const html = LitElement.prototype.html;
+const hass = document.querySelector("home-assistant").hass;
 
-export const fireEvent = (node, type, detail, options) => {
+const fireEvent = (node, type, detail, options) => {
   options = options || {};
   detail = detail === null || detail === undefined ? {} : detail;
   const event = new Event(type, {
@@ -17,7 +17,7 @@ export const fireEvent = (node, type, detail, options) => {
   return event;
 };
 
-export const defaultConfig = {
+const defaultConfig = {
   header: true,
   disable: false,
   menu: "show",
@@ -49,7 +49,8 @@ export const defaultConfig = {
   swipe_skip: "",
   swipe_wrap: true,
   swipe_prevent_default: false,
-  warning: true
+  warning: true,
+  compact_header: true
 };
 
 let root = document.querySelector("home-assistant");
@@ -65,7 +66,7 @@ root = root && root.querySelector("hui-root");
 const lovelace = root.lovelace;
 root = root.shadowRoot;
 
-export const newSidebar = !root.querySelector("hui-notification-drawer");
+const newSidebar = !root.querySelector("hui-notification-drawer");
 
 let notifications = notificationCount();
 const header = root.querySelector("app-header");
@@ -91,6 +92,7 @@ function run() {
   const tabs = tabContainer
     ? Array.from(tabContainer.querySelectorAll("paper-tab"))
     : [];
+
   if (firstRun || buttons == undefined) {
     buttons = getButtonElements(tabContainer);
   }
@@ -100,20 +102,22 @@ function run() {
 
   if (!disable && !urlDisable) {
     insertEditMenu(tabs);
-    if (!editMode) {
-      styleButtons(tabs);
-      styleHeader(tabContainer, tabs, header);
-      hideTabs(tabContainer, tabs);
-      defaultTab(tabs, tabContainer);
-    }
-    if (firstRun) sidebarMod();
     hideMenuItems();
-    for (const button in buttons) {
+    styleHeader(tabContainer, tabs, header);
+    styleButtons(tabs);
+    defaultTab(tabs, tabContainer);
+    hideTabs(tabContainer, tabs);
+    for (let button in buttons) {
       if (cchConfig[button] == "clock") insertClock(button);
+    }
+    if (firstRun) {
+      sidebarMod();
+      conditionalStyling(tabs, header);
     }
     if (!editMode) tabContainerMargin(tabContainer);
     if (cchConfig.swipe) swipeNavigation(tabs, tabContainer);
   }
+
   if (!disable && firstRun) observers(tabContainer, tabs, urlDisable, header);
   fireEvent(header, "iron-resize");
   firstRun = false;
@@ -147,21 +151,31 @@ function buildConfig(config) {
   ) {
     delete config.hide_tabs;
   }
-
   return { ...defaultConfig, ...config, ...exceptionConfig };
 
   function countMatches(conditions) {
     const userVars = { user: hass.user.name, user_agent: navigator.userAgent };
     let count = 0;
     for (const cond in conditions) {
-      if (
-        userVars[cond] == conditions[cond] ||
-        (cond == "user_agent" && userVars[cond].includes(conditions[cond])) ||
-        (cond == "media_query" && window.matchMedia(conditions[cond]).matches)
-      ) {
-        count++;
+      if (cond == "user" && conditions[cond].includes(",")) {
+        let userList = conditions[cond].split(/[ ,]+/);
+        for (let user in userList) {
+          if (userVars[cond] == userList[user]) {
+            count++;
+          }
+        }
       } else {
-        return 0;
+        if (
+          userVars[cond] == conditions[cond] ||
+          (cond == "query_string" &&
+            window.location.search.includes(conditions[cond])) ||
+          (cond == "user_agent" && userVars[cond].includes(conditions[cond])) ||
+          (cond == "media_query" && window.matchMedia(conditions[cond]).matches)
+        ) {
+          count++;
+        } else {
+          return 0;
+        }
       }
     }
     return count;
@@ -283,20 +297,26 @@ function tabContainerMargin(tabContainer) {
 }
 
 function hideMenuItems() {
-  if (cchConfig.hide_help || cchConfig.hide_config) {
+  if (cchConfig.hide_help || cchConfig.hide_config || cchConfig.hide_unused) {
     let menuItems = buttons.options
       .querySelector("paper-listbox")
       .querySelectorAll("paper-item");
     for (let item of menuItems) {
-      if (item.innerHTML.includes("Help") && cchConfig.hide_help) {
+      if (
+        (item.innerHTML.includes("Help") ||
+          item.getAttribute("aria-label") == "Help") &&
+        cchConfig.hide_help
+      ) {
         item.parentNode.removeChild(item);
       } else if (
-        item.innerHTML.includes("Unused entities") &&
+        (item.innerHTML.includes("Unused entities") ||
+          item.getAttribute("aria-label") == "Unused entities") &&
         cchConfig.hide_unused
       ) {
         item.parentNode.removeChild(item);
       } else if (
-        item.innerHTML.includes("Configure UI") &&
+        (item.innerHTML.includes("Configure UI") ||
+          item.getAttribute("aria-label") == "Configure UI") &&
         cchConfig.hide_config
       ) {
         item.parentNode.removeChild(item);
@@ -306,16 +326,18 @@ function hideMenuItems() {
 }
 
 function insertEditMenu(tabs) {
-  if (cchConfig.hide_tabs && buttons.options && editMode) {
-    let show_tabs = document.createElement("paper-item");
-    show_tabs.setAttribute("id", "show_tabs");
-    show_tabs.addEventListener("click", () => {
-      for (let i = 0; i < tabs.length; i++) {
-        tabs[i].style.removeProperty("display");
-      }
-    });
-    show_tabs.innerHTML = "Show all tabs";
-    insertMenuItem(buttons.options.querySelector("paper-listbox"), show_tabs);
+  if (buttons.options && editMode) {
+    if (cchConfig.hide_tabs) {
+      let show_tabs = document.createElement("paper-item");
+      show_tabs.setAttribute("id", "show_tabs");
+      show_tabs.addEventListener("click", () => {
+        for (let i = 0; i < tabs.length; i++) {
+          tabs[i].style.removeProperty("display");
+        }
+      });
+      show_tabs.innerHTML = "Show all tabs";
+      insertMenuItem(buttons.options.querySelector("paper-listbox"), show_tabs);
+    }
 
     let cchSettings = document.createElement("paper-item");
     cchSettings.setAttribute("id", "cch_settings");
@@ -356,21 +378,18 @@ function styleHeader(tabContainer, tabs, header) {
     view.style.marginTop = "-48.5px";
     view.style.paddingTop = "48.5px";
     view.style.boxSizing = "border-box";
-    let cchThemeBg = getComputedStyle(document.body).getPropertyValue(
-      "--cch-background"
-    );
     header.style.background =
-      cchConfig.background || cchThemeBg || "var(--primary-color)";
-    if (!tabContainer) {
-      header.querySelector("app-toolbar").style.background =
-        cchConfig.background || cchThemeBg || "var(--primary-color)";
-    }
+      cchConfig.background ||
+      getComputedStyle(document.body).getPropertyValue("--cch-background") ||
+      "var(--primary-color)";
+    header.querySelector("app-toolbar").style.background = "transparent";
   }
 
-  if (newSidebar)
-    main.shadowRoot
-      .querySelector("ha-sidebar")
-      .shadowRoot.querySelector(".menu").style = "height:49px;";
+  if (newSidebar && cchConfig.compact_header) {
+    let sidebar = main.shadowRoot.querySelector("ha-sidebar").shadowRoot;
+    sidebar.querySelector(".menu").style = "height:49px;";
+    sidebar.querySelector("paper-listbox").style = "height:calc(100% - 180px);";
+  }
   let indicator = cchConfig.tab_indicator_color;
   if (
     indicator &&
@@ -425,7 +444,9 @@ function styleHeader(tabContainer, tabs, header) {
 
   if (tabContainer) {
     // Shift the header up to hide unused portion.
-    root.querySelector("app-toolbar").style.marginTop = "-64px";
+    root.querySelector("app-toolbar").style.marginTop = cchConfig.compact_header
+      ? "-64px"
+      : "";
 
     if (!cchConfig.chevrons) {
       // Hide chevrons.
@@ -449,8 +470,37 @@ function styleHeader(tabContainer, tabs, header) {
 }
 
 function styleButtons(tabs) {
-  let topMargin = tabs.length > 0 ? "margin-top:111px;" : "";
+  let topMargin =
+    tabs.length > 0 && cchConfig.compact_header ? "margin-top:111px;" : "";
   buttons = reverseObject(buttons);
+  if (
+    newSidebar &&
+    cchConfig.menu != "hide" &&
+    !buttons.menu.shadowRoot.querySelector('[id="cch_dot"]')
+  ) {
+    let style = document.createElement("style");
+    style.setAttribute("id", "cch_dot");
+    let indicator =
+      cchConfig.notify_indicator_color ||
+      getComputedStyle(header).getPropertyValue("--cch-tab-indicator-color") ||
+      "";
+    let border = getComputedStyle(header)
+      .getPropertyValue("background")
+      .includes("url")
+      ? "border-color: transparent !important"
+      : `border-color: ${getComputedStyle(header).getPropertyValue(
+          "background-color"
+        )} !important;`;
+    style.innerHTML = `
+        .dot {
+          ${topMargin}
+          z-index: 2;
+          ${indicator ? `background: ${indicator} !important` : ""}
+          ${border}
+        }
+    `;
+    buttons.menu.shadowRoot.appendChild(style);
+  }
   for (const button in buttons) {
     if (!buttons[button]) continue;
     if (button == "options" && cchConfig[button] == "overflow") {
@@ -568,6 +618,17 @@ function defaultTab(tabs, tabContainer) {
   if (cchConfig.default_tab && !defaultTabRedirect && tabContainer) {
     let default_tab = cchConfig.default_tab;
     let activeTab = tabs.indexOf(tabContainer.querySelector(".iron-selected"));
+    if (isNaN(default_tab)) {
+      let views = lovelace.config.views;
+      for (let view in views) {
+        if (
+          views[view]["title"] == default_tab ||
+          views[view]["path"] == default_tab
+        ) {
+          default_tab = view;
+        }
+      }
+    }
     if (
       activeTab != default_tab &&
       activeTab == 0 &&
@@ -719,7 +780,7 @@ function insertClock(button) {
 
   let clockElement = clockIronIcon.parentNode.getElementById("cch_clock");
   if (cchConfig.menu == "clock") {
-    buttons.menu.style.marginTop = "111px";
+    buttons.menu.style.marginTop = cchConfig.compact_header ? "111px" : "";
     buttons.menu.style.zIndex = "1";
   }
   if (!clockElement) {
@@ -825,7 +886,7 @@ function conditionalStyling(tabs, header) {
       template.forEach(template => {
         templates(template, tabs, _hass, header);
       });
-    } else {
+    } else if (conditional_styles) {
       let entity = styling[i].entity;
       if (_hass.states[entity] == undefined && entity !== "notifications") {
         console.log(`CCH conditional styling: ${entity} does not exist.`);
@@ -867,6 +928,16 @@ function conditionalStyling(tabs, header) {
                 .shadowRoot.querySelector("iron-icon");
             }
           } else if (obj == "tab") {
+            if (isNaN(key)) {
+              let views = lovelace.config.views;
+              for (let view in views) {
+                if (views[view]["title"] == key || views[view]["path"] == key) {
+                  styling[i][obj][view] = styling[i][obj][key];
+                  delete styling[i][obj][key];
+                  key = view;
+                }
+              }
+            }
             getElements(key, tabs, i, obj, styling);
             iconElem = elem.querySelector("ha-icon");
           }
@@ -940,7 +1011,20 @@ function templates(template, tabs, _hass, header) {
         let tempCond = template[condition][tab];
         if (!tempCond.length) tempCond = [tempCond];
         tempCond.forEach(templateObj => {
-          let tabIndex = parseInt(Object.keys(template[condition]));
+          let tabIndex = Object.keys(template[condition]);
+          let views = lovelace.config.views;
+          if (isNaN(tabIndex)) {
+            for (let view in views) {
+              if (
+                views[view]["title"] == tabIndex ||
+                views[view]["path"] == tabIndex
+              ) {
+                tabIndex = view;
+              }
+            }
+          } else {
+            tabIndex = parseInt(tabIndex);
+          }
           let styleTarget = Object.keys(templateObj);
           let tabTemplate = templateObj[styleTarget];
           let tabElement = tabs[tabIndex];
@@ -991,34 +1075,41 @@ function templates(template, tabs, _hass, header) {
 
 // Get range (e.g., "5 to 9") and build (5,6,7,8,9).
 function buildRanges(array) {
-  if (!array) array = [];
+  let ranges = [];
+  if (!array) return [];
   const sortNumber = (a, b) => a - b;
   const range = (start, end) =>
     new Array(end - start + 1).fill(undefined).map((_, i) => i + start);
-
-  for (let i = 0; i < array.length; i++) {
-    if (array[i].length > 1 && array[i].includes("to")) {
+  for (let i in array) {
+    if (typeof array[i] == "string" && array[i].includes("to")) {
       let split = array[i].split("to");
-      array.splice(i, 1);
-      array = array.concat(range(parseInt(split[0]), parseInt(split[1])));
+      if (parseInt(split[1]) > parseInt(split[0])) {
+        ranges.push(range(parseInt(split[0]), parseInt(split[1])));
+      } else {
+        ranges.push(range(parseInt(split[1]), parseInt(split[0])));
+      }
+    } else if (isNaN(array[i])) {
+      let views = lovelace.config.views;
+      for (let view in views) {
+        if (
+          views[view]["title"] == array[i] ||
+          views[view]["path"] == array[i]
+        ) {
+          ranges.push(parseInt(view));
+        }
+      }
+    } else {
+      ranges.push(parseInt(array[i]));
     }
   }
-  for (let i = 0; i < array.length; i++) array[i] = parseInt(array[i]);
-  return array.sort(sortNumber);
+  return ranges.flat().sort(sortNumber);
 }
 
 function showEditor() {
   window.scrollTo(0, 0);
-  import("./compact-custom-header-editor.js?v=1.3.0").then(() => {
-    document.createElement("compact-custom-header-editor");
-  });
   if (!root.querySelector("ha-app-layout").querySelector("editor")) {
     const container = document.createElement("editor");
     const nest = document.createElement("div");
-    const loader = document.createElement("div");
-    loader.classList.add("lds-ring");
-    loader.innerHTML = "<div></div><div></div><div></div><div></div>";
-    const cchEditor = document.createElement("compact-custom-header-editor");
     nest.style.cssText = `
       padding: 20px;
       max-width: 600px;
@@ -1035,51 +1126,9 @@ function showEditor() {
       z-index: 2;
       padding: 5px;
     `;
-    nest.innerHTML += `
-      <style>
-      .lds-ring {
-        left: 50%;
-        margin-left: -32px;
-        display: inline-block;
-        position: relative;
-        width: 64px;
-        height: 64px;
-      }
-      .lds-ring div {
-        box-sizing: border-box;
-        display: block;
-        position: absolute;
-        width: 51px;
-        height: 51px;
-        margin: 6px;
-        border: 6px solid #fff;
-        border-radius: 50%;
-        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: var(--primary-color) transparent transparent transparent;
-      }
-      .lds-ring div:nth-child(1) {
-        animation-delay: -0.45s;
-      }
-      .lds-ring div:nth-child(2) {
-        animation-delay: -0.3s;
-      }
-      .lds-ring div:nth-child(3) {
-        animation-delay: -0.15s;
-      }
-      @keyframes lds-ring {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      </style>
-      `;
     root.querySelector("ha-app-layout").insertBefore(container, view);
     container.appendChild(nest);
-    nest.appendChild(loader);
-    nest.appendChild(cchEditor);
+    nest.appendChild(document.createElement("compact-custom-header-editor"));
   }
 }
 
@@ -1255,3 +1304,1233 @@ function breakingChangeNotification() {
     });
   }
 }
+
+// EDITOR //////////////////////////////////////////////////////////////////
+
+const buttonOptions = ["show", "hide", "clock", "overflow"];
+const overflowOptions = ["show", "hide", "clock"];
+const swipeAnimation = ["none", "swipe", "fade", "flip"];
+let _lovelace;
+
+class CompactCustomHeaderEditor extends LitElement {
+  static get properties() {
+    return {
+      _config: {}
+    };
+  }
+
+  firstUpdated() {
+    let ll = document.querySelector("home-assistant");
+    ll = ll && ll.shadowRoot;
+    ll = ll && ll.querySelector("home-assistant-main");
+    ll = ll && ll.shadowRoot;
+    ll = ll && ll.querySelector("app-drawer-layout partial-panel-resolver");
+    ll = (ll && ll.shadowRoot) || ll;
+    ll = ll && ll.querySelector("ha-panel-lovelace");
+    ll = ll && ll.shadowRoot;
+    _lovelace = ll && ll.querySelector("hui-root").lovelace;
+
+    this._config = _lovelace.config.cch ? deepcopy(_lovelace.config.cch) : {};
+  }
+
+  render() {
+    if (!this._config || !_lovelace) return html``;
+    return html`
+      <div @click="${this._close}" class="title_control">
+        X
+      </div>
+      ${this.renderStyle()}
+      <cch-config-editor
+        .defaultConfig="${defaultConfig}"
+        .config="${this._config}"
+        @cch-config-changed="${this._configChanged}"
+      >
+      </cch-config-editor>
+      <h4 class="underline">Exceptions</h4>
+      <br />
+      ${this._config.exceptions
+        ? this._config.exceptions.map((exception, index) => {
+            return html`
+              <cch-exception-editor
+                .config="${this._config}"
+                .exception="${exception}"
+                .index="${index}"
+                @cch-exception-changed="${this._exceptionChanged}"
+                @cch-exception-delete="${this._exceptionDelete}"
+              >
+              </cch-exception-editor>
+            `;
+          })
+        : ""}
+      <br />
+      ${this._mwc_button
+        ? html`
+            <mwc-button @click="${this._addException}"
+              >Add Exception
+            </mwc-button>
+          `
+        : html`
+            <paper-button @click="${this._addException}"
+              >Add Exception
+            </paper-button>
+          `}
+
+      <h4 class="underline">Current User</h4>
+      <p style="font-size:16pt">${hass.user.name}</p>
+      <h4 class="underline">Current User Agent</h4>
+      <br />
+      ${navigator.userAgent}
+      <br />
+      <h4
+        style="background:var(--paper-card-background-color);
+      margin-bottom:-20px;"
+        class="underline"
+      >
+        ${!this.exception
+          ? html`
+              ${this._save_button}
+            `
+          : ""}
+        ${!this.exception
+          ? html`
+              ${this._cancel_button}
+            `
+          : ""}
+      </h4>
+    `;
+  }
+
+  get _mwc_button() {
+    return customElements.get("mwc-button") ? true : false;
+  }
+
+  _close() {
+    let editor = this.parentNode.parentNode.parentNode.querySelector("editor");
+    this.parentNode.parentNode.parentNode.removeChild(editor);
+  }
+
+  _save() {
+    for (var key in this._config) {
+      if (this._config[key] == defaultConfig[key]) {
+        delete this._config[key];
+      }
+    }
+    let newConfig = {
+      ..._lovelace.config,
+      ...{ cch: this._config }
+    };
+    try {
+      _lovelace.saveConfig(newConfig).then(() => {
+        location.reload(true);
+      });
+    } catch (e) {
+      alert("Save failed: " + e);
+    }
+  }
+
+  get _save_button() {
+    return this._mwc_button
+      ? html`
+          <mwc-button raised @click="${this._save}">Save and Reload</mwc-button>
+        `
+      : html`
+          <paper-button raised @click="${this._save}"
+            >Save and Reload</paper-button
+          >
+        `;
+  }
+  get _cancel_button() {
+    return this._mwc_button
+      ? html`
+          <mwc-button raised @click="${this._close}">Cancel</mwc-button>
+        `
+      : html`
+          <paper-button raised @click="${this._close}">Cancel</paper-button>
+        `;
+  }
+
+  _addException() {
+    let newExceptions;
+    if (this._config.exceptions) {
+      newExceptions = this._config.exceptions.slice(0);
+      newExceptions.push({
+        conditions: {},
+        config: {}
+      });
+    } else {
+      newExceptions = [
+        {
+          conditions: {},
+          config: {}
+        }
+      ];
+    }
+    this._config = {
+      ...this._config,
+      exceptions: newExceptions
+    };
+
+    fireEvent(this, "config-changed", {
+      config: this._config
+    });
+  }
+
+  _configChanged(ev) {
+    if (!this._config) {
+      return;
+    }
+    this._config = {
+      ...this._config,
+      ...ev.detail.config
+    };
+    fireEvent(this, "config-changed", {
+      config: this._config
+    });
+  }
+
+  _exceptionChanged(ev) {
+    if (!this._config) {
+      return;
+    }
+    const target = ev.target.index;
+    const newExceptions = this._config.exceptions.slice(0);
+    newExceptions[target] = ev.detail.exception;
+    this._config = {
+      ...this._config,
+      exceptions: newExceptions
+    };
+
+    fireEvent(this, "config-changed", {
+      config: this._config
+    });
+  }
+
+  _exceptionDelete(ev) {
+    if (!this._config) {
+      return;
+    }
+    const target = ev.target;
+    const newExceptions = this._config.exceptions.slice(0);
+    newExceptions.splice(target.index, 1);
+    this._config = {
+      ...this._config,
+      exceptions: newExceptions
+    };
+
+    fireEvent(this, "config-changed", {
+      config: this._config
+    });
+    this.requestUpdate();
+  }
+
+  renderStyle() {
+    return html`
+      <style>
+        h3,
+        h4 {
+          font-size: 16pt;
+          margin-bottom: 5px;
+          width: 100%;
+        }
+        paper-button {
+          margin: 0;
+          background-color: var(--primary-color);
+          color: var(--text-primary-color, #fff);
+        }
+        .toggle-button {
+          margin: 4px;
+          background-color: transparent;
+          color: var(--primary-color);
+        }
+        .title_control {
+          color: var(--text-dark-color);
+          font-weight: bold;
+          font-size: 22px;
+          float: right;
+          cursor: pointer;
+          margin: -10px -5px -5px -5px;
+        }
+        .user_agent {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 5px;
+          border: 0;
+          resize: none;
+          width: 100%;
+        }
+        .underline {
+          width: 100%;
+          background: var(--dark-color);
+          color: var(--text-dark-color);
+          padding: 5px;
+          width: calc(100% + 30px);
+          margin-left: calc(0% - 20px);
+        }
+      </style>
+    `;
+  }
+}
+
+customElements.define(
+  "compact-custom-header-editor",
+  CompactCustomHeaderEditor
+);
+
+class CchConfigEditor extends LitElement {
+  static get properties() {
+    return {
+      defaultConfig: {},
+      config: {},
+      exception: {},
+      _closed: {}
+    };
+  }
+
+  get _clock() {
+    return (
+      this.getConfig("menu") == "clock" ||
+      this.getConfig("voice") == "clock" ||
+      this.getConfig("notifications") == "clock" ||
+      this.getConfig("options") == "clock"
+    );
+  }
+
+  getConfig(item) {
+    return this.config[item] !== undefined
+      ? this.config[item]
+      : this.defaultConfig[item];
+  }
+
+  render() {
+    this.exception = this.exception !== undefined && this.exception !== false;
+    return html`
+      <custom-style>
+        <style is="custom-style">
+          a {
+            color: var(--text-dark-color);
+            text-decoration: none;
+          }
+          .card-header {
+            margin-top: -5px;
+            @apply --paper-font-headline;
+          }
+          .card-header paper-icon-button {
+            margin-top: -5px;
+            float: right;
+          }
+        </style>
+      </custom-style>
+      ${!this.exception
+        ? html`
+            <h1 style="margin-top:-20px;margin-bottom:0;" class="underline">
+              Compact Custom Header
+            </h1>
+            <h4
+              style="margin-top:-5px;padding-top:10px;font-size:12pt;"
+              class="underline"
+            >
+              <a
+                href="https://maykar.github.io/compact-custom-header/"
+                target="_blank"
+              >
+                <ha-icon icon="mdi:help-circle" style="margin-top:-5px;">
+                </ha-icon>
+                Docs&nbsp;&nbsp;&nbsp;</a
+              >
+              <a
+                href="https://github.com/maykar/compact-custom-header"
+                target="_blank"
+              >
+                <ha-icon icon="mdi:github-circle" style="margin-top:-5px;">
+                </ha-icon>
+                Github&nbsp;&nbsp;&nbsp;</a
+              >
+              <a
+                href="https://community.home-assistant.io/t/compact-custom-header"
+                target="_blank"
+              >
+                <ha-icon icon="hass:home-assistant" style="margin-top:-5px;">
+                </ha-icon>
+                Forums</a
+              >
+            </h4>
+            ${this.getConfig("warning")
+              ? html`
+                  <br />
+                  <div class="warning">
+                    Modifying options marked with a
+                    <iron-icon
+                      icon="hass:alert"
+                      style="width:20px;margin-top:-6px;"
+                    ></iron-icon
+                    >or hiding the options button will remove your ability to
+                    edit from the UI. You can disable CCH by adding
+                    "?disable_cch" to the end of your URL to temporarily restore
+                    the default header.
+                  </div>
+                  <br />
+                `
+              : ""}
+          `
+        : ""}
+      ${this.renderStyle()}
+      <div class="side-by-side">
+        <paper-toggle-button
+          class="${this.exception && this.config.disable === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("disable") !== false}"
+          .configValue="${"disable"}"
+          @change="${this._valueChanged}"
+          title="Completely disable CCH. Useful for exceptions."
+        >
+          Disable CCH
+        </paper-toggle-button>
+        <paper-toggle-button
+          class="${this.exception && this.config.compact_header === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("compact_header") !== false}"
+          .configValue="${"compact_header"}"
+          @change="${this._valueChanged}"
+          title="Make header compact."
+        >
+          Compact Header
+        </paper-toggle-button>
+        <paper-toggle-button
+          class="${this.exception && this.config.kiosk_mode === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("kiosk_mode") !== false}"
+          .configValue="${"kiosk_mode"}"
+          @change="${this._valueChanged}"
+          title="Hide the header, close the sidebar, and disable sidebar swipe."
+        >
+          Kiosk Mode
+          ${this.getConfig("warning")
+            ? html`
+                <iron-icon icon="hass:alert" class="alert"></iron-icon>
+              `
+            : ""}
+        </paper-toggle-button>
+        <paper-toggle-button
+          class="${this.exception && this.config.header === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("header") !== false &&
+            this.getConfig("kiosk_mode") == false}"
+          .configValue="${"header"}"
+          @change="${this._valueChanged}"
+          title="Turn off to hide the header completely."
+        >
+          Display Header
+          ${this.getConfig("warning")
+            ? html`
+                <iron-icon icon="hass:alert" class="alert"></iron-icon>
+              `
+            : ""}
+        </paper-toggle-button>
+        <paper-toggle-button
+          class="${this.exception && this.config.chevrons === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("chevrons") !== false}"
+          .configValue="${"chevrons"}"
+          @change="${this._valueChanged}"
+          title="View scrolling controls in header."
+        >
+          Display Tab Chevrons
+        </paper-toggle-button>
+        <paper-toggle-button
+          class="${this.exception && this.config.redirect === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("redirect") !== false}"
+          .configValue="${"redirect"}"
+          @change="${this._valueChanged}"
+          title="Auto-redirect away from hidden tabs."
+        >
+          Hidden Tab Redirect
+        </paper-toggle-button>
+        <paper-toggle-button
+          style="${newSidebar ? "" : "display:none;"}"
+          class="${this.exception && this.config.disable_sidebar === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("disable_sidebar") !== false ||
+            this.getConfig("kiosk_mode") !== false}"
+          .configValue="${"disable_sidebar"}"
+          @change="${this._valueChanged}"
+          title="Hides and prevents sidebar from opening."
+        >
+          Hide & Disable Sidebar
+        </paper-toggle-button>
+        <paper-toggle-button
+          style="${newSidebar ? "display:none;" : ""}"
+          class="${this.exception && this.config.sidebar_closed === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("sidebar_closed") !== false ||
+            this.getConfig("kiosk_mode") !== false}"
+          .configValue="${"sidebar_closed"}"
+          @change="${this._valueChanged}"
+          title="Closes the sidebar on opening editor_lovelace."
+        >
+          Close Sidebar
+        </paper-toggle-button>
+        ${!this.exception
+          ? html`
+              <paper-toggle-button
+                class="${this.exception && this.config.warning === undefined
+                  ? "inherited"
+                  : ""}"
+                ?checked="${this.getConfig("warning") !== false}"
+                .configValue="${"warning"}"
+                @change="${this._valueChanged}"
+                title="Toggle warnings in this editor."
+              >
+                Display CCH Warnings
+              </paper-toggle-button>
+            `
+          : ""}
+        <paper-toggle-button
+          style="${newSidebar ? "display:none;" : ""}"
+          class="${this.exception && this.config.sidebar_swipe === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("sidebar_swipe") !== false &&
+            this.getConfig("kiosk_mode") == false}"
+          .configValue="${"sidebar_swipe"}"
+          @change="${this._valueChanged}"
+          title="Swipe to open sidebar on mobile devices."
+        >
+          Swipe Open Sidebar
+        </paper-toggle-button>
+      </div>
+      <h4 class="underline">Menu Items</h4>
+      <div class="side-by-side">
+        <paper-toggle-button
+          class="${this.exception && this.config.hide_config === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("hide_config") !== false}"
+          .configValue="${"hide_config"}"
+          @change="${this._valueChanged}"
+          title='Hide "Configure UI" in options menu.'
+        >
+          Hide "Configure UI"
+          ${this.getConfig("warning")
+            ? html`
+                <iron-icon icon="hass:alert" class="alert"></iron-icon>
+              `
+            : ""}
+        </paper-toggle-button>
+        <paper-toggle-button
+          class="${this.exception && this.config.hide_help === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("hide_help") !== false}"
+          .configValue="${"hide_help"}"
+          @change="${this._valueChanged}"
+          title='Hide "Help" in options menu.'
+        >
+          Hide "Help"
+        </paper-toggle-button>
+        <paper-toggle-button
+          class="${this.exception && this.config.hide_unused === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("hide_unused") !== false}"
+          .configValue="${"hide_unused"}"
+          @change="${this._valueChanged}"
+          title='Hide "Help" in options menu.'
+        >
+          Hide "Unused Entities"
+        </paper-toggle-button>
+      </div>
+      <h4 class="underline">Buttons</h4>
+      <div class="buttons side-by-side">
+        <div
+          class="${this.exception && this.config.menu === undefined
+            ? "inherited"
+            : ""}"
+        >
+          <iron-icon icon="hass:menu"></iron-icon>
+          <paper-dropdown-menu
+            @value-changed="${this._valueChanged}"
+            label="Menu Button:"
+            .configValue="${"menu"}"
+          >
+            <paper-listbox
+              slot="dropdown-content"
+              .selected="${buttonOptions.indexOf(this.getConfig("menu"))}"
+            >
+              ${buttonOptions.map(option => {
+                return html`
+                  <paper-item>${option}</paper-item>
+                `;
+              })}
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        <div
+          class="${this.exception && this.config.voice === undefined
+            ? "inherited"
+            : ""}"
+        >
+          <iron-icon icon="hass:microphone"></iron-icon>
+          <paper-dropdown-menu
+            @value-changed="${this._valueChanged}"
+            label="Voice Button:"
+            .configValue="${"voice"}"
+          >
+            <paper-listbox
+              slot="dropdown-content"
+              .selected="${buttonOptions.indexOf(this.getConfig("voice"))}"
+            >
+              ${buttonOptions.map(option => {
+                return html`
+                  <paper-item>${option}</paper-item>
+                `;
+              })}
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div
+        class="buttons side-by-side"
+        style="${newSidebar ? "width:50%;" : ""}"
+      >
+        <div
+          class="${this.exception && this.config.options === undefined
+            ? "inherited"
+            : ""}"
+        >
+          <iron-icon icon="hass:dots-vertical"></iron-icon>
+          <paper-dropdown-menu
+            @value-changed="${this._valueChanged}"
+            label="Options Button:"
+            .configValue="${"options"}"
+          >
+            <paper-listbox
+              slot="dropdown-content"
+              .selected="${overflowOptions.indexOf(this.getConfig("options"))}"
+            >
+              ${overflowOptions.map(option => {
+                return html`
+                  <paper-item>${option}</paper-item>
+                `;
+              })}
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        <div
+          style="${newSidebar ? "display:none;" : ""}"
+          class="${this.exception && this.config.notifications === undefined
+            ? "inherited"
+            : ""}"
+        >
+          <iron-icon icon="hass:bell"></iron-icon>
+          <paper-dropdown-menu
+            @value-changed="${this._valueChanged}"
+            label="Notifications Button:"
+            .configValue="${"notifications"}"
+          >
+            <paper-listbox
+              slot="dropdown-content"
+              .selected="${buttonOptions.indexOf(
+                this.getConfig("notifications")
+              )}"
+            >
+              ${buttonOptions.map(option => {
+                return html`
+                  <paper-item>${option}</paper-item>
+                `;
+              })}
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      ${this._clock
+        ? html`
+            <h4 class="underline">Clock Options</h4>
+            <div class="side-by-side">
+              <paper-dropdown-menu
+                class="${this.exception &&
+                this.getConfig("clock_format") === undefined
+                  ? "inherited"
+                  : ""}"
+                label="Clock format"
+                @value-changed="${this._valueChanged}"
+                .configValue="${"clock_format"}"
+              >
+                <paper-listbox
+                  slot="dropdown-content"
+                  .selected="${this.getConfig("clock_format") === "24" ? 1 : 0}"
+                >
+                  <paper-item>12</paper-item>
+                  <paper-item>24</paper-item>
+                </paper-listbox>
+              </paper-dropdown-menu>
+              <paper-input
+                class="${this.exception && this.config.date_locale === undefined
+                  ? "inherited"
+                  : ""}"
+                label="Date Locale:"
+                .value="${this.getConfig("date_locale")}"
+                .configValue="${"date_locale"}"
+                @value-changed="${this._valueChanged}"
+              >
+              </paper-input>
+
+              <div class="side-by-side">
+                <paper-toggle-button
+                  class="${this.exception &&
+                  this.config.clock_am_pm === undefined
+                    ? "inherited"
+                    : ""}"
+                  ?checked="${this.getConfig("clock_am_pm") !== false}"
+                  .configValue="${"clock_am_pm"}"
+                  @change="${this._valueChanged}"
+                >
+                  AM / PM</paper-toggle-button
+                >
+                <paper-toggle-button
+                  class="${this.exception &&
+                  this.config.clock_date === undefined
+                    ? "inherited"
+                    : ""}"
+                  ?checked="${this.getConfig("clock_date") !== false}"
+                  .configValue="${"clock_date"}"
+                  @change="${this._valueChanged}"
+                >
+                  Date</paper-toggle-button
+                >
+              </div>
+            </div>
+          `
+        : ""}
+      <h4 class="underline">Tabs</h4>
+      <paper-dropdown-menu id="tabs" @value-changed="${this._tabVisibility}">
+        <paper-listbox
+          slot="dropdown-content"
+          .selected="${this.getConfig("show_tabs").length > 0 ? "1" : "0"}"
+        >
+          <paper-item>Hide Tabs</paper-item>
+          <paper-item>Show Tabs</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+      <div class="side-by-side">
+        <div
+          id="show"
+          style="display:${this.getConfig("show_tabs").length > 0
+            ? "initial"
+            : "none"}"
+        >
+          <paper-input
+            class="${this.exception && this.config.show_tabs === undefined
+              ? "inherited"
+              : ""}"
+            label="Comma-separated list of tab numbers to show:"
+            .value="${this.getConfig("show_tabs")}"
+            .configValue="${"show_tabs"}"
+            @value-changed="${this._valueChanged}"
+          >
+          </paper-input>
+        </div>
+        <div
+          id="hide"
+          style="display:${this.getConfig("show_tabs").length > 0
+            ? "none"
+            : "initial"}"
+        >
+          <paper-input
+            class="${this.exception && this.config.hide_tabs === undefined
+              ? "inherited"
+              : ""}"
+            label="Comma-separated list of tab numbers to hide:"
+            .value="${this.getConfig("hide_tabs")}"
+            .configValue="${"hide_tabs"}"
+            @value-changed="${this._valueChanged}"
+          >
+          </paper-input>
+        </div>
+        <paper-input
+          class="${this.exception && this.config.default_tab === undefined
+            ? "inherited"
+            : ""}"
+          label="Default tab:"
+          .value="${this.getConfig("default_tab")}"
+          .configValue="${"default_tab"}"
+          @value-changed="${this._valueChanged}"
+        >
+        </paper-input>
+      </div>
+      <h4 class="underline">Swipe Navigation</h4>
+      <div class="side-by-side">
+        <paper-toggle-button
+          class="${this.exception && this.config.swipe === undefined
+            ? "inherited"
+            : ""}"
+          ?checked="${this.getConfig("swipe") !== false}"
+          .configValue="${"swipe"}"
+          @change="${this._valueChanged}"
+          title="Toggle Swipe Navigation"
+        >
+          Swipe Navigation
+        </paper-toggle-button>
+        ${this.config.swipe
+          ? html`
+        <paper-toggle-button
+          class="${
+            this.exception && this.config.swipe_wrap === undefined
+              ? "inherited"
+              : ""
+          }"
+          ?checked="${this.getConfig("swipe_wrap") !== false}"
+          .configValue="${"swipe_wrap"}"
+          @change="${this._valueChanged}"
+          title="Wrap from first to last tab and vice versa."
+        >
+          Wrapping
+        </paper-toggle-button>
+        <paper-toggle-button
+          class="${
+            this.exception && this.config.swipe_prevent_default === undefined
+              ? "inherited"
+              : ""
+          }"
+          ?checked="${this.getConfig("swipe_prevent_default") !== false}"
+          .configValue="${"swipe_prevent_default"}"
+          @change="${this._valueChanged}"
+          title="Prevent browsers default horizontal swipe action."
+        >
+          Prevent Default
+        </paper-toggle-button>
+        <div
+        class="${
+          this.exception && this.config.swipe_animate === undefined
+            ? "inherited"
+            : ""
+        }"
+      >
+      </div>
+      <div class="side-by-side">
+        <paper-dropdown-menu
+          @value-changed="${this._valueChanged}"
+          label="Swipe Animation:"
+          .configValue="${"swipe_animate"}"
+        >
+          <paper-listbox
+            slot="dropdown-content"
+            .selected="${swipeAnimation.indexOf(
+              this.getConfig("swipe_animate")
+            )}"
+          >
+            ${swipeAnimation.map(option => {
+              return html`
+                <paper-item>${option}</paper-item>
+              `;
+            })}
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
+      <paper-input
+      class="${
+        this.exception && this.config.swipe_amount === undefined
+          ? "inherited"
+          : ""
+      }"
+      label="Percentage of screen width needed for swipe:"
+      .value="${this.getConfig("swipe_amount")}"
+      .configValue="${"swipe_amount"}"
+      @value-changed="${this._valueChanged}"
+    >
+    </paper-input>
+        </div>
+        <paper-input
+        class="${
+          this.exception && this.config.swipe_skip === undefined
+            ? "inherited"
+            : ""
+        }"
+        label="Comma-separated list of tabs to skip over on swipe:"
+        .value="${this.getConfig("swipe_skip")}"
+        .configValue="${"swipe_skip"}"
+        @value-changed="${this._valueChanged}"
+      >
+      </paper-input>
+      </div>
+    `
+          : ""}
+      </div>
+    `;
+  }
+
+  _toggleCard() {
+    this._closed = !this._closed;
+    fireEvent(this, "iron-resize");
+  }
+
+  _tabVisibility() {
+    let show = this.shadowRoot.querySelector('[id="show"]');
+    let hide = this.shadowRoot.querySelector('[id="hide"]');
+    if (this.shadowRoot.querySelector('[id="tabs"]').value == "Hide Tabs") {
+      show.style.display = "none";
+      hide.style.display = "initial";
+    } else {
+      hide.style.display = "none";
+      show.style.display = "initial";
+    }
+  }
+
+  _valueChanged(ev) {
+    if (!this.config) {
+      return;
+    }
+    const target = ev.target;
+    if (this[`_${target.configValue}`] === target.value) {
+      return;
+    }
+    if (target.configValue) {
+      if (target.value === "") {
+        delete this.config[target.configValue];
+      } else {
+        this.config = {
+          ...this.config,
+          [target.configValue]:
+            target.checked !== undefined ? target.checked : target.value
+        };
+      }
+    }
+    fireEvent(this, "cch-config-changed", {
+      config: this.config
+    });
+  }
+
+  renderStyle() {
+    return html`
+      <style>
+        h3,
+        h4 {
+          font-size: 16pt;
+          margin-bottom: 5px;
+          width: 100%;
+        }
+        paper-toggle-button {
+          padding-top: 16px;
+        }
+        iron-icon {
+          padding-right: 5px;
+        }
+        iron-input {
+          max-width: 115px;
+        }
+        .inherited {
+          opacity: 0.4;
+        }
+        .inherited:hover {
+          opacity: 1;
+        }
+        .side-by-side {
+          display: flex;
+          flex-wrap: wrap;
+        }
+        .side-by-side > * {
+          flex: 1;
+          padding-right: 4px;
+          flex-basis: 33%;
+        }
+        .buttons > div {
+          display: flex;
+          align-items: center;
+        }
+        .buttons > div paper-dropdown-menu {
+          flex-grow: 1;
+        }
+        .buttons > div iron-icon {
+          padding-right: 15px;
+          padding-top: 20px;
+          margin-left: -3px;
+        }
+        .buttons > div:nth-of-type(2n) iron-icon {
+          padding-left: 20px;
+        }
+        .warning {
+          background-color: #455a64;
+          padding: 10px;
+          color: #ffcd4c;
+          border-radius: 5px;
+        }
+        .alert {
+          color: #ffcd4c;
+          width: 20px;
+          margin-top: -6px;
+        }
+        [closed] {
+          overflow: hidden;
+          height: 52px;
+        }
+        paper-card {
+          margin-top: 10px;
+          width: 100%;
+          transition: all 0.5s ease;
+        }
+        .underline {
+          width: 100%;
+          background: var(--dark-color);
+          color: var(--text-dark-color);
+          padding: 5px;
+          width: calc(100% + 30px);
+          margin-left: calc(0% - 20px);
+        }
+      </style>
+    `;
+  }
+}
+
+customElements.define("cch-config-editor", CchConfigEditor);
+
+class CchExceptionEditor extends LitElement {
+  static get properties() {
+    return {
+      config: {},
+      exception: {},
+      _closed: {}
+    };
+  }
+
+  constructor() {
+    super();
+    this._closed = true;
+  }
+
+  render() {
+    if (!this.exception) {
+      return html``;
+    }
+    return html`
+      ${this.renderStyle()}
+      <custom-style>
+        <style is="custom-style">
+          .card-header {
+            margin-top: -5px;
+            @apply --paper-font-headline;
+          }
+          .card-header paper-icon-button {
+            margin-top: -5px;
+            float: right;
+          }
+        </style>
+      </custom-style>
+      <paper-card ?closed=${this._closed}>
+        <div class="card-content">
+          <div class="card-header">
+            ${Object.values(this.exception.conditions)
+              .join(", ")
+              .substring(0, 40) || "New Exception"}
+            <paper-icon-button
+              icon="${this._closed ? "mdi:chevron-down" : "mdi:chevron-up"}"
+              @click="${this._toggleCard}"
+            >
+            </paper-icon-button>
+            <paper-icon-button
+              ?hidden=${this._closed}
+              icon="mdi:delete"
+              @click="${this._deleteException}"
+            >
+            </paper-icon-button>
+          </div>
+          <h4 class="underline">Conditions</h4>
+          <cch-conditions-editor
+            .conditions="${this.exception.conditions}"
+            @cch-conditions-changed="${this._conditionsChanged}"
+          >
+          </cch-conditions-editor>
+          <h4 class="underline">Config</h4>
+          <cch-config-editor
+            exception
+            .defaultConfig="${{ ...defaultConfig, ...this.config }}"
+            .config="${this.exception.config}"
+            @cch-config-changed="${this._configChanged}"
+          >
+          </cch-config-editor>
+        </div>
+      </paper-card>
+    `;
+  }
+
+  renderStyle() {
+    return html`
+      <style>
+        h3,
+        h4 {
+          font-size: 16pt;
+          margin-bottom: 5px;
+          width: 100%;
+        }
+        [closed] {
+          overflow: hidden;
+          height: 52px;
+        }
+        paper-card {
+          margin-top: 10px;
+          width: 100%;
+          transition: all 0.5s ease;
+        }
+        .underline {
+          width: 100%;
+          background: var(--dark-color);
+          color: var(--text-dark-color);
+          padding: 5px;
+          width: calc(100% + 30px);
+          margin-left: calc(0% - 20px);
+        }
+      </style>
+    `;
+  }
+
+  _toggleCard() {
+    this._closed = !this._closed;
+    fireEvent(this, "iron-resize");
+  }
+
+  _deleteException() {
+    fireEvent(this, "cch-exception-delete");
+  }
+
+  _conditionsChanged(ev) {
+    if (!this.exception) {
+      return;
+    }
+    const newException = {
+      ...this.exception,
+      conditions: ev.detail.conditions
+    };
+    fireEvent(this, "cch-exception-changed", {
+      exception: newException
+    });
+  }
+
+  _configChanged(ev) {
+    ev.stopPropagation();
+    if (!this.exception) {
+      return;
+    }
+    const newException = { ...this.exception, config: ev.detail.config };
+    fireEvent(this, "cch-exception-changed", {
+      exception: newException
+    });
+  }
+}
+
+customElements.define("cch-exception-editor", CchExceptionEditor);
+
+class CchConditionsEditor extends LitElement {
+  static get properties() {
+    return {
+      conditions: {}
+    };
+  }
+
+  get _user() {
+    return this.conditions.user || "";
+  }
+
+  get _user_agent() {
+    return this.conditions.user_agent || "";
+  }
+
+  get _media_query() {
+    return this.conditions.media_query || "";
+  }
+
+  get _query_string() {
+    return this.conditions.query_string || "";
+  }
+
+  render() {
+    if (!this.conditions) {
+      return html``;
+    }
+    return html`
+      <paper-input
+        label="User (Seperate multiple users with a comma.)"
+        .value="${this._user}"
+        .configValue="${"user"}"
+        @value-changed="${this._valueChanged}"
+      >
+      </paper-input>
+      <paper-input
+        label="User Agent"
+        .value="${this._user_agent}"
+        .configValue="${"user_agent"}"
+        @value-changed="${this._valueChanged}"
+      >
+      </paper-input>
+      <paper-input
+        label="Media Query"
+        .value="${this._media_query}"
+        .configValue="${"media_query"}"
+        @value-changed="${this._valueChanged}"
+      >
+      </paper-input>
+      <paper-input
+        label="Query String"
+        .value="${this._query_string}"
+        .configValue="${"query_string"}"
+        @value-changed="${this._valueChanged}"
+      >
+      </paper-input>
+    `;
+  }
+
+  _valueChanged(ev) {
+    if (!this.conditions) {
+      return;
+    }
+    const target = ev.target;
+    if (this[`_${target.configValue}`] === target.value) {
+      return;
+    }
+    if (target.configValue) {
+      if (target.value === "") {
+        delete this.conditions[target.configValue];
+      } else {
+        this.conditions = {
+          ...this.conditions,
+          [target.configValue]: target.value
+        };
+      }
+    }
+    fireEvent(this, "cch-conditions-changed", {
+      conditions: this.conditions
+    });
+  }
+}
+
+customElements.define("cch-conditions-editor", CchConditionsEditor);
+
+function deepcopy(value) {
+  if (!(!!value && typeof value == "object")) {
+    return value;
+  }
+  if (Object.prototype.toString.call(value) == "[object Date]") {
+    return new Date(value.getTime());
+  }
+  if (Array.isArray(value)) {
+    return value.map(deepcopy);
+  }
+  var result = {};
+  Object.keys(value).forEach(function(key) {
+    result[key] = deepcopy(value[key]);
+  });
+  return result;
+}
+
+console.info(
+  `%c COMPACT-CUSTOM-HEADER \n%c     Version 1.3.5     `,
+  "color: orange; font-weight: bold; background: black",
+  "color: white; font-weight: bold; background: dimgray"
+);
