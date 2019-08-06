@@ -1,0 +1,134 @@
+---
+# This is my old/original wired doorbell,
+# which I converted for just 2$!
+#
+# I've written an extensive blog post
+# on how I did it:
+# https://frenck.link/doorbell
+#
+esphome:
+  name: esp19
+  platform: ESP8266
+  board: esp01_1m
+
+# WiFi connection
+wifi:
+  ssid: !secret wifi_not_ssid
+  password: !secret wifi_not_password
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: !secret esphome_esp19_api_password
+
+# Enable over-the-air updates
+ota:
+  password: !secret esphome_esp19_ota_password
+
+# Enable Web server
+web_server:
+  port: 80
+
+# Sync time with Home Assistant
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+# Text sensors with general information
+text_sensor:
+  - platform: version
+    name: esphome_esp19_version
+  - platform: wifi_info
+    ip_address:
+      name: esphome_esp19_ip
+    ssid:
+      name: esphome_esp19_ssid
+    bssid:
+      name: esphome_esp19_bssid
+
+sensor:
+  # Uptime sensor
+  - platform: uptime
+    name: esphome_esp19_uptime
+  # WiFi Signal sensor
+  - platform: wifi_signal
+    name: esphome_esp19_wifi_signal
+    update_interval: 10s
+
+globals:
+  - id: chime
+    type: bool
+    restore_value: true
+    initial_value: 'true'
+
+switch:
+  # Switch to restart the plug
+  - platform: restart
+    name: esphome_esp19_restart
+  # Switch to toggle the relay
+  - platform: gpio
+    id: relay
+    inverted: true
+    name: esphome_esp19_switch
+    pin: GPIO0
+  - platform: template
+    name: esphome_esp19_chime
+    id: chime_switch
+    restore_state: false
+    turn_on_action:
+      - globals.set:
+          id: chime
+          value: 'true'
+    turn_off_action:
+      - globals.set:
+          id: chime
+          value: 'false'
+    lambda: |-
+      return id(chime);
+
+# This interval shuts off the
+# doorbell if it pushed for more
+# then 1.5-2.0 seconds.
+interval:
+  - interval: 500ms
+    then:
+      - if:
+          condition:
+            for:
+              time: 1.5s
+              condition:
+                - binary_sensor.is_on: button
+                - switch.is_on: relay
+          then:
+            - switch.turn_off: relay
+
+binary_sensor:
+  # Binary sensor for the button press
+  - platform: gpio
+    id: button
+    name: esphome_esp19_button
+    pin:
+      number: GPIO2
+      mode: INPUT_PULLUP
+      inverted: true
+    filters:
+      - delayed_on: 25ms
+      - delayed_off: 25ms
+    on_press:
+      then:
+        if:
+          condition:
+            - switch.is_on: chime_switch
+            - switch.is_off: relay
+          then:
+            - switch.turn_on: relay
+    on_release:
+      then:
+        if:
+          condition:
+            - switch.is_on: chime_switch
+            - switch.is_on: relay
+          then:
+            - switch.turn_off: relay

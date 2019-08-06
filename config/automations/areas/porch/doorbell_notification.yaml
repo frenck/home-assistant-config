@@ -1,0 +1,26 @@
+---
+# This automation sends notifications
+# when the doorbell button is pushed.
+#
+alias: porch_doorbell_notification
+trigger:
+  platform: state
+  entity_id: binary_sensor.porch_doorbell
+  to: 'on'
+action:
+  - service: notify.mobile_app_francks_iphone
+    data:
+      title: Deurbell
+      message: Ding dong! Er staat iemand aan de deur!
+      data:
+        attachment:
+          content-type: jpeg
+          url: http://tiptag.com.ar/wp-content/uploads/2018/06/timbre1.jpg
+  - service: notify.mobile_app_iphone_van_daphne
+    data:
+      title: Deurbell
+      message: Ding dong! Er staat iemand aan de deur!
+      data:
+        attachment:
+          content-type: jpeg
+          url: http://tiptag.com.ar/wp-content/uploads/2018/06/timbre1.jpg

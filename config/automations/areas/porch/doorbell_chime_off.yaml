@@ -1,0 +1,14 @@
+---
+# Turns off the doorbell chime in the evening
+# and at the afternoon. At these times, we
+# have kids that sleep.
+#
+alias: porch_doorbell_chime_off
+trigger:
+  - platform: time
+    at: "19:00:00"
+  - platform: time
+    at: "12:00:00"
+action:
+  service: switch.turn_off
+  entity_id: switch.porch_doorbell
