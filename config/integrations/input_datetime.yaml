@@ -1,0 +1,8 @@
+---
+# The input_datetime integration allows the user to define
+# date and time values that can be controlled via the
+# frontend and can be used within automations and templates.
+#
+# https://www.home-assistant.io/components/input_datetime/
+#
+input_datetime: !include_dir_merge_named ../entities/input_datetime

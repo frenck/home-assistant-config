@@ -1,0 +1,9 @@
+---
+# Stores the time on which our silent hours end
+# since we have kids, we don't have to take
+# into account the specific day...
+#
+house_silent_hours_end:
+  name: House Silent Hours End
+  has_date: false
+  has_time: true

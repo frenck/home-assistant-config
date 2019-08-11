@@ -1,0 +1,10 @@
+---
+# Flynn is still a little boy, so he
+# takes a afternoon nap. This records
+# those times and adjust some things
+# around the house
+#
+person_flynn_nap_start:
+  name: Flynn Afternoon Nap Start
+  has_date: false
+  has_time: true
