@@ -16,4 +16,5 @@ views:
   - !include lovelace/views/upstairs.yaml
   - !include lovelace/views/outside.yaml
   - !include lovelace/views/security.yaml
+  - !include lovelace/views/settings.yaml
   - !include lovelace/views/system.yaml

@@ -1,0 +1,13 @@
+---
+path: settings
+title: Settings
+icon: mdi:settings
+cards:
+  - type: entities
+    title: Times
+    show_header_toggle: false
+    entities:
+      - entity: input_datetime.person_flynn_nap_start
+      - entity: input_datetime.person_flynn_nap_end
+      - entity: input_datetime.house_silent_hours_start
+      - entity: input_datetime.house_silent_hours_end
