@@ -7,7 +7,7 @@ alias: porch_doorbell_chime_off
 trigger:
   - platform: template
     value_template: >-
-      {{ 
+      {{
         states('input_datetime.house_silent_hours_start')
         ==
         states('sensor.time')+":00"
