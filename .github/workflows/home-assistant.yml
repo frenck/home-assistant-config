@@ -13,4 +13,5 @@ jobs:
       - uses: actions/checkout@v1
       - name: Home Assistant Check
         uses: "docker://homeassistant/home-assistant:latest"
-        args: python -m homeassistant --version
+        with:
+          args: python -m homeassistant --version
