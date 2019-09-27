@@ -4,7 +4,7 @@
         "step": {
             "user": {
                 "title": "HACS (Home Assistant Community Store)",
-                "description": "If you need help with the configuration have a look here: https://custom-components.github.io/hacs/installation/configuration/",
+                "description": "If you need help with the configuration have a look here: https://hacs.netlify.com/installation/configuration/",
                 "data": {
                     "token": "GitHub Personal Access Token",
                     "sidepanel_title": "Sidepanel title",
@@ -20,6 +20,16 @@
         },
         "abort": {
             "single_instance_allowed": "Only a single configuration of HACS is allowed."
+        }
+    },
+    "options": {
+        "step": {
+            "user": {
+                "data": {
+                    "country": "Filter with country code.",
+                    "release_limit": "Number of releases to show."
+                }
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ from integrationhelper import Logger
 from . import Hacs
 from .const import STORAGE_VERSION
 from ..const import VERSION
+from ..repositories.manifest import HacsManifest
 
 
 STORES = {
@@ -52,7 +53,7 @@ class HacsData(Hacs):
         # Hacs
         path = f"{self.system.config_path}/.storage/{STORES['hacs']}"
         hacs = {"view": self.configuration.frontend_mode}
-        save(path, hacs)
+        save(self.logger, path, hacs)
 
         # Installed
         path = f"{self.system.config_path}/.storage/{STORES['installed']}"
@@ -67,14 +68,19 @@ class HacsData(Hacs):
                 "version_installed": repository.display_installed_version,
                 "version_available": repository.display_available_version,
             }
-        save(path, installed)
+        save(self.logger, path, installed)
 
         # Repositories
         path = f"{self.system.config_path}/.storage/{STORES['repositories']}"
         content = {}
         for repository in self.repositories:
+            if repository.repository_manifest is not None:
+                repository_manifest = repository.repository_manifest.manifest
+            else:
+                repository_manifest = None
             content[repository.information.uid] = {
                 "authors": repository.information.authors,
+                "topics": repository.information.topics,
                 "category": repository.information.category,
                 "description": repository.information.description,
                 "full_name": repository.information.full_name,
@@ -83,6 +89,7 @@ class HacsData(Hacs):
                 "installed": repository.status.installed,
                 "last_commit": repository.versions.available_commit,
                 "last_release_tag": repository.versions.available,
+                "repository_manifest": repository_manifest,
                 "name": repository.information.name,
                 "new": repository.status.new,
                 "selected_tag": repository.status.selected_tag,
@@ -103,7 +110,7 @@ class HacsData(Hacs):
                 f"Number of installed repositories does not match the number of stored repositories [{count_installed} vs {count_installed_restore}]"
             )
             return
-        save(path, content)
+        save(self.logger, path, content)
 
     async def restore(self):
         """Restore saved data."""
@@ -147,6 +154,9 @@ class HacsData(Hacs):
                 if repo.get("authors") is not None:
                     repository.information.authors = repo["authors"]
 
+                if repo.get("topics", []):
+                    repository.information.topics = repo["topics"]
+
                 if repo.get("description") is not None:
                     repository.information.description = repo["description"]
 
@@ -163,6 +173,11 @@ class HacsData(Hacs):
 
                 if repo.get("selected_tag") is not None:
                     repository.status.selected_tag = repo["selected_tag"]
+
+                if repo.get("repository_manifest") is not None:
+                    repository.repository_manifest = HacsManifest(
+                        repo["repository_manifest"]
+                    )
 
                 if repo.get("show_beta") is not None:
                     repository.status.show_beta = repo["show_beta"]
@@ -181,6 +196,7 @@ class HacsData(Hacs):
 
                 if repo["full_name"] == "custom-components/hacs":
                     repository.versions.installed = VERSION
+                    repository.status.installed = True
                     if "b" in VERSION:
                         repository.status.show_beta = True
                 elif repo.get("version_installed") is not None:
@@ -242,7 +258,7 @@ class HacsData(Hacs):
         return True
 
 
-def save(path, content):
+def save(logger, path, content):
     """Save file."""
     from .backup import Backup
 
@@ -252,6 +268,7 @@ def save(path, content):
         content = {"data": content, "schema": STORAGE_VERSION}
         with open(path, "w", encoding="utf-8") as storefile:
             json.dump(content, storefile, indent=4)
-    except Exception:  # pylint: disable=broad-except
+    except Exception as exception:  # pylint: disable=broad-except
+        logger.warning(f"Saving {path} failed - {exception}")
         backup.restore()
     backup.cleanup()

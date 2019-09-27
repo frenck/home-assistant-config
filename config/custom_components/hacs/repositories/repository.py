@@ -1,8 +1,12 @@
 """Repository."""
 # pylint: disable=broad-except, bad-continuation, no-member
 import pathlib
+import json
+import os
 from distutils.version import LooseVersion
 from integrationhelper import Validate, Logger
+from aiogithubapi import AIOGitHubException
+from .manifest import HacsManifest
 from ..hacsbase import Hacs
 from ..hacsbase.backup import Backup
 from ..handler.download import async_download_file, async_save_file
@@ -93,6 +97,7 @@ class HacsRepository(Hacs):
         self.information = RepositoryInformation()
         self.repository_object = None
         self.status = RepositoryStatus()
+        self.repository_manifest = None
         self.validate = Validate()
         self.releases = RepositoryReleases()
         self.versions = RepositoryVersions()
@@ -136,11 +141,16 @@ class HacsRepository(Hacs):
     @property
     def can_install(self):
         """Return bool if repository can be installed."""
+        target = None
         if self.information.homeassistant_version is not None:
+            target = self.information.homeassistant_version
+        if self.repository_manifest is not None:
+            if self.repository_manifest.homeassistant is not None:
+                target = self.repository_manifest.homeassistant
+
+        if target is not None:
             if self.releases.releases:
-                if LooseVersion(self.system.ha_version) < LooseVersion(
-                    self.information.homeassistant_version
-                ):
+                if LooseVersion(self.system.ha_version) < LooseVersion(target):
                     return False
         return True
 
@@ -151,6 +161,9 @@ class HacsRepository(Hacs):
         if self.information.category == "integration":
             if self.manifest is not None:
                 name = self.manifest["name"]
+
+        if self.repository_manifest is not None:
+            name = self.repository_manifest.name
 
         if name is not None:
             return name
@@ -273,6 +286,9 @@ class HacsRepository(Hacs):
         # Step 5: Get releases.
         await self.get_releases()
 
+        # Step 6: Get the content of hacs.json
+        await self.get_repository_manifest_content()
+
         # Set repository name
         self.information.name = self.information.full_name.split("/")[1]
 
@@ -316,10 +332,7 @@ class HacsRepository(Hacs):
             self.information.description = self.repository_object.description
 
         # Update default branch
-        if self.information.full_name != "custom-components/hacs":
-            self.information.default_branch = self.repository_object.default_branch
-        else:
-            self.information.default_branch = "next"
+        self.information.default_branch = self.repository_object.default_branch
 
         # Update last available commit
         await self.repository_object.set_last_commit()
@@ -331,6 +344,9 @@ class HacsRepository(Hacs):
         # Update topics
         self.information.topics = self.repository_object.topics
 
+        # Get the content of hacs.json
+        await self.get_repository_manifest_content()
+
         # Update "info.md"
         await self.get_info_md_content()
 
@@ -340,8 +356,20 @@ class HacsRepository(Hacs):
     async def install(self):
         """Common installation steps of the repository."""
         self.validate.errors = []
+        persistent_directory = None
 
         await self.update_repository()
+
+        if self.repository_manifest:
+            if self.repository_manifest.persistent_directory:
+                if os.path.exists(
+                    f"{self.content.path.local}/{self.repository_manifest.persistent_directory}"
+                ):
+                    persistent_directory = Backup(
+                        f"{self.content.path.local}/{self.repository_manifest.persistent_directory}",
+                        "/tmp/hacs_persistent_directory/",
+                    )
+                    persistent_directory.create()
 
         if self.status.installed and not self.content.single:
             backup = Backup(self.content.path.local)
@@ -359,6 +387,10 @@ class HacsRepository(Hacs):
 
         if self.status.installed and not self.content.single:
             backup.cleanup()
+
+        if persistent_directory is not None:
+            persistent_directory.restore()
+            persistent_directory.cleanup()
 
         if validate.success:
             if self.information.full_name not in self.common.installed:
@@ -439,25 +471,38 @@ class HacsRepository(Hacs):
             pass
         return validate
 
+    async def get_repository_manifest_content(self):
+        """Get the content of the hacs.json file."""
+        try:
+            manifest = await self.repository_object.get_contents("hacs.json", self.ref)
+            self.repository_manifest = HacsManifest(json.loads(manifest.content))
+        except (AIOGitHubException, Exception):  # Gotta Catch 'Em All
+            pass
+
     async def get_info_md_content(self):
         """Get the content of info.md"""
         from ..handler.template import render_template
 
         info = None
         info_files = ["info", "info.md"]
+
+        if self.repository_manifest is not None:
+            if self.repository_manifest.render_readme:
+                info_files = ["readme", "readme.md"]
         try:
             root = await self.repository_object.get_contents("", self.ref)
             for file in root:
                 if file.name.lower() in info_files:
-                    info = await self.repository_object.get_contents(
+
+                    info = await self.repository_object.get_rendered_contents(
                         file.name, self.ref
                     )
                     break
             if info is None:
                 self.information.additional_info = ""
             else:
-                info = await self.github.render_markdown(info.content)
                 info = info.replace("&lt;", "<")
+                info = info.replace("<svg", "<disabled").replace("</svg", "</disabled")
                 info = info.replace("<h3>", "<h6>").replace("</h3>", "</h6>")
                 info = info.replace("<h2>", "<h5>").replace("</h2>", "</h5>")
                 info = info.replace("<h1>", "<h4>").replace("</h1>", "</h4>")
@@ -465,20 +510,30 @@ class HacsRepository(Hacs):
                 info = info.replace(
                     '<a href="http', '<a rel="noreferrer" target="_blank" href="http'
                 )
-                info = info.replace("<ul>", "")
-                info = info.replace("</ul>", "")
+                info = info.replace("<li>", "<li style='list-style-type: initial;'>")
+
+                # Special changes that needs to be done:
+                info = info.replace(
+                    "<your", "<&#8205;your"
+                )  # for thomasloven/hass-favicon
+
                 info += "</br>"
+
                 self.information.additional_info = render_template(info, self)
 
-        except Exception:  # Gotta Catch 'Em All
+        except (AIOGitHubException, Exception):
             self.information.additional_info = ""
 
     async def get_releases(self):
         """Get repository releases."""
         if self.status.show_beta:
-            temp = await self.repository_object.get_releases(prerelease=True)
+            temp = await self.repository_object.get_releases(
+                prerelease=True, returnlimit=self.configuration.release_limit
+            )
         else:
-            temp = await self.repository_object.get_releases(prerelease=False)
+            temp = await self.repository_object.get_releases(
+                prerelease=False, returnlimit=self.configuration.release_limit
+            )
 
         if not temp:
             return
@@ -536,7 +591,6 @@ class HacsRepository(Hacs):
 
     async def remove_local_directory(self):
         """Check the local directory."""
-        import os
         import shutil
         from asyncio import sleep
 

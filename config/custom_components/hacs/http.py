@@ -47,15 +47,12 @@ class HacsWebResponse(HomeAssistantView, Hacs):
         self.repository_id = path.replace(self.endpoint + "/", "")
         if self.endpoint != "static":
             self.logger.debug(f"Endpoint ({self.endpoint}) called")
-        if self.configuration.dev:
-            self.logger.debug(f"Raw headers ({self.raw_headers})")
-            self.logger.debug(f"Postdata ({self.postdata})")
         if self.endpoint in WEBRESPONSE:
             try:
                 response = WEBRESPONSE[self.endpoint]
                 response = await response.response(self)
             except Exception as exception:
-                render = self.render(f"error", message=exception)
+                render = self.render("error", message=exception)
                 return web.Response(
                     body=render, content_type="text/html", charset="utf-8"
                 )

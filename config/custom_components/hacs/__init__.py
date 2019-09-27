@@ -2,7 +2,7 @@
 Custom element manager for community created elements.
 
 For more details about this integration, please refer to the documentation at
-https://custom-components.github.io/hacs/
+https://hacs.netlify.com/
 """
 # pylint: disable=bad-continuation
 from asyncio import sleep
@@ -36,6 +36,15 @@ from .hacsbase.data import HacsData
 from .hacsbase.configuration import Configuration
 from .hacsbase.migration import ValidateData
 
+
+OPTIONS_SCHEMA = vol.Schema(
+    {
+        vol.Optional("country"): vol.All(cv.string, vol.In(const.LOCALE)),
+        vol.Optional("release_limit"): cv.positive_int,
+    }
+)
+
+
 CONFIG_SCHEMA = vol.Schema(
     {
         const.DOMAIN: vol.Schema(
@@ -47,6 +56,7 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Optional("appdaemon", default=False): cv.boolean,
                 vol.Optional("python_script", default=False): cv.boolean,
                 vol.Optional("theme", default=False): cv.boolean,
+                vol.Optional("options"): OPTIONS_SCHEMA,
             }
         )
     },
@@ -60,7 +70,9 @@ async def async_setup(hass, config):  # pylint: disable=unused-argument
         return True
     hass.data[const.DOMAIN] = config
     Hacs.hass = hass
-    Hacs.configuration = Configuration(config[const.DOMAIN])
+    Hacs.configuration = Configuration(
+        config[const.DOMAIN], config[const.DOMAIN].get("options")
+    )
     Hacs.configuration.config_type = "yaml"
     await startup_wrapper_for_yaml(Hacs)
     hass.async_create_task(
@@ -82,9 +94,10 @@ async def async_setup_entry(hass, config_entry):
             )
         return False
     Hacs.hass = hass
-    Hacs.configuration = Configuration(config_entry.data)
+    Hacs.configuration = Configuration(config_entry.data, config_entry.options)
     Hacs.configuration.config_type = "flow"
     Hacs.configuration.config_entry = config_entry
+    config_entry.add_update_listener(reload_hacs)
     startup_result = await hacs_startup(Hacs)
     if not startup_result:
         raise ConfigEntryNotReady
@@ -179,7 +192,7 @@ async def hacs_startup(hacs):
 
     # Print DEV warning
     if hacs.configuration.dev:
-        hacs.logger.error(const.DEV_MODE)
+        hacs.logger.warning(const.DEV_MODE)
         hacs.hass.components.persistent_notification.create(
             title="HACS DEV MODE",
             message=const.DEV_MODE,
@@ -215,8 +228,10 @@ def check_version(hacs):
 async def load_hacs_repository(hacs):
     """Load HACS repositroy."""
     try:
-        await hacs().register_repository("custom-components/hacs", "integration")
         repository = hacs().get_by_name("custom-components/hacs")
+        if repository is None:
+            await hacs().register_repository("custom-components/hacs", "integration")
+            repository = hacs().get_by_name("custom-components/hacs")
         if repository is None:
             raise AIOGitHubException("Unknown error")
         repository.status.installed = True
@@ -330,22 +345,6 @@ async def test_repositories(hacs):
 
 async def async_remove_entry(hass, config_entry):
     """Handle removal of an entry."""
-    if Hacs.configuration is not None:
-        if Hacs.configuration.config_type == "yaml":
-            Hacs().logger.warning(
-                """
-            You can not remove HACS from the UI when you have configured it with YAML.
-            To start using UI configuration you need to remove it from YAML, then restart HA.
-            Before adding it under configuration -> integrations."""
-            )
-            hass.async_create_task(
-                hass.config_entries.flow.async_init(
-                    const.DOMAIN,
-                    context={"source": config_entries.SOURCE_IMPORT},
-                    data={},
-                )
-            )
-            return
     Hacs().logger.info("Disabling HACS")
     Hacs().logger.info("Removing recuring tasks")
     for task in Hacs().tasks:
@@ -353,8 +352,19 @@ async def async_remove_entry(hass, config_entry):
     Hacs().logger.info("Removing sensor")
     await hass.config_entries.async_forward_entry_unload(config_entry, "sensor")
     Hacs().logger.info("Removing sidepanel")
-    hass.components.frontend.async_remove_panel(
-        Hacs.configuration.sidepanel_title.lower().replace(" ", "_").replace("-", "_")
-    )
+    try:
+        hass.components.frontend.async_remove_panel(
+            Hacs.configuration.sidepanel_title.lower()
+            .replace(" ", "_")
+            .replace("-", "_")
+        )
+    except AttributeError:
+        pass
     Hacs().system.disabled = True
     Hacs().logger.info("HACS is now disabled")
+
+
+async def reload_hacs(hass, config_entry):
+    """Reload HACS."""
+    await async_remove_entry(hass, config_entry)
+    await async_setup_entry(hass, config_entry)
