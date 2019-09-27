@@ -33,19 +33,22 @@ jobs:
     needs: [yamllint, remarklint]
     strategy:
       matrix:
-        stability: ["stable", "beta", "dev"]
+        stability:
+          - "docker://homeassistant/home-assistant:stable"
+          - "docker://homeassistant/home-assistant:beta"
+          - "docker://homeassistant/home-assistant:dev"
     steps:
       - name: Getting your configuration from GitHub
         uses: actions/checkout@v1
       - name: Copy stub files into configuration folder
         run: cp -R ./.stubs/* ./config
       - name: Home Assistant Version
-        uses: "docker://homeassistant/home-assistant:%{matrix.stability}"
+        uses: ${{ matrix.stability }}
         with:
           args: |
             python -m homeassistant --version
       - name: Home Assistant Check
-        uses: "docker://homeassistant/home-assistant:%{matrix.stability}"
+        uses: ${{ matrix.stability }}
         with:
           args: python -m homeassistant --config ./config/ --script check_config --info all
   home_assistant_beta:
