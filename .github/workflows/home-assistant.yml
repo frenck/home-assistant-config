@@ -26,7 +26,7 @@ jobs:
       - name: Running Remark lint
         uses: "docker://pipelinecomponents/remark-lint:latest"
         with:
-          args: "remark --no-stdout --color  --use preset-lint-recommended ."
+          args: "remark --no-stdout --color --frail --use preset-lint-recommended ."
   home_assistant_stable:
     runs-on: ubuntu-latest
     needs: [yamllint, remarklint]
