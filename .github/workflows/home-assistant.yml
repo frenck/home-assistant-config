@@ -11,5 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Run a one-line script
-        run: echo Choo choo homies!
+      - name: Home Assistant Check
+        uses: "docker://homeassistant/home-assistant:latest"
+        args: python -m homeassistant --version
