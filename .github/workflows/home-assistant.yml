@@ -28,27 +28,21 @@ jobs:
         continue-on-error: true
         with:
           args: "remark --no-stdout --color --frail --use preset-lint-recommended ."
-  home_assistant_matrix:
+  home_assistant_stable:
     runs-on: ubuntu-latest
     needs: [yamllint, remarklint]
-    strategy:
-      matrix:
-        stability:
-          - "docker://homeassistant/home-assistant:stable"
-          - "docker://homeassistant/home-assistant:beta"
-          - "docker://homeassistant/home-assistant:dev"
     steps:
       - name: Getting your configuration from GitHub
         uses: actions/checkout@v1
       - name: Copy stub files into configuration folder
         run: cp -R ./.stubs/* ./config
       - name: Home Assistant Version
-        uses: ${{ matrix.stability }}
+        uses: "docker://homeassistant/home-assistant:stable"
         with:
           args: |
             python -m homeassistant --version
       - name: Home Assistant Check
-        uses: ${{ matrix.stability }}
+        uses: "docker://homeassistant/home-assistant:stable"
         with:
           args: python -m homeassistant --config ./config/ --script check_config --info all
   home_assistant_beta:
