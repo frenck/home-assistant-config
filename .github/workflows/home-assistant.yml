@@ -11,7 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Copy stub files into configuration folder
+        run: cp -R ./.stubs/* ./config
       - name: Home Assistant Check
         uses: "docker://homeassistant/home-assistant:latest"
         with:
-          args: python -m homeassistant --version
+          args: |
+            python -m homeassistant --version && \
+            python -m homeassistant \
+              --config ./config/ \
+              --script check_config \
+              --info all
