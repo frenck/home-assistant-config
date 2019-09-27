@@ -40,12 +40,12 @@ jobs:
       - name: Copy stub files into configuration folder
         run: cp -R ./.stubs/* ./config
       - name: Home Assistant Version
-        uses: "docker://homeassistant/home-assistant:${{ matrix.stability }}"
+        uses: "docker://homeassistant/home-assistant:%{matrix.stability}"
         with:
           args: |
             python -m homeassistant --version
       - name: Home Assistant Check
-        uses: "docker://homeassistant/home-assistant:${{ matrix.stability }}"
+        uses: "docker://homeassistant/home-assistant:%{matrix.stability}"
         with:
           args: python -m homeassistant --config ./config/ --script check_config --info all
   home_assistant_beta:
