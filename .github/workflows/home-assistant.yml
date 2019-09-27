@@ -1,0 +1,15 @@
+name: Home Assistant CI
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: 0 12 * * *
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run a one-line script
+        run: echo Choo choo homies!
