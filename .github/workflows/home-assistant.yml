@@ -21,8 +21,4 @@ jobs:
       - name: Home Assistant Check
         uses: "docker://homeassistant/home-assistant:latest"
         with:
-          args: |
-            python -m homeassistant \
-              --config ./config/ \
-              --script check_config \
-              --info all
+          args: python -m homeassistant --config ./config/ --script check_config --info all
