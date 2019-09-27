@@ -6,3 +6,6 @@
 platform: onvif
 name: bedroom_flynn
 host: !secret camera_onvif_bedroom_flynn_host
+port: !secret camera_onvif_bedroom_flynn_port
+username: !secret camera_onvif_bedroom_flynn_username
+password: !secret camera_onvif_bedroom_flynn_password
