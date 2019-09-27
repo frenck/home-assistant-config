@@ -7,7 +7,7 @@
 # Views are actually include one by one, this to guarentee the order of
 # the tabs of the view in the UI.
 #
-title: Home Control Panel
+title: Home Control Panels
 resources: !include_dir_list lovelace/resources
 cch: !include lovelace/cards/compact_custom_header.yaml
 views:
