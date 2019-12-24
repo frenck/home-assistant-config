@@ -2,6 +2,6 @@
 # The stream component provides a way to proxy live streams through
 # Home Assistant.
 #
-# https://www.home-assistant.io/components/stream/
+# https://www.home-assistant.io/integrations/stream/
 #
 stream:

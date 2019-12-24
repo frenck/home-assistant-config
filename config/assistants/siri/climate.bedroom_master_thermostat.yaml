@@ -3,7 +3,6 @@
 #
 # I use this to customize how the device shows up in HomeKit.
 #
-# https://www.home-assistant.io/components/homekit/#entity_config
+# https://www.home-assistant.io/integrations/homekit/#entity_config
 #
-climate.bedroom_master:
-  name: Slaapkamer Thermostaat
+name: Slaapkamer Thermostaat

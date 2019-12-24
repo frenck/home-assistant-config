@@ -4,7 +4,7 @@
 # and also gets data from my SolarEdge Solar panels.
 #
 # https://www.eneco.nl/energieproducten/toon-thermostaat/
-# https://www.home-assistant.io/components/toon/
+# https://www.home-assistant.io/integrations/toon/
 #
 toon:
   client_id: !secret toon_client_id

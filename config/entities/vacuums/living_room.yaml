@@ -2,7 +2,7 @@
 #
 # Integrates our Xiaomi Roborock S50 into Home Assistant.
 #
-# https://www.home-assistant.io/components/vacuum.xiaomi_miio/
+# https://www.home-assistant.io/integrations/vacuum.xiaomi_miio/
 #
 platform: xiaomi_miio
 name: living_room

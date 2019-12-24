@@ -5,7 +5,7 @@
 #
 # This little light switch solves that issue.
 #
-# https://www.home-assistant.io/components/light.switch/
+# https://www.home-assistant.io/integrations/light.switch/
 #
 platform: switch
 name: kitchen_cupboard

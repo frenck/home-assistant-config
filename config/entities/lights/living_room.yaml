@@ -3,7 +3,7 @@
 #
 # This light controls all the other lights in my living room
 #
-# https://www.home-assistant.io/components/light.group/
+# https://www.home-assistant.io/integrations/light.group/
 #
 platform: group
 name: living_room

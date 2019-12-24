@@ -3,6 +3,6 @@
 # your house by showing all the changes that happened to your house in
 # reverse chronological order.
 #
-# https://www.home-assistant.io/components/logbook/
+# https://www.home-assistant.io/integrations/logbook/
 #
 logbook:

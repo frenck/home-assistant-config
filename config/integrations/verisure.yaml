@@ -4,7 +4,7 @@
 # The alarm system not only exposes the Alarm device itself, but all
 # its sensors as well.
 #
-# https://www.home-assistant.io/components/verisure/
+# https://www.home-assistant.io/integrations/verisure/
 #
 verisure:
   username: !secret verisure_username

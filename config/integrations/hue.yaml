@@ -2,7 +2,7 @@
 # Philips Hue support is integrated into Home Assistant as a Hub that can
 # drive the light platform.
 #
-# https://www.home-assistant.io/components/hue/
+# https://www.home-assistant.io/integrations/hue/
 #
 hue:
   bridges:

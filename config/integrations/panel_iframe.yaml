@@ -6,6 +6,6 @@
 #
 # This configration loads up all my panels
 #
-# https://www.home-assistant.io/components/panel_iframe/
+# https://www.home-assistant.io/integrations/panel_iframe/
 #
 panel_iframe: !include_dir_merge_named ../panels/iframes

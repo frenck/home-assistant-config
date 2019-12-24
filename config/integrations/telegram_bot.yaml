@@ -6,7 +6,7 @@
 # Currently not really in use yet, but configured and I might use it in the
 # near future.
 #
-# https://www.home-assistant.io/components/telegram_bot/
+# https://www.home-assistant.io/integrations/telegram_bot/
 #
 telegram_bot:
   - platform: webhooks

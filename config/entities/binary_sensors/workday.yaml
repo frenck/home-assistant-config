@@ -4,7 +4,7 @@
 #
 # This is pretty useful for a lot of automations.
 #
-# https://www.home-assistant.io/components/binary_sensor.workday/
+# https://www.home-assistant.io/integrations/binary_sensor.workday/
 #
 platform: workday
 name: workday

@@ -2,6 +2,6 @@
 #
 # This handles the loading of my weather platforms.
 #
-# https://www.home-assistant.io/components/weather/
+# https://www.home-assistant.io/integrations/weather/
 #
 weather: !include_dir_list ../entities/weather

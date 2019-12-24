@@ -2,7 +2,7 @@
 # The recorder component is storing details in a database which
 # then are handled by the history component.
 #
-# https://www.home-assistant.io/components/recorder/
+# https://www.home-assistant.io/integrations/recorder/
 #
 recorder:
   # The number of days of history to keep in the recorder database

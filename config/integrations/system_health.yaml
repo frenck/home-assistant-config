@@ -2,6 +2,6 @@
 # The System Health component provides an API to offer information
 # on the system and its components.
 #
-# https://www.home-assistant.io/components/system_health/
+# https://www.home-assistant.io/integrations/system_health/
 #
 system_health:

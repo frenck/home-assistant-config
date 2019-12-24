@@ -3,7 +3,7 @@
 #
 # See esp03.yaml for the matching ESPHome configuration
 #
-# https://www.home-assistant.io/components/fan.template/
+# https://www.home-assistant.io/integrations/fan.template/
 #
 platform: template
 fans:

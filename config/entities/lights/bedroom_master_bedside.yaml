@@ -4,7 +4,7 @@
 #
 # This group allows me to handle them both at once
 #
-# https://www.home-assistant.io/components/light.group/
+# https://www.home-assistant.io/integrations/light.group/
 #
 platform: group
 name: bedroom_master_bedside

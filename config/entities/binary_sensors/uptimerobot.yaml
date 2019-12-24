@@ -3,7 +3,7 @@
 # you get the status for all of your monitors
 # from your account on Uptime Robot.
 #
-# https://www.home-assistant.io/components/uptimerobot/
+# https://www.home-assistant.io/integrations/uptimerobot/
 # https://uptimerobot.com/
 #
 platform: uptimerobot

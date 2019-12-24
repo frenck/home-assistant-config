@@ -3,7 +3,7 @@
 # My bathroom has 3 Ikea Tradfri GU10 WS (400lm) in the ceiling as spotlights
 # and I want them to act as one.
 #
-# https://www.home-assistant.io/components/light.group/
+# https://www.home-assistant.io/integrations/light.group/
 #
 platform: group
 name: bathroom_ceiling

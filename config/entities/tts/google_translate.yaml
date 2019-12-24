@@ -2,7 +2,7 @@
 # The Google Text-to-Speech platform use Google Text-to-Speech engine to
 # read a text with a natural sounding voice(s).
 #
-# https://www.home-assistant.io/components/google_translate/
+# https://www.home-assistant.io/integrations/google_translate/
 #
 platform: google_translate
 

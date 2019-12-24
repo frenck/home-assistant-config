@@ -1,7 +1,7 @@
 ---
 # The onvif camera platform allows you to use an ONVIF camera in Home Assistant.
 #
-# https://www.home-assistant.io/components/onvif/
+# https://www.home-assistant.io/integrations/onvif/
 #
 platform: onvif
 name: bedroom_flynn

@@ -5,7 +5,7 @@
 # I use this template to break out the attribute from the thermostat into
 # its own sensor.
 #
-# https://www.home-assistant.io/components/template/
+# https://www.home-assistant.io/integrations/template/
 #
 platform: template
 sensors:

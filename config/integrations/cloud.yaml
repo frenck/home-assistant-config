@@ -2,7 +2,7 @@
 # The Home Assistant Cloud allows you to quickly integrate your local
 # Home Assistant with various cloud services like Amazon Alexa and Google Home.
 #
-# https://www.home-assistant.io/components/cloud/
+# https://www.home-assistant.io/integrations/cloud/
 #
 cloud:
 
@@ -31,3 +31,4 @@ cloud:
         - light.office_window
         - vacuum.living_room
         # - light.bedroom_master_bedside
+        - script.camera_flynn_living_room_tv

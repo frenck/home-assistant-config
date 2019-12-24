@@ -1,6 +1,6 @@
 ---
 # Zones allow you to specify certain regions on earth (for now).
 #
-# https://www.home-assistant.io/components/zone/
+# https://www.home-assistant.io/integrations/zone/
 #
 zone: !include_dir_list ../entities/zones

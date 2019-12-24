@@ -2,7 +2,7 @@
 # The http component serves all files and data required for the
 # Home Assistant frontend.
 #
-# https://www.home-assistant.io/components/http/
+# https://www.home-assistant.io/integrations/http/
 #
 http:
   # Contains the URL that Home Assistant is available on the internet.

@@ -4,7 +4,7 @@
 # and has 7 Ikea Tradfri GU10 WS (400lm) spots
 # and I want them to act as one.
 #
-# https://www.home-assistant.io/components/light.group/
+# https://www.home-assistant.io/integrations/light.group/
 #
 platform: group
 name: office_window

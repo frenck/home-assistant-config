@@ -3,6 +3,6 @@
 # date and time values that can be controlled via the
 # frontend and can be used within automations and templates.
 #
-# https://www.home-assistant.io/components/input_datetime/
+# https://www.home-assistant.io/integrations/input_datetime/
 #
 input_datetime: !include_dir_merge_named ../entities/input_datetime

@@ -5,7 +5,7 @@
 #
 # This configration loads up all my custom panels
 #
-# https://www.home-assistant.io/components/panel_custom
+# https://www.home-assistant.io/integrations/panel_custom
 #
 # CURRENTLY DISABLED, because I don't have any at this point.
 #

@@ -2,6 +2,6 @@
 # The person integration allows connecting device tracker
 # entities to one or more person entities.
 #
-# https://www.home-assistant.io/components/person/
+# https://www.home-assistant.io/integrations/person/
 #
 person: !include_dir_list ../entities/persons

@@ -5,7 +5,7 @@
 # This automation wait for a signal from Z-Wave and
 # will start HomeKit.
 #
-# https://www.home-assistant.io/components/homekit/#disable-auto-start
+# https://www.home-assistant.io/integrations/homekit/#disable-auto-start
 #
 alias: system_homekit_start
 trigger:

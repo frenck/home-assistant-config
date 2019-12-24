@@ -2,7 +2,7 @@
 # The HomeKit component allows you to forward entities from Home Assistant
 # to Apple HomeKit, so they can be controlled from Apple’s Home app and Siri.
 #
-# https://www.home-assistant.io/components/homekit
+# https://www.home-assistant.io/integrations/homekit
 #
 homekit:
   # Stop the HomeKit Server from starting automatically after the Home Assistant
