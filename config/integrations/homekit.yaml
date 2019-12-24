@@ -15,20 +15,20 @@ homekit:
 
   # Configuration for specific entities. Allows customization of names and types
   # These are imported from another folder, to decouple them from the packages.
-  entity_config: !include_dir_merge_named ../assistants/siri
+  entity_config: !include_dir_named ../assistants/siri
 
   # Filters for entities to be included / excluded from HomeKit.
   filter:
     include_entities:
       - climate.living_room
       - light.living_room_bar
-      # - climate.bedroom_master_thermostat
+      - climate.bedroom_master_thermostat
       # - light.bedroom_master_bedside
       # - light.bedroom_master_ceiling
-      # - light.kitchen_ceiling
-      # - light.kitchen_cupboard
-      # - light.livingroom_computer_corner
-      # - light.livingroom_desk
-      # - light.livingroom_spotlight
-      # - light.livingroom_tv
-      # - light.livingroom_window
+      - light.kitchen_ceiling
+      - light.kitchen_cupboard
+      - light.office_window
+      - light.office_desk
+      - light.livingroom_spotlight
+      - light.living_room_television
+      - light.living_room_window

@@ -5,12 +5,9 @@
 #
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
-light.kitchen_ceiling:
-  name: Keuken plafond
+script.camera_flynn_living_room_tv:
+  name: Camera Flynn
   aliases:
-    - keuken plafond
-    - ceiling
-    - keuken
-    - kitchen
-    - kitchen ceiling
-  room: Keuken
+    - camera flynn
+    - flynn camera
+    - camera slaapkamer flynn
