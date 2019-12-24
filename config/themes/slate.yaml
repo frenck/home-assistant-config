@@ -1,8 +1,3 @@
----
-# Slate by Sean Green
-#
-# https://github.com/seangreen2/home_assistant/blob/master/themes.yaml
-#
 slate:
   # Main colors
   primary-color: '#2980b9'
@@ -48,18 +43,21 @@ slate:
   paper-toggle-button-unchecked-button-color: 'var(--disabled-text-color)'
   paper-toggle-button-unchecked-bar-color: 'var(--disabled-text-color)'
   paper-toggle-button-unchecked-ink-color: 'var(--disabled-text-color)'
+  switch-checked-color: 'var(--paper-toggle-button-checked-button-color)'
+  switch-unchecked-color: 'var(--disabled-text-color)'
+  switch-unchecked-button-color: 'var(--disabled-text-color)'
+  switch-unchecked-track-color: 'var(--disabled-text-color)'
   # Sliders
   paper-slider-knob-color: '#2980b9'
   paper-slider-knob-start-color: '#2980b9'
   paper-slider-pin-color: '#2980b9'
   paper-slider-active-color: '#2980b9'
-  paper-slider-container-color: 'linear-gradient(var(--primary-background-color),
-      var(--secondary-background-color)) no-repeat'
+  paper-slider-container-color: 'linear-gradient(var(--primary-background-color), var(--secondary-background-color)) no-repeat'
   paper-slider-secondary-color: 'var(--secondary-background-color)'
   paper-slider-disabled-active-color: 'var(--disabled-text-color)'
   paper-slider-disabled-secondary-color: 'var(--disabled-text-color)'
   # Google colors
-  google-red-500: '#b58e31'
+  google-red-500: '#b93829'
   google-green-500: '#2980b9'
   # Changes to fix history/logbook menus
   lumo-primary-text-color: '#2980b9'
@@ -85,3 +83,5 @@ slate:
   lumo-shade-10pct: 'rgba(34, 34, 34, .1)'
   lumo-shade-5pct: 'rgba(34, 34, 34, .05)'
   lumo-tint-5pct: '#222222'
+  # fix for device configuration screen
+  card-background-color: "var(--paper-card-background-color)"
