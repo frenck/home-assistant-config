@@ -1,7 +1,7 @@
-function t(t, e, n, i) {
-  var r,
-      s = arguments.length,
-      a = s < 3 ? e : null === i ? i = Object.getOwnPropertyDescriptor(e, n) : i;if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, n, i);else for (var o = t.length - 1; o >= 0; o--) (r = t[o]) && (a = (s < 3 ? r(a) : s > 3 ? r(e, n, a) : r(e, n)) || a);return s > 3 && a && Object.defineProperty(e, n, a), a;
+function t(t, e, i, s) {
+  var n,
+      r = arguments.length,
+      a = r < 3 ? e : null === s ? s = Object.getOwnPropertyDescriptor(e, i) : s;if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) a = Reflect.decorate(t, e, i, s);else for (var o = t.length - 1; o >= 0; o--) (n = t[o]) && (a = (r < 3 ? n(a) : r > 3 ? n(e, i, a) : n(e, i)) || a);return r > 3 && a && Object.defineProperty(e, i, a), a;
   /**
    * @license
    * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -16,62 +16,62 @@ function t(t, e, n, i) {
    * http://polymer.github.io/PATENTS.txt
    */
 }const e = new WeakMap(),
-      n = t => (...n) => {
-  const i = t(...n);return e.set(i, !0), i;
+      i = t => (...i) => {
+  const s = t(...i);return e.set(s, !0), s;
 },
-      i = t => "function" == typeof t && e.has(t),
-      r = void 0 !== window.customElements && void 0 !== window.customElements.polyfillWrapFlushCallback,
-      s = (t, e, n = null) => {
-  for (; e !== n;) {
-    const n = e.nextSibling;t.removeChild(e), e = n;
+      s = t => "function" == typeof t && e.has(t),
+      n = void 0 !== window.customElements && void 0 !== window.customElements.polyfillWrapFlushCallback,
+      r = (t, e, i = null) => {
+  for (; e !== i;) {
+    const i = e.nextSibling;t.removeChild(e), e = i;
   }
 },
       a = {},
       o = {},
       c = `{{lit-${String(Math.random()).slice(2)}}}`,
       l = `\x3c!--${c}--\x3e`,
-      u = new RegExp(`${c}|${l}`),
-      d = "$lit$";class h {
+      h = new RegExp(`${c}|${l}`),
+      d = "$lit$";class u {
   constructor(t, e) {
-    this.parts = [], this.element = e;const n = [],
-          i = [],
-          r = document.createTreeWalker(e.content, 133, null, !1);let s = 0,
+    this.parts = [], this.element = e;const i = [],
+          s = [],
+          n = document.createTreeWalker(e.content, 133, null, !1);let r = 0,
         a = -1,
-        o = 0;const { strings: l, values: { length: h } } = t;for (; o < h;) {
-      const t = r.nextNode();if (null !== t) {
+        o = 0;const { strings: l, values: { length: u } } = t;for (; o < u;) {
+      const t = n.nextNode();if (null !== t) {
         if (a++, 1 === t.nodeType) {
           if (t.hasAttributes()) {
             const e = t.attributes,
-                  { length: n } = e;let i = 0;for (let t = 0; t < n; t++) f(e[t].name, d) && i++;for (; i-- > 0;) {
+                  { length: i } = e;let s = 0;for (let t = 0; t < i; t++) p(e[t].name, d) && s++;for (; s-- > 0;) {
               const e = l[o],
-                    n = g.exec(e)[2],
-                    i = n.toLowerCase() + d,
-                    r = t.getAttribute(i);t.removeAttribute(i);const s = r.split(u);this.parts.push({ type: "attribute", index: a, name: n, strings: s }), o += s.length - 1;
+                    i = g.exec(e)[2],
+                    s = i.toLowerCase() + d,
+                    n = t.getAttribute(s);t.removeAttribute(s);const r = n.split(h);this.parts.push({ type: "attribute", index: a, name: i, strings: r }), o += r.length - 1;
             }
-          }"TEMPLATE" === t.tagName && (i.push(t), r.currentNode = t.content);
+          }"TEMPLATE" === t.tagName && (s.push(t), n.currentNode = t.content);
         } else if (3 === t.nodeType) {
           const e = t.data;if (e.indexOf(c) >= 0) {
-            const i = t.parentNode,
-                  r = e.split(u),
-                  s = r.length - 1;for (let e = 0; e < s; e++) {
-              let n,
-                  s = r[e];if ("" === s) n = m();else {
-                const t = g.exec(s);null !== t && f(t[2], d) && (s = s.slice(0, t.index) + t[1] + t[2].slice(0, -d.length) + t[3]), n = document.createTextNode(s);
-              }i.insertBefore(n, t), this.parts.push({ type: "node", index: ++a });
-            }"" === r[s] ? (i.insertBefore(m(), t), n.push(t)) : t.data = r[s], o += s;
+            const s = t.parentNode,
+                  n = e.split(h),
+                  r = n.length - 1;for (let e = 0; e < r; e++) {
+              let i,
+                  r = n[e];if ("" === r) i = m();else {
+                const t = g.exec(r);null !== t && p(t[2], d) && (r = r.slice(0, t.index) + t[1] + t[2].slice(0, -d.length) + t[3]), i = document.createTextNode(r);
+              }s.insertBefore(i, t), this.parts.push({ type: "node", index: ++a });
+            }"" === n[r] ? (s.insertBefore(m(), t), i.push(t)) : t.data = n[r], o += r;
           }
         } else if (8 === t.nodeType) if (t.data === c) {
-          const e = t.parentNode;null !== t.previousSibling && a !== s || (a++, e.insertBefore(m(), t)), s = a, this.parts.push({ type: "node", index: a }), null === t.nextSibling ? t.data = "" : (n.push(t), a--), o++;
+          const e = t.parentNode;null !== t.previousSibling && a !== r || (a++, e.insertBefore(m(), t)), r = a, this.parts.push({ type: "node", index: a }), null === t.nextSibling ? t.data = "" : (i.push(t), a--), o++;
         } else {
           let e = -1;for (; -1 !== (e = t.data.indexOf(c, e + 1));) this.parts.push({ type: "node", index: -1 }), o++;
         }
-      } else r.currentNode = i.pop();
-    }for (const t of n) t.parentNode.removeChild(t);
+      } else n.currentNode = s.pop();
+    }for (const c of i) c.parentNode.removeChild(c);
   }
-}const f = (t, e) => {
-  const n = t.length - e.length;return n >= 0 && t.slice(n) === e;
+}const p = (t, e) => {
+  const i = t.length - e.length;return i >= 0 && t.slice(i) === e;
 },
-      p = t => -1 !== t.index,
+      f = t => -1 !== t.index,
       m = () => document.createComment(""),
       g = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=\/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
 /**
@@ -88,22 +88,22 @@ function t(t, e, n, i) {
  * http://polymer.github.io/PATENTS.txt
  */
 class b {
-  constructor(t, e, n) {
-    this.__parts = [], this.template = t, this.processor = e, this.options = n;
+  constructor(t, e, i) {
+    this.__parts = [], this.template = t, this.processor = e, this.options = i;
   }update(t) {
-    let e = 0;for (const n of this.__parts) void 0 !== n && n.setValue(t[e]), e++;for (const t of this.__parts) void 0 !== t && t.commit();
+    let e = 0;for (const i of this.__parts) void 0 !== i && i.setValue(t[e]), e++;for (const i of this.__parts) void 0 !== i && i.commit();
   }_clone() {
-    const t = r ? this.template.element.content.cloneNode(!0) : document.importNode(this.template.element.content, !0),
+    const t = n ? this.template.element.content.cloneNode(!0) : document.importNode(this.template.element.content, !0),
           e = [],
-          n = this.template.parts,
-          i = document.createTreeWalker(t, 133, null, !1);let s,
+          i = this.template.parts,
+          s = document.createTreeWalker(t, 133, null, !1);let r,
         a = 0,
         o = 0,
-        c = i.nextNode();for (; a < n.length;) if (s = n[a], p(s)) {
-      for (; o < s.index;) o++, "TEMPLATE" === c.nodeName && (e.push(c), i.currentNode = c.content), null === (c = i.nextNode()) && (i.currentNode = e.pop(), c = i.nextNode());if ("node" === s.type) {
+        c = s.nextNode();for (; a < i.length;) if (r = i[a], f(r)) {
+      for (; o < r.index;) o++, "TEMPLATE" === c.nodeName && (e.push(c), s.currentNode = c.content), null === (c = s.nextNode()) && (s.currentNode = e.pop(), c = s.nextNode());if ("node" === r.type) {
         const t = this.processor.handleTextExpression(this.options);t.insertAfterNode(c.previousSibling), this.__parts.push(t);
-      } else this.__parts.push(...this.processor.handleAttributeExpressions(c, s.name, s.strings, this.options));a++;
-    } else this.__parts.push(void 0), a++;return r && (document.adoptNode(t), customElements.upgrade(t)), t;
+      } else this.__parts.push(...this.processor.handleAttributeExpressions(c, r.name, r.strings, this.options));a++;
+    } else this.__parts.push(void 0), a++;return n && (document.adoptNode(t), customElements.upgrade(t)), t;
   }
 }
 /**
@@ -118,14 +118,14 @@ class b {
  * Code distributed by Google as part of the polymer project is also
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
- */class v {
-  constructor(t, e, n, i) {
-    this.strings = t, this.values = e, this.type = n, this.processor = i;
+ */const _ = ` ${c} `;class y {
+  constructor(t, e, i, s) {
+    this.strings = t, this.values = e, this.type = i, this.processor = s;
   }getHTML() {
     const t = this.strings.length - 1;let e = "",
-        n = !1;for (let i = 0; i < t; i++) {
-      const t = this.strings[i],
-            r = t.lastIndexOf("\x3c!--");n = (r > -1 || n) && -1 === t.indexOf("--\x3e", r + 1);const s = g.exec(t);e += null === s ? t + (n ? c : l) : t.substr(0, s.index) + s[1] + s[2] + d + s[3] + c;
+        i = !1;for (let s = 0; s < t; s++) {
+      const t = this.strings[s],
+            n = t.lastIndexOf("\x3c!--");i = (n > -1 || i) && -1 === t.indexOf("--\x3e", n + 1);const r = g.exec(t);e += null === r ? t + (i ? _ : l) : t.substr(0, r.index) + r[1] + r[2] + d + r[3] + c;
     }return e += this.strings[t];
   }getTemplateElement() {
     const t = document.createElement("template");return t.innerHTML = this.getHTML(), t;
@@ -143,33 +143,33 @@ class b {
  * Code distributed by Google as part of the polymer project is also
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
- */const _ = t => null === t || !("object" == typeof t || "function" == typeof t),
-      y = t => Array.isArray(t) || !(!t || !t[Symbol.iterator]);class w {
-  constructor(t, e, n) {
-    this.dirty = !0, this.element = t, this.name = e, this.strings = n, this.parts = [];for (let t = 0; t < n.length - 1; t++) this.parts[t] = this._createPart();
+ */const v = t => null === t || !("object" == typeof t || "function" == typeof t),
+      w = t => Array.isArray(t) || !(!t || !t[Symbol.iterator]);class S {
+  constructor(t, e, i) {
+    this.dirty = !0, this.element = t, this.name = e, this.strings = i, this.parts = [];for (let s = 0; s < i.length - 1; s++) this.parts[s] = this._createPart();
   }_createPart() {
-    return new S(this);
+    return new M(this);
   }_getValue() {
     const t = this.strings,
-          e = t.length - 1;let n = "";for (let i = 0; i < e; i++) {
-      n += t[i];const e = this.parts[i];if (void 0 !== e) {
-        const t = e.value;if (_(t) || !y(t)) n += "string" == typeof t ? t : String(t);else for (const e of t) n += "string" == typeof e ? e : String(e);
+          e = t.length - 1;let i = "";for (let s = 0; s < e; s++) {
+      i += t[s];const e = this.parts[s];if (void 0 !== e) {
+        const t = e.value;if (v(t) || !w(t)) i += "string" == typeof t ? t : String(t);else for (const e of t) i += "string" == typeof e ? e : String(e);
       }
-    }return n += t[e];
+    }return i += t[e];
   }commit() {
     this.dirty && (this.dirty = !1, this.element.setAttribute(this.name, this._getValue()));
   }
-}class S {
+}class M {
   constructor(t) {
     this.value = void 0, this.committer = t;
   }setValue(t) {
-    t === a || _(t) && t === this.value || (this.value = t, i(t) || (this.committer.dirty = !0));
+    t === a || v(t) && t === this.value || (this.value = t, s(t) || (this.committer.dirty = !0));
   }commit() {
-    for (; i(this.value);) {
+    for (; s(this.value);) {
       const t = this.value;this.value = a, t(this);
     }this.value !== a && this.committer.commit();
   }
-}class M {
+}class k {
   constructor(t) {
     this.value = void 0, this.__pendingValue = void 0, this.options = t;
   }appendInto(t) {
@@ -183,67 +183,67 @@ class b {
   }setValue(t) {
     this.__pendingValue = t;
   }commit() {
-    for (; i(this.__pendingValue);) {
+    for (; s(this.__pendingValue);) {
       const t = this.__pendingValue;this.__pendingValue = a, t(this);
-    }const t = this.__pendingValue;t !== a && (_(t) ? t !== this.value && this.__commitText(t) : t instanceof v ? this.__commitTemplateResult(t) : t instanceof Node ? this.__commitNode(t) : y(t) ? this.__commitIterable(t) : t === o ? (this.value = o, this.clear()) : this.__commitText(t));
+    }const t = this.__pendingValue;t !== a && (v(t) ? t !== this.value && this.__commitText(t) : t instanceof y ? this.__commitTemplateResult(t) : t instanceof Node ? this.__commitNode(t) : w(t) ? this.__commitIterable(t) : t === o ? (this.value = o, this.clear()) : this.__commitText(t));
   }__insert(t) {
     this.endNode.parentNode.insertBefore(t, this.endNode);
   }__commitNode(t) {
     this.value !== t && (this.clear(), this.__insert(t), this.value = t);
   }__commitText(t) {
     const e = this.startNode.nextSibling,
-          n = "string" == typeof (t = null == t ? "" : t) ? t : String(t);e === this.endNode.previousSibling && 3 === e.nodeType ? e.data = n : this.__commitNode(document.createTextNode(n)), this.value = t;
+          i = "string" == typeof (t = null == t ? "" : t) ? t : String(t);e === this.endNode.previousSibling && 3 === e.nodeType ? e.data = i : this.__commitNode(document.createTextNode(i)), this.value = t;
   }__commitTemplateResult(t) {
     const e = this.options.templateFactory(t);if (this.value instanceof b && this.value.template === e) this.value.update(t.values);else {
-      const n = new b(e, t.processor, this.options),
-            i = n._clone();n.update(t.values), this.__commitNode(i), this.value = n;
+      const i = new b(e, t.processor, this.options),
+            s = i._clone();i.update(t.values), this.__commitNode(s), this.value = i;
     }
   }__commitIterable(t) {
-    Array.isArray(this.value) || (this.value = [], this.clear());const e = this.value;let n,
-        i = 0;for (const r of t) void 0 === (n = e[i]) && (n = new M(this.options), e.push(n), 0 === i ? n.appendIntoPart(this) : n.insertAfterPart(e[i - 1])), n.setValue(r), n.commit(), i++;i < e.length && (e.length = i, this.clear(n && n.endNode));
+    Array.isArray(this.value) || (this.value = [], this.clear());const e = this.value;let i,
+        s = 0;for (const n of t) void 0 === (i = e[s]) && (i = new k(this.options), e.push(i), 0 === s ? i.appendIntoPart(this) : i.insertAfterPart(e[s - 1])), i.setValue(n), i.commit(), s++;s < e.length && (e.length = s, this.clear(i && i.endNode));
   }clear(t = this.startNode) {
-    s(this.startNode.parentNode, t.nextSibling, this.endNode);
+    r(this.startNode.parentNode, t.nextSibling, this.endNode);
   }
 }class x {
-  constructor(t, e, n) {
-    if (this.value = void 0, this.__pendingValue = void 0, 2 !== n.length || "" !== n[0] || "" !== n[1]) throw new Error("Boolean attributes can only contain a single expression");this.element = t, this.name = e, this.strings = n;
+  constructor(t, e, i) {
+    if (this.value = void 0, this.__pendingValue = void 0, 2 !== i.length || "" !== i[0] || "" !== i[1]) throw new Error("Boolean attributes can only contain a single expression");this.element = t, this.name = e, this.strings = i;
   }setValue(t) {
     this.__pendingValue = t;
   }commit() {
-    for (; i(this.__pendingValue);) {
+    for (; s(this.__pendingValue);) {
       const t = this.__pendingValue;this.__pendingValue = a, t(this);
     }if (this.__pendingValue === a) return;const t = !!this.__pendingValue;this.value !== t && (t ? this.element.setAttribute(this.name, "") : this.element.removeAttribute(this.name), this.value = t), this.__pendingValue = a;
   }
-}class k extends w {
-  constructor(t, e, n) {
-    super(t, e, n), this.single = 2 === n.length && "" === n[0] && "" === n[1];
+}class N extends S {
+  constructor(t, e, i) {
+    super(t, e, i), this.single = 2 === i.length && "" === i[0] && "" === i[1];
   }_createPart() {
-    return new A(this);
+    return new O(this);
   }_getValue() {
     return this.single ? this.parts[0].value : super._getValue();
   }commit() {
     this.dirty && (this.dirty = !1, this.element[this.name] = this._getValue());
   }
-}class A extends S {}let P = !1;try {
+}class O extends M {}let C = !1;try {
   const t = { get capture() {
-      return P = !0, !1;
+      return C = !0, !1;
     } };window.addEventListener("test", t, t), window.removeEventListener("test", t, t);
-} catch (t) {}class E {
-  constructor(t, e, n) {
-    this.value = void 0, this.__pendingValue = void 0, this.element = t, this.eventName = e, this.eventContext = n, this.__boundHandleEvent = t => this.handleEvent(t);
+} catch (Ce) {}class A {
+  constructor(t, e, i) {
+    this.value = void 0, this.__pendingValue = void 0, this.element = t, this.eventName = e, this.eventContext = i, this.__boundHandleEvent = t => this.handleEvent(t);
   }setValue(t) {
     this.__pendingValue = t;
   }commit() {
-    for (; i(this.__pendingValue);) {
+    for (; s(this.__pendingValue);) {
       const t = this.__pendingValue;this.__pendingValue = a, t(this);
     }if (this.__pendingValue === a) return;const t = this.__pendingValue,
           e = this.value,
-          n = null == t || null != e && (t.capture !== e.capture || t.once !== e.once || t.passive !== e.passive),
-          r = null != t && (null == e || n);n && this.element.removeEventListener(this.eventName, this.__boundHandleEvent, this.__options), r && (this.__options = O(t), this.element.addEventListener(this.eventName, this.__boundHandleEvent, this.__options)), this.value = t, this.__pendingValue = a;
+          i = null == t || null != e && (t.capture !== e.capture || t.once !== e.once || t.passive !== e.passive),
+          n = null != t && (null == e || i);i && this.element.removeEventListener(this.eventName, this.__boundHandleEvent, this.__options), n && (this.__options = P(t), this.element.addEventListener(this.eventName, this.__boundHandleEvent, this.__options)), this.value = t, this.__pendingValue = a;
   }handleEvent(t) {
     "function" == typeof this.value ? this.value.call(this.eventContext || this.element, t) : this.value.handleEvent(t);
   }
-}const O = t => t && (P ? { capture: t.capture, passive: t.passive, once: t.once } : t.capture);
+}const P = t => t && (C ? { capture: t.capture, passive: t.passive, once: t.once } : t.capture);
 /**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -256,11 +256,11 @@ class b {
  * Code distributed by Google as part of the polymer project is also
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
- */const T = new class {
-  handleAttributeExpressions(t, e, n, i) {
-    const r = e[0];return "." === r ? new k(t, e.slice(1), n).parts : "@" === r ? [new E(t, e.slice(1), i.eventContext)] : "?" === r ? [new x(t, e.slice(1), n)] : new w(t, e, n).parts;
+ */const E = new class {
+  handleAttributeExpressions(t, e, i, s) {
+    const n = e[0];return "." === n ? new N(t, e.slice(1), i).parts : "@" === n ? [new A(t, e.slice(1), s.eventContext)] : "?" === n ? [new x(t, e.slice(1), i)] : new S(t, e, i).parts;
   }handleTextExpression(t) {
-    return new M(t);
+    return new k(t);
   }
 }();
 /**
@@ -275,10 +275,10 @@ class b {
  * Code distributed by Google as part of the polymer project is also
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
- */function N(t) {
-  let e = C.get(t.type);void 0 === e && (e = { stringsArray: new WeakMap(), keyString: new Map() }, C.set(t.type, e));let n = e.stringsArray.get(t.strings);if (void 0 !== n) return n;const i = t.strings.join(c);return void 0 === (n = e.keyString.get(i)) && (n = new h(t, t.getTemplateElement()), e.keyString.set(i, n)), e.stringsArray.set(t.strings, n), n;
-}const C = new Map(),
-      F = new WeakMap();
+ */function T(t) {
+  let e = F.get(t.type);void 0 === e && (e = { stringsArray: new WeakMap(), keyString: new Map() }, F.set(t.type, e));let i = e.stringsArray.get(t.strings);if (void 0 !== i) return i;const s = t.strings.join(c);return void 0 === (i = e.keyString.get(s)) && (i = new u(t, t.getTemplateElement()), e.keyString.set(s, i)), e.stringsArray.set(t.strings, i), i;
+}const F = new Map(),
+      R = new WeakMap();
 /**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -305,8 +305,8 @@ class b {
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
  */
-(window.litHtmlVersions || (window.litHtmlVersions = [])).push("1.1.1");const R = (t, ...e) => new v(t, e, "html", T),
-      V = 133;
+(window.litHtmlVersions || (window.litHtmlVersions = [])).push("1.1.2");const V = (t, ...e) => new y(t, e, "html", E),
+      B = 133;
 /**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -319,20 +319,20 @@ class b {
  * Code distributed by Google as part of the polymer project is also
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
- */function L(t, e) {
-  const { element: { content: n }, parts: i } = t,
-        r = document.createTreeWalker(n, V, null, !1);let s = j(i),
-      a = i[s],
+ */function j(t, e) {
+  const { element: { content: i }, parts: s } = t,
+        n = document.createTreeWalker(i, B, null, !1);let r = H(s),
+      a = s[r],
       o = -1,
-      c = 0;const l = [];let u = null;for (; r.nextNode();) {
-    o++;const t = r.currentNode;for (t.previousSibling === u && (u = null), e.has(t) && (l.push(t), null === u && (u = t)), null !== u && c++; void 0 !== a && a.index === o;) a.index = null !== u ? -1 : a.index - c, a = i[s = j(i, s)];
+      c = 0;const l = [];let h = null;for (; n.nextNode();) {
+    o++;const t = n.currentNode;for (t.previousSibling === h && (h = null), e.has(t) && (l.push(t), null === h && (h = t)), null !== h && c++; void 0 !== a && a.index === o;) a.index = null !== h ? -1 : a.index - c, a = s[r = H(s, r)];
   }l.forEach(t => t.parentNode.removeChild(t));
-}const B = t => {
-  let e = 11 === t.nodeType ? 0 : 1;const n = document.createTreeWalker(t, V, null, !1);for (; n.nextNode();) e++;return e;
+}const $ = t => {
+  let e = 11 === t.nodeType ? 0 : 1;const i = document.createTreeWalker(t, B, null, !1);for (; i.nextNode();) e++;return e;
 },
-      j = (t, e = -1) => {
-  for (let n = e + 1; n < t.length; n++) {
-    const e = t[n];if (p(e)) return n;
+      H = (t, e = -1) => {
+  for (let i = e + 1; i < t.length; i++) {
+    const e = t[i];if (f(e)) return i;
   }return -1;
 };
 /**
@@ -348,53 +348,39 @@ class b {
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
  */
-const $ = (t, e) => `${t}--${e}`;let H = !0;void 0 === window.ShadyCSS ? H = !1 : void 0 === window.ShadyCSS.prepareTemplateDom && (console.warn("Incompatible ShadyCSS version detected. Please update to at least @webcomponents/webcomponentsjs@2.0.2 and @webcomponents/shadycss@1.3.1."), H = !1);const D = t => e => {
-  const n = $(e.type, t);let i = C.get(n);void 0 === i && (i = { stringsArray: new WeakMap(), keyString: new Map() }, C.set(n, i));let r = i.stringsArray.get(e.strings);if (void 0 !== r) return r;const s = e.strings.join(c);if (void 0 === (r = i.keyString.get(s))) {
-    const n = e.getTemplateElement();H && window.ShadyCSS.prepareTemplateDom(n, t), r = new h(e, n), i.keyString.set(s, r);
-  }return i.stringsArray.set(e.strings, r), r;
+const L = (t, e) => `${t}--${e}`;let D = !0;void 0 === window.ShadyCSS ? D = !1 : void 0 === window.ShadyCSS.prepareTemplateDom && (console.warn("Incompatible ShadyCSS version detected. Please update to at least @webcomponents/webcomponentsjs@2.0.2 and @webcomponents/shadycss@1.3.1."), D = !1);const z = t => e => {
+  const i = L(e.type, t);let s = F.get(i);void 0 === s && (s = { stringsArray: new WeakMap(), keyString: new Map() }, F.set(i, s));let n = s.stringsArray.get(e.strings);if (void 0 !== n) return n;const r = e.strings.join(c);if (void 0 === (n = s.keyString.get(r))) {
+    const i = e.getTemplateElement();D && window.ShadyCSS.prepareTemplateDom(i, t), n = new u(e, i), s.keyString.set(r, n);
+  }return s.stringsArray.set(e.strings, n), n;
 },
       I = ["html", "svg"],
-      z = new Set(),
-      W = (t, e, n) => {
-  z.add(t);const i = n ? n.element : document.createElement("template"),
-        r = e.querySelectorAll("style"),
-        { length: s } = r;if (0 === s) return void window.ShadyCSS.prepareTemplateStyles(i, t);const a = document.createElement("style");for (let t = 0; t < s; t++) {
-    const e = r[t];e.parentNode.removeChild(e), a.textContent += e.textContent;
+      q = new Set(),
+      U = (t, e, i) => {
+  q.add(t);const s = i ? i.element : document.createElement("template"),
+        n = e.querySelectorAll("style"),
+        { length: r } = n;if (0 === r) return void window.ShadyCSS.prepareTemplateStyles(s, t);const a = document.createElement("style");for (let l = 0; l < r; l++) {
+    const t = n[l];t.parentNode.removeChild(t), a.textContent += t.textContent;
   }(t => {
     I.forEach(e => {
-      const n = C.get($(e, t));void 0 !== n && n.keyString.forEach(t => {
+      const i = F.get(L(e, t));void 0 !== i && i.keyString.forEach(t => {
         const { element: { content: e } } = t,
-              n = new Set();Array.from(e.querySelectorAll("style")).forEach(t => {
-          n.add(t);
-        }), L(t, n);
+              i = new Set();Array.from(e.querySelectorAll("style")).forEach(t => {
+          i.add(t);
+        }), j(t, i);
       });
     });
-  })(t);const o = i.content;n ? function (t, e, n = null) {
-    const { element: { content: i }, parts: r } = t;if (null == n) return void i.appendChild(e);const s = document.createTreeWalker(i, V, null, !1);let a = j(r),
+  })(t);const o = s.content;i ? function (t, e, i = null) {
+    const { element: { content: s }, parts: n } = t;if (null == i) return void s.appendChild(e);const r = document.createTreeWalker(s, B, null, !1);let a = H(n),
         o = 0,
-        c = -1;for (; s.nextNode();) for (c++, s.currentNode === n && (o = B(e), n.parentNode.insertBefore(e, n)); -1 !== a && r[a].index === c;) {
+        c = -1;for (; r.nextNode();) for (c++, r.currentNode === i && (o = $(e), i.parentNode.insertBefore(e, i)); -1 !== a && n[a].index === c;) {
       if (o > 0) {
-        for (; -1 !== a;) r[a].index += o, a = j(r, a);return;
-      }a = j(r, a);
+        for (; -1 !== a;) n[a].index += o, a = H(n, a);return;
+      }a = H(n, a);
     }
-  }(n, a, o.firstChild) : o.insertBefore(a, o.firstChild), window.ShadyCSS.prepareTemplateStyles(i, t);const c = o.querySelector("style");if (window.ShadyCSS.nativeShadow && null !== c) e.insertBefore(c.cloneNode(!0), e.firstChild);else if (n) {
-    o.insertBefore(a, o.firstChild);const t = new Set();t.add(a), L(n, t);
+  }(i, a, o.firstChild) : o.insertBefore(a, o.firstChild), window.ShadyCSS.prepareTemplateStyles(s, t);const c = o.querySelector("style");if (window.ShadyCSS.nativeShadow && null !== c) e.insertBefore(c.cloneNode(!0), e.firstChild);else if (i) {
+    o.insertBefore(a, o.firstChild);const t = new Set();t.add(a), j(i, t);
   }
-};
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */
-window.JSCompiler_renameProperty = (t, e) => t;const Y = { toAttribute(t, e) {
+};window.JSCompiler_renameProperty = (t, e) => t;const Y = { toAttribute(t, e) {
     switch (e) {case Boolean:
         return t ? "" : null;case Object:case Array:
         return null == t ? t : JSON.stringify(t);}return t;
@@ -404,46 +390,47 @@ window.JSCompiler_renameProperty = (t, e) => t;const Y = { toAttribute(t, e) {
         return null === t ? null : Number(t);case Object:case Array:
         return JSON.parse(t);}return t;
   } },
-      U = (t, e) => e !== t && (e == e || t == t),
-      q = { attribute: !0, type: String, converter: Y, reflect: !1, hasChanged: U },
-      G = Promise.resolve(!0),
-      J = 1,
+      W = (t, e) => e !== t && (e == e || t == t),
+      G = { attribute: !0, type: String, converter: Y, reflect: !1, hasChanged: W },
+      J = Promise.resolve(!0),
+      Q = 1,
       Z = 4,
       K = 8,
       X = 16,
-      Q = 32;class tt extends HTMLElement {
+      tt = 32,
+      et = "finalized";class it extends HTMLElement {
   constructor() {
-    super(), this._updateState = 0, this._instanceProperties = void 0, this._updatePromise = G, this._hasConnectedResolver = void 0, this._changedProperties = new Map(), this._reflectingProperties = void 0, this.initialize();
+    super(), this._updateState = 0, this._instanceProperties = void 0, this._updatePromise = J, this._hasConnectedResolver = void 0, this._changedProperties = new Map(), this._reflectingProperties = void 0, this.initialize();
   }static get observedAttributes() {
-    this.finalize();const t = [];return this._classProperties.forEach((e, n) => {
-      const i = this._attributeNameForProperty(n, e);void 0 !== i && (this._attributeToPropertyMap.set(i, n), t.push(i));
+    this.finalize();const t = [];return this._classProperties.forEach((e, i) => {
+      const s = this._attributeNameForProperty(i, e);void 0 !== s && (this._attributeToPropertyMap.set(s, i), t.push(s));
     }), t;
   }static _ensureClassProperties() {
     if (!this.hasOwnProperty(JSCompiler_renameProperty("_classProperties", this))) {
       this._classProperties = new Map();const t = Object.getPrototypeOf(this)._classProperties;void 0 !== t && t.forEach((t, e) => this._classProperties.set(e, t));
     }
-  }static createProperty(t, e = q) {
-    if (this._ensureClassProperties(), this._classProperties.set(t, e), e.noAccessor || this.prototype.hasOwnProperty(t)) return;const n = "symbol" == typeof t ? Symbol() : `__${t}`;Object.defineProperty(this.prototype, t, { get() {
-        return this[n];
+  }static createProperty(t, e = G) {
+    if (this._ensureClassProperties(), this._classProperties.set(t, e), e.noAccessor || this.prototype.hasOwnProperty(t)) return;const i = "symbol" == typeof t ? Symbol() : `__${t}`;Object.defineProperty(this.prototype, t, { get() {
+        return this[i];
       }, set(e) {
-        const i = this[t];this[n] = e, this._requestUpdate(t, i);
+        const s = this[t];this[i] = e, this._requestUpdate(t, s);
       }, configurable: !0, enumerable: !0 });
   }static finalize() {
-    if (this.hasOwnProperty(JSCompiler_renameProperty("finalized", this)) && this.finalized) return;const t = Object.getPrototypeOf(this);if ("function" == typeof t.finalize && t.finalize(), this.finalized = !0, this._ensureClassProperties(), this._attributeToPropertyMap = new Map(), this.hasOwnProperty(JSCompiler_renameProperty("properties", this))) {
+    const t = Object.getPrototypeOf(this);if (t.hasOwnProperty(et) || t.finalize(), this[et] = !0, this._ensureClassProperties(), this._attributeToPropertyMap = new Map(), this.hasOwnProperty(JSCompiler_renameProperty("properties", this))) {
       const t = this.properties,
-            e = [...Object.getOwnPropertyNames(t), ...("function" == typeof Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(t) : [])];for (const n of e) this.createProperty(n, t[n]);
+            e = [...Object.getOwnPropertyNames(t), ...("function" == typeof Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(t) : [])];for (const i of e) this.createProperty(i, t[i]);
     }
   }static _attributeNameForProperty(t, e) {
-    const n = e.attribute;return !1 === n ? void 0 : "string" == typeof n ? n : "string" == typeof t ? t.toLowerCase() : void 0;
-  }static _valueHasChanged(t, e, n = U) {
-    return n(t, e);
+    const i = e.attribute;return !1 === i ? void 0 : "string" == typeof i ? i : "string" == typeof t ? t.toLowerCase() : void 0;
+  }static _valueHasChanged(t, e, i = W) {
+    return i(t, e);
   }static _propertyValueFromAttribute(t, e) {
-    const n = e.type,
-          i = e.converter || Y,
-          r = "function" == typeof i ? i : i.fromAttribute;return r ? r(t, n) : t;
+    const i = e.type,
+          s = e.converter || Y,
+          n = "function" == typeof s ? s : s.fromAttribute;return n ? n(t, i) : t;
   }static _propertyValueToAttribute(t, e) {
-    if (void 0 === e.reflect) return;const n = e.type,
-          i = e.converter;return (i && i.toAttribute || Y.toAttribute)(t, n);
+    if (void 0 === e.reflect) return;const i = e.type,
+          s = e.converter;return (s && s.toAttribute || Y.toAttribute)(t, i);
   }initialize() {
     this._saveInstanceProperties(), this._requestUpdate();
   }_saveInstanceProperties() {
@@ -455,60 +442,62 @@ window.JSCompiler_renameProperty = (t, e) => t;const Y = { toAttribute(t, e) {
   }_applyInstanceProperties() {
     this._instanceProperties.forEach((t, e) => this[e] = t), this._instanceProperties = void 0;
   }connectedCallback() {
-    this._updateState = this._updateState | Q, this._hasConnectedResolver && (this._hasConnectedResolver(), this._hasConnectedResolver = void 0);
-  }disconnectedCallback() {}attributeChangedCallback(t, e, n) {
-    e !== n && this._attributeToProperty(t, n);
-  }_propertyToAttribute(t, e, n = q) {
-    const i = this.constructor,
-          r = i._attributeNameForProperty(t, n);if (void 0 !== r) {
-      const t = i._propertyValueToAttribute(e, n);if (void 0 === t) return;this._updateState = this._updateState | K, null == t ? this.removeAttribute(r) : this.setAttribute(r, t), this._updateState = this._updateState & ~K;
+    this._updateState = this._updateState | tt, this._hasConnectedResolver && (this._hasConnectedResolver(), this._hasConnectedResolver = void 0);
+  }disconnectedCallback() {}attributeChangedCallback(t, e, i) {
+    e !== i && this._attributeToProperty(t, i);
+  }_propertyToAttribute(t, e, i = G) {
+    const s = this.constructor,
+          n = s._attributeNameForProperty(t, i);if (void 0 !== n) {
+      const t = s._propertyValueToAttribute(e, i);if (void 0 === t) return;this._updateState = this._updateState | K, null == t ? this.removeAttribute(n) : this.setAttribute(n, t), this._updateState = this._updateState & ~K;
     }
   }_attributeToProperty(t, e) {
-    if (this._updateState & K) return;const n = this.constructor,
-          i = n._attributeToPropertyMap.get(t);if (void 0 !== i) {
-      const t = n._classProperties.get(i) || q;this._updateState = this._updateState | X, this[i] = n._propertyValueFromAttribute(e, t), this._updateState = this._updateState & ~X;
+    if (this._updateState & K) return;const i = this.constructor,
+          s = i._attributeToPropertyMap.get(t);if (void 0 !== s) {
+      const t = i._classProperties.get(s) || G;this._updateState = this._updateState | X, this[s] = i._propertyValueFromAttribute(e, t), this._updateState = this._updateState & ~X;
     }
   }_requestUpdate(t, e) {
-    let n = !0;if (void 0 !== t) {
-      const i = this.constructor,
-            r = i._classProperties.get(t) || q;i._valueHasChanged(this[t], e, r.hasChanged) ? (this._changedProperties.has(t) || this._changedProperties.set(t, e), !0 !== r.reflect || this._updateState & X || (void 0 === this._reflectingProperties && (this._reflectingProperties = new Map()), this._reflectingProperties.set(t, r))) : n = !1;
-    }!this._hasRequestedUpdate && n && this._enqueueUpdate();
+    let i = !0;if (void 0 !== t) {
+      const s = this.constructor,
+            n = s._classProperties.get(t) || G;s._valueHasChanged(this[t], e, n.hasChanged) ? (this._changedProperties.has(t) || this._changedProperties.set(t, e), !0 !== n.reflect || this._updateState & X || (void 0 === this._reflectingProperties && (this._reflectingProperties = new Map()), this._reflectingProperties.set(t, n))) : i = !1;
+    }!this._hasRequestedUpdate && i && this._enqueueUpdate();
   }requestUpdate(t, e) {
     return this._requestUpdate(t, e), this.updateComplete;
   }async _enqueueUpdate() {
-    let t, e;this._updateState = this._updateState | Z;const n = this._updatePromise;this._updatePromise = new Promise((n, i) => {
-      t = n, e = i;
+    let t, e;this._updateState = this._updateState | Z;const i = this._updatePromise;this._updatePromise = new Promise((i, s) => {
+      t = i, e = s;
     });try {
-      await n;
-    } catch (t) {}this._hasConnected || (await new Promise(t => this._hasConnectedResolver = t));try {
+      await i;
+    } catch (s) {}this._hasConnected || (await new Promise(t => this._hasConnectedResolver = t));try {
       const t = this.performUpdate();null != t && (await t);
-    } catch (t) {
-      e(t);
+    } catch (s) {
+      e(s);
     }t(!this._hasRequestedUpdate);
   }get _hasConnected() {
-    return this._updateState & Q;
+    return this._updateState & tt;
   }get _hasRequestedUpdate() {
     return this._updateState & Z;
   }get hasUpdated() {
-    return this._updateState & J;
+    return this._updateState & Q;
   }performUpdate() {
     this._instanceProperties && this._applyInstanceProperties();let t = !1;const e = this._changedProperties;try {
       (t = this.shouldUpdate(e)) && this.update(e);
-    } catch (e) {
-      throw t = !1, e;
+    } catch (i) {
+      throw t = !1, i;
     } finally {
       this._markUpdated();
-    }t && (this._updateState & J || (this._updateState = this._updateState | J, this.firstUpdated(e)), this.updated(e));
+    }t && (this._updateState & Q || (this._updateState = this._updateState | Q, this.firstUpdated(e)), this.updated(e));
   }_markUpdated() {
     this._changedProperties = new Map(), this._updateState = this._updateState & ~Z;
   }get updateComplete() {
+    return this._getUpdateComplete();
+  }_getUpdateComplete() {
     return this._updatePromise;
   }shouldUpdate(t) {
     return !0;
   }update(t) {
     void 0 !== this._reflectingProperties && this._reflectingProperties.size > 0 && (this._reflectingProperties.forEach((t, e) => this._propertyToAttribute(e, this[e], t)), this._reflectingProperties = void 0);
   }updated(t) {}firstUpdated(t) {}
-}tt.finalized = !0;
+}it[et] = !0;
 /**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
@@ -522,17 +511,17 @@ window.JSCompiler_renameProperty = (t, e) => t;const Y = { toAttribute(t, e) {
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
  */
-const et = (t, e) => "method" !== e.kind || !e.descriptor || "value" in e.descriptor ? { kind: "field", key: Symbol(), placement: "own", descriptor: {}, initializer() {
+const st = (t, e) => "method" !== e.kind || !e.descriptor || "value" in e.descriptor ? { kind: "field", key: Symbol(), placement: "own", descriptor: {}, initializer() {
     "function" == typeof e.initializer && (this[e.key] = e.initializer.call(this));
-  }, finisher(n) {
-    n.createProperty(e.key, t);
-  } } : Object.assign({}, e, { finisher(n) {
-    n.createProperty(e.key, t);
+  }, finisher(i) {
+    i.createProperty(e.key, t);
+  } } : Object.assign({}, e, { finisher(i) {
+    i.createProperty(e.key, t);
   } }),
-      nt = (t, e, n) => {
-  e.constructor.createProperty(n, t);
-};function it(t) {
-  return (e, n) => void 0 !== n ? nt(t, e, n) : et(t, e);
+      nt = (t, e, i) => {
+  e.constructor.createProperty(i, t);
+};function rt(t) {
+  return (e, i) => void 0 !== i ? nt(t, e, i) : st(t, e);
 }
 /**
 @license
@@ -543,12 +532,12 @@ http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
 found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
 part of the polymer project is also subject to an additional IP rights grant
 found at http://polymer.github.io/PATENTS.txt
-*/const rt = "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype,
-      st = Symbol();class at {
+*/const at = "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype,
+      ot = Symbol();class ct {
   constructor(t, e) {
-    if (e !== st) throw new Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText = t;
+    if (e !== ot) throw new Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText = t;
   }get styleSheet() {
-    return void 0 === this._styleSheet && (rt ? (this._styleSheet = new CSSStyleSheet(), this._styleSheet.replaceSync(this.cssText)) : this._styleSheet = null), this._styleSheet;
+    return void 0 === this._styleSheet && (at ? (this._styleSheet = new CSSStyleSheet(), this._styleSheet.replaceSync(this.cssText)) : this._styleSheet = null), this._styleSheet;
   }toString() {
     return this.cssText;
   }
@@ -566,41 +555,41 @@ found at http://polymer.github.io/PATENTS.txt
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
  */
-(window.litElementVersions || (window.litElementVersions = [])).push("2.2.0");const ot = t => t.flat ? t.flat(1 / 0) : function t(e, n = []) {
-  for (let i = 0, r = e.length; i < r; i++) {
-    const r = e[i];Array.isArray(r) ? t(r, n) : n.push(r);
-  }return n;
-}(t);class ct extends tt {
+(window.litElementVersions || (window.litElementVersions = [])).push("2.2.1");const lt = t => t.flat ? t.flat(1 / 0) : function t(e, i = []) {
+  for (let s = 0, n = e.length; s < n; s++) {
+    const n = e[s];Array.isArray(n) ? t(n, i) : i.push(n);
+  }return i;
+}(t);class ht extends it {
   static finalize() {
-    super.finalize(), this._styles = this.hasOwnProperty(JSCompiler_renameProperty("styles", this)) ? this._getUniqueStyles() : this._styles || [];
+    super.finalize.call(this), this._styles = this.hasOwnProperty(JSCompiler_renameProperty("styles", this)) ? this._getUniqueStyles() : this._styles || [];
   }static _getUniqueStyles() {
     const t = this.styles,
           e = [];if (Array.isArray(t)) {
-      ot(t).reduceRight((t, e) => (t.add(e), t), new Set()).forEach(t => e.unshift(t));
+      lt(t).reduceRight((t, e) => (t.add(e), t), new Set()).forEach(t => e.unshift(t));
     } else t && e.push(t);return e;
   }initialize() {
     super.initialize(), this.renderRoot = this.createRenderRoot(), window.ShadowRoot && this.renderRoot instanceof window.ShadowRoot && this.adoptStyles();
   }createRenderRoot() {
     return this.attachShadow({ mode: "open" });
   }adoptStyles() {
-    const t = this.constructor._styles;0 !== t.length && (void 0 === window.ShadyCSS || window.ShadyCSS.nativeShadow ? rt ? this.renderRoot.adoptedStyleSheets = t.map(t => t.styleSheet) : this._needsShimAdoptedStyleSheets = !0 : window.ShadyCSS.ScopingShim.prepareAdoptedCssText(t.map(t => t.cssText), this.localName));
+    const t = this.constructor._styles;0 !== t.length && (void 0 === window.ShadyCSS || window.ShadyCSS.nativeShadow ? at ? this.renderRoot.adoptedStyleSheets = t.map(t => t.styleSheet) : this._needsShimAdoptedStyleSheets = !0 : window.ShadyCSS.ScopingShim.prepareAdoptedCssText(t.map(t => t.cssText), this.localName));
   }connectedCallback() {
     super.connectedCallback(), this.hasUpdated && void 0 !== window.ShadyCSS && window.ShadyCSS.styleElement(this);
   }update(t) {
-    super.update(t);const e = this.render();e instanceof v && this.constructor.render(e, this.renderRoot, { scopeName: this.localName, eventContext: this }), this._needsShimAdoptedStyleSheets && (this._needsShimAdoptedStyleSheets = !1, this.constructor._styles.forEach(t => {
+    super.update(t);const e = this.render();e instanceof y && this.constructor.render(e, this.renderRoot, { scopeName: this.localName, eventContext: this }), this._needsShimAdoptedStyleSheets && (this._needsShimAdoptedStyleSheets = !1, this.constructor._styles.forEach(t => {
       const e = document.createElement("style");e.textContent = t.cssText, this.renderRoot.appendChild(e);
     }));
   }render() {}
-}ct.finalized = !0, ct.render = (t, e, n) => {
-  if (!n || "object" != typeof n || !n.scopeName) throw new Error("The `scopeName` option is required.");const i = n.scopeName,
-        r = F.has(e),
-        a = H && 11 === e.nodeType && !!e.host,
-        o = a && !z.has(i),
-        c = o ? document.createDocumentFragment() : e;if (((t, e, n) => {
-    let i = F.get(e);void 0 === i && (s(e, e.firstChild), F.set(e, i = new M(Object.assign({ templateFactory: N }, n))), i.appendInto(e)), i.setValue(t), i.commit();
-  })(t, c, Object.assign({ templateFactory: D(i) }, n)), o) {
-    const t = F.get(c);F.delete(c);const n = t.value instanceof b ? t.value.template : void 0;W(i, c, n), s(e, e.firstChild), e.appendChild(c), F.set(e, t);
-  }!r && a && window.ShadyCSS.styleElement(e.host);
+}ht.finalized = !0, ht.render = (t, e, i) => {
+  if (!i || "object" != typeof i || !i.scopeName) throw new Error("The `scopeName` option is required.");const s = i.scopeName,
+        n = R.has(e),
+        a = D && 11 === e.nodeType && !!e.host,
+        o = a && !q.has(s),
+        c = o ? document.createDocumentFragment() : e;if (((t, e, i) => {
+    let s = R.get(e);void 0 === s && (r(e, e.firstChild), R.set(e, s = new k(Object.assign({ templateFactory: T }, i))), s.appendInto(e)), s.setValue(t), s.commit();
+  })(t, c, Object.assign({ templateFactory: z(s) }, i)), o) {
+    const t = R.get(c);R.delete(c);const i = t.value instanceof b ? t.value.template : void 0;U(s, c, i), r(e, e.firstChild), e.appendChild(c), R.set(e, t);
+  }!n && a && window.ShadyCSS.styleElement(e.host);
 };
 /**
  * @license
@@ -615,58 +604,58 @@ found at http://polymer.github.io/PATENTS.txt
  * subject to an additional IP rights grant found at
  * http://polymer.github.io/PATENTS.txt
  */
-const lt = new WeakMap(),
-      ut = n(t => e => {
-  if (!(e instanceof S) || e instanceof A || "style" !== e.committer.name || e.committer.parts.length > 1) throw new Error("The `styleMap` directive must be used in the style attribute and must be the only part in the attribute.");const { committer: n } = e,
-        { style: i } = n.element;lt.has(e) || (i.cssText = n.strings.join(" "));const r = lt.get(e);for (const e in r) e in t || (-1 === e.indexOf("-") ? i[e] = null : i.removeProperty(e));for (const e in t) -1 === e.indexOf("-") ? i[e] = t[e] : i.setProperty(e, t[e]);lt.set(e, t);
+const dt = new WeakMap(),
+      ut = i(t => e => {
+  if (!(e instanceof M) || e instanceof O || "style" !== e.committer.name || e.committer.parts.length > 1) throw new Error("The `styleMap` directive must be used in the style attribute and must be the only part in the attribute.");const { committer: i } = e,
+        { style: s } = i.element;dt.has(e) || (s.cssText = i.strings.join(" "));const n = dt.get(e);for (const r in n) r in t || (-1 === r.indexOf("-") ? s[r] = null : s.removeProperty(r));for (const r in t) -1 === r.indexOf("-") ? s[r] = t[r] : s.setProperty(r, t[r]);dt.set(e, t);
 }),
-      dt = new WeakMap(),
-      ht = n(t => e => {
-  if (!(e instanceof M)) throw new Error("unsafeHTML can only be used in text bindings");const n = dt.get(e);if (void 0 !== n && _(t) && t === n.value && e.value === n.fragment) return;const i = document.createElement("template");i.innerHTML = t;const r = document.importNode(i.content, !0);e.setValue(r), dt.set(e, { value: t, fragment: r });
+      pt = new WeakMap(),
+      ft = i(t => e => {
+  if (!(e instanceof k)) throw new Error("unsafeHTML can only be used in text bindings");const i = pt.get(e);if (void 0 !== i && v(t) && t === i.value && e.value === i.fragment) return;const s = document.createElement("template");s.innerHTML = t;const n = document.importNode(s.content, !0);e.setValue(n), pt.set(e, { value: t, fragment: n });
 }),
-      ft = n(t => e => {
-  if (void 0 === t && e instanceof S) {
+      mt = i(t => e => {
+  if (void 0 === t && e instanceof M) {
     if (t !== e.value) {
       const t = e.committer.name;e.committer.element.removeAttribute(t);
     }
   } else e.setValue(t);
 }),
-      pt = new WeakMap(),
-      mt = n(t => e => {
-  if (!(e instanceof S) || e instanceof A || "class" !== e.committer.name || e.committer.parts.length > 1) throw new Error("The `classMap` directive must be used in the `class` attribute and must be the only part in the attribute.");const { committer: n } = e,
-        { element: i } = n;pt.has(e) || (i.className = n.strings.join(" "));const { classList: r } = i,
-        s = pt.get(e);for (const e in s) e in t || r.remove(e);for (const e in t) {
-    const n = t[e];if (!s || n !== s[e]) {
-      r[n ? "add" : "remove"](e);
+      gt = new WeakMap(),
+      bt = i(t => e => {
+  if (!(e instanceof M) || e instanceof O || "class" !== e.committer.name || e.committer.parts.length > 1) throw new Error("The `classMap` directive must be used in the `class` attribute and must be the only part in the attribute.");const { committer: i } = e,
+        { element: s } = i;gt.has(e) || (s.className = i.strings.join(" "));const { classList: n } = s,
+        r = gt.get(e);for (const a in r) a in t || n.remove(a);for (const a in t) {
+    const e = t[a];if (!r || e !== r[a]) {
+      n[e ? "add" : "remove"](a);
     }
-  }pt.set(e, t);
-});var gt = {},
-    bt = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g,
+  }gt.set(e, t);
+});var _t = {},
+    yt = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g,
     vt = "[^\\s]+",
-    _t = /\[([^]*?)\]/gm,
-    yt = function () {};function wt(t, e) {
-  for (var n = [], i = 0, r = t.length; i < r; i++) n.push(t[i].substr(0, e));return n;
-}function St(t) {
-  return function (e, n, i) {
-    var r = i[t].indexOf(n.charAt(0).toUpperCase() + n.substr(1).toLowerCase());~r && (e.month = r);
+    wt = /\[([^]*?)\]/gm,
+    St = function () {};function Mt(t, e) {
+  for (var i = [], s = 0, n = t.length; s < n; s++) i.push(t[s].substr(0, e));return i;
+}function kt(t) {
+  return function (e, i, s) {
+    var n = s[t].indexOf(i.charAt(0).toUpperCase() + i.substr(1).toLowerCase());~n && (e.month = n);
   };
-}function Mt(t, e) {
+}function xt(t, e) {
   for (t = String(t), e = e || 2; t.length < e;) t = "0" + t;return t;
-}var xt = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    kt = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-    At = wt(kt, 3),
-    Pt = wt(xt, 3);gt.i18n = { dayNamesShort: Pt, dayNames: xt, monthNamesShort: At, monthNames: kt, amPm: ["am", "pm"], DoFn: function (t) {
+}var Nt = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    Ot = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    Ct = Mt(Ot, 3),
+    At = Mt(Nt, 3);_t.i18n = { dayNamesShort: At, dayNames: Nt, monthNamesShort: Ct, monthNames: Ot, amPm: ["am", "pm"], DoFn: function (t) {
     return t + ["th", "st", "nd", "rd"][t % 10 > 3 ? 0 : (t - t % 10 != 10) * t % 10];
-  } };var Et = { D: function (t) {
+  } };var Pt = { D: function (t) {
     return t.getDate();
   }, DD: function (t) {
-    return Mt(t.getDate());
+    return xt(t.getDate());
   }, Do: function (t, e) {
     return e.DoFn(t.getDate());
   }, d: function (t) {
     return t.getDay();
   }, dd: function (t) {
-    return Mt(t.getDay());
+    return xt(t.getDay());
   }, ddd: function (t, e) {
     return e.dayNamesShort[t.getDay()];
   }, dddd: function (t, e) {
@@ -674,52 +663,52 @@ const lt = new WeakMap(),
   }, M: function (t) {
     return t.getMonth() + 1;
   }, MM: function (t) {
-    return Mt(t.getMonth() + 1);
+    return xt(t.getMonth() + 1);
   }, MMM: function (t, e) {
     return e.monthNamesShort[t.getMonth()];
   }, MMMM: function (t, e) {
     return e.monthNames[t.getMonth()];
   }, YY: function (t) {
-    return Mt(String(t.getFullYear()), 4).substr(2);
+    return xt(String(t.getFullYear()), 4).substr(2);
   }, YYYY: function (t) {
-    return Mt(t.getFullYear(), 4);
+    return xt(t.getFullYear(), 4);
   }, h: function (t) {
     return t.getHours() % 12 || 12;
   }, hh: function (t) {
-    return Mt(t.getHours() % 12 || 12);
+    return xt(t.getHours() % 12 || 12);
   }, H: function (t) {
     return t.getHours();
   }, HH: function (t) {
-    return Mt(t.getHours());
+    return xt(t.getHours());
   }, m: function (t) {
     return t.getMinutes();
   }, mm: function (t) {
-    return Mt(t.getMinutes());
+    return xt(t.getMinutes());
   }, s: function (t) {
     return t.getSeconds();
   }, ss: function (t) {
-    return Mt(t.getSeconds());
+    return xt(t.getSeconds());
   }, S: function (t) {
     return Math.round(t.getMilliseconds() / 100);
   }, SS: function (t) {
-    return Mt(Math.round(t.getMilliseconds() / 10), 2);
+    return xt(Math.round(t.getMilliseconds() / 10), 2);
   }, SSS: function (t) {
-    return Mt(t.getMilliseconds(), 3);
+    return xt(t.getMilliseconds(), 3);
   }, a: function (t, e) {
     return t.getHours() < 12 ? e.amPm[0] : e.amPm[1];
   }, A: function (t, e) {
     return t.getHours() < 12 ? e.amPm[0].toUpperCase() : e.amPm[1].toUpperCase();
   }, ZZ: function (t) {
-    var e = t.getTimezoneOffset();return (e > 0 ? "-" : "+") + Mt(100 * Math.floor(Math.abs(e) / 60) + Math.abs(e) % 60, 4);
+    var e = t.getTimezoneOffset();return (e > 0 ? "-" : "+") + xt(100 * Math.floor(Math.abs(e) / 60) + Math.abs(e) % 60, 4);
   } },
-    Ot = { D: ["\\d\\d?", function (t, e) {
+    Et = { D: ["\\d\\d?", function (t, e) {
     t.day = e;
   }], Do: ["\\d\\d?" + vt, function (t, e) {
     t.day = parseInt(e, 10);
   }], M: ["\\d\\d?", function (t, e) {
     t.month = e - 1;
   }], YY: ["\\d\\d?", function (t, e) {
-    var n = +("" + new Date().getFullYear()).substr(0, 2);t.year = "" + (e > 68 ? n - 1 : n) + e;
+    var i = +("" + new Date().getFullYear()).substr(0, 2);t.year = "" + (e > 68 ? i - 1 : i) + e;
   }], h: ["\\d\\d?", function (t, e) {
     t.hour = e;
   }], m: ["\\d\\d?", function (t, e) {
@@ -734,35 +723,35 @@ const lt = new WeakMap(),
     t.millisecond = 10 * e;
   }], SSS: ["\\d{3}", function (t, e) {
     t.millisecond = e;
-  }], d: ["\\d\\d?", yt], ddd: [vt, yt], MMM: [vt, St("monthNamesShort")], MMMM: [vt, St("monthNames")], a: [vt, function (t, e, n) {
-    var i = e.toLowerCase();i === n.amPm[0] ? t.isPm = !1 : i === n.amPm[1] && (t.isPm = !0);
+  }], d: ["\\d\\d?", St], ddd: [vt, St], MMM: [vt, kt("monthNamesShort")], MMMM: [vt, kt("monthNames")], a: [vt, function (t, e, i) {
+    var s = e.toLowerCase();s === i.amPm[0] ? t.isPm = !1 : s === i.amPm[1] && (t.isPm = !0);
   }], ZZ: ["[^\\s]*?[\\+\\-]\\d\\d:?\\d\\d|[^\\s]*?Z", function (t, e) {
-    var n,
-        i = (e + "").match(/([+-]|\d\d)/gi);i && (n = 60 * i[1] + parseInt(i[2], 10), t.timezoneOffset = "+" === i[0] ? n : -n);
+    var i,
+        s = (e + "").match(/([+-]|\d\d)/gi);s && (i = 60 * s[1] + parseInt(s[2], 10), t.timezoneOffset = "+" === s[0] ? i : -i);
   }] };function Tt(t) {
   var e = t.split(":").map(Number);return 3600 * e[0] + 60 * e[1] + e[2];
-}Ot.dd = Ot.d, Ot.dddd = Ot.ddd, Ot.DD = Ot.D, Ot.mm = Ot.m, Ot.hh = Ot.H = Ot.HH = Ot.h, Ot.MM = Ot.M, Ot.ss = Ot.s, Ot.A = Ot.a, gt.masks = { default: "ddd MMM DD YYYY HH:mm:ss", shortDate: "M/D/YY", mediumDate: "MMM D, YYYY", longDate: "MMMM D, YYYY", fullDate: "dddd, MMMM D, YYYY", shortTime: "HH:mm", mediumTime: "HH:mm:ss", longTime: "HH:mm:ss.SSS" }, gt.format = function (t, e, n) {
-  var i = n || gt.i18n;if ("number" == typeof t && (t = new Date(t)), "[object Date]" !== Object.prototype.toString.call(t) || isNaN(t.getTime())) throw new Error("Invalid Date in fecha.format");e = gt.masks[e] || e || gt.masks.default;var r = [];return (e = (e = e.replace(_t, function (t, e) {
-    return r.push(e), "@@@";
-  })).replace(bt, function (e) {
-    return e in Et ? Et[e](t, i) : e.slice(1, e.length - 1);
+}Et.dd = Et.d, Et.dddd = Et.ddd, Et.DD = Et.D, Et.mm = Et.m, Et.hh = Et.H = Et.HH = Et.h, Et.MM = Et.M, Et.ss = Et.s, Et.A = Et.a, _t.masks = { default: "ddd MMM DD YYYY HH:mm:ss", shortDate: "M/D/YY", mediumDate: "MMM D, YYYY", longDate: "MMMM D, YYYY", fullDate: "dddd, MMMM D, YYYY", shortTime: "HH:mm", mediumTime: "HH:mm:ss", longTime: "HH:mm:ss.SSS" }, _t.format = function (t, e, i) {
+  var s = i || _t.i18n;if ("number" == typeof t && (t = new Date(t)), "[object Date]" !== Object.prototype.toString.call(t) || isNaN(t.getTime())) throw new Error("Invalid Date in fecha.format");e = _t.masks[e] || e || _t.masks.default;var n = [];return (e = (e = e.replace(wt, function (t, e) {
+    return n.push(e), "@@@";
+  })).replace(yt, function (e) {
+    return e in Pt ? Pt[e](t, s) : e.slice(1, e.length - 1);
   })).replace(/@@@/g, function () {
-    return r.shift();
+    return n.shift();
   });
-}, gt.parse = function (t, e, n) {
-  var i = n || gt.i18n;if ("string" != typeof e) throw new Error("Invalid format in fecha.parse");if (e = gt.masks[e] || e, t.length > 1e3) return null;var r = {},
-      s = [],
-      a = [];e = e.replace(_t, function (t, e) {
+}, _t.parse = function (t, e, i) {
+  var s = i || _t.i18n;if ("string" != typeof e) throw new Error("Invalid format in fecha.parse");if (e = _t.masks[e] || e, t.length > 1e3) return null;var n = {},
+      r = [],
+      a = [];e = e.replace(wt, function (t, e) {
     return a.push(e), "@@@";
   });var o,
-      c = (o = e, o.replace(/[|\\{()[^$+*?.-]/g, "\\$&")).replace(bt, function (t) {
-    if (Ot[t]) {
-      var e = Ot[t];return s.push(e[1]), "(" + e[0] + ")";
+      c = (o = e, o.replace(/[|\\{()[^$+*?.-]/g, "\\$&")).replace(yt, function (t) {
+    if (Et[t]) {
+      var e = Et[t];return r.push(e[1]), "(" + e[0] + ")";
     }return t;
   });c = c.replace(/@@@/g, function () {
     return a.shift();
-  });var l = t.match(new RegExp(c, "i"));if (!l) return null;for (var u = 1; u < l.length; u++) s[u - 1](r, l[u], i);var d,
-      h = new Date();return !0 === r.isPm && null != r.hour && 12 != +r.hour ? r.hour = +r.hour + 12 : !1 === r.isPm && 12 == +r.hour && (r.hour = 0), null != r.timezoneOffset ? (r.minute = +(r.minute || 0) - +r.timezoneOffset, d = new Date(Date.UTC(r.year || h.getFullYear(), r.month || 0, r.day || 1, r.hour || 0, r.minute || 0, r.second || 0, r.millisecond || 0))) : d = new Date(r.year || h.getFullYear(), r.month || 0, r.day || 1, r.hour || 0, r.minute || 0, r.second || 0, r.millisecond || 0), d;
+  });var l = t.match(new RegExp(c, "i"));if (!l) return null;for (var h = 1; h < l.length; h++) r[h - 1](n, l[h], s);var d,
+      u = new Date();return !0 === n.isPm && null != n.hour && 12 != +n.hour ? n.hour = +n.hour + 12 : !1 === n.isPm && 12 == +n.hour && (n.hour = 0), null != n.timezoneOffset ? (n.minute = +(n.minute || 0) - +n.timezoneOffset, d = new Date(Date.UTC(n.year || u.getFullYear(), n.month || 0, n.day || 1, n.hour || 0, n.minute || 0, n.second || 0, n.millisecond || 0))) : d = new Date(n.year || u.getFullYear(), n.month || 0, n.day || 1, n.hour || 0, n.minute || 0, n.second || 0, n.millisecond || 0), d;
 };(function () {
   try {
     new Date().toLocaleDateString("i");
@@ -781,548 +770,380 @@ const lt = new WeakMap(),
   } catch (t) {
     return "RangeError" === t.name;
   }
-}();var Nt = function (t) {
+}();var Ft = function (t) {
   return t < 10 ? "0" + t : t;
-};var Ct = "hass:bookmark",
-    Ft = ["closed", "locked", "off"],
-    Rt = function (t, e, n, i) {
-  i = i || {}, n = null == n ? {} : n;var r = new Event(e, { bubbles: void 0 === i.bubbles || i.bubbles, cancelable: Boolean(i.cancelable), composed: void 0 === i.composed || i.composed });return r.detail = n, t.dispatchEvent(r), r;
+};var Rt = "hass:bookmark",
+    Vt = ["closed", "locked", "off"],
+    Bt = function (t, e, i, s) {
+  s = s || {}, i = null == i ? {} : i;var n = new Event(e, { bubbles: void 0 === s.bubbles || s.bubbles, cancelable: Boolean(s.cancelable), composed: void 0 === s.composed || s.composed });return n.detail = i, t.dispatchEvent(n), n;
 },
-    Vt = { alert: "hass:alert", automation: "hass:playlist-play", calendar: "hass:calendar", camera: "hass:video", climate: "hass:thermostat", configurator: "hass:settings", conversation: "hass:text-to-speech", device_tracker: "hass:account", fan: "hass:fan", group: "hass:google-circles-communities", history_graph: "hass:chart-line", homeassistant: "hass:home-assistant", homekit: "hass:home-automation", image_processing: "hass:image-filter-frames", input_boolean: "hass:drawing", input_datetime: "hass:calendar-clock", input_number: "hass:ray-vertex", input_select: "hass:format-list-bulleted", input_text: "hass:textbox", light: "hass:lightbulb", mailbox: "hass:mailbox", notify: "hass:comment-alert", person: "hass:account", plant: "hass:flower", proximity: "hass:apple-safari", remote: "hass:remote", scene: "hass:google-pages", script: "hass:file-document", sensor: "hass:eye", simple_alarm: "hass:bell", sun: "hass:white-balance-sunny", switch: "hass:flash", timer: "hass:timer", updater: "hass:cloud-upload", vacuum: "hass:robot-vacuum", water_heater: "hass:thermometer", weblink: "hass:open-in-new" };var Lt = function (t, e) {
-  Rt(t, "haptic", e);
+    jt = { alert: "hass:alert", automation: "hass:playlist-play", calendar: "hass:calendar", camera: "hass:video", climate: "hass:thermostat", configurator: "hass:settings", conversation: "hass:text-to-speech", device_tracker: "hass:account", fan: "hass:fan", group: "hass:google-circles-communities", history_graph: "hass:chart-line", homeassistant: "hass:home-assistant", homekit: "hass:home-automation", image_processing: "hass:image-filter-frames", input_boolean: "hass:drawing", input_datetime: "hass:calendar-clock", input_number: "hass:ray-vertex", input_select: "hass:format-list-bulleted", input_text: "hass:textbox", light: "hass:lightbulb", mailbox: "hass:mailbox", notify: "hass:comment-alert", person: "hass:account", plant: "hass:flower", proximity: "hass:apple-safari", remote: "hass:remote", scene: "hass:google-pages", script: "hass:file-document", sensor: "hass:eye", simple_alarm: "hass:bell", sun: "hass:white-balance-sunny", switch: "hass:flash", timer: "hass:timer", updater: "hass:cloud-upload", vacuum: "hass:robot-vacuum", water_heater: "hass:thermometer", weblink: "hass:open-in-new" };var $t = function (t, e) {
+  Bt(t, "haptic", e);
 },
-    Bt = function (t, e, n, i, r) {
-  var s;switch (r && n.dbltap_action ? s = n.dbltap_action : i && n.hold_action ? s = n.hold_action : !i && n.tap_action && (s = n.tap_action), s || (s = { action: "more-info" }), s.action) {case "more-info":
-      (n.entity || n.camera_image) && (Rt(t, "hass-more-info", { entityId: s.entity ? s.entity : n.entity ? n.entity : n.camera_image }), s.haptic && Lt(t, s.haptic));break;case "navigate":
-      s.navigation_path && (function (t, e, n) {
-        void 0 === n && (n = !1), n ? history.replaceState(null, "", e) : history.pushState(null, "", e), Rt(window, "location-changed", { replace: n });
-      }(0, s.navigation_path), s.haptic && Lt(t, s.haptic));break;case "url":
-      s.url && window.open(s.url), s.haptic && Lt(t, s.haptic);break;case "toggle":
-      n.entity && (function (t, e) {
-        (function (t, e, n) {
-          void 0 === n && (n = !0);var i,
-              r = function (t) {
+    Ht = function (t, e, i, s, n) {
+  var r;if (n && i.double_tap_action ? r = i.double_tap_action : s && i.hold_action ? r = i.hold_action : !s && i.tap_action && (r = i.tap_action), r || (r = { action: "more-info" }), !r.confirmation || r.confirmation.exemptions && r.confirmation.exemptions.some(function (t) {
+    return t.user === e.user.id;
+  }) || confirm(r.confirmation.text || "Are you sure you want to " + r.action + "?")) switch (r.action) {case "more-info":
+      (i.entity || i.camera_image) && (Bt(t, "hass-more-info", { entityId: r.entity ? r.entity : i.entity ? i.entity : i.camera_image }), r.haptic && $t(t, r.haptic));break;case "navigate":
+      r.navigation_path && (function (t, e, i) {
+        void 0 === i && (i = !1), i ? history.replaceState(null, "", e) : history.pushState(null, "", e), Bt(window, "location-changed", { replace: i });
+      }(0, r.navigation_path), r.haptic && $t(t, r.haptic));break;case "url":
+      r.url_path && window.open(r.url_path), r.haptic && $t(t, r.haptic);break;case "toggle":
+      i.entity && (function (t, e) {
+        (function (t, e, i) {
+          void 0 === i && (i = !0);var s,
+              n = function (t) {
             return t.substr(0, t.indexOf("."));
           }(e),
-              s = "group" === r ? "homeassistant" : r;switch (r) {case "lock":
-              i = n ? "unlock" : "lock";break;case "cover":
-              i = n ? "open_cover" : "close_cover";break;default:
-              i = n ? "turn_on" : "turn_off";}t.callService(s, i, { entity_id: e });
-        })(t, e, Ft.includes(t.states[e].state));
-      }(e, n.entity), s.haptic && Lt(t, s.haptic));break;case "call-service":
-      if (!s.service) return;var a = s.service.split(".", 2),
+              r = "group" === n ? "homeassistant" : n;switch (n) {case "lock":
+              s = i ? "unlock" : "lock";break;case "cover":
+              s = i ? "open_cover" : "close_cover";break;default:
+              s = i ? "turn_on" : "turn_off";}t.callService(r, s, { entity_id: e });
+        })(t, e, Vt.includes(t.states[e].state));
+      }(e, i.entity), r.haptic && $t(t, r.haptic));break;case "call-service":
+      if (!r.service) return;var a = r.service.split(".", 2),
           o = a[0],
           c = a[1],
-          l = Object.assign({}, s.service_data);"entity" === l.entity_id && (l.entity_id = n.entity), e.callService(o, c, l), s.haptic && Lt(t, s.haptic);}
-};String(Math.random()).slice(2);try {
-  const t = { get capture() {
-      return !1;
-    } };window.addEventListener("test", t, t), window.removeEventListener("test", t, t);
-} catch (t) {}(window.litHtmlVersions || (window.litHtmlVersions = [])).push("1.0.0");var jt = "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0,
-    $t = function (t) {
-  function e() {
-    t.call(this), this.holdTime = 500, this.ripple = document.createElement("paper-ripple"), this.timer = void 0, this.held = !1, this.cooldownStart = !1, this.cooldownEnd = !1, this.nbClicks = 0;
-  }return t && (e.__proto__ = t), (e.prototype = Object.create(t && t.prototype)).constructor = e, e.prototype.connectedCallback = function () {
-    var t = this;Object.assign(this.style, { borderRadius: "50%", position: "absolute", width: jt ? "100px" : "50px", height: jt ? "100px" : "50px", transform: "translate(-50%, -50%)", pointerEvents: "none" }), this.appendChild(this.ripple), this.ripple.style.color = "#03a9f4", this.ripple.style.color = "var(--primary-color)", ["touchcancel", "mouseout", "mouseup", "touchmove", "mousewheel", "wheel", "scroll"].forEach(function (e) {
-      document.addEventListener(e, function () {
-        clearTimeout(t.timer), t.stopAnimation(), t.timer = void 0;
-      }, { passive: !0 });
-    });
-  }, e.prototype.bind = function (t) {
-    var e = this;if (!t.longPress) {
-      t.longPress = !0, t.addEventListener("contextmenu", function (t) {
-        var e = t || window.event;return e.preventDefault && e.preventDefault(), e.stopPropagation && e.stopPropagation(), e.cancelBubble = !0, e.returnValue = !1, !1;
-      });var n = function (n) {
-        var i, r;e.cooldownStart || (e.held = !1, n.touches ? (i = n.touches[0].pageX, r = n.touches[0].pageY) : (i = n.pageX, r = n.pageY), e.timer = window.setTimeout(function () {
-          e.startAnimation(i, r), e.held = !0, t.repeat && !t.isRepeating && (t.isRepeating = !0, e.repeatTimeout = setInterval(function () {
-            t.dispatchEvent(new Event("ha-hold"));
-          }, t.repeat));
-        }, e.holdTime), e.cooldownStart = !0, window.setTimeout(function () {
-          return e.cooldownStart = !1;
-        }, 100));
-      },
-          i = function (n) {
-        e.cooldownEnd || ["touchend", "touchcancel"].includes(n.type) && void 0 === e.timer ? t.isRepeating && e.repeatTimeout && (clearInterval(e.repeatTimeout), t.isRepeating = !1) : (clearTimeout(e.timer), t.isRepeating && e.repeatTimeout && clearInterval(e.repeatTimeout), t.isRepeating = !1, e.stopAnimation(), e.timer = void 0, e.held ? t.repeat || t.dispatchEvent(new Event("ha-hold")) : t.hasDblClick ? 0 === e.nbClicks ? (e.nbClicks += 1, e.dblClickTimeout = window.setTimeout(function () {
-          1 === e.nbClicks && (e.nbClicks = 0, t.dispatchEvent(new Event("ha-click")));
-        }, 250)) : (e.nbClicks = 0, clearTimeout(e.dblClickTimeout), t.dispatchEvent(new Event("ha-dblclick"))) : t.dispatchEvent(new Event("ha-click")), e.cooldownEnd = !0, window.setTimeout(function () {
-          return e.cooldownEnd = !1;
-        }, 100));
-      };t.addEventListener("touchstart", n, { passive: !0 }), t.addEventListener("touchend", i), t.addEventListener("touchcancel", i), t.addEventListener("mousedown", n, { passive: !0 }), t.addEventListener("click", i);
+          l = Object.assign({}, r.service_data);"entity" === l.entity_id && (l.entity_id = i.entity), e.callService(o, c, l), r.haptic && $t(t, r.haptic);}
+};const Lt = { "Amazon Silk": "amazon_silk", "Android Browser": "android", Bada: "bada", BlackBerry: "blackberry", Chrome: "chrome", Chromium: "chromium", Epiphany: "epiphany", Firefox: "firefox", Focus: "focus", Generic: "generic", "Google Search": "google_search", Googlebot: "googlebot", "Internet Explorer": "ie", "K-Meleon": "k_meleon", Maxthon: "maxthon", "Microsoft Edge": "edge", "MZ Browser": "mz", "NAVER Whale Browser": "naver", Opera: "opera", "Opera Coast": "opera_coast", PhantomJS: "phantomjs", Puffin: "puffin", QupZilla: "qupzilla", QQ: "qq", QQLite: "qqlite", Safari: "safari", Sailfish: "sailfish", "Samsung Internet for Android": "samsung_internet", SeaMonkey: "seamonkey", Sleipnir: "sleipnir", Swing: "swing", Tizen: "tizen", "UC Browser": "uc", Vivaldi: "vivaldi", "WebOS Browser": "webos", WeChat: "wechat", "Yandex Browser": "yandex", Roku: "roku" },
+      Dt = { amazon_silk: "Amazon Silk", android: "Android Browser", bada: "Bada", blackberry: "BlackBerry", chrome: "Chrome", chromium: "Chromium", epiphany: "Epiphany", firefox: "Firefox", focus: "Focus", generic: "Generic", googlebot: "Googlebot", google_search: "Google Search", ie: "Internet Explorer", k_meleon: "K-Meleon", maxthon: "Maxthon", edge: "Microsoft Edge", mz: "MZ Browser", naver: "NAVER Whale Browser", opera: "Opera", opera_coast: "Opera Coast", phantomjs: "PhantomJS", puffin: "Puffin", qupzilla: "QupZilla", qq: "QQ Browser", qqlite: "QQ Browser Lite", safari: "Safari", sailfish: "Sailfish", samsung_internet: "Samsung Internet for Android", seamonkey: "SeaMonkey", sleipnir: "Sleipnir", swing: "Swing", tizen: "Tizen", uc: "UC Browser", vivaldi: "Vivaldi", webos: "WebOS Browser", wechat: "WeChat", yandex: "Yandex Browser" },
+      zt = { tablet: "tablet", mobile: "mobile", desktop: "desktop", tv: "tv" },
+      It = { WindowsPhone: "Windows Phone", Windows: "Windows", MacOS: "macOS", iOS: "iOS", Android: "Android", WebOS: "WebOS", BlackBerry: "BlackBerry", Bada: "Bada", Tizen: "Tizen", Linux: "Linux", ChromeOS: "Chrome OS", PlayStation4: "PlayStation 4", Roku: "Roku" },
+      qt = { EdgeHTML: "EdgeHTML", Blink: "Blink", Trident: "Trident", Presto: "Presto", Gecko: "Gecko", WebKit: "WebKit" };class Ut {
+  static getFirstMatch(t, e) {
+    const i = e.match(t);return i && i.length > 0 && i[1] || "";
+  }static getSecondMatch(t, e) {
+    const i = e.match(t);return i && i.length > 1 && i[2] || "";
+  }static matchAndReturnConst(t, e, i) {
+    if (t.test(e)) return i;
+  }static getWindowsVersionName(t) {
+    switch (t) {case "NT":
+        return "NT";case "XP":
+        return "XP";case "NT 5.0":
+        return "2000";case "NT 5.1":
+        return "XP";case "NT 5.2":
+        return "2003";case "NT 6.0":
+        return "Vista";case "NT 6.1":
+        return "7";case "NT 6.2":
+        return "8";case "NT 6.3":
+        return "8.1";case "NT 10.0":
+        return "10";default:
+        return;}
+  }static getMacOSVersionName(t) {
+    const e = t.split(".").splice(0, 2).map(t => parseInt(t, 10) || 0);if (e.push(0), 10 === e[0]) switch (e[1]) {case 5:
+        return "Leopard";case 6:
+        return "Snow Leopard";case 7:
+        return "Lion";case 8:
+        return "Mountain Lion";case 9:
+        return "Mavericks";case 10:
+        return "Yosemite";case 11:
+        return "El Capitan";case 12:
+        return "Sierra";case 13:
+        return "High Sierra";case 14:
+        return "Mojave";case 15:
+        return "Catalina";default:
+        return;}
+  }static getAndroidVersionName(t) {
+    const e = t.split(".").splice(0, 2).map(t => parseInt(t, 10) || 0);if (e.push(0), !(1 === e[0] && e[1] < 5)) return 1 === e[0] && e[1] < 6 ? "Cupcake" : 1 === e[0] && e[1] >= 6 ? "Donut" : 2 === e[0] && e[1] < 2 ? "Eclair" : 2 === e[0] && 2 === e[1] ? "Froyo" : 2 === e[0] && e[1] > 2 ? "Gingerbread" : 3 === e[0] ? "Honeycomb" : 4 === e[0] && e[1] < 1 ? "Ice Cream Sandwich" : 4 === e[0] && e[1] < 4 ? "Jelly Bean" : 4 === e[0] && e[1] >= 4 ? "KitKat" : 5 === e[0] ? "Lollipop" : 6 === e[0] ? "Marshmallow" : 7 === e[0] ? "Nougat" : 8 === e[0] ? "Oreo" : 9 === e[0] ? "Pie" : void 0;
+  }static getVersionPrecision(t) {
+    return t.split(".").length;
+  }static compareVersions(t, e, i = !1) {
+    const s = Ut.getVersionPrecision(t),
+          n = Ut.getVersionPrecision(e);let r = Math.max(s, n),
+        a = 0;const o = Ut.map([t, e], t => {
+      const e = r - Ut.getVersionPrecision(t),
+            i = t + new Array(e + 1).join(".0");return Ut.map(i.split("."), t => new Array(20 - t.length).join("0") + t).reverse();
+    });for (i && (a = r - Math.min(s, n)), r -= 1; r >= a;) {
+      if (o[0][r] > o[1][r]) return 1;if (o[0][r] === o[1][r]) {
+        if (r === a) return 0;r -= 1;
+      } else if (o[0][r] < o[1][r]) return -1;
     }
-  }, e.prototype.startAnimation = function (t, e) {
-    Object.assign(this.style, { left: t + "px", top: e + "px", display: null }), this.ripple.holdDown = !0, this.ripple.simulatedRipple();
-  }, e.prototype.stopAnimation = function () {
-    this.ripple.holdDown = !1, this.style.display = "none";
-  }, e;
-}(HTMLElement);customElements.get("long-press-custom-card-helpers") || customElements.define("long-press-custom-card-helpers", $t);"undefined" != typeof globalThis ? globalThis : "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self && self;var Ht,
-    Dt,
-    It = (function (t, e) {
-  t.exports = function (t) {
-    var e = {};function n(i) {
-      if (e[i]) return e[i].exports;var r = e[i] = { i: i, l: !1, exports: {} };return t[i].call(r.exports, r, r.exports, n), r.l = !0, r.exports;
-    }return n.m = t, n.c = e, n.d = function (t, e, i) {
-      n.o(t, e) || Object.defineProperty(t, e, { enumerable: !0, get: i });
-    }, n.r = function (t) {
-      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(t, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(t, "__esModule", { value: !0 });
-    }, n.t = function (t, e) {
-      if (1 & e && (t = n(t)), 8 & e) return t;if (4 & e && "object" == typeof t && t && t.__esModule) return t;var i = Object.create(null);if (n.r(i), Object.defineProperty(i, "default", { enumerable: !0, value: t }), 2 & e && "string" != typeof t) for (var r in t) n.d(i, r, function (e) {
-        return t[e];
-      }.bind(null, r));return i;
-    }, n.n = function (t) {
-      var e = t && t.__esModule ? function () {
-        return t.default;
-      } : function () {
-        return t;
-      };return n.d(e, "a", e), e;
-    }, n.o = function (t, e) {
-      return Object.prototype.hasOwnProperty.call(t, e);
-    }, n.p = "", n(n.s = 90);
-  }({ 17: function (t, e, n) {
-      e.__esModule = !0, e.default = void 0;var i = n(18),
-          r = function () {
-        function t() {}return t.getFirstMatch = function (t, e) {
-          var n = e.match(t);return n && n.length > 0 && n[1] || "";
-        }, t.getSecondMatch = function (t, e) {
-          var n = e.match(t);return n && n.length > 1 && n[2] || "";
-        }, t.matchAndReturnConst = function (t, e, n) {
-          if (t.test(e)) return n;
-        }, t.getWindowsVersionName = function (t) {
-          switch (t) {case "NT":
-              return "NT";case "XP":
-              return "XP";case "NT 5.0":
-              return "2000";case "NT 5.1":
-              return "XP";case "NT 5.2":
-              return "2003";case "NT 6.0":
-              return "Vista";case "NT 6.1":
-              return "7";case "NT 6.2":
-              return "8";case "NT 6.3":
-              return "8.1";case "NT 10.0":
-              return "10";default:
-              return;}
-        }, t.getAndroidVersionName = function (t) {
-          var e = t.split(".").splice(0, 2).map(function (t) {
-            return parseInt(t, 10) || 0;
-          });if (e.push(0), !(1 === e[0] && e[1] < 5)) return 1 === e[0] && e[1] < 6 ? "Cupcake" : 1 === e[0] && e[1] >= 6 ? "Donut" : 2 === e[0] && e[1] < 2 ? "Eclair" : 2 === e[0] && 2 === e[1] ? "Froyo" : 2 === e[0] && e[1] > 2 ? "Gingerbread" : 3 === e[0] ? "Honeycomb" : 4 === e[0] && e[1] < 1 ? "Ice Cream Sandwich" : 4 === e[0] && e[1] < 4 ? "Jelly Bean" : 4 === e[0] && e[1] >= 4 ? "KitKat" : 5 === e[0] ? "Lollipop" : 6 === e[0] ? "Marshmallow" : 7 === e[0] ? "Nougat" : 8 === e[0] ? "Oreo" : void 0;
-        }, t.getVersionPrecision = function (t) {
-          return t.split(".").length;
-        }, t.compareVersions = function (e, n, i) {
-          void 0 === i && (i = !1);var r = t.getVersionPrecision(e),
-              s = t.getVersionPrecision(n),
-              a = Math.max(r, s),
-              o = 0,
-              c = t.map([e, n], function (e) {
-            var n = a - t.getVersionPrecision(e),
-                i = e + new Array(n + 1).join(".0");return t.map(i.split("."), function (t) {
-              return new Array(20 - t.length).join("0") + t;
-            }).reverse();
-          });for (i && (o = a - Math.min(r, s)), a -= 1; a >= o;) {
-            if (c[0][a] > c[1][a]) return 1;if (c[0][a] === c[1][a]) {
-              if (a === o) return 0;a -= 1;
-            } else if (c[0][a] < c[1][a]) return -1;
-          }
-        }, t.map = function (t, e) {
-          var n,
-              i = [];if (Array.prototype.map) return Array.prototype.map.call(t, e);for (n = 0; n < t.length; n += 1) i.push(e(t[n]));return i;
-        }, t.getBrowserAlias = function (t) {
-          return i.BROWSER_ALIASES_MAP[t];
-        }, t.getBrowserTypeByAlias = function (t) {
-          return i.BROWSER_MAP[t] || "";
-        }, t;
-      }();e.default = r, t.exports = e.default;
-    }, 18: function (t, e, n) {
-      e.__esModule = !0, e.ENGINE_MAP = e.OS_MAP = e.PLATFORMS_MAP = e.BROWSER_MAP = e.BROWSER_ALIASES_MAP = void 0, e.BROWSER_ALIASES_MAP = { "Amazon Silk": "amazon_silk", "Android Browser": "android", Bada: "bada", BlackBerry: "blackberry", Chrome: "chrome", Chromium: "chromium", Epiphany: "epiphany", Firefox: "firefox", Focus: "focus", Generic: "generic", Googlebot: "googlebot", "Internet Explorer": "ie", "K-Meleon": "k_meleon", Maxthon: "maxthon", "Microsoft Edge": "edge", "MZ Browser": "mz", "NAVER Whale Browser": "naver", Opera: "opera", "Opera Coast": "opera_coast", PhantomJS: "phantomjs", Puffin: "puffin", QupZilla: "qupzilla", Safari: "safari", Sailfish: "sailfish", "Samsung Internet for Android": "samsung_internet", SeaMonkey: "seamonkey", Sleipnir: "sleipnir", Swing: "swing", Tizen: "tizen", "UC Browser": "uc", Vivaldi: "vivaldi", "WebOS Browser": "webos", WeChat: "wechat", "Yandex Browser": "yandex", Roku: "roku" }, e.BROWSER_MAP = { amazon_silk: "Amazon Silk", android: "Android Browser", bada: "Bada", blackberry: "BlackBerry", chrome: "Chrome", chromium: "Chromium", epiphany: "Epiphany", firefox: "Firefox", focus: "Focus", generic: "Generic", googlebot: "Googlebot", ie: "Internet Explorer", k_meleon: "K-Meleon", maxthon: "Maxthon", edge: "Microsoft Edge", mz: "MZ Browser", naver: "NAVER Whale Browser", opera: "Opera", opera_coast: "Opera Coast", phantomjs: "PhantomJS", puffin: "Puffin", qupzilla: "QupZilla", safari: "Safari", sailfish: "Sailfish", samsung_internet: "Samsung Internet for Android", seamonkey: "SeaMonkey", sleipnir: "Sleipnir", swing: "Swing", tizen: "Tizen", uc: "UC Browser", vivaldi: "Vivaldi", webos: "WebOS Browser", wechat: "WeChat", yandex: "Yandex Browser" }, e.PLATFORMS_MAP = { tablet: "tablet", mobile: "mobile", desktop: "desktop", tv: "tv" }, e.OS_MAP = { WindowsPhone: "Windows Phone", Windows: "Windows", MacOS: "macOS", iOS: "iOS", Android: "Android", WebOS: "WebOS", BlackBerry: "BlackBerry", Bada: "Bada", Tizen: "Tizen", Linux: "Linux", ChromeOS: "Chrome OS", PlayStation4: "PlayStation 4", Roku: "Roku" }, e.ENGINE_MAP = { EdgeHTML: "EdgeHTML", Blink: "Blink", Trident: "Trident", Presto: "Presto", Gecko: "Gecko", WebKit: "WebKit" };
-    }, 90: function (t, e, n) {
-      e.__esModule = !0, e.default = void 0;var i,
-          r = (i = n(91)) && i.__esModule ? i : { default: i },
-          s = n(18);function a(t, e) {
-        for (var n = 0; n < e.length; n++) {
-          var i = e[n];i.enumerable = i.enumerable || !1, i.configurable = !0, "value" in i && (i.writable = !0), Object.defineProperty(t, i.key, i);
-        }
-      }var o = function () {
-        function t() {}var e, n;return t.getParser = function (t, e) {
-          if (void 0 === e && (e = !1), "string" != typeof t) throw new Error("UserAgent should be a string");return new r.default(t, e);
-        }, t.parse = function (t) {
-          return new r.default(t).getResult();
-        }, e = t, (n = [{ key: "BROWSER_MAP", get: function () {
-            return s.BROWSER_MAP;
-          } }, { key: "ENGINE_MAP", get: function () {
-            return s.ENGINE_MAP;
-          } }, { key: "OS_MAP", get: function () {
-            return s.OS_MAP;
-          } }, { key: "PLATFORMS_MAP", get: function () {
-            return s.PLATFORMS_MAP;
-          } }]) && a(e, n), t;
-      }();e.default = o, t.exports = e.default;
-    }, 91: function (t, e, n) {
-      e.__esModule = !0, e.default = void 0;var i = c(n(92)),
-          r = c(n(93)),
-          s = c(n(94)),
-          a = c(n(95)),
-          o = c(n(17));function c(t) {
-        return t && t.__esModule ? t : { default: t };
-      }var l = function () {
-        function t(t, e) {
-          if (void 0 === e && (e = !1), null == t || "" === t) throw new Error("UserAgent parameter can't be empty");this._ua = t, this.parsedResult = {}, !0 !== e && this.parse();
-        }var e = t.prototype;return e.getUA = function () {
-          return this._ua;
-        }, e.test = function (t) {
-          return t.test(this._ua);
-        }, e.parseBrowser = function () {
-          var t = this;this.parsedResult.browser = {};var e = i.default.find(function (e) {
-            if ("function" == typeof e.test) return e.test(t);if (e.test instanceof Array) return e.test.some(function (e) {
-              return t.test(e);
-            });throw new Error("Browser's test function is not valid");
-          });return e && (this.parsedResult.browser = e.describe(this.getUA())), this.parsedResult.browser;
-        }, e.getBrowser = function () {
-          return this.parsedResult.browser ? this.parsedResult.browser : this.parseBrowser();
-        }, e.getBrowserName = function (t) {
-          return t ? String(this.getBrowser().name).toLowerCase() || "" : this.getBrowser().name || "";
-        }, e.getBrowserVersion = function () {
-          return this.getBrowser().version;
-        }, e.getOS = function () {
-          return this.parsedResult.os ? this.parsedResult.os : this.parseOS();
-        }, e.parseOS = function () {
-          var t = this;this.parsedResult.os = {};var e = r.default.find(function (e) {
-            if ("function" == typeof e.test) return e.test(t);if (e.test instanceof Array) return e.test.some(function (e) {
-              return t.test(e);
-            });throw new Error("Browser's test function is not valid");
-          });return e && (this.parsedResult.os = e.describe(this.getUA())), this.parsedResult.os;
-        }, e.getOSName = function (t) {
-          var e = this.getOS().name;return t ? String(e).toLowerCase() || "" : e || "";
-        }, e.getOSVersion = function () {
-          return this.getOS().version;
-        }, e.getPlatform = function () {
-          return this.parsedResult.platform ? this.parsedResult.platform : this.parsePlatform();
-        }, e.getPlatformType = function (t) {
-          void 0 === t && (t = !1);var e = this.getPlatform().type;return t ? String(e).toLowerCase() || "" : e || "";
-        }, e.parsePlatform = function () {
-          var t = this;this.parsedResult.platform = {};var e = s.default.find(function (e) {
-            if ("function" == typeof e.test) return e.test(t);if (e.test instanceof Array) return e.test.some(function (e) {
-              return t.test(e);
-            });throw new Error("Browser's test function is not valid");
-          });return e && (this.parsedResult.platform = e.describe(this.getUA())), this.parsedResult.platform;
-        }, e.getEngine = function () {
-          return this.parsedResult.engine ? this.parsedResult.engine : this.parseEngine();
-        }, e.getEngineName = function (t) {
-          return t ? String(this.getEngine().name).toLowerCase() || "" : this.getEngine().name || "";
-        }, e.parseEngine = function () {
-          var t = this;this.parsedResult.engine = {};var e = a.default.find(function (e) {
-            if ("function" == typeof e.test) return e.test(t);if (e.test instanceof Array) return e.test.some(function (e) {
-              return t.test(e);
-            });throw new Error("Browser's test function is not valid");
-          });return e && (this.parsedResult.engine = e.describe(this.getUA())), this.parsedResult.engine;
-        }, e.parse = function () {
-          return this.parseBrowser(), this.parseOS(), this.parsePlatform(), this.parseEngine(), this;
-        }, e.getResult = function () {
-          return Object.assign({}, this.parsedResult);
-        }, e.satisfies = function (t) {
-          var e = this,
-              n = {},
-              i = 0,
-              r = {},
-              s = 0;if (Object.keys(t).forEach(function (e) {
-            var a = t[e];"string" == typeof a ? (r[e] = a, s += 1) : "object" == typeof a && (n[e] = a, i += 1);
-          }), i > 0) {
-            var a = Object.keys(n),
-                o = a.find(function (t) {
-              return e.isOS(t);
-            });if (o) {
-              var c = this.satisfies(n[o]);if (void 0 !== c) return c;
-            }var l = a.find(function (t) {
-              return e.isPlatform(t);
-            });if (l) {
-              var u = this.satisfies(n[l]);if (void 0 !== u) return u;
-            }
-          }if (s > 0) {
-            var d = Object.keys(r).find(function (t) {
-              return e.isBrowser(t, !0);
-            });if (void 0 !== d) return this.compareVersion(r[d]);
-          }
-        }, e.isBrowser = function (t, e) {
-          void 0 === e && (e = !1);var n = this.getBrowserName().toLowerCase(),
-              i = t.toLowerCase(),
-              r = o.default.getBrowserTypeByAlias(i);return e && r && (i = r.toLowerCase()), i === n;
-        }, e.compareVersion = function (t) {
-          var e = [0],
-              n = t,
-              i = !1,
-              r = this.getBrowserVersion();if ("string" == typeof r) return ">" === t[0] || "<" === t[0] ? (n = t.substr(1), "=" === t[1] ? (i = !0, n = t.substr(2)) : e = [], ">" === t[0] ? e.push(1) : e.push(-1)) : "=" === t[0] ? n = t.substr(1) : "~" === t[0] && (i = !0, n = t.substr(1)), e.indexOf(o.default.compareVersions(r, n, i)) > -1;
-        }, e.isOS = function (t) {
-          return this.getOSName(!0) === String(t).toLowerCase();
-        }, e.isPlatform = function (t) {
-          return this.getPlatformType(!0) === String(t).toLowerCase();
-        }, e.isEngine = function (t) {
-          return this.getEngineName(!0) === String(t).toLowerCase();
-        }, e.is = function (t) {
-          return this.isBrowser(t) || this.isOS(t) || this.isPlatform(t);
-        }, e.some = function (t) {
-          var e = this;return void 0 === t && (t = []), t.some(function (t) {
-            return e.is(t);
-          });
-        }, t;
-      }();e.default = l, t.exports = e.default;
-    }, 92: function (t, e, n) {
-      e.__esModule = !0, e.default = void 0;var i,
-          r = (i = n(17)) && i.__esModule ? i : { default: i },
-          s = /version\/(\d+(\.?_?\d+)+)/i,
-          a = [{ test: [/googlebot/i], describe: function (t) {
-          var e = { name: "Googlebot" },
-              n = r.default.getFirstMatch(/googlebot\/(\d+(\.\d+))/i, t) || r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/opera/i], describe: function (t) {
-          var e = { name: "Opera" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/(?:opera)[\s\/](\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/opr\/|opios/i], describe: function (t) {
-          var e = { name: "Opera" },
-              n = r.default.getFirstMatch(/(?:opr|opios)[\s\/](\S+)/i, t) || r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/SamsungBrowser/i], describe: function (t) {
-          var e = { name: "Samsung Internet for Android" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/(?:SamsungBrowser)[\s\/](\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/Whale/i], describe: function (t) {
-          var e = { name: "NAVER Whale Browser" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/(?:whale)[\s\/](\d+(?:\.\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/MZBrowser/i], describe: function (t) {
-          var e = { name: "MZ Browser" },
-              n = r.default.getFirstMatch(/(?:MZBrowser)[\s\/](\d+(?:\.\d+)+)/i, t) || r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/focus/i], describe: function (t) {
-          var e = { name: "Focus" },
-              n = r.default.getFirstMatch(/(?:focus)[\s\/](\d+(?:\.\d+)+)/i, t) || r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/swing/i], describe: function (t) {
-          var e = { name: "Swing" },
-              n = r.default.getFirstMatch(/(?:swing)[\s\/](\d+(?:\.\d+)+)/i, t) || r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/coast/i], describe: function (t) {
-          var e = { name: "Opera Coast" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/(?:coast)[\s\/](\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/yabrowser/i], describe: function (t) {
-          var e = { name: "Yandex Browser" },
-              n = r.default.getFirstMatch(/(?:yabrowser)[\s\/](\d+(\.?_?\d+)+)/i, t) || r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/ucbrowser/i], describe: function (t) {
-          var e = { name: "UC Browser" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/(?:ucbrowser)[\s\/](\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/Maxthon|mxios/i], describe: function (t) {
-          var e = { name: "Maxthon" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/(?:Maxthon|mxios)[\s\/](\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/epiphany/i], describe: function (t) {
-          var e = { name: "Epiphany" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/(?:epiphany)[\s\/](\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/puffin/i], describe: function (t) {
-          var e = { name: "Puffin" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/(?:puffin)[\s\/](\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/sleipnir/i], describe: function (t) {
-          var e = { name: "Sleipnir" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/(?:sleipnir)[\s\/](\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/k-meleon/i], describe: function (t) {
-          var e = { name: "K-Meleon" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/(?:k-meleon)[\s\/](\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/micromessenger/i], describe: function (t) {
-          var e = { name: "WeChat" },
-              n = r.default.getFirstMatch(/(?:micromessenger)[\s\/](\d+(\.?_?\d+)+)/i, t) || r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/msie|trident/i], describe: function (t) {
-          var e = { name: "Internet Explorer" },
-              n = r.default.getFirstMatch(/(?:msie |rv:)(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/\sedg\//i], describe: function (t) {
-          var e = { name: "Microsoft Edge" },
-              n = r.default.getFirstMatch(/\sedg\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/edg([ea]|ios)/i], describe: function (t) {
-          var e = { name: "Microsoft Edge" },
-              n = r.default.getSecondMatch(/edg([ea]|ios)\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/vivaldi/i], describe: function (t) {
-          var e = { name: "Vivaldi" },
-              n = r.default.getFirstMatch(/vivaldi\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/seamonkey/i], describe: function (t) {
-          var e = { name: "SeaMonkey" },
-              n = r.default.getFirstMatch(/seamonkey\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/sailfish/i], describe: function (t) {
-          var e = { name: "Sailfish" },
-              n = r.default.getFirstMatch(/sailfish\s?browser\/(\d+(\.\d+)?)/i, t);return n && (e.version = n), e;
-        } }, { test: [/silk/i], describe: function (t) {
-          var e = { name: "Amazon Silk" },
-              n = r.default.getFirstMatch(/silk\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/phantom/i], describe: function (t) {
-          var e = { name: "PhantomJS" },
-              n = r.default.getFirstMatch(/phantomjs\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/slimerjs/i], describe: function (t) {
-          var e = { name: "SlimerJS" },
-              n = r.default.getFirstMatch(/slimerjs\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/blackberry|\bbb\d+/i, /rim\stablet/i], describe: function (t) {
-          var e = { name: "BlackBerry" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/blackberry[\d]+\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/(web|hpw)[o0]s/i], describe: function (t) {
-          var e = { name: "WebOS Browser" },
-              n = r.default.getFirstMatch(s, t) || r.default.getFirstMatch(/w(?:eb)?[o0]sbrowser\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/bada/i], describe: function (t) {
-          var e = { name: "Bada" },
-              n = r.default.getFirstMatch(/dolfin\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/tizen/i], describe: function (t) {
-          var e = { name: "Tizen" },
-              n = r.default.getFirstMatch(/(?:tizen\s?)?browser\/(\d+(\.?_?\d+)+)/i, t) || r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/qupzilla/i], describe: function (t) {
-          var e = { name: "QupZilla" },
-              n = r.default.getFirstMatch(/(?:qupzilla)[\s\/](\d+(\.?_?\d+)+)/i, t) || r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/firefox|iceweasel|fxios/i], describe: function (t) {
-          var e = { name: "Firefox" },
-              n = r.default.getFirstMatch(/(?:firefox|iceweasel|fxios)[\s\/](\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/chromium/i], describe: function (t) {
-          var e = { name: "Chromium" },
-              n = r.default.getFirstMatch(/(?:chromium)[\s\/](\d+(\.?_?\d+)+)/i, t) || r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/chrome|crios|crmo/i], describe: function (t) {
-          var e = { name: "Chrome" },
-              n = r.default.getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: function (t) {
-          var e = !t.test(/like android/i),
-              n = t.test(/android/i);return e && n;
-        }, describe: function (t) {
-          var e = { name: "Android Browser" },
-              n = r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/playstation 4/i], describe: function (t) {
-          var e = { name: "PlayStation 4" },
-              n = r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/safari|applewebkit/i], describe: function (t) {
-          var e = { name: "Safari" },
-              n = r.default.getFirstMatch(s, t);return n && (e.version = n), e;
-        } }, { test: [/.*/i], describe: function (t) {
-          var e = -1 !== t.search("\\(") ? /^(.*)\/(.*)[ \t]\((.*)/ : /^(.*)\/(.*) /;return { name: r.default.getFirstMatch(e, t), version: r.default.getSecondMatch(e, t) };
-        } }];e.default = a, t.exports = e.default;
-    }, 93: function (t, e, n) {
-      e.__esModule = !0, e.default = void 0;var i,
-          r = (i = n(17)) && i.__esModule ? i : { default: i },
-          s = n(18),
-          a = [{ test: [/Roku\/DVP/], describe: function (t) {
-          var e = r.default.getFirstMatch(/Roku\/DVP-(\d+\.\d+)/i, t);return { name: s.OS_MAP.Roku, version: e };
-        } }, { test: [/windows phone/i], describe: function (t) {
-          var e = r.default.getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i, t);return { name: s.OS_MAP.WindowsPhone, version: e };
-        } }, { test: [/windows/i], describe: function (t) {
-          var e = r.default.getFirstMatch(/Windows ((NT|XP)( \d\d?.\d)?)/i, t),
-              n = r.default.getWindowsVersionName(e);return { name: s.OS_MAP.Windows, version: e, versionName: n };
-        } }, { test: [/macintosh/i], describe: function (t) {
-          var e = r.default.getFirstMatch(/mac os x (\d+(\.?_?\d+)+)/i, t).replace(/[_\s]/g, ".");return { name: s.OS_MAP.MacOS, version: e };
-        } }, { test: [/(ipod|iphone|ipad)/i], describe: function (t) {
-          var e = r.default.getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i, t).replace(/[_\s]/g, ".");return { name: s.OS_MAP.iOS, version: e };
-        } }, { test: function (t) {
-          var e = !t.test(/like android/i),
-              n = t.test(/android/i);return e && n;
-        }, describe: function (t) {
-          var e = r.default.getFirstMatch(/android[\s\/-](\d+(\.\d+)*)/i, t),
-              n = r.default.getAndroidVersionName(e),
-              i = { name: s.OS_MAP.Android, version: e };return n && (i.versionName = n), i;
-        } }, { test: [/(web|hpw)[o0]s/i], describe: function (t) {
-          var e = r.default.getFirstMatch(/(?:web|hpw)[o0]s\/(\d+(\.\d+)*)/i, t),
-              n = { name: s.OS_MAP.WebOS };return e && e.length && (n.version = e), n;
-        } }, { test: [/blackberry|\bbb\d+/i, /rim\stablet/i], describe: function (t) {
-          var e = r.default.getFirstMatch(/rim\stablet\sos\s(\d+(\.\d+)*)/i, t) || r.default.getFirstMatch(/blackberry\d+\/(\d+([_\s]\d+)*)/i, t) || r.default.getFirstMatch(/\bbb(\d+)/i, t);return { name: s.OS_MAP.BlackBerry, version: e };
-        } }, { test: [/bada/i], describe: function (t) {
-          var e = r.default.getFirstMatch(/bada\/(\d+(\.\d+)*)/i, t);return { name: s.OS_MAP.Bada, version: e };
-        } }, { test: [/tizen/i], describe: function (t) {
-          var e = r.default.getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i, t);return { name: s.OS_MAP.Tizen, version: e };
-        } }, { test: [/linux/i], describe: function () {
-          return { name: s.OS_MAP.Linux };
-        } }, { test: [/CrOS/], describe: function () {
-          return { name: s.OS_MAP.ChromeOS };
-        } }, { test: [/PlayStation 4/], describe: function (t) {
-          var e = r.default.getFirstMatch(/PlayStation 4[\/\s](\d+(\.\d+)*)/i, t);return { name: s.OS_MAP.PlayStation4, version: e };
-        } }];e.default = a, t.exports = e.default;
-    }, 94: function (t, e, n) {
-      e.__esModule = !0, e.default = void 0;var i,
-          r = (i = n(17)) && i.__esModule ? i : { default: i },
-          s = n(18),
-          a = [{ test: [/googlebot/i], describe: function () {
-          return { type: "bot", vendor: "Google" };
-        } }, { test: [/huawei/i], describe: function (t) {
-          var e = r.default.getFirstMatch(/(can-l01)/i, t) && "Nova",
-              n = { type: s.PLATFORMS_MAP.mobile, vendor: "Huawei" };return e && (n.model = e), n;
-        } }, { test: [/nexus\s*(?:7|8|9|10).*/i], describe: function () {
-          return { type: s.PLATFORMS_MAP.tablet, vendor: "Nexus" };
-        } }, { test: [/ipad/i], describe: function () {
-          return { type: s.PLATFORMS_MAP.tablet, vendor: "Apple", model: "iPad" };
-        } }, { test: [/kftt build/i], describe: function () {
-          return { type: s.PLATFORMS_MAP.tablet, vendor: "Amazon", model: "Kindle Fire HD 7" };
-        } }, { test: [/silk/i], describe: function () {
-          return { type: s.PLATFORMS_MAP.tablet, vendor: "Amazon" };
-        } }, { test: [/tablet/i], describe: function () {
-          return { type: s.PLATFORMS_MAP.tablet };
-        } }, { test: function (t) {
-          var e = t.test(/ipod|iphone/i),
-              n = t.test(/like (ipod|iphone)/i);return e && !n;
-        }, describe: function (t) {
-          var e = r.default.getFirstMatch(/(ipod|iphone)/i, t);return { type: s.PLATFORMS_MAP.mobile, vendor: "Apple", model: e };
-        } }, { test: [/nexus\s*[0-6].*/i, /galaxy nexus/i], describe: function () {
-          return { type: s.PLATFORMS_MAP.mobile, vendor: "Nexus" };
-        } }, { test: [/[^-]mobi/i], describe: function () {
-          return { type: s.PLATFORMS_MAP.mobile };
-        } }, { test: function (t) {
-          return "blackberry" === t.getBrowserName(!0);
-        }, describe: function () {
-          return { type: s.PLATFORMS_MAP.mobile, vendor: "BlackBerry" };
-        } }, { test: function (t) {
-          return "bada" === t.getBrowserName(!0);
-        }, describe: function () {
-          return { type: s.PLATFORMS_MAP.mobile };
-        } }, { test: function (t) {
-          return "windows phone" === t.getBrowserName();
-        }, describe: function () {
-          return { type: s.PLATFORMS_MAP.mobile, vendor: "Microsoft" };
-        } }, { test: function (t) {
-          var e = Number(String(t.getOSVersion()).split(".")[0]);return "android" === t.getOSName(!0) && e >= 3;
-        }, describe: function () {
-          return { type: s.PLATFORMS_MAP.tablet };
-        } }, { test: function (t) {
-          return "android" === t.getOSName(!0);
-        }, describe: function () {
-          return { type: s.PLATFORMS_MAP.mobile };
-        } }, { test: function (t) {
-          return "macos" === t.getOSName(!0);
-        }, describe: function () {
-          return { type: s.PLATFORMS_MAP.desktop, vendor: "Apple" };
-        } }, { test: function (t) {
-          return "windows" === t.getOSName(!0);
-        }, describe: function () {
-          return { type: s.PLATFORMS_MAP.desktop };
-        } }, { test: function (t) {
-          return "linux" === t.getOSName(!0);
-        }, describe: function () {
-          return { type: s.PLATFORMS_MAP.desktop };
-        } }, { test: function (t) {
-          return "playstation 4" === t.getOSName(!0);
-        }, describe: function () {
-          return { type: s.PLATFORMS_MAP.tv };
-        } }, { test: function (t) {
-          return "roku" === t.getOSName(!0);
-        }, describe: function () {
-          return { type: s.PLATFORMS_MAP.tv };
-        } }];e.default = a, t.exports = e.default;
-    }, 95: function (t, e, n) {
-      e.__esModule = !0, e.default = void 0;var i,
-          r = (i = n(17)) && i.__esModule ? i : { default: i },
-          s = n(18),
-          a = [{ test: function (t) {
-          return "microsoft edge" === t.getBrowserName(!0);
-        }, describe: function (t) {
-          if (/\sedg\//i.test(t)) return { name: s.ENGINE_MAP.Blink };var e = r.default.getFirstMatch(/edge\/(\d+(\.?_?\d+)+)/i, t);return { name: s.ENGINE_MAP.EdgeHTML, version: e };
-        } }, { test: [/trident/i], describe: function (t) {
-          var e = { name: s.ENGINE_MAP.Trident },
-              n = r.default.getFirstMatch(/trident\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: function (t) {
-          return t.test(/presto/i);
-        }, describe: function (t) {
-          var e = { name: s.ENGINE_MAP.Presto },
-              n = r.default.getFirstMatch(/presto\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: function (t) {
-          var e = t.test(/gecko/i),
-              n = t.test(/like gecko/i);return e && !n;
-        }, describe: function (t) {
-          var e = { name: s.ENGINE_MAP.Gecko },
-              n = r.default.getFirstMatch(/gecko\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }, { test: [/(apple)?webkit\/537\.36/i], describe: function () {
-          return { name: s.ENGINE_MAP.Blink };
-        } }, { test: [/(apple)?webkit/i], describe: function (t) {
-          var e = { name: s.ENGINE_MAP.WebKit },
-              n = r.default.getFirstMatch(/webkit\/(\d+(\.?_?\d+)+)/i, t);return n && (e.version = n), e;
-        } }];e.default = a, t.exports = e.default;
-    } });
-}(Ht = { exports: {} }, Ht.exports), Ht.exports);(Dt = It) && Dt.__esModule && Object.prototype.hasOwnProperty.call(Dt, "default") && Dt.default;var zt = It.getParser;It.bowser;const Wt = "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;customElements.define("long-press-button-card", class extends HTMLElement {
+  }static map(t, e) {
+    const i = [];let s;if (Array.prototype.map) return Array.prototype.map.call(t, e);for (s = 0; s < t.length; s += 1) i.push(e(t[s]));return i;
+  }static getBrowserAlias(t) {
+    return Lt[t];
+  }static getBrowserTypeByAlias(t) {
+    return Dt[t] || "";
+  }
+}const Yt = /version\/(\d+(\.?_?\d+)+)/i,
+      Wt = [{ test: [/googlebot/i], describe(t) {
+    const e = { name: "Googlebot" },
+          i = Ut.getFirstMatch(/googlebot\/(\d+(\.\d+))/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/opera/i], describe(t) {
+    const e = { name: "Opera" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/(?:opera)[\s\/](\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/opr\/|opios/i], describe(t) {
+    const e = { name: "Opera" },
+          i = Ut.getFirstMatch(/(?:opr|opios)[\s\/](\S+)/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/SamsungBrowser/i], describe(t) {
+    const e = { name: "Samsung Internet for Android" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/(?:SamsungBrowser)[\s\/](\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/Whale/i], describe(t) {
+    const e = { name: "NAVER Whale Browser" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/(?:whale)[\s\/](\d+(?:\.\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/MZBrowser/i], describe(t) {
+    const e = { name: "MZ Browser" },
+          i = Ut.getFirstMatch(/(?:MZBrowser)[\s\/](\d+(?:\.\d+)+)/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/focus/i], describe(t) {
+    const e = { name: "Focus" },
+          i = Ut.getFirstMatch(/(?:focus)[\s\/](\d+(?:\.\d+)+)/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/swing/i], describe(t) {
+    const e = { name: "Swing" },
+          i = Ut.getFirstMatch(/(?:swing)[\s\/](\d+(?:\.\d+)+)/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/coast/i], describe(t) {
+    const e = { name: "Opera Coast" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/(?:coast)[\s\/](\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/yabrowser/i], describe(t) {
+    const e = { name: "Yandex Browser" },
+          i = Ut.getFirstMatch(/(?:yabrowser)[\s\/](\d+(\.?_?\d+)+)/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/ucbrowser/i], describe(t) {
+    const e = { name: "UC Browser" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/(?:ucbrowser)[\s\/](\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/Maxthon|mxios/i], describe(t) {
+    const e = { name: "Maxthon" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/(?:Maxthon|mxios)[\s\/](\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/epiphany/i], describe(t) {
+    const e = { name: "Epiphany" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/(?:epiphany)[\s\/](\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/puffin/i], describe(t) {
+    const e = { name: "Puffin" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/(?:puffin)[\s\/](\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/sleipnir/i], describe(t) {
+    const e = { name: "Sleipnir" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/(?:sleipnir)[\s\/](\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/k-meleon/i], describe(t) {
+    const e = { name: "K-Meleon" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/(?:k-meleon)[\s\/](\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/micromessenger/i], describe(t) {
+    const e = { name: "WeChat" },
+          i = Ut.getFirstMatch(/(?:micromessenger)[\s\/](\d+(\.?_?\d+)+)/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/qqbrowser/i], describe(t) {
+    const e = { name: /qqbrowserlite/i.test(t) ? "QQ Browser Lite" : "QQ Browser" },
+          i = Ut.getFirstMatch(/(?:qqbrowserlite|qqbrowser)[\/](\d+(\.?_?\d+)+)/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/msie|trident/i], describe(t) {
+    const e = { name: "Internet Explorer" },
+          i = Ut.getFirstMatch(/(?:msie |rv:)(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/\sedg\//i], describe(t) {
+    const e = { name: "Microsoft Edge" },
+          i = Ut.getFirstMatch(/\sedg\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/edg([ea]|ios)/i], describe(t) {
+    const e = { name: "Microsoft Edge" },
+          i = Ut.getSecondMatch(/edg([ea]|ios)\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/vivaldi/i], describe(t) {
+    const e = { name: "Vivaldi" },
+          i = Ut.getFirstMatch(/vivaldi\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/seamonkey/i], describe(t) {
+    const e = { name: "SeaMonkey" },
+          i = Ut.getFirstMatch(/seamonkey\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/sailfish/i], describe(t) {
+    const e = { name: "Sailfish" },
+          i = Ut.getFirstMatch(/sailfish\s?browser\/(\d+(\.\d+)?)/i, t);return i && (e.version = i), e;
+  } }, { test: [/silk/i], describe(t) {
+    const e = { name: "Amazon Silk" },
+          i = Ut.getFirstMatch(/silk\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/phantom/i], describe(t) {
+    const e = { name: "PhantomJS" },
+          i = Ut.getFirstMatch(/phantomjs\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/slimerjs/i], describe(t) {
+    const e = { name: "SlimerJS" },
+          i = Ut.getFirstMatch(/slimerjs\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/blackberry|\bbb\d+/i, /rim\stablet/i], describe(t) {
+    const e = { name: "BlackBerry" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/blackberry[\d]+\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/(web|hpw)[o0]s/i], describe(t) {
+    const e = { name: "WebOS Browser" },
+          i = Ut.getFirstMatch(Yt, t) || Ut.getFirstMatch(/w(?:eb)?[o0]sbrowser\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/bada/i], describe(t) {
+    const e = { name: "Bada" },
+          i = Ut.getFirstMatch(/dolfin\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/tizen/i], describe(t) {
+    const e = { name: "Tizen" },
+          i = Ut.getFirstMatch(/(?:tizen\s?)?browser\/(\d+(\.?_?\d+)+)/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/qupzilla/i], describe(t) {
+    const e = { name: "QupZilla" },
+          i = Ut.getFirstMatch(/(?:qupzilla)[\s\/](\d+(\.?_?\d+)+)/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/firefox|iceweasel|fxios/i], describe(t) {
+    const e = { name: "Firefox" },
+          i = Ut.getFirstMatch(/(?:firefox|iceweasel|fxios)[\s\/](\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/chromium/i], describe(t) {
+    const e = { name: "Chromium" },
+          i = Ut.getFirstMatch(/(?:chromium)[\s\/](\d+(\.?_?\d+)+)/i, t) || Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/chrome|crios|crmo/i], describe(t) {
+    const e = { name: "Chrome" },
+          i = Ut.getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/GSA/i], describe(t) {
+    const e = { name: "Google Search" },
+          i = Ut.getFirstMatch(/(?:GSA)\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test(t) {
+    const e = !t.test(/like android/i),
+          i = t.test(/android/i);return e && i;
+  }, describe(t) {
+    const e = { name: "Android Browser" },
+          i = Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/playstation 4/i], describe(t) {
+    const e = { name: "PlayStation 4" },
+          i = Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/safari|applewebkit/i], describe(t) {
+    const e = { name: "Safari" },
+          i = Ut.getFirstMatch(Yt, t);return i && (e.version = i), e;
+  } }, { test: [/.*/i], describe(t) {
+    const e = -1 !== t.search("\\(") ? /^(.*)\/(.*)[ \t]\((.*)/ : /^(.*)\/(.*) /;return { name: Ut.getFirstMatch(e, t), version: Ut.getSecondMatch(e, t) };
+  } }];var Gt = [{ test: [/Roku\/DVP/], describe(t) {
+    const e = Ut.getFirstMatch(/Roku\/DVP-(\d+\.\d+)/i, t);return { name: It.Roku, version: e };
+  } }, { test: [/windows phone/i], describe(t) {
+    const e = Ut.getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i, t);return { name: It.WindowsPhone, version: e };
+  } }, { test: [/windows/i], describe(t) {
+    const e = Ut.getFirstMatch(/Windows ((NT|XP)( \d\d?.\d)?)/i, t),
+          i = Ut.getWindowsVersionName(e);return { name: It.Windows, version: e, versionName: i };
+  } }, { test: [/macintosh/i], describe(t) {
+    const e = Ut.getFirstMatch(/mac os x (\d+(\.?_?\d+)+)/i, t).replace(/[_\s]/g, "."),
+          i = Ut.getMacOSVersionName(e),
+          s = { name: It.MacOS, version: e };return i && (s.versionName = i), s;
+  } }, { test: [/(ipod|iphone|ipad)/i], describe(t) {
+    const e = Ut.getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i, t).replace(/[_\s]/g, ".");return { name: It.iOS, version: e };
+  } }, { test(t) {
+    const e = !t.test(/like android/i),
+          i = t.test(/android/i);return e && i;
+  }, describe(t) {
+    const e = Ut.getFirstMatch(/android[\s\/-](\d+(\.\d+)*)/i, t),
+          i = Ut.getAndroidVersionName(e),
+          s = { name: It.Android, version: e };return i && (s.versionName = i), s;
+  } }, { test: [/(web|hpw)[o0]s/i], describe(t) {
+    const e = Ut.getFirstMatch(/(?:web|hpw)[o0]s\/(\d+(\.\d+)*)/i, t),
+          i = { name: It.WebOS };return e && e.length && (i.version = e), i;
+  } }, { test: [/blackberry|\bbb\d+/i, /rim\stablet/i], describe(t) {
+    const e = Ut.getFirstMatch(/rim\stablet\sos\s(\d+(\.\d+)*)/i, t) || Ut.getFirstMatch(/blackberry\d+\/(\d+([_\s]\d+)*)/i, t) || Ut.getFirstMatch(/\bbb(\d+)/i, t);return { name: It.BlackBerry, version: e };
+  } }, { test: [/bada/i], describe(t) {
+    const e = Ut.getFirstMatch(/bada\/(\d+(\.\d+)*)/i, t);return { name: It.Bada, version: e };
+  } }, { test: [/tizen/i], describe(t) {
+    const e = Ut.getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i, t);return { name: It.Tizen, version: e };
+  } }, { test: [/linux/i], describe: () => ({ name: It.Linux }) }, { test: [/CrOS/], describe: () => ({ name: It.ChromeOS }) }, { test: [/PlayStation 4/], describe(t) {
+    const e = Ut.getFirstMatch(/PlayStation 4[\/\s](\d+(\.\d+)*)/i, t);return { name: It.PlayStation4, version: e };
+  } }],
+    Jt = [{ test: [/googlebot/i], describe: () => ({ type: "bot", vendor: "Google" }) }, { test: [/huawei/i], describe(t) {
+    const e = Ut.getFirstMatch(/(can-l01)/i, t) && "Nova",
+          i = { type: zt.mobile, vendor: "Huawei" };return e && (i.model = e), i;
+  } }, { test: [/nexus\s*(?:7|8|9|10).*/i], describe: () => ({ type: zt.tablet, vendor: "Nexus" }) }, { test: [/ipad/i], describe: () => ({ type: zt.tablet, vendor: "Apple", model: "iPad" }) }, { test: [/kftt build/i], describe: () => ({ type: zt.tablet, vendor: "Amazon", model: "Kindle Fire HD 7" }) }, { test: [/silk/i], describe: () => ({ type: zt.tablet, vendor: "Amazon" }) }, { test: [/tablet(?! pc)/i], describe: () => ({ type: zt.tablet }) }, { test(t) {
+    const e = t.test(/ipod|iphone/i),
+          i = t.test(/like (ipod|iphone)/i);return e && !i;
+  }, describe(t) {
+    const e = Ut.getFirstMatch(/(ipod|iphone)/i, t);return { type: zt.mobile, vendor: "Apple", model: e };
+  } }, { test: [/nexus\s*[0-6].*/i, /galaxy nexus/i], describe: () => ({ type: zt.mobile, vendor: "Nexus" }) }, { test: [/[^-]mobi/i], describe: () => ({ type: zt.mobile }) }, { test: t => "blackberry" === t.getBrowserName(!0), describe: () => ({ type: zt.mobile, vendor: "BlackBerry" }) }, { test: t => "bada" === t.getBrowserName(!0), describe: () => ({ type: zt.mobile }) }, { test: t => "windows phone" === t.getBrowserName(), describe: () => ({ type: zt.mobile, vendor: "Microsoft" }) }, { test(t) {
+    const e = Number(String(t.getOSVersion()).split(".")[0]);return "android" === t.getOSName(!0) && e >= 3;
+  }, describe: () => ({ type: zt.tablet }) }, { test: t => "android" === t.getOSName(!0), describe: () => ({ type: zt.mobile }) }, { test: t => "macos" === t.getOSName(!0), describe: () => ({ type: zt.desktop, vendor: "Apple" }) }, { test: t => "windows" === t.getOSName(!0), describe: () => ({ type: zt.desktop }) }, { test: t => "linux" === t.getOSName(!0), describe: () => ({ type: zt.desktop }) }, { test: t => "playstation 4" === t.getOSName(!0), describe: () => ({ type: zt.tv }) }, { test: t => "roku" === t.getOSName(!0), describe: () => ({ type: zt.tv }) }],
+    Qt = [{ test: t => "microsoft edge" === t.getBrowserName(!0), describe(t) {
+    if (/\sedg\//i.test(t)) return { name: qt.Blink };const e = Ut.getFirstMatch(/edge\/(\d+(\.?_?\d+)+)/i, t);return { name: qt.EdgeHTML, version: e };
+  } }, { test: [/trident/i], describe(t) {
+    const e = { name: qt.Trident },
+          i = Ut.getFirstMatch(/trident\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: t => t.test(/presto/i), describe(t) {
+    const e = { name: qt.Presto },
+          i = Ut.getFirstMatch(/presto\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test(t) {
+    const e = t.test(/gecko/i),
+          i = t.test(/like gecko/i);return e && !i;
+  }, describe(t) {
+    const e = { name: qt.Gecko },
+          i = Ut.getFirstMatch(/gecko\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }, { test: [/(apple)?webkit\/537\.36/i], describe: () => ({ name: qt.Blink }) }, { test: [/(apple)?webkit/i], describe(t) {
+    const e = { name: qt.WebKit },
+          i = Ut.getFirstMatch(/webkit\/(\d+(\.?_?\d+)+)/i, t);return i && (e.version = i), e;
+  } }];class Zt {
+  constructor(t, e = !1) {
+    if (null == t || "" === t) throw new Error("UserAgent parameter can't be empty");this._ua = t, this.parsedResult = {}, !0 !== e && this.parse();
+  }getUA() {
+    return this._ua;
+  }test(t) {
+    return t.test(this._ua);
+  }parseBrowser() {
+    this.parsedResult.browser = {};const t = Wt.find(t => {
+      if ("function" == typeof t.test) return t.test(this);if (t.test instanceof Array) return t.test.some(t => this.test(t));throw new Error("Browser's test function is not valid");
+    });return t && (this.parsedResult.browser = t.describe(this.getUA())), this.parsedResult.browser;
+  }getBrowser() {
+    return this.parsedResult.browser ? this.parsedResult.browser : this.parseBrowser();
+  }getBrowserName(t) {
+    return t ? String(this.getBrowser().name).toLowerCase() || "" : this.getBrowser().name || "";
+  }getBrowserVersion() {
+    return this.getBrowser().version;
+  }getOS() {
+    return this.parsedResult.os ? this.parsedResult.os : this.parseOS();
+  }parseOS() {
+    this.parsedResult.os = {};const t = Gt.find(t => {
+      if ("function" == typeof t.test) return t.test(this);if (t.test instanceof Array) return t.test.some(t => this.test(t));throw new Error("Browser's test function is not valid");
+    });return t && (this.parsedResult.os = t.describe(this.getUA())), this.parsedResult.os;
+  }getOSName(t) {
+    const { name: e } = this.getOS();return t ? String(e).toLowerCase() || "" : e || "";
+  }getOSVersion() {
+    return this.getOS().version;
+  }getPlatform() {
+    return this.parsedResult.platform ? this.parsedResult.platform : this.parsePlatform();
+  }getPlatformType(t = !1) {
+    const { type: e } = this.getPlatform();return t ? String(e).toLowerCase() || "" : e || "";
+  }parsePlatform() {
+    this.parsedResult.platform = {};const t = Jt.find(t => {
+      if ("function" == typeof t.test) return t.test(this);if (t.test instanceof Array) return t.test.some(t => this.test(t));throw new Error("Browser's test function is not valid");
+    });return t && (this.parsedResult.platform = t.describe(this.getUA())), this.parsedResult.platform;
+  }getEngine() {
+    return this.parsedResult.engine ? this.parsedResult.engine : this.parseEngine();
+  }getEngineName(t) {
+    return t ? String(this.getEngine().name).toLowerCase() || "" : this.getEngine().name || "";
+  }parseEngine() {
+    this.parsedResult.engine = {};const t = Qt.find(t => {
+      if ("function" == typeof t.test) return t.test(this);if (t.test instanceof Array) return t.test.some(t => this.test(t));throw new Error("Browser's test function is not valid");
+    });return t && (this.parsedResult.engine = t.describe(this.getUA())), this.parsedResult.engine;
+  }parse() {
+    return this.parseBrowser(), this.parseOS(), this.parsePlatform(), this.parseEngine(), this;
+  }getResult() {
+    return Object.assign({}, this.parsedResult);
+  }satisfies(t) {
+    const e = {};let i = 0;const s = {};let n = 0;if (Object.keys(t).forEach(r => {
+      const a = t[r];"string" == typeof a ? (s[r] = a, n += 1) : "object" == typeof a && (e[r] = a, i += 1);
+    }), i > 0) {
+      const t = Object.keys(e),
+            i = t.find(t => this.isOS(t));if (i) {
+        const t = this.satisfies(e[i]);if (void 0 !== t) return t;
+      }const s = t.find(t => this.isPlatform(t));if (s) {
+        const t = this.satisfies(e[s]);if (void 0 !== t) return t;
+      }
+    }if (n > 0) {
+      const t = Object.keys(s).find(t => this.isBrowser(t, !0));if (void 0 !== t) return this.compareVersion(s[t]);
+    }
+  }isBrowser(t, e = !1) {
+    const i = this.getBrowserName().toLowerCase();let s = t.toLowerCase();const n = Ut.getBrowserTypeByAlias(s);return e && n && (s = n.toLowerCase()), s === i;
+  }compareVersion(t) {
+    let e = [0],
+        i = t,
+        s = !1;const n = this.getBrowserVersion();if ("string" == typeof n) return ">" === t[0] || "<" === t[0] ? (i = t.substr(1), "=" === t[1] ? (s = !0, i = t.substr(2)) : e = [], ">" === t[0] ? e.push(1) : e.push(-1)) : "=" === t[0] ? i = t.substr(1) : "~" === t[0] && (s = !0, i = t.substr(1)), e.indexOf(Ut.compareVersions(n, i, s)) > -1;
+  }isOS(t) {
+    return this.getOSName(!0) === String(t).toLowerCase();
+  }isPlatform(t) {
+    return this.getPlatformType(!0) === String(t).toLowerCase();
+  }isEngine(t) {
+    return this.getEngineName(!0) === String(t).toLowerCase();
+  }is(t) {
+    return this.isBrowser(t) || this.isOS(t) || this.isPlatform(t);
+  }some(t = []) {
+    return t.some(t => this.is(t));
+  }
+}class Kt {
+  static getParser(t, e = !1) {
+    if ("string" != typeof t) throw new Error("UserAgent should be a string");return new Zt(t, e);
+  }static parse(t) {
+    return new Zt(t).getResult();
+  }static get BROWSER_MAP() {
+    return Dt;
+  }static get ENGINE_MAP() {
+    return qt;
+  }static get OS_MAP() {
+    return It;
+  }static get PLATFORMS_MAP() {
+    return zt;
+  }
+}const Xt = "ontouchstart" in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;customElements.define("long-press-button-card", class extends HTMLElement {
   constructor() {
     super(), this.holdTime = 500, this.ripple = document.createElement("paper-ripple"), this.timer = void 0, this.held = !1, this.cooldownStart = !1, this.cooldownEnd = !1, this.nbClicks = 0;
   }connectedCallback() {
-    Object.assign(this.style, { borderRadius: "50%", position: "absolute", width: Wt ? "100px" : "50px", height: Wt ? "100px" : "50px", transform: "translate(-50%, -50%)", pointerEvents: "none" }), this.appendChild(this.ripple), this.ripple.style.color = "#03a9f4", this.ripple.style.color = "var(--primary-color)", ["touchcancel", "mouseout", "mouseup", "touchmove", "mousewheel", "wheel", "scroll"].forEach(t => {
+    Object.assign(this.style, { borderRadius: "50%", position: "absolute", width: Xt ? "100px" : "50px", height: Xt ? "100px" : "50px", transform: "translate(-50%, -50%)", pointerEvents: "none" }), this.appendChild(this.ripple), this.ripple.style.color = "#03a9f4", this.ripple.style.color = "var(--primary-color)", ["touchcancel", "mouseout", "mouseup", "touchmove", "mousewheel", "wheel", "scroll"].forEach(t => {
       document.addEventListener(t, () => {
         clearTimeout(this.timer), this.stopAnimation(), this.timer = void 0;
       }, { passive: !0 });
@@ -1331,111 +1152,111 @@ const lt = new WeakMap(),
     if (t.longPress) return;t.longPress = !0, t.addEventListener("contextmenu", t => {
       const e = t || window.event;return e.preventDefault && e.preventDefault(), e.stopPropagation && e.stopPropagation(), e.cancelBubble = !0, e.returnValue = !1, !1;
     });const e = e => {
-      if (this.cooldownStart) return;let n, i;this.held = !1, e.touches ? (n = e.touches[0].pageX, i = e.touches[0].pageY) : (n = e.pageX, i = e.pageY), this.timer = window.setTimeout(() => {
-        this.startAnimation(n, i), this.held = !0, t.repeat && !t.isRepeating && (t.isRepeating = !0, this.repeatTimeout = setInterval(() => {
+      if (this.cooldownStart) return;let i, s;this.held = !1, e.touches ? (i = e.touches[0].pageX, s = e.touches[0].pageY) : (i = e.pageX, s = e.pageY), this.timer = window.setTimeout(() => {
+        this.startAnimation(i, s), this.held = !0, t.repeat && !t.isRepeating && (t.isRepeating = !0, this.repeatTimeout = setInterval(() => {
           t.dispatchEvent(new Event("ha-hold"));
         }, t.repeat));
       }, this.holdTime), this.cooldownStart = !0, window.setTimeout(() => this.cooldownStart = !1, 100);
     },
-          n = e => {
+          i = e => {
       this.cooldownEnd || ["touchend", "touchcancel"].includes(e.type) && void 0 === this.timer ? t.isRepeating && this.repeatTimeout && (clearInterval(this.repeatTimeout), t.isRepeating = !1) : (clearTimeout(this.timer), t.isRepeating && this.repeatTimeout && clearInterval(this.repeatTimeout), t.isRepeating = !1, this.stopAnimation(), this.timer = void 0, this.held ? t.repeat || t.dispatchEvent(new Event("ha-hold")) : t.hasDblClick ? 0 === this.nbClicks ? (this.nbClicks += 1, this.dblClickTimeout = window.setTimeout(() => {
         1 === this.nbClicks && (this.nbClicks = 0, t.dispatchEvent(new Event("ha-click")));
       }, 250)) : (this.nbClicks = 0, clearTimeout(this.dblClickTimeout), t.dispatchEvent(new Event("ha-dblclick"))) : t.dispatchEvent(new Event("ha-click")), this.cooldownEnd = !0, window.setTimeout(() => this.cooldownEnd = !1, 100));
     },
-          i = zt(window.navigator.userAgent),
-          r = i.satisfies({ mobile: { safari: ">=13" } }),
-          s = new RegExp("^13\\..*", "gm"),
-          a = "iOS" === i.getOSName() && !!i.getOSVersion().match(s);t.addEventListener("touchstart", e, { passive: !0 }), t.addEventListener("touchend", n), t.addEventListener("touchcancel", n), r || a || (t.addEventListener("mousedown", e, { passive: !0 }), t.addEventListener("click", n));
+          s = Kt.getParser(window.navigator.userAgent),
+          n = s.satisfies({ mobile: { safari: ">=13" } }),
+          r = new RegExp("^13\\..*", "gm"),
+          a = "iOS" === s.getOSName() && !!s.getOSVersion().match(r);t.addEventListener("touchstart", e, { passive: !0 }), t.addEventListener("touchend", i), t.addEventListener("touchcancel", i), n || a || (t.addEventListener("mousedown", e, { passive: !0 }), t.addEventListener("click", i));
   }startAnimation(t, e) {
     Object.assign(this.style, { left: `${t}px`, top: `${e}px`, display: null }), this.ripple.holdDown = !0, this.ripple.simulatedRipple();
   }stopAnimation() {
     this.ripple.holdDown = !1, this.style.display = "none";
   }
-});const Yt = t => {
+});const te = t => {
   const e = (() => {
     const t = document.body;if (t.querySelector("long-press-button-card")) return t.querySelector("long-press-button-card");const e = document.createElement("long-press-button-card");return t.appendChild(e), e;
   })();e && e.bind(t);
 },
-      Ut = n(() => t => {
-  Yt(t.committer.element);
-});function qt(t, e) {
+      ee = i(() => t => {
+  te(t.committer.element);
+});function ie(t, e) {
   (function (t) {
     return "string" == typeof t && t.includes(".") && 1 === parseFloat(t);
-  })(t) && (t = "100%");var n = function (t) {
+  })(t) && (t = "100%");var i = function (t) {
     return "string" == typeof t && t.includes("%");
-  }(t);return t = 360 === e ? t : Math.min(e, Math.max(0, parseFloat(t))), n && (t = parseInt(String(t * e), 10) / 100), Math.abs(t - e) < 1e-6 ? 1 : t = 360 === e ? (t < 0 ? t % e + e : t % e) / parseFloat(String(e)) : t % e / parseFloat(String(e));
-}function Gt(t) {
+  }(t);return t = 360 === e ? t : Math.min(e, Math.max(0, parseFloat(t))), i && (t = parseInt(String(t * e), 10) / 100), Math.abs(t - e) < 1e-6 ? 1 : t = 360 === e ? (t < 0 ? t % e + e : t % e) / parseFloat(String(e)) : t % e / parseFloat(String(e));
+}function se(t) {
   return Math.min(1, Math.max(0, t));
-}function Jt(t) {
-  return t = parseFloat(t), (isNaN(t) || t < 0 || t > 1) && (t = 1), t;
-}function Zt(t) {
-  return t <= 1 ? 100 * Number(t) + "%" : t;
-}function Kt(t) {
-  return 1 === t.length ? "0" + t : String(t);
-}function Xt(t, e, n) {
-  t = qt(t, 255), e = qt(e, 255), n = qt(n, 255);var i = Math.max(t, e, n),
-      r = Math.min(t, e, n),
-      s = 0,
-      a = 0,
-      o = (i + r) / 2;if (i === r) a = 0, s = 0;else {
-    var c = i - r;switch (a = o > .5 ? c / (2 - i - r) : c / (i + r), i) {case t:
-        s = (e - n) / c + (e < n ? 6 : 0);break;case e:
-        s = (n - t) / c + 2;break;case n:
-        s = (t - e) / c + 4;}s /= 6;
-  }return { h: s, s: a, l: o };
-}function Qt(t, e, n) {
-  t = qt(t, 255), e = qt(e, 255), n = qt(n, 255);var i = Math.max(t, e, n),
-      r = Math.min(t, e, n),
-      s = 0,
-      a = i,
-      o = i - r,
-      c = 0 === i ? 0 : o / i;if (i === r) s = 0;else {
-    switch (i) {case t:
-        s = (e - n) / o + (e < n ? 6 : 0);break;case e:
-        s = (n - t) / o + 2;break;case n:
-        s = (t - e) / o + 4;}s /= 6;
-  }return { h: s, s: c, v: a };
-}function te(t, e, n, i) {
-  var r = [Kt(Math.round(t).toString(16)), Kt(Math.round(e).toString(16)), Kt(Math.round(n).toString(16))];return i && r[0].charAt(0) === r[0].charAt(1) && r[1].charAt(0) === r[1].charAt(1) && r[2].charAt(0) === r[2].charAt(1) ? r[0].charAt(0) + r[1].charAt(0) + r[2].charAt(0) : r.join("");
-}function ee(t) {
-  return ne(t) / 255;
 }function ne(t) {
+  return t = parseFloat(t), (isNaN(t) || t < 0 || t > 1) && (t = 1), t;
+}function re(t) {
+  return t <= 1 ? 100 * Number(t) + "%" : t;
+}function ae(t) {
+  return 1 === t.length ? "0" + t : String(t);
+}function oe(t, e, i) {
+  t = ie(t, 255), e = ie(e, 255), i = ie(i, 255);var s = Math.max(t, e, i),
+      n = Math.min(t, e, i),
+      r = 0,
+      a = 0,
+      o = (s + n) / 2;if (s === n) a = 0, r = 0;else {
+    var c = s - n;switch (a = o > .5 ? c / (2 - s - n) : c / (s + n), s) {case t:
+        r = (e - i) / c + (e < i ? 6 : 0);break;case e:
+        r = (i - t) / c + 2;break;case i:
+        r = (t - e) / c + 4;}r /= 6;
+  }return { h: r, s: a, l: o };
+}function ce(t, e, i) {
+  t = ie(t, 255), e = ie(e, 255), i = ie(i, 255);var s = Math.max(t, e, i),
+      n = Math.min(t, e, i),
+      r = 0,
+      a = s,
+      o = s - n,
+      c = 0 === s ? 0 : o / s;if (s === n) r = 0;else {
+    switch (s) {case t:
+        r = (e - i) / o + (e < i ? 6 : 0);break;case e:
+        r = (i - t) / o + 2;break;case i:
+        r = (t - e) / o + 4;}r /= 6;
+  }return { h: r, s: c, v: a };
+}function le(t, e, i, s) {
+  var n = [ae(Math.round(t).toString(16)), ae(Math.round(e).toString(16)), ae(Math.round(i).toString(16))];return s && n[0].charAt(0) === n[0].charAt(1) && n[1].charAt(0) === n[1].charAt(1) && n[2].charAt(0) === n[2].charAt(1) ? n[0].charAt(0) + n[1].charAt(0) + n[2].charAt(0) : n.join("");
+}function he(t) {
+  return de(t) / 255;
+}function de(t) {
   return parseInt(t, 16);
-}var ie = { aliceblue: "#f0f8ff", antiquewhite: "#faebd7", aqua: "#00ffff", aquamarine: "#7fffd4", azure: "#f0ffff", beige: "#f5f5dc", bisque: "#ffe4c4", black: "#000000", blanchedalmond: "#ffebcd", blue: "#0000ff", blueviolet: "#8a2be2", brown: "#a52a2a", burlywood: "#deb887", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", cornflowerblue: "#6495ed", cornsilk: "#fff8dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", darkkhaki: "#bdb76b", darkmagenta: "#8b008b", darkolivegreen: "#556b2f", darkorange: "#ff8c00", darkorchid: "#9932cc", darkred: "#8b0000", darksalmon: "#e9967a", darkseagreen: "#8fbc8f", darkslateblue: "#483d8b", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", darkturquoise: "#00ced1", darkviolet: "#9400d3", deeppink: "#ff1493", deepskyblue: "#00bfff", dimgray: "#696969", dimgrey: "#696969", dodgerblue: "#1e90ff", firebrick: "#b22222", floralwhite: "#fffaf0", forestgreen: "#228b22", fuchsia: "#ff00ff", gainsboro: "#dcdcdc", ghostwhite: "#f8f8ff", gold: "#ffd700", goldenrod: "#daa520", gray: "#808080", green: "#008000", greenyellow: "#adff2f", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", indianred: "#cd5c5c", indigo: "#4b0082", ivory: "#fffff0", khaki: "#f0e68c", lavender: "#e6e6fa", lavenderblush: "#fff0f5", lawngreen: "#7cfc00", lemonchiffon: "#fffacd", lightblue: "#add8e6", lightcoral: "#f08080", lightcyan: "#e0ffff", lightgoldenrodyellow: "#fafad2", lightgray: "#d3d3d3", lightgreen: "#90ee90", lightgrey: "#d3d3d3", lightpink: "#ffb6c1", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", lightskyblue: "#87cefa", lightslategray: "#778899", lightslategrey: "#778899", lightsteelblue: "#b0c4de", lightyellow: "#ffffe0", lime: "#00ff00", limegreen: "#32cd32", linen: "#faf0e6", magenta: "#ff00ff", maroon: "#800000", mediumaquamarine: "#66cdaa", mediumblue: "#0000cd", mediumorchid: "#ba55d3", mediumpurple: "#9370db", mediumseagreen: "#3cb371", mediumslateblue: "#7b68ee", mediumspringgreen: "#00fa9a", mediumturquoise: "#48d1cc", mediumvioletred: "#c71585", midnightblue: "#191970", mintcream: "#f5fffa", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", navajowhite: "#ffdead", navy: "#000080", oldlace: "#fdf5e6", olive: "#808000", olivedrab: "#6b8e23", orange: "#ffa500", orangered: "#ff4500", orchid: "#da70d6", palegoldenrod: "#eee8aa", palegreen: "#98fb98", paleturquoise: "#afeeee", palevioletred: "#db7093", papayawhip: "#ffefd5", peachpuff: "#ffdab9", peru: "#cd853f", pink: "#ffc0cb", plum: "#dda0dd", powderblue: "#b0e0e6", purple: "#800080", rebeccapurple: "#663399", red: "#ff0000", rosybrown: "#bc8f8f", royalblue: "#4169e1", saddlebrown: "#8b4513", salmon: "#fa8072", sandybrown: "#f4a460", seagreen: "#2e8b57", seashell: "#fff5ee", sienna: "#a0522d", silver: "#c0c0c0", skyblue: "#87ceeb", slateblue: "#6a5acd", slategray: "#708090", slategrey: "#708090", snow: "#fffafa", springgreen: "#00ff7f", steelblue: "#4682b4", tan: "#d2b48c", teal: "#008080", thistle: "#d8bfd8", tomato: "#ff6347", turquoise: "#40e0d0", violet: "#ee82ee", wheat: "#f5deb3", white: "#ffffff", whitesmoke: "#f5f5f5", yellow: "#ffff00", yellowgreen: "#9acd32" };function re(t) {
+}var ue = { aliceblue: "#f0f8ff", antiquewhite: "#faebd7", aqua: "#00ffff", aquamarine: "#7fffd4", azure: "#f0ffff", beige: "#f5f5dc", bisque: "#ffe4c4", black: "#000000", blanchedalmond: "#ffebcd", blue: "#0000ff", blueviolet: "#8a2be2", brown: "#a52a2a", burlywood: "#deb887", cadetblue: "#5f9ea0", chartreuse: "#7fff00", chocolate: "#d2691e", coral: "#ff7f50", cornflowerblue: "#6495ed", cornsilk: "#fff8dc", crimson: "#dc143c", cyan: "#00ffff", darkblue: "#00008b", darkcyan: "#008b8b", darkgoldenrod: "#b8860b", darkgray: "#a9a9a9", darkgreen: "#006400", darkgrey: "#a9a9a9", darkkhaki: "#bdb76b", darkmagenta: "#8b008b", darkolivegreen: "#556b2f", darkorange: "#ff8c00", darkorchid: "#9932cc", darkred: "#8b0000", darksalmon: "#e9967a", darkseagreen: "#8fbc8f", darkslateblue: "#483d8b", darkslategray: "#2f4f4f", darkslategrey: "#2f4f4f", darkturquoise: "#00ced1", darkviolet: "#9400d3", deeppink: "#ff1493", deepskyblue: "#00bfff", dimgray: "#696969", dimgrey: "#696969", dodgerblue: "#1e90ff", firebrick: "#b22222", floralwhite: "#fffaf0", forestgreen: "#228b22", fuchsia: "#ff00ff", gainsboro: "#dcdcdc", ghostwhite: "#f8f8ff", gold: "#ffd700", goldenrod: "#daa520", gray: "#808080", green: "#008000", greenyellow: "#adff2f", grey: "#808080", honeydew: "#f0fff0", hotpink: "#ff69b4", indianred: "#cd5c5c", indigo: "#4b0082", ivory: "#fffff0", khaki: "#f0e68c", lavender: "#e6e6fa", lavenderblush: "#fff0f5", lawngreen: "#7cfc00", lemonchiffon: "#fffacd", lightblue: "#add8e6", lightcoral: "#f08080", lightcyan: "#e0ffff", lightgoldenrodyellow: "#fafad2", lightgray: "#d3d3d3", lightgreen: "#90ee90", lightgrey: "#d3d3d3", lightpink: "#ffb6c1", lightsalmon: "#ffa07a", lightseagreen: "#20b2aa", lightskyblue: "#87cefa", lightslategray: "#778899", lightslategrey: "#778899", lightsteelblue: "#b0c4de", lightyellow: "#ffffe0", lime: "#00ff00", limegreen: "#32cd32", linen: "#faf0e6", magenta: "#ff00ff", maroon: "#800000", mediumaquamarine: "#66cdaa", mediumblue: "#0000cd", mediumorchid: "#ba55d3", mediumpurple: "#9370db", mediumseagreen: "#3cb371", mediumslateblue: "#7b68ee", mediumspringgreen: "#00fa9a", mediumturquoise: "#48d1cc", mediumvioletred: "#c71585", midnightblue: "#191970", mintcream: "#f5fffa", mistyrose: "#ffe4e1", moccasin: "#ffe4b5", navajowhite: "#ffdead", navy: "#000080", oldlace: "#fdf5e6", olive: "#808000", olivedrab: "#6b8e23", orange: "#ffa500", orangered: "#ff4500", orchid: "#da70d6", palegoldenrod: "#eee8aa", palegreen: "#98fb98", paleturquoise: "#afeeee", palevioletred: "#db7093", papayawhip: "#ffefd5", peachpuff: "#ffdab9", peru: "#cd853f", pink: "#ffc0cb", plum: "#dda0dd", powderblue: "#b0e0e6", purple: "#800080", rebeccapurple: "#663399", red: "#ff0000", rosybrown: "#bc8f8f", royalblue: "#4169e1", saddlebrown: "#8b4513", salmon: "#fa8072", sandybrown: "#f4a460", seagreen: "#2e8b57", seashell: "#fff5ee", sienna: "#a0522d", silver: "#c0c0c0", skyblue: "#87ceeb", slateblue: "#6a5acd", slategray: "#708090", slategrey: "#708090", snow: "#fffafa", springgreen: "#00ff7f", steelblue: "#4682b4", tan: "#d2b48c", teal: "#008080", thistle: "#d8bfd8", tomato: "#ff6347", turquoise: "#40e0d0", violet: "#ee82ee", wheat: "#f5deb3", white: "#ffffff", whitesmoke: "#f5f5f5", yellow: "#ffff00", yellowgreen: "#9acd32" };function pe(t) {
   var e,
-      n,
       i,
-      r = { r: 0, g: 0, b: 0 },
-      s = 1,
+      s,
+      n = { r: 0, g: 0, b: 0 },
+      r = 1,
       a = null,
       o = null,
       c = null,
       l = !1,
-      u = !1;return "string" == typeof t && (t = function (t) {
-    if (0 === (t = t.trim().toLowerCase()).length) return !1;var e = !1;if (ie[t]) t = ie[t], e = !0;else if ("transparent" === t) return { r: 0, g: 0, b: 0, a: 0, format: "name" };var n = ce.rgb.exec(t);if (n) return { r: n[1], g: n[2], b: n[3] };if (n = ce.rgba.exec(t)) return { r: n[1], g: n[2], b: n[3], a: n[4] };if (n = ce.hsl.exec(t)) return { h: n[1], s: n[2], l: n[3] };if (n = ce.hsla.exec(t)) return { h: n[1], s: n[2], l: n[3], a: n[4] };if (n = ce.hsv.exec(t)) return { h: n[1], s: n[2], v: n[3] };if (n = ce.hsva.exec(t)) return { h: n[1], s: n[2], v: n[3], a: n[4] };if (n = ce.hex8.exec(t)) return { r: ne(n[1]), g: ne(n[2]), b: ne(n[3]), a: ee(n[4]), format: e ? "name" : "hex8" };if (n = ce.hex6.exec(t)) return { r: ne(n[1]), g: ne(n[2]), b: ne(n[3]), format: e ? "name" : "hex" };if (n = ce.hex4.exec(t)) return { r: ne(n[1] + n[1]), g: ne(n[2] + n[2]), b: ne(n[3] + n[3]), a: ee(n[4] + n[4]), format: e ? "name" : "hex8" };if (n = ce.hex3.exec(t)) return { r: ne(n[1] + n[1]), g: ne(n[2] + n[2]), b: ne(n[3] + n[3]), format: e ? "name" : "hex" };return !1;
-  }(t)), "object" == typeof t && (le(t.r) && le(t.g) && le(t.b) ? (e = t.r, n = t.g, i = t.b, r = { r: 255 * qt(e, 255), g: 255 * qt(n, 255), b: 255 * qt(i, 255) }, l = !0, u = "%" === String(t.r).substr(-1) ? "prgb" : "rgb") : le(t.h) && le(t.s) && le(t.v) ? (a = Zt(t.s), o = Zt(t.v), r = function (t, e, n) {
-    t = 6 * qt(t, 360), e = qt(e, 100), n = qt(n, 100);var i = Math.floor(t),
-        r = t - i,
-        s = n * (1 - e),
-        a = n * (1 - r * e),
-        o = n * (1 - (1 - r) * e),
-        c = i % 6;return { r: 255 * [n, a, s, s, o, n][c], g: 255 * [o, n, n, a, s, s][c], b: 255 * [s, s, o, n, n, a][c] };
-  }(t.h, a, o), l = !0, u = "hsv") : le(t.h) && le(t.s) && le(t.l) && (a = Zt(t.s), c = Zt(t.l), r = function (t, e, n) {
-    var i, r, s;function a(t, e, n) {
-      return n < 0 && (n += 1), n > 1 && (n -= 1), n < 1 / 6 ? t + 6 * n * (e - t) : n < .5 ? e : n < 2 / 3 ? t + (e - t) * (2 / 3 - n) * 6 : t;
-    }if (t = qt(t, 360), e = qt(e, 100), n = qt(n, 100), 0 === e) r = n, s = n, i = n;else {
-      var o = n < .5 ? n * (1 + e) : n + e - n * e,
-          c = 2 * n - o;i = a(c, o, t + 1 / 3), r = a(c, o, t), s = a(c, o, t - 1 / 3);
-    }return { r: 255 * i, g: 255 * r, b: 255 * s };
-  }(t.h, a, c), l = !0, u = "hsl"), Object.prototype.hasOwnProperty.call(t, "a") && (s = t.a)), s = Jt(s), { ok: l, format: t.format || u, r: Math.min(255, Math.max(r.r, 0)), g: Math.min(255, Math.max(r.g, 0)), b: Math.min(255, Math.max(r.b, 0)), a: s };
-}var se = "(?:[-\\+]?\\d*\\.\\d+%?)|(?:[-\\+]?\\d+%?)",
-    ae = "[\\s|\\(]+(" + se + ")[,|\\s]+(" + se + ")[,|\\s]+(" + se + ")\\s*\\)?",
-    oe = "[\\s|\\(]+(" + se + ")[,|\\s]+(" + se + ")[,|\\s]+(" + se + ")[,|\\s]+(" + se + ")\\s*\\)?",
-    ce = { CSS_UNIT: new RegExp(se), rgb: new RegExp("rgb" + ae), rgba: new RegExp("rgba" + oe), hsl: new RegExp("hsl" + ae), hsla: new RegExp("hsla" + oe), hsv: new RegExp("hsv" + ae), hsva: new RegExp("hsva" + oe), hex3: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/, hex6: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/, hex4: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/, hex8: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/ };function le(t) {
-  return Boolean(ce.CSS_UNIT.exec(String(t)));
-}var ue = function () {
-  function t(e, n) {
-    if (void 0 === e && (e = ""), void 0 === n && (n = {}), e instanceof t) return e;this.originalInput = e;var i = re(e);this.originalInput = e, this.r = i.r, this.g = i.g, this.b = i.b, this.a = i.a, this.roundA = Math.round(100 * this.a) / 100, this.format = n.format || i.format, this.gradientType = n.gradientType, this.r < 1 && (this.r = Math.round(this.r)), this.g < 1 && (this.g = Math.round(this.g)), this.b < 1 && (this.b = Math.round(this.b)), this.isValid = i.ok;
+      h = !1;return "string" == typeof t && (t = function (t) {
+    if (0 === (t = t.trim().toLowerCase()).length) return !1;var e = !1;if (ue[t]) t = ue[t], e = !0;else if ("transparent" === t) return { r: 0, g: 0, b: 0, a: 0, format: "name" };var i = be.rgb.exec(t);if (i) return { r: i[1], g: i[2], b: i[3] };if (i = be.rgba.exec(t)) return { r: i[1], g: i[2], b: i[3], a: i[4] };if (i = be.hsl.exec(t)) return { h: i[1], s: i[2], l: i[3] };if (i = be.hsla.exec(t)) return { h: i[1], s: i[2], l: i[3], a: i[4] };if (i = be.hsv.exec(t)) return { h: i[1], s: i[2], v: i[3] };if (i = be.hsva.exec(t)) return { h: i[1], s: i[2], v: i[3], a: i[4] };if (i = be.hex8.exec(t)) return { r: de(i[1]), g: de(i[2]), b: de(i[3]), a: he(i[4]), format: e ? "name" : "hex8" };if (i = be.hex6.exec(t)) return { r: de(i[1]), g: de(i[2]), b: de(i[3]), format: e ? "name" : "hex" };if (i = be.hex4.exec(t)) return { r: de(i[1] + i[1]), g: de(i[2] + i[2]), b: de(i[3] + i[3]), a: he(i[4] + i[4]), format: e ? "name" : "hex8" };if (i = be.hex3.exec(t)) return { r: de(i[1] + i[1]), g: de(i[2] + i[2]), b: de(i[3] + i[3]), format: e ? "name" : "hex" };return !1;
+  }(t)), "object" == typeof t && (_e(t.r) && _e(t.g) && _e(t.b) ? (e = t.r, i = t.g, s = t.b, n = { r: 255 * ie(e, 255), g: 255 * ie(i, 255), b: 255 * ie(s, 255) }, l = !0, h = "%" === String(t.r).substr(-1) ? "prgb" : "rgb") : _e(t.h) && _e(t.s) && _e(t.v) ? (a = re(t.s), o = re(t.v), n = function (t, e, i) {
+    t = 6 * ie(t, 360), e = ie(e, 100), i = ie(i, 100);var s = Math.floor(t),
+        n = t - s,
+        r = i * (1 - e),
+        a = i * (1 - n * e),
+        o = i * (1 - (1 - n) * e),
+        c = s % 6;return { r: 255 * [i, a, r, r, o, i][c], g: 255 * [o, i, i, a, r, r][c], b: 255 * [r, r, o, i, i, a][c] };
+  }(t.h, a, o), l = !0, h = "hsv") : _e(t.h) && _e(t.s) && _e(t.l) && (a = re(t.s), c = re(t.l), n = function (t, e, i) {
+    var s, n, r;function a(t, e, i) {
+      return i < 0 && (i += 1), i > 1 && (i -= 1), i < 1 / 6 ? t + 6 * i * (e - t) : i < .5 ? e : i < 2 / 3 ? t + (e - t) * (2 / 3 - i) * 6 : t;
+    }if (t = ie(t, 360), e = ie(e, 100), i = ie(i, 100), 0 === e) n = i, r = i, s = i;else {
+      var o = i < .5 ? i * (1 + e) : i + e - i * e,
+          c = 2 * i - o;s = a(c, o, t + 1 / 3), n = a(c, o, t), r = a(c, o, t - 1 / 3);
+    }return { r: 255 * s, g: 255 * n, b: 255 * r };
+  }(t.h, a, c), l = !0, h = "hsl"), Object.prototype.hasOwnProperty.call(t, "a") && (r = t.a)), r = ne(r), { ok: l, format: t.format || h, r: Math.min(255, Math.max(n.r, 0)), g: Math.min(255, Math.max(n.g, 0)), b: Math.min(255, Math.max(n.b, 0)), a: r };
+}var fe = "(?:[-\\+]?\\d*\\.\\d+%?)|(?:[-\\+]?\\d+%?)",
+    me = "[\\s|\\(]+(" + fe + ")[,|\\s]+(" + fe + ")[,|\\s]+(" + fe + ")\\s*\\)?",
+    ge = "[\\s|\\(]+(" + fe + ")[,|\\s]+(" + fe + ")[,|\\s]+(" + fe + ")[,|\\s]+(" + fe + ")\\s*\\)?",
+    be = { CSS_UNIT: new RegExp(fe), rgb: new RegExp("rgb" + me), rgba: new RegExp("rgba" + ge), hsl: new RegExp("hsl" + me), hsla: new RegExp("hsla" + ge), hsv: new RegExp("hsv" + me), hsva: new RegExp("hsva" + ge), hex3: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/, hex6: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/, hex4: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/, hex8: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/ };function _e(t) {
+  return Boolean(be.CSS_UNIT.exec(String(t)));
+}var ye = function () {
+  function t(e, i) {
+    if (void 0 === e && (e = ""), void 0 === i && (i = {}), e instanceof t) return e;this.originalInput = e;var s = pe(e);this.originalInput = e, this.r = s.r, this.g = s.g, this.b = s.b, this.a = s.a, this.roundA = Math.round(100 * this.a) / 100, this.format = i.format || s.format, this.gradientType = i.gradientType, this.r < 1 && (this.r = Math.round(this.r)), this.g < 1 && (this.g = Math.round(this.g)), this.b < 1 && (this.b = Math.round(this.b)), this.isValid = s.ok;
   }return t.prototype.isDark = function () {
     return this.getBrightness() < 128;
   }, t.prototype.isLight = function () {
@@ -1445,34 +1266,34 @@ const lt = new WeakMap(),
   }, t.prototype.getLuminance = function () {
     var t = this.toRgb(),
         e = t.r / 255,
-        n = t.g / 255,
-        i = t.b / 255;return .2126 * (e <= .03928 ? e / 12.92 : Math.pow((e + .055) / 1.055, 2.4)) + .7152 * (n <= .03928 ? n / 12.92 : Math.pow((n + .055) / 1.055, 2.4)) + .0722 * (i <= .03928 ? i / 12.92 : Math.pow((i + .055) / 1.055, 2.4));
+        i = t.g / 255,
+        s = t.b / 255;return .2126 * (e <= .03928 ? e / 12.92 : Math.pow((e + .055) / 1.055, 2.4)) + .7152 * (i <= .03928 ? i / 12.92 : Math.pow((i + .055) / 1.055, 2.4)) + .0722 * (s <= .03928 ? s / 12.92 : Math.pow((s + .055) / 1.055, 2.4));
   }, t.prototype.getAlpha = function () {
     return this.a;
   }, t.prototype.setAlpha = function (t) {
-    return this.a = Jt(t), this.roundA = Math.round(100 * this.a) / 100, this;
+    return this.a = ne(t), this.roundA = Math.round(100 * this.a) / 100, this;
   }, t.prototype.toHsv = function () {
-    var t = Qt(this.r, this.g, this.b);return { h: 360 * t.h, s: t.s, v: t.v, a: this.a };
+    var t = ce(this.r, this.g, this.b);return { h: 360 * t.h, s: t.s, v: t.v, a: this.a };
   }, t.prototype.toHsvString = function () {
-    var t = Qt(this.r, this.g, this.b),
+    var t = ce(this.r, this.g, this.b),
         e = Math.round(360 * t.h),
-        n = Math.round(100 * t.s),
-        i = Math.round(100 * t.v);return 1 === this.a ? "hsv(" + e + ", " + n + "%, " + i + "%)" : "hsva(" + e + ", " + n + "%, " + i + "%, " + this.roundA + ")";
+        i = Math.round(100 * t.s),
+        s = Math.round(100 * t.v);return 1 === this.a ? "hsv(" + e + ", " + i + "%, " + s + "%)" : "hsva(" + e + ", " + i + "%, " + s + "%, " + this.roundA + ")";
   }, t.prototype.toHsl = function () {
-    var t = Xt(this.r, this.g, this.b);return { h: 360 * t.h, s: t.s, l: t.l, a: this.a };
+    var t = oe(this.r, this.g, this.b);return { h: 360 * t.h, s: t.s, l: t.l, a: this.a };
   }, t.prototype.toHslString = function () {
-    var t = Xt(this.r, this.g, this.b),
+    var t = oe(this.r, this.g, this.b),
         e = Math.round(360 * t.h),
-        n = Math.round(100 * t.s),
-        i = Math.round(100 * t.l);return 1 === this.a ? "hsl(" + e + ", " + n + "%, " + i + "%)" : "hsla(" + e + ", " + n + "%, " + i + "%, " + this.roundA + ")";
+        i = Math.round(100 * t.s),
+        s = Math.round(100 * t.l);return 1 === this.a ? "hsl(" + e + ", " + i + "%, " + s + "%)" : "hsla(" + e + ", " + i + "%, " + s + "%, " + this.roundA + ")";
   }, t.prototype.toHex = function (t) {
-    return void 0 === t && (t = !1), te(this.r, this.g, this.b, t);
+    return void 0 === t && (t = !1), le(this.r, this.g, this.b, t);
   }, t.prototype.toHexString = function (t) {
     return void 0 === t && (t = !1), "#" + this.toHex(t);
   }, t.prototype.toHex8 = function (t) {
-    return void 0 === t && (t = !1), function (t, e, n, i, r) {
-      var s,
-          a = [Kt(Math.round(t).toString(16)), Kt(Math.round(e).toString(16)), Kt(Math.round(n).toString(16)), Kt((s = i, Math.round(255 * parseFloat(s)).toString(16)))];return r && a[0].charAt(0) === a[0].charAt(1) && a[1].charAt(0) === a[1].charAt(1) && a[2].charAt(0) === a[2].charAt(1) && a[3].charAt(0) === a[3].charAt(1) ? a[0].charAt(0) + a[1].charAt(0) + a[2].charAt(0) + a[3].charAt(0) : a.join("");
+    return void 0 === t && (t = !1), function (t, e, i, s, n) {
+      var r,
+          a = [ae(Math.round(t).toString(16)), ae(Math.round(e).toString(16)), ae(Math.round(i).toString(16)), ae((r = s, Math.round(255 * parseFloat(r)).toString(16)))];return n && a[0].charAt(0) === a[0].charAt(1) && a[1].charAt(0) === a[1].charAt(1) && a[2].charAt(0) === a[2].charAt(1) && a[3].charAt(0) === a[3].charAt(1) ? a[0].charAt(0) + a[1].charAt(0) + a[2].charAt(0) + a[3].charAt(0) : a.join("");
     }(this.r, this.g, this.b, this.a, t);
   }, t.prototype.toHex8String = function (t) {
     return void 0 === t && (t = !1), "#" + this.toHex8(t);
@@ -1481,92 +1302,92 @@ const lt = new WeakMap(),
   }, t.prototype.toRgbString = function () {
     var t = Math.round(this.r),
         e = Math.round(this.g),
-        n = Math.round(this.b);return 1 === this.a ? "rgb(" + t + ", " + e + ", " + n + ")" : "rgba(" + t + ", " + e + ", " + n + ", " + this.roundA + ")";
+        i = Math.round(this.b);return 1 === this.a ? "rgb(" + t + ", " + e + ", " + i + ")" : "rgba(" + t + ", " + e + ", " + i + ", " + this.roundA + ")";
   }, t.prototype.toPercentageRgb = function () {
     var t = function (t) {
-      return Math.round(100 * qt(t, 255)) + "%";
+      return Math.round(100 * ie(t, 255)) + "%";
     };return { r: t(this.r), g: t(this.g), b: t(this.b), a: this.a };
   }, t.prototype.toPercentageRgbString = function () {
     var t = function (t) {
-      return Math.round(100 * qt(t, 255));
+      return Math.round(100 * ie(t, 255));
     };return 1 === this.a ? "rgb(" + t(this.r) + "%, " + t(this.g) + "%, " + t(this.b) + "%)" : "rgba(" + t(this.r) + "%, " + t(this.g) + "%, " + t(this.b) + "%, " + this.roundA + ")";
   }, t.prototype.toName = function () {
-    if (0 === this.a) return "transparent";if (this.a < 1) return !1;for (var t = "#" + te(this.r, this.g, this.b, !1), e = 0, n = Object.keys(ie); e < n.length; e++) {
-      var i = n[e];if (ie[i] === t) return i;
+    if (0 === this.a) return "transparent";if (this.a < 1) return !1;for (var t = "#" + le(this.r, this.g, this.b, !1), e = 0, i = Object.keys(ue); e < i.length; e++) {
+      var s = i[e];if (ue[s] === t) return s;
     }return !1;
   }, t.prototype.toString = function (t) {
-    var e = Boolean(t);t = t || this.format;var n = !1,
-        i = this.a < 1 && this.a >= 0;return e || !i || !t.startsWith("hex") && "name" !== t ? ("rgb" === t && (n = this.toRgbString()), "prgb" === t && (n = this.toPercentageRgbString()), "hex" !== t && "hex6" !== t || (n = this.toHexString()), "hex3" === t && (n = this.toHexString(!0)), "hex4" === t && (n = this.toHex8String(!0)), "hex8" === t && (n = this.toHex8String()), "name" === t && (n = this.toName()), "hsl" === t && (n = this.toHslString()), "hsv" === t && (n = this.toHsvString()), n || this.toHexString()) : "name" === t && 0 === this.a ? this.toName() : this.toRgbString();
+    var e = Boolean(t);t = t || this.format;var i = !1,
+        s = this.a < 1 && this.a >= 0;return e || !s || !t.startsWith("hex") && "name" !== t ? ("rgb" === t && (i = this.toRgbString()), "prgb" === t && (i = this.toPercentageRgbString()), "hex" !== t && "hex6" !== t || (i = this.toHexString()), "hex3" === t && (i = this.toHexString(!0)), "hex4" === t && (i = this.toHex8String(!0)), "hex8" === t && (i = this.toHex8String()), "name" === t && (i = this.toName()), "hsl" === t && (i = this.toHslString()), "hsv" === t && (i = this.toHsvString()), i || this.toHexString()) : "name" === t && 0 === this.a ? this.toName() : this.toRgbString();
   }, t.prototype.clone = function () {
     return new t(this.toString());
   }, t.prototype.lighten = function (e) {
-    void 0 === e && (e = 10);var n = this.toHsl();return n.l += e / 100, n.l = Gt(n.l), new t(n);
+    void 0 === e && (e = 10);var i = this.toHsl();return i.l += e / 100, i.l = se(i.l), new t(i);
   }, t.prototype.brighten = function (e) {
-    void 0 === e && (e = 10);var n = this.toRgb();return n.r = Math.max(0, Math.min(255, n.r - Math.round(-e / 100 * 255))), n.g = Math.max(0, Math.min(255, n.g - Math.round(-e / 100 * 255))), n.b = Math.max(0, Math.min(255, n.b - Math.round(-e / 100 * 255))), new t(n);
+    void 0 === e && (e = 10);var i = this.toRgb();return i.r = Math.max(0, Math.min(255, i.r - Math.round(-e / 100 * 255))), i.g = Math.max(0, Math.min(255, i.g - Math.round(-e / 100 * 255))), i.b = Math.max(0, Math.min(255, i.b - Math.round(-e / 100 * 255))), new t(i);
   }, t.prototype.darken = function (e) {
-    void 0 === e && (e = 10);var n = this.toHsl();return n.l -= e / 100, n.l = Gt(n.l), new t(n);
+    void 0 === e && (e = 10);var i = this.toHsl();return i.l -= e / 100, i.l = se(i.l), new t(i);
   }, t.prototype.tint = function (t) {
     return void 0 === t && (t = 10), this.mix("white", t);
   }, t.prototype.shade = function (t) {
     return void 0 === t && (t = 10), this.mix("black", t);
   }, t.prototype.desaturate = function (e) {
-    void 0 === e && (e = 10);var n = this.toHsl();return n.s -= e / 100, n.s = Gt(n.s), new t(n);
+    void 0 === e && (e = 10);var i = this.toHsl();return i.s -= e / 100, i.s = se(i.s), new t(i);
   }, t.prototype.saturate = function (e) {
-    void 0 === e && (e = 10);var n = this.toHsl();return n.s += e / 100, n.s = Gt(n.s), new t(n);
+    void 0 === e && (e = 10);var i = this.toHsl();return i.s += e / 100, i.s = se(i.s), new t(i);
   }, t.prototype.greyscale = function () {
     return this.desaturate(100);
   }, t.prototype.spin = function (e) {
-    var n = this.toHsl(),
-        i = (n.h + e) % 360;return n.h = i < 0 ? 360 + i : i, new t(n);
-  }, t.prototype.mix = function (e, n) {
-    void 0 === n && (n = 50);var i = this.toRgb(),
-        r = new t(e).toRgb(),
-        s = n / 100;return new t({ r: (r.r - i.r) * s + i.r, g: (r.g - i.g) * s + i.g, b: (r.b - i.b) * s + i.b, a: (r.a - i.a) * s + i.a });
-  }, t.prototype.analogous = function (e, n) {
-    void 0 === e && (e = 6), void 0 === n && (n = 30);var i = this.toHsl(),
-        r = 360 / n,
-        s = [this];for (i.h = (i.h - (r * e >> 1) + 720) % 360; --e;) i.h = (i.h + r) % 360, s.push(new t(i));return s;
+    var i = this.toHsl(),
+        s = (i.h + e) % 360;return i.h = s < 0 ? 360 + s : s, new t(i);
+  }, t.prototype.mix = function (e, i) {
+    void 0 === i && (i = 50);var s = this.toRgb(),
+        n = new t(e).toRgb(),
+        r = i / 100;return new t({ r: (n.r - s.r) * r + s.r, g: (n.g - s.g) * r + s.g, b: (n.b - s.b) * r + s.b, a: (n.a - s.a) * r + s.a });
+  }, t.prototype.analogous = function (e, i) {
+    void 0 === e && (e = 6), void 0 === i && (i = 30);var s = this.toHsl(),
+        n = 360 / i,
+        r = [this];for (s.h = (s.h - (n * e >> 1) + 720) % 360; --e;) s.h = (s.h + n) % 360, r.push(new t(s));return r;
   }, t.prototype.complement = function () {
     var e = this.toHsl();return e.h = (e.h + 180) % 360, new t(e);
   }, t.prototype.monochromatic = function (e) {
-    void 0 === e && (e = 6);for (var n = this.toHsv(), i = n.h, r = n.s, s = n.v, a = [], o = 1 / e; e--;) a.push(new t({ h: i, s: r, v: s })), s = (s + o) % 1;return a;
+    void 0 === e && (e = 6);for (var i = this.toHsv(), s = i.h, n = i.s, r = i.v, a = [], o = 1 / e; e--;) a.push(new t({ h: s, s: n, v: r })), r = (r + o) % 1;return a;
   }, t.prototype.splitcomplement = function () {
     var e = this.toHsl(),
-        n = e.h;return [this, new t({ h: (n + 72) % 360, s: e.s, l: e.l }), new t({ h: (n + 216) % 360, s: e.s, l: e.l })];
+        i = e.h;return [this, new t({ h: (i + 72) % 360, s: e.s, l: e.l }), new t({ h: (i + 216) % 360, s: e.s, l: e.l })];
   }, t.prototype.triad = function () {
     return this.polyad(3);
   }, t.prototype.tetrad = function () {
     return this.polyad(4);
   }, t.prototype.polyad = function (e) {
-    for (var n = this.toHsl(), i = n.h, r = [this], s = 360 / e, a = 1; a < e; a++) r.push(new t({ h: (i + a * s) % 360, s: n.s, l: n.l }));return r;
+    for (var i = this.toHsl(), s = i.h, n = [this], r = 360 / e, a = 1; a < e; a++) n.push(new t({ h: (s + a * r) % 360, s: i.s, l: i.l }));return n;
   }, t.prototype.equals = function (e) {
     return this.toRgbString() === new t(e).toRgbString();
   }, t;
-}();function de(t, e) {
-  return void 0 === t && (t = ""), void 0 === e && (e = {}), new ue(t, e);
-}function he(t) {
+}();function ve(t, e) {
+  return void 0 === t && (t = ""), void 0 === e && (e = {}), new ye(t, e);
+}function we(t) {
   return t.substr(0, t.indexOf("."));
-}function fe(t) {
+}function Se(t) {
   return "var" === t.substring(0, 3) ? window.getComputedStyle(document.documentElement).getPropertyValue(t.substring(4).slice(0, -1)).trim() : t;
-}function pe(t, e) {
-  const n = new ue(fe(t));if (n.isValid) {
-    const t = n.mix("black", 100 - e).toString();if (t) return t;
+}function Me(t, e) {
+  const i = new ye(Se(t));if (i.isValid) {
+    const t = i.mix("black", 100 - e).toString();if (t) return t;
   }return t;
-}function me(...t) {
-  const e = t => t && "object" == typeof t;return t.reduce((t, n) => (Object.keys(n).forEach(i => {
-    const r = t[i],
-          s = n[i];Array.isArray(r) && Array.isArray(s) ? t[i] = r.concat(...s) : e(r) && e(s) ? t[i] = me(r, s) : t[i] = s;
+}function ke(...t) {
+  const e = t => t && "object" == typeof t;return t.reduce((t, i) => (Object.keys(i).forEach(s => {
+    const n = t[s],
+          r = i[s];Array.isArray(n) && Array.isArray(r) ? t[s] = n.concat(...r) : e(n) && e(r) ? t[s] = ke(n, r) : t[s] = r;
   }), t), {});
-}function ge(t, e) {
-  let n = [];return t && t.forEach(t => {
-    let i = t;e && e.forEach(e => {
-      e.id && t.id && e.id == t.id && (i = me(i, e));
-    }), n.push(i);
-  }), e && (n = n.concat(e.filter(e => !t || !t.find(t => !(!t.id || !e.id) && t.id == e.id)))), n;
-}const be = ((t, ...e) => {
-  const n = e.reduce((e, n, i) => e + (t => {
-    if (t instanceof at) return t.cssText;if ("number" == typeof t) return t;throw new Error(`Value passed to 'css' function must be a 'css' function result: ${t}. Use 'unsafeCSS' to pass non-literal values, but\n            take care to ensure page security.`);
-  })(n) + t[i + 1], t[0]);return new at(n, st);
+}function xe(t, e) {
+  let i = [];return t && t.forEach(t => {
+    let s = t;e && e.forEach(e => {
+      e.id && t.id && e.id == t.id && (s = ke(s, e));
+    }), i.push(s);
+  }), e && (i = i.concat(e.filter(e => !t || !t.find(t => !(!t.id || !e.id) && t.id == e.id)))), i;
+}const Ne = ((t, ...e) => {
+  const i = e.reduce((e, i, s) => e + (t => {
+    if (t instanceof ct) return t.cssText;if ("number" == typeof t) return t;throw new Error(`Value passed to 'css' function must be a 'css' function result: ${t}. Use 'unsafeCSS' to pass non-literal values, but\n            take care to ensure page security.`);
+  })(i) + t[s + 1], t[0]);return new ct(i, ot);
 })`
   ha-card {
     cursor: pointer;
@@ -1615,23 +1436,19 @@ const lt = new WeakMap(),
     display: flex;
   }
   #lock {
-    -webkit-animation-duration: 5s;
-    animation-duration: 5s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
     margin: unset;
   }
-  @keyframes fadeOut{
-    0% {opacity: 0.5;}
-    20% {opacity: 0;}
-    80% {opacity: 0;}
-    100% {opacity: 0.5;}
+  .invalid {
+    animation: blink 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
   }
-  .fadeOut {
-    -webkit-animation-name: fadeOut;
-    animation-name: fadeOut;
+  .hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1s, opacity 1s linear;
   }
-  @keyframes blink{
+  @keyframes blink {
     0%{opacity:0;}
     50%{opacity:1;}
     100%{opacity:0;}
@@ -1947,28 +1764,27 @@ const lt = new WeakMap(),
       height: 100%;
     }
   }
-`;let ve = class extends ct {
+`;console.info("%c  BUTTON-CARD  \n%c Version 3.0.0 ", "color: orange; font-weight: bold; background: black", "color: white; font-weight: bold; background: dimgray");let Oe = class extends ht {
   disconnectedCallback() {
     super.disconnectedCallback(), this._clearInterval();
   }connectedCallback() {
-    if (super.connectedCallback(), this.config && this.config.entity && "timer" === he(this.config.entity)) {
+    if (super.connectedCallback(), this.config && this.config.entity && "timer" === we(this.config.entity)) {
       const t = this.hass.states[this.config.entity];this._startInterval(t);
     }
   }static get styles() {
-    return be;
+    return Ne;
   }render() {
-    return this.config && this.hass ? this._cardHtml() : R``;
+    return this._stateObj = this.config.entity ? this.hass.states[this.config.entity] : void 0, this.config && this.hass ? this._cardHtml() : V``;
   }shouldUpdate(t) {
-    const e = this.config.entity ? this.hass.states[this.config.entity] : void 0,
-          n = (this._getMatchingConfigState(e), !!(this._hasTemplate || this.config.state && this.config.state.find(t => "template" === t.operator) || t.has("_timeRemaining")));return function (t, e, n) {
-      if (e.has("config") || n) return !0;if (t.config.entity) {
-        const n = e.get("hass");return !n || n.states[t.config.entity] !== t.hass.states[t.config.entity];
+    const e = !!(this._hasTemplate || this.config.state && this.config.state.find(t => "template" === t.operator) || t.has("_timeRemaining"));return function (t, e, i) {
+      if (e.has("config") || i) return !0;if (t.config.entity) {
+        const i = e.get("hass");return !i || i.states[t.config.entity] !== t.hass.states[t.config.entity];
       }return !1;
-    }(this, t, n);
+    }(this, t, e);
   }updated(t) {
-    if (super.updated(t), this.config && this.config.entity && "timer" === he(this.config.entity) && t.has("hass")) {
+    if (super.updated(t), this.config && this.config.entity && "timer" === we(this.config.entity) && t.has("hass")) {
       const e = this.hass.states[this.config.entity],
-            n = t.get("hass");(n ? n.states[this.config.entity] : void 0) !== e ? this._startInterval(e) : e || this._clearInterval();
+            i = t.get("hass");(i ? i.states[this.config.entity] : void 0) !== e ? this._startInterval(e) : e || this._clearInterval();
     }
   }_clearInterval() {
     this._interval && (window.clearInterval(this._interval), this._interval = void 0);
@@ -1977,18 +1793,18 @@ const lt = new WeakMap(),
   }_calculateRemaining(t) {
     this._timeRemaining = function (t) {
       var e = Tt(t.attributes.remaining);if ("active" === t.state) {
-        var n = new Date().getTime(),
-            i = new Date(t.last_changed).getTime();e = Math.max(e - (n - i) / 1e3, 0);
+        var i = new Date().getTime(),
+            s = new Date(t.last_changed).getTime();e = Math.max(e - (i - s) / 1e3, 0);
       }return e;
     }(t);
   }_computeTimeDisplay(t) {
     if (t) return function (t) {
       var e = Math.floor(t / 3600),
-          n = Math.floor(t % 3600 / 60),
-          i = Math.floor(t % 3600 % 60);return e > 0 ? e + ":" + Nt(n) + ":" + Nt(i) : n > 0 ? n + ":" + Nt(i) : i > 0 ? "" + i : null;
+          i = Math.floor(t % 3600 / 60),
+          s = Math.floor(t % 3600 % 60);return e > 0 ? e + ":" + Ft(i) + ":" + Ft(s) : i > 0 ? i + ":" + Ft(s) : s > 0 ? "" + s : null;
     }(this._timeRemaining || Tt(t.attributes.duration));
   }_getMatchingConfigState(t) {
-    if (!this.config.state) return;const e = this.config.state.find(t => "template" === t.operator);if (!t && !e) return;let n;const i = this.config.state.find(e => {
+    if (!this.config.state) return;const e = this.config.state.find(t => "template" === t.operator);if (!t && !e) return;let i;const s = this.config.state.find(e => {
       if (!e.operator) return t && this._getTemplateOrValue(t, e.value) == t.state;switch (e.operator) {case "==":
           return t && t.state == this._getTemplateOrValue(t, e.value);case "<=":
           return t && t.state <= this._getTemplateOrValue(t, e.value);case "<":
@@ -1998,31 +1814,31 @@ const lt = new WeakMap(),
           return t && t.state != this._getTemplateOrValue(t, e.value);case "regex":
           return !(!t || !t.state.match(this._getTemplateOrValue(t, e.value)));case "template":
           return this._getTemplateOrValue(t, e.value);case "default":
-          return n = e, !1;default:
+          return i = e, !1;default:
           return !1;}
-    });return !i && n ? n : i;
+    });return !s && i ? i : s;
   }_evalTemplate(t, e) {
     return new Function("states", "entity", "user", "hass", `'use strict'; ${e}`).call(this, this.hass.states, t, this.hass.user, this.hass);
   }_getTemplateOrValue(t, e) {
-    if (["number", "boolean"].includes(typeof e)) return e;if (!e) return e;const n = e.trim();return "[[[" === n.substring(0, 3) && "]]]" === n.slice(-3) ? this._evalTemplate(t, n.slice(3, -3)) : e;
+    if (["number", "boolean"].includes(typeof e)) return e;if (!e) return e;const i = e.trim();return "[[[" === i.substring(0, 3) && "]]]" === i.slice(-3) ? this._evalTemplate(t, i.slice(3, -3)) : e;
   }_getDefaultColorForState(t) {
     switch (t.state) {case "on":
         return this.config.color_on;case "off":
         return this.config.color_off;default:
         return this.config.default_color;}
   }_getColorForLightEntity(t, e) {
-    let n = this.config.default_color;return t && (t.attributes.rgb_color ? (n = `rgb(${t.attributes.rgb_color.join(",")})`, t.attributes.brightness && (n = pe(n, (t.attributes.brightness + 245) / 5))) : e && t.attributes.color_temp && t.attributes.min_mireds && t.attributes.max_mireds ? (n = function (t, e, n) {
-      const i = new ue("rgb(255, 160, 0)"),
-            r = new ue("rgb(166, 209, 255)"),
-            s = new ue("white"),
-            a = (t - e) / (n - e) * 100;return a < 50 ? de(r).mix(s, 2 * a).toRgbString() : de(s).mix(i, 2 * (a - 50)).toRgbString();
-    }(t.attributes.color_temp, t.attributes.min_mireds, t.attributes.max_mireds), t.attributes.brightness && (n = pe(n, (t.attributes.brightness + 245) / 5))) : n = t.attributes.brightness ? pe(this._getDefaultColorForState(t), (t.attributes.brightness + 245) / 5) : this._getDefaultColorForState(t)), n;
+    let i = this.config.default_color;return t && (t.attributes.rgb_color ? (i = `rgb(${t.attributes.rgb_color.join(",")})`, t.attributes.brightness && (i = Me(i, (t.attributes.brightness + 245) / 5))) : e && t.attributes.color_temp && t.attributes.min_mireds && t.attributes.max_mireds ? (i = function (t, e, i) {
+      const s = new ye("rgb(255, 160, 0)"),
+            n = new ye("rgb(166, 209, 255)"),
+            r = new ye("white"),
+            a = (t - e) / (i - e) * 100;return a < 50 ? ve(n).mix(r, 2 * a).toRgbString() : ve(r).mix(s, 2 * (a - 50)).toRgbString();
+    }(t.attributes.color_temp, t.attributes.min_mireds, t.attributes.max_mireds), t.attributes.brightness && (i = Me(i, (t.attributes.brightness + 245) / 5))) : i = t.attributes.brightness ? Me(this._getDefaultColorForState(t), (t.attributes.brightness + 245) / 5) : this._getDefaultColorForState(t)), i;
   }_buildCssColorAttribute(t, e) {
-    let n,
-        i = "";return e && e.color ? i = e.color : "auto" !== this.config.color && t && "off" === t.state ? i = this.config.color_off : this.config.color && (i = this.config.color), n = "auto" == i || "auto-no-temperature" == i ? this._getColorForLightEntity(t, "auto-no-temperature" !== i) : i || (t ? this._getDefaultColorForState(t) : this.config.default_color);
+    let i,
+        s = "";return e && e.color ? s = e.color : "auto" !== this.config.color && t && "off" === t.state ? s = this.config.color_off : this.config.color && (s = this.config.color), i = "auto" == s || "auto-no-temperature" == s ? this._getColorForLightEntity(t, "auto-no-temperature" !== s) : s || (t ? this._getDefaultColorForState(t) : this.config.default_color);
   }_buildIcon(t, e) {
-    if (!this.config.show_icon) return;let n;return e && e.icon ? n = e.icon : this.config.icon ? n = this.config.icon : t && t.attributes && (n = t.attributes.icon ? t.attributes.icon : function (t, e) {
-      if (t in Vt) return Vt[t];switch (t) {case "alarm_control_panel":
+    if (!this.config.show_icon) return;let i;return e && e.icon ? i = e.icon : this.config.icon ? i = this.config.icon : t && t.attributes && (i = t.attributes.icon ? t.attributes.icon : function (t, e) {
+      if (t in jt) return jt[t];switch (t) {case "alarm_control_panel":
           switch (e) {case "armed_home":
               return "hass:bell-plus";case "armed_night":
               return "hass:bell-sleep";case "disarmed":
@@ -2038,35 +1854,35 @@ const lt = new WeakMap(),
               return "hass:sleep";case "initializing":
               return "hass:timer-sand";default:
               return "hass:z-wave";}default:
-          return console.warn("Unable to find icon for domain " + t + " (" + e + ")"), Ct;}
-    }(he(t.entity_id), t.state)), this._getTemplateOrValue(t, n);
+          return console.warn("Unable to find icon for domain " + t + " (" + e + ")"), Rt;}
+    }(we(t.entity_id), t.state)), this._getTemplateOrValue(t, i);
   }_buildEntityPicture(t, e) {
-    if (!this.config.show_entity_picture || !t && !e && !this.config.entity_picture) return;let n;return e && e.entity_picture ? n = e.entity_picture : this.config.entity_picture ? n = this.config.entity_picture : t && (n = t.attributes && t.attributes.entity_picture ? t.attributes.entity_picture : void 0), this._getTemplateOrValue(t, n);
-  }_buildStyleGeneric(t, e, n) {
-    let i = {};if (this.config.styles && this.config.styles[n] && (i = Object.assign(i, ...this.config.styles[n])), e && e.styles && e.styles[n]) {
-      let t = {};t = Object.assign(t, ...e.styles[n]), i = Object.assign({}, i, t);
-    }return Object.keys(i).forEach(e => {
-      i[e] = this._getTemplateOrValue(t, i[e]);
-    }), i;
-  }_buildCustomStyleGeneric(t, e, n) {
-    let i = {};if (this.config.styles && this.config.styles.custom_fields && this.config.styles.custom_fields[n] && (i = Object.assign(i, ...this.config.styles.custom_fields[n])), e && e.styles && e.styles.custom_fields && e.styles.custom_fields[n]) {
-      let t = {};t = Object.assign(t, ...e.styles.custom_fields[n]), i = Object.assign({}, i, t);
-    }return Object.keys(i).forEach(e => {
-      i[e] = this._getTemplateOrValue(t, i[e]);
-    }), i;
+    if (!this.config.show_entity_picture || !t && !e && !this.config.entity_picture) return;let i;return e && e.entity_picture ? i = e.entity_picture : this.config.entity_picture ? i = this.config.entity_picture : t && (i = t.attributes && t.attributes.entity_picture ? t.attributes.entity_picture : void 0), this._getTemplateOrValue(t, i);
+  }_buildStyleGeneric(t, e, i) {
+    let s = {};if (this.config.styles && this.config.styles[i] && (s = Object.assign(s, ...this.config.styles[i])), e && e.styles && e.styles[i]) {
+      let t = {};t = Object.assign(t, ...e.styles[i]), s = Object.assign(Object.assign({}, s), t);
+    }return Object.keys(s).forEach(e => {
+      s[e] = this._getTemplateOrValue(t, s[e]);
+    }), s;
+  }_buildCustomStyleGeneric(t, e, i) {
+    let s = {};if (this.config.styles && this.config.styles.custom_fields && this.config.styles.custom_fields[i] && (s = Object.assign(s, ...this.config.styles.custom_fields[i])), e && e.styles && e.styles.custom_fields && e.styles.custom_fields[i]) {
+      let t = {};t = Object.assign(t, ...e.styles.custom_fields[i]), s = Object.assign(Object.assign({}, s), t);
+    }return Object.keys(s).forEach(e => {
+      s[e] = this._getTemplateOrValue(t, s[e]);
+    }), s;
   }_buildName(t, e) {
-    if (!1 === this.config.show_name) return;let n;var i;return e && e.name ? n = e.name : this.config.name ? n = this.config.name : t && (n = t.attributes && t.attributes.friendly_name ? t.attributes.friendly_name : (i = t.entity_id).substr(i.indexOf(".") + 1)), this._getTemplateOrValue(t, n);
+    if (!1 === this.config.show_name) return;let i;var s;return e && e.name ? i = e.name : this.config.name ? i = this.config.name : t && (i = t.attributes && t.attributes.friendly_name ? t.attributes.friendly_name : (s = t.entity_id).substr(s.indexOf(".") + 1)), this._getTemplateOrValue(t, i);
   }_buildStateString(t) {
     let e;if (this.config.show_state && t && t.state) {
-      const n = ((t, e) => {
-        let n;const i = he(e.entity_id);return "binary_sensor" === i ? (e.attributes.device_class && (n = t(`state.${i}.${e.attributes.device_class}.${e.state}`)), n || (n = t(`state.${i}.default.${e.state}`))) : n = e.attributes.unit_of_measurement && !["unknown", "unavailable"].includes(e.state) ? e.state : "zwave" === i ? ["initializing", "dead"].includes(e.state) ? t(`state.zwave.query_stage.${e.state}`, "query_stage", e.attributes.query_stage) : t(`state.zwave.default.${e.state}`) : t(`state.${i}.${e.state}`), n || (n = t(`state.default.${e.state}`) || t(`component.${i}.state.${e.state}`) || e.state), n;
+      const i = ((t, e) => {
+        let i;const s = we(e.entity_id);return "binary_sensor" === s ? (e.attributes.device_class && (i = t(`state.${s}.${e.attributes.device_class}.${e.state}`)), i || (i = t(`state.${s}.default.${e.state}`))) : i = e.attributes.unit_of_measurement && !["unknown", "unavailable"].includes(e.state) ? e.state : "zwave" === s ? ["initializing", "dead"].includes(e.state) ? t(`state.zwave.query_stage.${e.state}`, "query_stage", e.attributes.query_stage) : t(`state.zwave.default.${e.state}`) : t(`state.${s}.${e.state}`), i || (i = t(`state.default.${e.state}`) || t(`component.${s}.state.${e.state}`) || e.state), i;
       })(this.hass.localize, t),
-            i = this._buildUnits(t);i ? e = `${t.state} ${i}` : "timer" === he(t.entity_id) ? "idle" === t.state || 0 === this._timeRemaining ? e = n : (e = this._computeTimeDisplay(t), "paused" === t.state && (e += ` (${n})`)) : e = n;
+            s = this._buildUnits(t);s ? e = `${t.state} ${s}` : "timer" === we(t.entity_id) ? "idle" === t.state || 0 === this._timeRemaining ? e = i : (e = this._computeTimeDisplay(t), "paused" === t.state && (e += ` (${i})`)) : e = i;
     }return e;
   }_buildUnits(t) {
     let e;return t && this.config.show_units && (e = t.attributes && t.attributes.unit_of_measurement && !this.config.units ? t.attributes.unit_of_measurement : this.config.units ? this.config.units : void 0), e;
   }_buildLastChanged(t, e) {
-    return this.config.show_last_changed && t ? R`
+    return this.config.show_last_changed && t ? V`
         <ha-relative-time
           id="label"
           class="ellipsis"
@@ -2075,112 +1891,139 @@ const lt = new WeakMap(),
           style=${ut(e)}
         ></ha-relative-time>` : void 0;
   }_buildLabel(t, e) {
-    if (!this.config.show_label) return;let n;return n = e && e.label ? e.label : this.config.label, this._getTemplateOrValue(t, n);
+    if (!this.config.show_label) return;let i;return i = e && e.label ? e.label : this.config.label, this._getTemplateOrValue(t, i);
   }_buildCustomFields(t, e) {
-    let n = R``;const i = {};return this.config.custom_fields && Object.keys(this.config.custom_fields).forEach(e => {
-      const n = this.config.custom_fields[e];i[e] = this._getTemplateOrValue(t, n);
-    }), e && e.custom_fields && Object.keys(e.custom_fields).forEach(n => {
-      const r = e.custom_fields[n];i[n] = this._getTemplateOrValue(t, r);
-    }), Object.keys(i).forEach(r => {
-      if (null != i[r]) {
-        const s = Object.assign({}, this._buildCustomStyleGeneric(t, e, r), { "grid-area": r });n = R`${n}
-        <div id=${r} class="ellipsis" style=${ut(s)}>${ht(i[r])}</div>`;
+    let i = V``;const s = {},
+          n = {};return this.config.custom_fields && Object.keys(this.config.custom_fields).forEach(e => {
+      const i = this.config.custom_fields[e];i.card ? n[e] = i.card : s[e] = this._getTemplateOrValue(t, i);
+    }), e && e.custom_fields && Object.keys(e.custom_fields).forEach(i => {
+      const r = e.custom_fields[i];r.card ? n[i] = r.card : s[i] = this._getTemplateOrValue(t, r);
+    }), Object.keys(s).forEach(n => {
+      if (null != s[n]) {
+        const r = Object.assign(Object.assign({}, this._buildCustomStyleGeneric(t, e, n)), { "grid-area": n });i = V`${i}
+        <div id=${n} class="ellipsis" style=${ut(r)}>${ft(s[n])}</div>`;
       }
-    }), n;
+    }), Object.keys(n).forEach(s => {
+      if (null != n[s]) {
+        const r = Object.assign(Object.assign({}, this._buildCustomStyleGeneric(t, e, s)), { "grid-area": s }),
+              a = function (t) {
+          var e = function (t, e) {
+            return i("hui-error-card", { type: "error", error: t, config: e });
+          },
+              i = function (t, i) {
+            var s = window.document.createElement(t);try {
+              s.setConfig(i);
+            } catch (s) {
+              return console.error(t, s), e(s.message, i);
+            }return s;
+          };if (!t || "object" != typeof t || !t.type) return e("No type defined", t);var s = t.type;if (s = s.startsWith("custom:") ? s.substr("custom:".length) : "hui-" + s + "-card", customElements.get(s)) return i(s, t);var n = e("Custom element doesn't exist: " + t.type + ".", t);n.style.display = "None";var r = setTimeout(function () {
+            n.style.display = "";
+          }, 2e3);return customElements.whenDefined(t.type).then(function () {
+            clearTimeout(r), Bt(n, "ll-rebuild", {}, n);
+          }), n;
+        }(n[s]);a.hass = this.hass, i = V`${i}
+        <div id=${s} class="ellipsis" @click=${this._stopPropagation} @touchstart=${this._stopPropagation} style=${ut(r)}>${a}</div>`;
+      }
+    }), i;
   }_isClickable(t) {
-    let e = !0;if ("toggle" === this.config.tap_action.action && "none" === this.config.hold_action.action && "none" === this.config.dbltap_action.action || "toggle" === this.config.hold_action.action && "none" === this.config.tap_action.action && "none" === this.config.dbltap_action.action || "toggle" === this.config.dbltap_action.action && "none" === this.config.tap_action.action && "none" === this.config.hold_action.action) {
-      if (t) switch (he(t.entity_id)) {case "sensor":case "binary_sensor":case "device_tracker":
+    let e = !0;if ("toggle" === this.config.tap_action.action && "none" === this.config.hold_action.action && "none" === this.config.double_tap_action.action || "toggle" === this.config.hold_action.action && "none" === this.config.tap_action.action && "none" === this.config.double_tap_action.action || "toggle" === this.config.double_tap_action.action && "none" === this.config.tap_action.action && "none" === this.config.hold_action.action) {
+      if (t) switch (we(t.entity_id)) {case "sensor":case "binary_sensor":case "device_tracker":
           e = !1;break;default:
           e = !0;} else e = !1;
-    } else e = "none" != this.config.tap_action.action || "none" != this.config.hold_action.action || "none" != this.config.dbltap_action.action;return e;
+    } else e = "none" != this.config.tap_action.action || "none" != this.config.hold_action.action || "none" != this.config.double_tap_action.action;return e;
   }_rotate(t) {
     return !(!t || !t.spin);
   }_blankCardColoredHtml(t) {
-    const e = Object.assign({ background: "none", "box-shadow": "none" }, t);return R`
+    const e = Object.assign({ background: "none", "box-shadow": "none" }, t);return V`
       <ha-card class="disabled" style=${ut(e)}>
         <div></div>
       </ha-card>
       `;
   }_cardHtml() {
-    const t = this.config.entity ? this.hass.states[this.config.entity] : void 0,
-          e = this._getMatchingConfigState(t),
-          n = this._buildCssColorAttribute(t, e);let i = n,
-        r = {},
-        s = {};const a = {},
-          o = this._buildStyleGeneric(t, e, "lock"),
-          c = this._buildStyleGeneric(t, e, "card"),
-          l = { "button-card-main": !0, disabled: !this._isClickable(t) };switch (c.width && (this.style.setProperty("flex", "0 0 auto"), this.style.setProperty("max-width", "fit-content")), this.config.color_type) {case "blank-card":
-        return this._blankCardColoredHtml(c);case "card":case "label-card":
+    const t = this._getMatchingConfigState(this._stateObj),
+          e = this._buildCssColorAttribute(this._stateObj, t);let i = e,
+        s = {},
+        n = {};const r = {},
+          a = this._buildStyleGeneric(this._stateObj, t, "lock"),
+          o = this._buildStyleGeneric(this._stateObj, t, "card"),
+          c = { "button-card-main": !0, disabled: !this._isClickable(this._stateObj) };switch (o.width && (this.style.setProperty("flex", "0 0 auto"), this.style.setProperty("max-width", "fit-content")), this.config.color_type) {case "blank-card":
+        return this._blankCardColoredHtml(o);case "card":case "label-card":
         {
           const t = function (t) {
-            const e = new ue(fe(t));return e.isValid && e.getLuminance() > .5 ? "rgb(62, 62, 62)" : "rgb(234, 234, 234)";
-          }(n);r.color = t, s.color = t, r["background-color"] = n, r = Object.assign({}, r, c), i = "inherit";break;
+            const e = new ye(Se(t));return e.isValid && e.getLuminance() > .5 ? "rgb(62, 62, 62)" : "rgb(234, 234, 234)";
+          }(e);s.color = t, n.color = t, s["background-color"] = e, s = Object.assign(Object.assign({}, s), o), i = "inherit";break;
         }default:
-        r = c;}return this.config.aspect_ratio ? (a["--aspect-ratio"] = this.config.aspect_ratio, r.position = "absolute") : a.display = "inline", this.style.setProperty("--button-card-light-color", this._getColorForLightEntity(t, !0)), this.style.setProperty("--button-card-light-color-no-temperature", this._getColorForLightEntity(t, !1)), s = Object.assign({}, s, o), R`
-      <div id="aspect-ratio" style=${ut(a)}>
+        s = o;}return this.config.aspect_ratio ? (r["--aspect-ratio"] = this.config.aspect_ratio, s.position = "absolute") : r.display = "inline", this.style.setProperty("--button-card-light-color", this._getColorForLightEntity(this._stateObj, !0)), this.style.setProperty("--button-card-light-color-no-temperature", this._getColorForLightEntity(this._stateObj, !1)), n = Object.assign(Object.assign({}, n), a), V`
+      <div id="aspect-ratio" style=${ut(r)}>
         <ha-card
           id="card"
-          class=${mt(l)}
-          style=${ut(r)}
+          class=${bt(c)}
+          style=${ut(s)}
           @ha-click="${this._handleTap}"
           @ha-hold="${this._handleHold}"
           @ha-dblclick=${this._handleDblTap}
-          .hasDblClick=${"none" !== this.config.dbltap_action.action}
-          .repeat=${ft(this.config.hold_action.repeat)}
-          .longpress=${Ut()}
+          .hasDblClick=${"none" !== this.config.double_tap_action.action}
+          .repeat=${mt(this.config.hold_action.repeat)}
+          .longpress=${ee()}
           .config="${this.config}"
         >
-          ${this._getLock(s)}
-          ${this._buttonContent(t, e, i)}
-          ${this.config.lock ? "" : R`<mwc-ripple id="ripple"></mwc-ripple>`}
+          ${this._buttonContent(this._stateObj, t, i)}
+          ${this._getLock(n)}
         </ha-card>
       </div>
       `;
   }_getLock(t) {
-    return this.config.lock ? R`
-        <div id="overlay" style=${ut(t)} @click=${this._handleLock} @touchstart=${this._handleLock}>
+    return this.config.lock && this._getTemplateOrValue(this._stateObj, this.config.lock.enabled) ? V`
+        <div id="overlay" style=${ut(t)}
+          @ha-click=${t => this._handleUnlockType(t, "tap")}
+          @ha-hold=${t => this._handleUnlockType(t, "hold")}
+          @ha-dblclick=${t => this._handleUnlockType(t, "double_tap")}
+          .hasDblClick=${"double_tap" === this.config.lock.unlock}
+          .longpress=${ee()}
+          .config="${this.config}"
+        >
           <ha-icon id="lock" icon="mdi:lock-outline"></ha-icon>
         </div>
-      ` : R``;
-  }_buttonContent(t, e, n) {
-    const i = this._buildName(t, e),
-          r = this._buildStateString(t),
-          s = function (t, e) {
-      if (!t && !e) return;let n;return n = e ? t ? `${t}: ${e}` : e : t;
-    }(i, r);switch (this.config.layout) {case "icon_name_state":case "name_state":
-        return this._gridHtml(t, e, this.config.layout, n, s, void 0);default:
-        return this._gridHtml(t, e, this.config.layout, n, i, r);}
-  }_gridHtml(t, e, n, i, r, s) {
-    const a = this._getIconHtml(t, e, i),
-          o = [n],
+      ` : V`<mwc-ripple id="ripple"></mwc-ripple>`;
+  }_buttonContent(t, e, i) {
+    const s = this._buildName(t, e),
+          n = this._buildStateString(t),
+          r = function (t, e) {
+      if (!t && !e) return;let i;return i = e ? t ? `${t}: ${e}` : e : t;
+    }(s, n);switch (this.config.layout) {case "icon_name_state":case "name_state":
+        return this._gridHtml(t, e, this.config.layout, i, r, void 0);default:
+        return this._gridHtml(t, e, this.config.layout, i, s, n);}
+  }_gridHtml(t, e, i, s, n, r) {
+    const a = this._getIconHtml(t, e, s),
+          o = [i],
           c = this._buildLabel(t, e),
           l = this._buildStyleGeneric(t, e, "name"),
-          u = this._buildStyleGeneric(t, e, "state"),
+          h = this._buildStyleGeneric(t, e, "state"),
           d = this._buildStyleGeneric(t, e, "label"),
-          h = this._buildLastChanged(t, d),
-          f = this._buildStyleGeneric(t, e, "grid");return a || o.push("no-icon"), r || o.push("no-name"), s || o.push("no-state"), c || h || o.push("no-label"), R`
-      <div id="container" class=${o.join(" ")} style=${ut(f)}>
+          u = this._buildLastChanged(t, d),
+          p = this._buildStyleGeneric(t, e, "grid");return a || o.push("no-icon"), n || o.push("no-name"), r || o.push("no-state"), c || u || o.push("no-label"), V`
+      <div id="container" class=${o.join(" ")} style=${ut(p)}>
         ${a || ""}
-        ${r ? R`<div id="name" class="ellipsis" style=${ut(l)}>${ht(r)}</div>` : ""}
-        ${s ? R`<div id="state" class="ellipsis" style=${ut(u)}>${s}</div>` : ""}
-        ${c && !h ? R`<div id="label" class="ellipsis" style=${ut(d)}>${ht(c)}</div>` : ""}
-        ${h || ""}
+        ${n ? V`<div id="name" class="ellipsis" style=${ut(l)}>${ft(n)}</div>` : ""}
+        ${r ? V`<div id="state" class="ellipsis" style=${ut(h)}>${r}</div>` : ""}
+        ${c && !u ? V`<div id="label" class="ellipsis" style=${ut(d)}>${ft(c)}</div>` : ""}
+        ${u || ""}
         ${this._buildCustomFields(t, e)}
       </div>
     `;
-  }_getIconHtml(t, e, n) {
-    const i = this._buildIcon(t, e),
-          r = this._buildEntityPicture(t, e),
-          s = this._buildStyleGeneric(t, e, "entity_picture"),
+  }_getIconHtml(t, e, i) {
+    const s = this._buildIcon(t, e),
+          n = this._buildEntityPicture(t, e),
+          r = this._buildStyleGeneric(t, e, "entity_picture"),
           a = this._buildStyleGeneric(t, e, "icon"),
           o = this._buildStyleGeneric(t, e, "img_cell"),
           c = this._buildStyleGeneric(t, e, "card"),
-          l = Object.assign({ color: n, width: this.config.size, position: this.config.aspect_ratio || c.height ? "absolute" : "relative" }, a),
-          u = Object.assign({}, l, s);return i || r ? R`
+          l = Object.assign({ color: i, width: this.config.size, position: this.config.aspect_ratio || c.height ? "absolute" : "relative" }, a),
+          h = Object.assign(Object.assign({}, l), r);return s || n ? V`
         <div id="img-cell" style=${ut(o)}>
-          ${i && !r ? R`<ha-icon style=${ut(l)}
-            .icon="${i}" id="icon" ?rotating=${this._rotate(e)}></ha-icon>` : ""}
-          ${r ? R`<img src="${r}" style=${ut(u)}
+          ${s && !n ? V`<ha-icon style=${ut(l)}
+            .icon="${s}" id="icon" ?rotating=${this._rotate(e)}></ha-icon>` : ""}
+          ${n ? V`<img src="${n}" style=${ut(h)}
             id="icon" ?rotating=${this._rotate(e)} />` : ""}
         </div>
       ` : void 0;
@@ -2189,39 +2032,46 @@ const lt = new WeakMap(),
       var t = document.querySelector("home-assistant");if (t = (t = (t = (t = (t = (t = (t = (t = t && t.shadowRoot) && t.querySelector("home-assistant-main")) && t.shadowRoot) && t.querySelector("app-drawer-layout partial-panel-resolver")) && t.shadowRoot || t) && t.querySelector("ha-panel-lovelace")) && t.shadowRoot) && t.querySelector("hui-root")) {
         var e = t.lovelace;return e.current_view = t.___curView, e;
       }return null;
-    }();let n = Object.assign({}, t),
-        i = n.template,
-        r = t.state;for (; i && e.config.button_card_templates && e.config.button_card_templates[i];) n = me(e.config.button_card_templates[i], n), r = ge(e.config.button_card_templates[i].state, r), i = e.config.button_card_templates[i].template;n.state = r, this.config = Object.assign({ tap_action: { action: "toggle" }, hold_action: { action: "none" }, dbltap_action: { action: "none" }, layout: "vertical", size: "40%", color_type: "icon", show_name: !0, show_state: !1, show_icon: !0, show_units: !0, show_label: !1, show_entity_picture: !1 }, n), this.config.default_color = "var(--primary-text-color)", "icon" !== this.config.color_type ? this.config.color_off = "var(--paper-card-background-color)" : this.config.color_off = "var(--paper-item-icon-color)", this.config.color_on = "var(--paper-item-icon-active-color)";const s = JSON.stringify(this.config),
-          a = new RegExp("\\[\\[\\[.*\\]\\]\\]", "gm");this._hasTemplate = !!s.match(a);
+    }();let i = Object.assign({}, t),
+        s = i.template,
+        n = t.state;for (; s && e.config.button_card_templates && e.config.button_card_templates[s];) i = ke(e.config.button_card_templates[s], i), n = xe(e.config.button_card_templates[s].state, n), s = e.config.button_card_templates[s].template;i.state = n, this.config = Object.assign({ tap_action: { action: "toggle" }, hold_action: { action: "none" }, double_tap_action: { action: "none" }, layout: "vertical", size: "40%", color_type: "icon", show_name: !0, show_state: !1, show_icon: !0, show_units: !0, show_label: !1, show_entity_picture: !1 }, i), this.config.lock = Object.assign({ enabled: !1, duration: 5, unlock: "tap" }, this.config.lock), this.config.default_color = "var(--primary-text-color)", "icon" !== this.config.color_type ? this.config.color_off = "var(--paper-card-background-color)" : this.config.color_off = "var(--paper-item-icon-color)", this.config.color_on = "var(--paper-item-icon-active-color)";const r = JSON.stringify(this.config),
+          a = new RegExp("\\[\\[\\[.*\\]\\]\\]", "gm");this._hasTemplate = !!r.match(a);
   }getCardSize() {
     return 3;
   }_evalActions(t, e) {
-    const n = this.config.entity ? this.hass.states[this.config.entity] : void 0,
-          i = JSON.parse(JSON.stringify(t)),
-          r = t => t ? (Object.keys(t).forEach(e => {
-      "object" == typeof t[e] ? t[e] = r(t[e]) : t[e] = this._getTemplateOrValue(n, t[e]);
-    }), t) : t;return i[e] = r(i[e]), i;
+    const i = this.config.entity ? this.hass.states[this.config.entity] : void 0,
+          s = JSON.parse(JSON.stringify(t)),
+          n = t => t ? (Object.keys(t).forEach(e => {
+      "object" == typeof t[e] ? t[e] = n(t[e]) : t[e] = this._getTemplateOrValue(i, t[e]);
+    }), t) : t;return s[e] = n(s[e]), !s[e].confirmation && s.confirmation && (s[e].confirmation = n(s.confirmation)), s;
   }_handleTap(t) {
-    if (this.config.confirmation && !window.confirm(this.config.confirmation)) return;const e = t.target.config;Bt(this, this.hass, this._evalActions(e, "tap_action"), !1, !1);
+    const e = t.target.config;Ht(this, this.hass, this._evalActions(e, "tap_action"), !1, !1);
   }_handleHold(t) {
-    if (this.config.confirmation && !window.confirm(this.config.confirmation)) return;const e = t.target.config;Bt(this, this.hass, this._evalActions(e, "hold_action"), !0, !1);
+    const e = t.target.config;Ht(this, this.hass, this._evalActions(e, "hold_action"), !0, !1);
   }_handleDblTap(t) {
-    if (this.config.confirmation && !window.confirm(this.config.confirmation)) return;const e = t.target.config;Bt(this, this.hass, this._evalActions(e, "dbltap_action"), !1, !0);
+    const e = t.target.config;Ht(this, this.hass, this._evalActions(e, "double_tap_action"), !1, !0);
+  }_handleUnlockType(t, e) {
+    t.target.config.lock.unlock === e && this._handleLock(t);
   }_handleLock(t) {
-    if (t.stopPropagation(), this.config.unlock_users) {
-      if (!this.hass.user.name) return;if (this.config.unlock_users.indexOf(this.hass.user.name) < 0) return;
-    }const e = this.shadowRoot.getElementById("overlay"),
-          n = this.shadowRoot.getElementById("card");e.style.setProperty("pointer-events", "none");const i = document.createElement("paper-ripple"),
-          r = this.shadowRoot.getElementById("lock");if (r) {
-      n.appendChild(i);const t = document.createAttribute("icon");t.value = "mdi:lock-open-outline", r.attributes.setNamedItem(t), r.classList.add("fadeOut");
+    t.stopPropagation();const e = this.shadowRoot.getElementById("lock");if (!e) return;if (this.config.lock.exemptions) {
+      if (!this.hass.user.name || !this.hass.user.id) return;let t = !1;if (this.config.lock.exemptions.forEach(e => {
+        (!t && e.user === this.hass.user.id || e.username === this.hass.user.name) && (t = !0);
+      }), !t) return e.classList.add("invalid"), void window.setTimeout(() => {
+        e && e.classList.remove("invalid");
+      }, 3e3);
+    }const i = this.shadowRoot.getElementById("overlay"),
+          s = this.shadowRoot.getElementById("card");i.style.setProperty("pointer-events", "none");const n = document.createElement("paper-ripple");if (e) {
+      s.appendChild(n);const t = document.createAttribute("icon");t.value = "mdi:lock-open-outline", e.attributes.setNamedItem(t), e.classList.add("hidden");
     }window.setTimeout(() => {
-      if (e.style.setProperty("pointer-events", ""), r) {
-        r.classList.remove("fadeOut");const t = document.createAttribute("icon");t.value = "mdi:lock-outline", r.attributes.setNamedItem(t), n.removeChild(i);
+      if (i.style.setProperty("pointer-events", ""), e) {
+        e.classList.remove("hidden");const t = document.createAttribute("icon");t.value = "mdi:lock-outline", e.attributes.setNamedItem(t), s.removeChild(n);
       }
-    }, 5e3);
+    }, 1e3 * this.config.lock.duration);
+  }_stopPropagation(t) {
+    t.stopPropagation(), console.log("BRRRR");
   }
-};t([it()], ve.prototype, "hass", void 0), t([it()], ve.prototype, "config", void 0), t([it()], ve.prototype, "_timeRemaining", void 0), t([it()], ve.prototype, "_hasTemplate", void 0), ve = t([(t => e => "function" == typeof e ? ((t, e) => (window.customElements.define(t, e), e))(t, e) : ((t, e) => {
-  const { kind: n, elements: i } = e;return { kind: n, elements: i, finisher(e) {
+};t([rt()], Oe.prototype, "hass", void 0), t([rt()], Oe.prototype, "config", void 0), t([rt()], Oe.prototype, "_timeRemaining", void 0), t([rt()], Oe.prototype, "_hasTemplate", void 0), t([rt()], Oe.prototype, "_stateObj", void 0), Oe = t([(t => e => "function" == typeof e ? ((t, e) => (window.customElements.define(t, e), e))(t, e) : ((t, e) => {
+  const { kind: i, elements: s } = e;return { kind: i, elements: s, finisher(e) {
       window.customElements.define(t, e);
     } };
-})(t, e))("button-card")], ve);
+})(t, e))("button-card")], Oe);
