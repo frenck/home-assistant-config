@@ -9,7 +9,7 @@
 #
 title: Home Control Panel
 resources: !include_dir_list lovelace/resources
-cch: !include lovelace/cards/compact_custom_header.yaml
+custom_header: !include lovelace/cards/custom_header.yaml
 views:
   - !include lovelace/views/dashboard.yaml
   - !include lovelace/views/downstairs.yaml
