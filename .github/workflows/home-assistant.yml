@@ -1,0 +1,81 @@
+---
+name: Home Assistant CI
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: 0 12 * * *
+
+jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Getting your configuration from GitHub
+        uses: actions/checkout@v1
+      - name: Running YAMLlint
+        uses: "docker://pipelinecomponents/yamllint:latest"
+        with:
+          args: yamllint .
+  remarklint:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Getting your configuration from GitHub
+        uses: actions/checkout@v1
+      - name: Running Remark lint
+        uses: "docker://pipelinecomponents/remark-lint:latest"
+        continue-on-error: true
+        with:
+          args: "remark --no-stdout --color --frail --use preset-lint-recommended ."
+  home_assistant_stable:
+    runs-on: ubuntu-latest
+    needs: [yamllint, remarklint]
+    steps:
+      - name: Getting your configuration from GitHub
+        uses: actions/checkout@v1
+      - name: Copy stub files into configuration folder
+        run: cp -R ./.stubs/* ./config
+      - name: Home Assistant Version
+        uses: "docker://homeassistant/home-assistant:stable"
+        with:
+          args: |
+            python -m homeassistant --version
+      - name: Home Assistant Check
+        uses: "docker://homeassistant/home-assistant:stable"
+        with:
+          args: python -m homeassistant --config ./config/ --script check_config --info all
+  home_assistant_beta:
+    runs-on: ubuntu-latest
+    needs: [yamllint, remarklint]
+    steps:
+      - name: Getting your configuration from GitHub
+        uses: actions/checkout@v1
+      - name: Copy stub files into configuration folder
+        run: cp -R ./.stubs/* ./config
+      - name: Home Assistant Version
+        uses: "docker://homeassistant/home-assistant:beta"
+        with:
+          args: |
+            python -m homeassistant --version
+      - name: Home Assistant Check
+        uses: "docker://homeassistant/home-assistant:beta"
+        with:
+          args: python -m homeassistant --config ./config/ --script check_config --info all
+  home_assistant_dev:
+    runs-on: ubuntu-latest
+    needs: [yamllint, remarklint]
+    steps:
+      - name: Getting your configuration from GitHub
+        uses: actions/checkout@v1
+      - name: Copy stub files into configuration folder
+        run: cp -R ./.stubs/* ./config
+      - name: Home Assistant Version
+        uses: "docker://homeassistant/home-assistant:dev"
+        with:
+          args: |
+            python -m homeassistant --version
+      - name: Home Assistant Check
+        uses: "docker://homeassistant/home-assistant:dev"
+        with:
+          args: python -m homeassistant --config ./config/ --script check_config --info all
