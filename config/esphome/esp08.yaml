@@ -129,9 +129,9 @@ binary_sensor:
     pin:
       number: GPIO3
       inverted: true
-    # This is my freezer... let's not turn it off...
-    # on_press:
-    #   - switch.toggle: relay
+      # This is my freezer... let's not turn it off...
+      # on_press:
+      #   - switch.toggle: relay
 
 switch:
   # Switch to restart the plug
