@@ -3,7 +3,7 @@
 # many people are watching and on which devices.
 #
 # https://github.com/hassio-addons/addon-plex
-# https://www.home-assistant.io/components/media_player.plex/
+# https://www.home-assistant.io/integrations/media_player.plex/
 #
 #
 # CURRENTLY DISABLED. No specific reason, just need to hook it up to
