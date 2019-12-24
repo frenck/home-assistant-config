@@ -4,6 +4,13 @@ ignore: |
   config/ip_bans.yaml
   config/esphomeyaml/*/
   config/notebooks/
+  config/automations.yaml
+  config/scenes.yaml
+  config/themes/clear.yaml
+  config/themes/slate.yaml
+  config/themes/clear-dark.yaml
+  config/themes/synthwave.yaml
+  config/themes/purple.yaml
 rules:
   braces:
     level: error
