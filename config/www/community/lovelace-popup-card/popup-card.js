@@ -20,9 +20,9 @@ customElements.whenDefined('card-tools').then(() => {
       let settings = data[e.detail.entityId];
       while(settings && typeof settings === "string") settings = data[settings];
       if(!settings) return;
-      const card = cardTools.createCard(settings.card);
-      if(cardTools.hass) card.hass = cardTools.hass;
-      moreInfo = cardTools.popUp(settings.title, card, settings.large || false);
+      // const card = cardTools.createCard(settings.card);
+      // if(cardTools.hass) card.hass = cardTools.hass;
+      moreInfo = cardTools.popUp(settings.title, settings.card, settings.large || false);
       if(settings.style) {
         let oldStyle = {};
         for(var k in settings.style) {
