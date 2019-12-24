@@ -1,0 +1,83 @@
+synthwave:
+  # text
+  primary-text-color: '#fff'
+  secondary-text-color: '#ffffffca'
+  text-primary-color: '#f4eee4'
+  disabled-text-color: '#bdbdbd'
+  
+  # main interface colors
+  primary-color: '#2a2139'
+  dark-primary-color: '#f92aad'
+  light-primary-color: '#241b2f'
+  accent-color: '#f92aad'
+  divider-color: '#49549539'
+  paper-dialog-button-color: '#fff'
+  
+  ###
+  
+  # background and sidebar
+  card-background-color: '#34294f88'
+  paper-card-background-color: 'var(--card-background-color)'
+  primary-background-color: 'var(--primary-color)' 
+  secondary-background-color: 'var(--light-primary-color)' # behind the cards on state
+  ha-card-border-radius: '0'
+  
+  # sidebar menu
+  sidebar-text-color: 'var(--secondary-text-color)'
+  # sidebar-background-color: 'var(--paper-listbox-background-color)' # backward compatible with existing themes
+  sidebar-icon-color: 'var(--secondary-text-color)'
+  sidebar-selected-text-color: 'var(--primary-text-color)'
+  sidebar-selected-icon-color: 'var(--primary-text-color)'
+  
+  # mwc - for some reason it's buttons
+  mdc-theme-primary: 'var(--dark-primary-color)'
+  
+  # shadows
+  ha-card-box-shadow: '0'
+
+  # icons
+  paper-item-icon-color: 'var(--secondary-text-color)'  # Off
+  paper-item-icon-active-color: '#ffcc00' # On
+
+  # switches
+  toggle-button-color: 'var(--primary-color)'
+  # --toggle-button-unchecked-color: 'var(--accent-color)'
+  paper-toggle-button-checked-button-color: '#FFF' # Knob On
+  paper-toggle-button-checked-bar-color: 'var(--dark-primary-color)' # Background On
+  switch-checked-color: 'var(--dark-primary-color)' # Background On
+  paper-toggle-button-unchecked-button-color: '#FFF' # Knob Off
+  paper-toggle-button-unchecked-bar-color: 'var(--disabled-text-color)' # Background Off
+
+  # Sliders
+  slider-color: 'var(--primary-color)'
+  slider-secondary-color: 'var(--light-primary-color)'
+  slider-bar-color: 'var(--disabled-text-color)'
+  paper-slider-knob-color: 'var(--accent-color)'
+  paper-slider-knob-start-color: 'var(--accent-color)'
+  paper-slider-pin-color: 'var(--accent-color)'
+  paper-slider-active-color: 'var(--dark-primary-color)'
+  # paper-slider-container-color: 'linear-gradient(var(--primary-background-color), var(--secondary-background-color)) no-repeat'
+  paper-slider-secondary-color: 'var(--secondary-background-color)'
+  paper-slider-disabled-active-color: 'var(--disabled-text-color)'
+  paper-slider-disabled-secondary-color: 'var(--disabled-text-color)'
+
+  # radio buttons
+  paper-radio-button-checked-color: 'var(--paper-toggle-button-checked-button-color)'
+  paper-radio-button-unchecked-color: 'var(--paper-toggle-button-unchecked-button-color)'
+
+  # other
+  state-icon-color: '#72f1b8cc'
+  table-row-background-color: 'var(--divider-color)'
+  table-row-alternative-background-color: 'var(--light-primary-color)'
+  
+  ###
+
+  # UI
+  paper-card-header-color: 'var(--text-primary-color)' # Title in settings
+
+  # Left Menu
+  paper-listbox-background-color: 'var(--light-primary-color)' # Background
+
+  # bar-card compatibility
+  # https://github.com/custom-cards/bar-card
+  custom-bar-card-color: 'var(--accent-color)'
