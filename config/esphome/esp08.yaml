@@ -21,6 +21,7 @@ logger:
 # Enable Home Assistant API
 api:
   password: !secret esphome_esp08_api_password
+  reboot_timeout: 30min
 
 # Enable over-the-air updates
 ota:
@@ -128,8 +129,9 @@ binary_sensor:
     pin:
       number: GPIO3
       inverted: true
-    on_press:
-      - switch.toggle: relay
+    # This is my freezer... let's not turn it off...
+    # on_press:
+    #   - switch.toggle: relay
 
 switch:
   # Switch to restart the plug
@@ -144,6 +146,8 @@ switch:
     on_turn_on:
       - light.turn_on: led
     on_turn_off:
+      # Freezer... if it is turned of, turn it on again.
+      - switch.turn_on: relay
       - light.turn_off: led
 
 output:
