@@ -28,6 +28,7 @@ class HacsData(Hacs):
             {
                 "view": self.configuration.frontend_mode,
                 "compact": self.configuration.frontend_compact,
+                "onboarding_done": self.configuration.onboarding_done,
             },
         )
 
@@ -40,21 +41,24 @@ class HacsData(Hacs):
                 repository_manifest = None
             content[repository.information.uid] = {
                 "authors": repository.information.authors,
-                "topics": repository.information.topics,
                 "category": repository.information.category,
                 "description": repository.information.description,
+                "downloads": repository.releases.last_release_object_downloads,
                 "full_name": repository.information.full_name,
+                "first_install": repository.status.first_install,
                 "hide": repository.status.hide,
                 "installed_commit": repository.versions.installed_commit,
                 "installed": repository.status.installed,
-                "stars": repository.information.stars,
                 "last_commit": repository.versions.available_commit,
                 "last_release_tag": repository.versions.available,
-                "repository_manifest": repository_manifest,
+                "last_updated": repository.information.last_updated,
                 "name": repository.information.name,
                 "new": repository.status.new,
+                "repository_manifest": repository_manifest,
                 "selected_tag": repository.status.selected_tag,
                 "show_beta": repository.status.show_beta,
+                "stars": repository.information.stars,
+                "topics": repository.information.topics,
                 "version_installed": repository.versions.installed,
             }
 
@@ -69,13 +73,14 @@ class HacsData(Hacs):
         try:
             if not hacs and not repositories:
                 # Assume new install
-                self.system.new = True
+                self.system.status.new = True
                 return True
             self.logger.info("Restore started")
 
             # Hacs
             self.configuration.frontend_mode = hacs.get("view", "Grid")
             self.configuration.frontend_compact = hacs.get("compact", False)
+            self.configuration.onboarding_done = hacs.get("onboarding_done", False)
 
             # Repositories
             for entry in repositories:
@@ -112,6 +117,8 @@ def restore_repository_data(
     repository.information.authors = repository_data.get("authors", [])
     repository.information.description = repository_data.get("description")
     repository.information.name = repository_data.get("name")
+    repository.releases.last_release_object_downloads = repository_data.get("downloads")
+    repository.information.last_updated = repository_data.get("last_updated")
     repository.information.topics = repository_data.get("topics", [])
     repository.information.stars = repository_data.get("stars", 0)
     repository.releases.last_release = repository_data.get("last_release_tag")

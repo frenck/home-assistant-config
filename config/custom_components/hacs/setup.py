@@ -1,17 +1,16 @@
 """Setup functions for HACS."""
 # pylint: disable=bad-continuation
-from aiogithubapi import AIOGitHubAuthentication, AIOGitHubException, AIOGitHubRatelimit
-
-from homeassistant.helpers import discovery
-from hacs_frontend.version import VERSION as FE_VERSION
-
-from .const import VERSION, DOMAIN
-from .http import HacsPluginView, HacsFrontend
-from .ws_api_handlers import setup_ws_api
 
 
 async def load_hacs_repository(hacs):
     """Load HACS repositroy."""
+    from .const import VERSION
+    from aiogithubapi import (
+        AIOGitHubAuthentication,
+        AIOGitHubException,
+        AIOGitHubRatelimit,
+    )
+
     try:
         repository = hacs().get_by_name("hacs/integration")
         if repository is None:
@@ -34,8 +33,20 @@ async def load_hacs_repository(hacs):
     return True
 
 
+def setup_extra_stores(hacs):
+    """Set up extra stores in HACS if enabled in Home Assistant."""
+    if "python_script" in hacs.hass.config.components:
+        hacs.common.categories.append("python_script")
+
+    if hacs.hass.services.services.get("frontend", {}).get("reload_themes") is not None:
+        hacs.common.categories.append("theme")
+
+
 def add_sensor(hacs):
     """Add sensor."""
+    from .const import DOMAIN
+    from homeassistant.helpers import discovery
+
     try:
         if hacs.configuration.config_type == "yaml":
             hacs.hass.async_create_task(
@@ -55,7 +66,12 @@ def add_sensor(hacs):
 
 async def setup_frontend(hacs):
     """Configure the HACS frontend elements."""
+    from .http import HacsPluginView, HacsFrontend
+    from .ws_api_handlers import setup_ws_api
+    from hacs_frontend.version import VERSION as FE_VERSION
+
     hacs.hass.http.register_view(HacsPluginView())
+    hacs.frontend.version_running = FE_VERSION
 
     # Add to sidepanel
     hacs.hass.http.register_view(HacsFrontend())
@@ -63,7 +79,7 @@ async def setup_frontend(hacs):
         "name": "hacs-frontend",
         "embed_iframe": False,
         "trust_external": False,
-        "js_url": f"/hacs_frontend/main_{FE_VERSION}.js",
+        "js_url": f"/hacs_frontend/{hacs.frontend.version_running}.js",
     }
 
     config = {}

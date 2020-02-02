@@ -73,6 +73,7 @@ class RepositoryReleases:
 
     last_release = None
     last_release_object = None
+    last_release_object_downloads = None
     published_tags = []
     objects = []
     releases = False
@@ -118,9 +119,22 @@ class HacsRepository(Hacs):
     def pending_upgrade(self):
         """Return pending upgrade."""
         if self.status.installed:
+            if self.status.selected_tag is not None:
+                if self.status.selected_tag == self.information.default_branch:
+                    if self.versions.installed_commit != self.versions.available_commit:
+                        return True
+                    return False
             if self.display_installed_version != self.display_available_version:
                 return True
+        return False
 
+    @property
+    def config_flow(self):
+        """Return bool if integration has config_flow."""
+        if self.manifest:
+            if self.information.full_name == "hacs/integration":
+                return False
+            return self.manifest.get("config_flow", False)
         return False
 
     @property
@@ -327,6 +341,8 @@ class HacsRepository(Hacs):
                 f"hacs.repository.{self.information.category}.{self.information.full_name}"
             )
 
+        self.logger.debug("Getting repository information")
+
         # Attach repository
         self.repository_object = await self.github.get_repo(self.information.full_name)
 
@@ -342,15 +358,17 @@ class HacsRepository(Hacs):
         # Update default branch
         self.information.default_branch = self.repository_object.default_branch
 
-        # Update last available commit
-        await self.repository_object.set_last_commit()
-        self.versions.available_commit = self.repository_object.last_commit
-
         # Update last updaeted
-        self.information.last_updated = self.repository_object.pushed_at
+        self.information.last_updated = self.repository_object.attributes.get(
+            "pushed_at", 0
+        )
 
         # Update topics
         self.information.topics = self.repository_object.topics
+
+        # Update last available commit
+        await self.repository_object.set_last_commit()
+        self.versions.available_commit = self.repository_object.last_commit
 
         # Get the content of hacs.json
         await self.get_repository_manifest_content()
@@ -375,7 +393,7 @@ class HacsRepository(Hacs):
                 ):
                     persistent_directory = Backup(
                         f"{self.content.path.local}/{self.repository_manifest.persistent_directory}",
-                        tempfile.TemporaryFile() + "/hacs_persistent_directory/",
+                        tempfile.gettempdir() + "/hacs_persistent_directory/",
                     )
                     persistent_directory.create()
 
@@ -518,7 +536,7 @@ class HacsRepository(Hacs):
                     continue
 
                 # Save the content of the file.
-                if self.content.single:
+                if self.content.single or content.path is None:
                     local_directory = self.content.path.local
 
                 else:
@@ -582,9 +600,6 @@ class HacsRepository(Hacs):
                 info = info.content.replace("<svg", "<disabled").replace(
                     "</svg", "</disabled"
                 )
-                info = info.replace(
-                    '<a href="http', '<a rel="noreferrer" target="_blank" href="http'
-                )
 
                 self.information.additional_info = render_template(info, self)
 
@@ -619,6 +634,12 @@ class HacsRepository(Hacs):
                     if release.tag_name == self.status.selected_tag:
                         self.releases.last_release_object = release
                         break
+        if self.releases.last_release_object.assets:
+            self.releases.last_release_object_downloads = self.releases.last_release_object.assets[
+                0
+            ].attributes.get(
+                "download_count"
+            )
         self.versions.available = self.releases.objects[0].tag_name
 
     def remove(self):
