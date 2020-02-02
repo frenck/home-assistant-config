@@ -8,5 +8,5 @@
 # https://github.com/claytonjn/hass-circadian_lighting
 #
 circadian_lighting:
-  interval: 60
-  transition: 60
+  interval: 600
+  transition: 15
