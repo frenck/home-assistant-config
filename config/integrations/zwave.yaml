@@ -5,21 +5,8 @@
 # https://www.home-assistant.io/docs/z-wave/installation
 #
 zwave:
-  # The USB port where the Aeotech Z-Stick is connected to.
-  # Configured via integrations in Home Assistant.
-  # usb_path: /dev/ttyACM0
-
-  # I use a custom Open Zwave configuration. Used this to be able to support
-  # newer Z-Wave devices, like the Eurotronic Spirit Thermostat, but they are now in by default.
-  # config_path: /config/open-zwave/config
-
-  # If a Z-Wave devices support it, I will add it as a secure node.
-  # This defines my secure network key
-  # Configured via integrations in Home Assistant.
-  # network_key: !secret zwave_network_key
-
   # The time period in milliseconds between polls of a nodes value
-  polling_interval: 60000
+  polling_interval: 120000
 
   # The following contains node-specific override values.
   # I use this for hiding/ignoring z-wave stuff I don't use.
@@ -60,5 +47,9 @@ zwave:
       polling_intensity: 0
 
     "sensor.eurotronic_eur_spiritz_wall_radiator_thermostat_syste*":
+      ignored: true
+      polling_intensity: 0
+
+    "sensor.fibaro_system_fgwpe_f_wall_plug_power_*0":
       ignored: true
       polling_intensity: 0
