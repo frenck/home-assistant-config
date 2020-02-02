@@ -3,4 +3,4 @@ name: Frenck
 id: frenck
 user_id: !secret user_id_frenck
 device_trackers:
-  - device_tracker.iphone_frenck
+  - device_tracker.frenck_iphone
