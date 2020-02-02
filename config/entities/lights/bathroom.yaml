@@ -1,0 +1,9 @@
+---
+# Light group: Bathroom
+#
+# https://www.home-assistant.io/integrations/light.group/
+#
+platform: group
+name: bathroom
+entities:
+  - light.bathroom_ceiling
