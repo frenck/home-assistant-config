@@ -6,17 +6,27 @@
 # only heating. On/Off for this is OK, since generally, I'm only changing
 # temperatures.
 #
+id: 995cb631-efde-4d01-a3b0-8bca47d546fe
+description: Turn off thermostat when window is opened
 alias: bedroom_flynn_window_climate
 trigger:
-  platform: state
-  entity_id: binary_sensor.bedroom_flynn_window
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: zwave.network_complete
+  - platform: event
+    event_type: zwave.network_ready
+  - platform: state
+    entity_id:
+      - binary_sensor.bedroom_flynn_window
 action:
   service: climate.set_hvac_mode
+  entity_id:
+    - climate.bedroom_flynn
   data_template:
-    entity_id: climate.bedroom_flynn
     hvac_mode: >-
       {% if is_state('binary_sensor.bedroom_flynn_window', 'on') %}
-        Off
+        off
       {% else %}
-        Heat
+        heat
       {% endif %}
