@@ -5,8 +5,12 @@
 # https://www.home-assistant.io/integrations/recorder/
 #
 recorder:
+  # Use the Core MariaDB add-on to store the recorder data in
+  # e.g.: "mysql://homeassistant:PASSWORD@core-mariadb/homeassistant?charset=utf8"
+  db_url: !secret recorder_db_url
+
   # The number of days of history to keep in the recorder database
-  purge_keep_days: 3
+  purge_keep_days: 30
 
   # How often (in days) the purge task runs
   purge_interval: 1
