@@ -11,8 +11,12 @@ esphome:
   board: lolin32
 
 wifi:
-  ssid: !secret wifi_not_ssid
-  password: !secret wifi_not_password
+  ssid: !secret wifi_iot_ssid
+  password: !secret wifi_iot_password
+  ap:
+    ssid: esp01
+
+captive_portal:
 
 logger:
 

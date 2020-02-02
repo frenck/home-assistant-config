@@ -7,8 +7,12 @@ esphome:
 
 # WiFi connection
 wifi:
-  ssid: !secret wifi_not_ssid
-  password: !secret wifi_not_password
+  ssid: !secret wifi_iot_ssid
+  password: !secret wifi_iot_password
+  ap:
+    ssid: esp12
+
+captive_portal:
 
 # Enable logging
 logger:
