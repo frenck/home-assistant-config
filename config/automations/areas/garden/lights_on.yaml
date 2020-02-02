@@ -1,0 +1,46 @@
+---
+id: 5dc7b352-589a-4ac1-b59a-009270699576
+alias: garden_lights_on
+description: Turn garden lights on
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: state
+    entity_id:
+      - alarm_control_panel.home_alarm
+      - binary_sensor.garden_door
+      - sun.sun
+  - platform: state
+    entity_id:
+      - binary_sensor.garden_door
+    to: 'off'
+    for:
+      minutes: 5
+condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: disarmed
+  - condition: state
+    entity_id: binary_sensor.garden_door
+    state: 'off'
+    for:
+      minutes: 5
+  - condition: numeric_state
+    entity_id: sun.sun
+    value_template: >-
+      {{ state_attr('sun.sun', 'elevation') }}
+    below: 1.0
+action:
+  - service: switch.turn_on
+    entity_id:
+      - switch.circadian_lighting_garden
+  - service: light.turn_on
+    entity_id:
+      - light.garden_wall
+    data:
+      transition: 5
+    data_template:
+      kelvin: >-
+        {{ state_attr('sensor.circadian_values', 'colortemp') | int }}
+      brightness_pct: >-
+        {{ state_attr('switch.circadian_lighting_garden', 'brightness') | int }}

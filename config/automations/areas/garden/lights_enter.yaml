@@ -1,0 +1,34 @@
+---
+id: 69cbe9c2-a60f-486a-98d7-8ad94cf48f9a
+alias: garden_lights_enter
+description: Turn up the brigthness of the garden lights when entering
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: state
+    entity_id:
+      - binary_sensor.garden_door
+      - light.garden_wall
+condition:
+  - condition: state
+    entity_id: binary_sensor.garden_door
+    state: 'on'
+  - condition: state
+    entity_id: light.garden_wall
+    state: 'on'
+  - condition: state
+    entity_id: switch.circadian_lighting_garden
+    state: 'on'
+action:
+  - service: switch.turn_off
+    entity_id:
+      - switch.circadian_lighting_garden
+  - service: light.turn_on
+    entity_id:
+      - light.garden_wall
+    data:
+      brightness_pct: 75
+      transition: 3
+    data_template:
+      kelvin: >-
+        {{ (state_attr('sensor.circadian_values', 'colortemp') | int) }}

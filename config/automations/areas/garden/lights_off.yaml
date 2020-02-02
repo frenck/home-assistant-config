@@ -1,0 +1,37 @@
+---
+id: c9c64055-42cd-41c7-99f6-dbce7e4f915d
+alias: garden_lights_off
+description: Turn garden lights off
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: state
+    entity_id:
+      - alarm_control_panel.home_alarm
+      - sun.sun
+condition:
+  - condition: state
+    entity_id: light.garden_wall
+    state: 'on'
+  - condition: or
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_away
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_home
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: >-
+          {{ state_attr('sun.sun', 'elevation') }}
+        above: 1.0
+action:
+  - service: switch.turn_off
+    entity_id:
+      - switch.circadian_lighting_garden
+  - service: light.turn_off
+    entity_id:
+      - light.garden_wall
+    data:
+      transition: 5

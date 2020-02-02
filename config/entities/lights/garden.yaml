@@ -1,0 +1,13 @@
+---
+# Light group: Garden
+# We have a wall on the left and right of our garden.
+# Both have a Philips Hue light, which we control as one.
+#
+# Other lights needs to be replaced and hooked up.
+#
+# https://www.home-assistant.io/integrations/light.group/
+#
+platform: group
+name: garden
+entities:
+  - light.garden_wall
