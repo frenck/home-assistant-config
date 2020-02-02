@@ -14,11 +14,3 @@ telegram_bot:
     parse_mode: markdown
     allowed_chat_ids:
       - !secret telegram_frenck
-    trusted_networks:
-      - 149.154.167.197/32
-      - 149.154.167.198/31
-      - 149.154.167.200/29
-      - 149.154.167.208/28
-      - 149.154.167.224/29
-      - 149.154.167.232/31
-      - ::ffff:959a:a7d4
