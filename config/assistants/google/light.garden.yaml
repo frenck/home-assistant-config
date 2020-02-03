@@ -1,8 +1,0 @@
----
-light.garden:
-  name: Tuin
-  aliases:
-    - tuin
-    - buiten
-    - garden
-  room: Tuin
