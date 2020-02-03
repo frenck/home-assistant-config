@@ -1,0 +1,9 @@
+---
+# Light group: Bedroom Lilly
+#
+# https://www.home-assistant.io/integrations/light.group/
+#
+platform: group
+name: bedroom_lilly
+entities:
+  - light.bedroom_lilly_bedside

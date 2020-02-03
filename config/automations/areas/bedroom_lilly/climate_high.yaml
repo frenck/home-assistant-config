@@ -1,0 +1,16 @@
+---
+# Turns up the heating in Lilly's bedroom, so it is nice when she
+# goes to bed at 7PM.
+#
+id: 615c9141-1b3a-4345-b8f0-96b4af1393c7
+alias: bedroom_lilly_climate_high
+description: Turn up heating in Lilly's bedroom
+trigger:
+  - platform: time
+    at: "17:30:00"
+action:
+  - service: climate.set_temperature
+    entity_id:
+      - climate.bedroom_lilly
+    data:
+      temperature: 19

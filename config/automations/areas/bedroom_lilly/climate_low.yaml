@@ -1,12 +1,15 @@
 ---
 # Turns down bedroom heating on Lilly's room during the day.
 #
+id: 04aeaac8-0f0e-4638-8dde-a2568b676d20
 alias: bedroom_lilly_climate_low
+description: Turn down heating in Lilly's bedroom
 trigger:
-  platform: time
-  at: "07:00:00"
+  - platform: time
+    at: "07:00:00"
 action:
   service: climate.set_temperature
+  entity_id:
+    - climate.bedroom_lilly
   data:
-    entity_id: climate.bedroom_lilly
     temperature: 17
