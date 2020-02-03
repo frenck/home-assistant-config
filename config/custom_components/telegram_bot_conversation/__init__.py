@@ -10,7 +10,7 @@
 # and sending back the response.
 #
 # This allows you to "Talk" to your Home Assistant in
-# a more natrual "Human" language.
+# a more natural "Human" language.
 #
 # Requires telegram_bot to be set up.
 #
