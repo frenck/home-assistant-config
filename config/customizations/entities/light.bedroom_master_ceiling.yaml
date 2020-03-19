@@ -1,8 +1,0 @@
----
-#
-# Customizes the master bedroom ceiling light in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-light.bedroom_master_ceiling:
-  icon: mdi:ceiling-light

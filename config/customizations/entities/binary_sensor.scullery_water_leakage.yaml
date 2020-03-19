@@ -5,5 +5,5 @@
 #
 # https://www.home-assistant.io/docs/configuration/customizing-devices/
 #
-binary_sensor.scullery_leakage:
+binary_sensor.scullery_water_leakage:
   device_class: moisture

@@ -1,0 +1,3 @@
+---
+binary_sensor.workday:
+  friendly_name: Workday

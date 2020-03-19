@@ -4,6 +4,6 @@
 #
 # https://www.home-assistant.io/docs/configuration/customizing-devices/
 #
-light.office_window:
-  friendly_name: Office Window
+light.office:
+  friendly_name: Office
   icon: mdi:lightbulb-group

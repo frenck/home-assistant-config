@@ -1,0 +1,3 @@
+---
+sensor.office_desk_light_right_power:
+  device_class: power

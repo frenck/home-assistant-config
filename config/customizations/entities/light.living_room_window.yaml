@@ -5,5 +5,5 @@
 # https://www.home-assistant.io/docs/configuration/customizing-devices/
 #
 light.living_room_window:
-  icon: mdi:window-maximize
   friendly_name: Living Room Window
+  icon: mdi:lightbulb-group

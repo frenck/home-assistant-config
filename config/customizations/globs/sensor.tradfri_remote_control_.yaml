@@ -1,9 +1,0 @@
----
-# I'm hiding the Ikea Tradfri remotes sensors for now.
-# They will be valueble in the future (allows you to control battery levels
-# for example). But I'm not using them (just for pairing).
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-"sensor.tradfri_remote_control_*":
-  hidden: true

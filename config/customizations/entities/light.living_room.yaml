@@ -1,9 +1,9 @@
 ---
 #
-# Customizes the office window lights in Home Assistant
+# Customizes the living room light group in Home Assistant
 #
 # https://www.home-assistant.io/docs/configuration/customizing-devices/
 #
-light.office_window:
-  friendly_name: Office Window
+light.living_room:
+  friendly_name: Living Room
   icon: mdi:lightbulb-group

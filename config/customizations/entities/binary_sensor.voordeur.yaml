@@ -1,0 +1,4 @@
+---
+binary_sensor.voordeur:
+  friendly_name: Front Door
+  device_class: door
