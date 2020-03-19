@@ -1,21 +1,22 @@
 """Class for themes in HACS."""
-from .repository import HacsRepository, register_repository_class
+from integrationhelper import Logger
+from .repository import HacsRepository
+from ..hacsbase.exceptions import HacsException
+from ..helpers.information import find_file_name
 
 
-@register_repository_class
 class HacsTheme(HacsRepository):
     """Themes in HACS."""
-
-    category = "theme"
 
     def __init__(self, full_name):
         """Initialize."""
         super().__init__()
-        self.information.full_name = full_name
-        self.information.category = self.category
+        self.data.full_name = full_name
+        self.data.category = "theme"
         self.content.path.remote = "themes"
-        self.content.path.local = f"{self.system.config_path}/themes"
-        self.content.single = True
+        self.content.path.local = f"{self.hacs.system.config_path}/themes/"
+        self.content.single = False
+        self.logger = Logger(f"hacs.repository.{self.data.category}.{full_name}")
 
     async def validate_repository(self):
         """Validate."""
@@ -23,20 +24,23 @@ class HacsTheme(HacsRepository):
         await self.common_validate()
 
         # Custom step 1: Validate content.
-        self.content.objects = await self.repository_object.get_contents(
-            self.content.path.remote, self.ref
-        )
-        if not isinstance(self.content.objects, list):
-            self.validate.errors.append("Repostitory structure not compliant")
+        compliant = False
+        for treefile in self.treefiles:
+            if treefile.startswith("themes/") and treefile.endswith(".yaml"):
+                compliant = True
+                break
+        if not compliant:
+            raise HacsException(
+                f"Repostitory structure for {self.ref.replace('tags/','')} is not compliant"
+            )
 
-        self.content.files = []
-        for filename in self.content.objects:
-            self.content.files.append(filename.name)
+        if self.data.content_in_root:
+            self.content.path.remote = ""
 
         # Handle potential errors
         if self.validate.errors:
             for error in self.validate.errors:
-                if not self.system.status.startup:
+                if not self.hacs.system.status.startup:
                     self.logger.error(error)
         return self.validate.success
 
@@ -49,31 +53,20 @@ class HacsTheme(HacsRepository):
         await self.common_registration()
 
         # Set name
-        self.information.name = self.content.objects[0].name.replace(".yaml", "")
+        find_file_name(self)
+        self.content.path.local = f"{self.hacs.system.config_path}/themes/{self.data.file_name.replace('.yaml', '')}"
 
     async def update_repository(self):  # lgtm[py/similar-function]
         """Update."""
-        if self.github.ratelimits.remaining == 0:
+        if self.hacs.github.ratelimits.remaining == 0:
             return
         # Run common update steps.
         await self.common_update()
 
         # Get theme objects.
-        if self.repository_manifest:
-            if self.repository_manifest.content_in_root:
-                self.content.path.remote = ""
-        self.content.objects = await self.repository_object.get_contents(
-            self.content.path.remote, self.ref
-        )
-
-        self.content.files = []
-        for filename in self.content.objects:
-            self.content.files.append(filename.name)
+        if self.data.content_in_root:
+            self.content.path.remote = ""
 
         # Update name
-        self.information.file_name = self.content.objects[0].name
-        self.information.name = self.content.objects[0].name.replace(".yaml", "")
-
-        self.content.files = []
-        for filename in self.content.objects:
-            self.content.files.append(filename.name)
+        find_file_name(self)
+        self.content.path.local = f"{self.hacs.system.config_path}/themes/{self.data.file_name.replace('.yaml', '')}"

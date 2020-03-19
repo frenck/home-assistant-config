@@ -13,6 +13,8 @@
         "integration": "Integration",
         "integrations": "Integrations",
         "manage": "manage",
+        "netdaemon": "NetDaemon",
+        "netdaemon_apps": "NetDaemon Apps",
         "plugin": "Plugin",
         "plugins": "Plugins",
         "python_script": "Python Script",
@@ -34,6 +36,7 @@
             "user": {
                 "data": {
                     "appdaemon": "Enable AppDaemon apps discovery & tracking",
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
                     "python_script": "Enable python_scripts discovery & tracking",
                     "sidepanel_icon": "Side panel icon",
                     "sidepanel_title": "Side panel title",
@@ -56,6 +59,7 @@
         "exist": "{item} already exists",
         "generic": "Are you sure?",
         "home_assistant_is_restarting": "Hold on, Home Assistant is now restarting.",
+        "home_assistant_version_not_correct": "You are running Home Assistant version '{haversion}', but this repository requires minimum version '{minversion}' to be installed.",
         "no": "No",
         "no_upgrades": "No upgrades pending",
         "ok": "OK",
@@ -70,16 +74,22 @@
         "step": {
             "user": {
                 "data": {
+                    "appdaemon": "Enable AppDaemon apps discovery & tracking",
                     "country": "Filter with country code.",
                     "debug": "Enable debug.",
                     "experimental": "Enable experimental features",
-                    "release_limit": "Number of releases to show."
+                    "netdaemon": "Enable NetDaemon apps discovery & tracking",
+                    "not_in_use": "Not in use with YAML",
+                    "release_limit": "Number of releases to show.",
+                    "sidepanel_icon": "Side panel icon",
+                    "sidepanel_title": "Side panel title"
                 }
             }
         }
     },
     "repository_banner": {
         "config_flow": "This integration supports config_flow, that means that you now can go to the integration section of your UI to configure it.",
+        "config_flow_title": "UI Configuration supported",
         "integration_not_loaded": "This integration is not loaded in Home Assistant.",
         "no_restart_required": "No restart required",
         "not_loaded": "Not loaded",
@@ -110,6 +120,7 @@
         "note_installed": "When installed, this will be located in",
         "note_integration": "you still need to add it to your 'configuration.yaml' file",
         "note_plugin": "you still need to add it to your lovelace configuration ('ui-lovelace.yaml' or the raw UI config editor)",
+        "note_plugin_post_107": "you still need to add it to your lovelace configuration ('configuration.yaml' or the resource editor '\/config\/lovelace\/resources')",
         "open_issue": "Open issue",
         "open_plugin": "Open plugin",
         "reinstall": "Reinstall",
