@@ -6,7 +6,7 @@
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
 vacuum.living_room:
-  name: Woonkamer Stofzuiger
+  name: Stofzuiger
   aliases:
     - cleanup
     - dweilen

@@ -17,18 +17,21 @@ cloud:
     # These are loaded from a separate directory.
     filter:
       include_entities:
+        - climate.bedroom_flynn
+        - climate.bedroom_lilly
         - climate.bedroom_master
         - climate.living_room
         - fan.attic_ventilation
+        - light.bedroom_lilly_bedside
+        - light.bedroom_lilly_bedside
         - light.bedroom_master_ceiling
+        - light.garden_wall
         - light.kitchen_ceiling
         - light.kitchen_cupboard
-        - light.living_room_bar
+        - light.living_room_bartop
         - light.living_room_spotlight
         - light.living_room_television
         - light.living_room_window
         - light.office_desk
         - light.office_window
         - vacuum.living_room
-        # - light.bedroom_master_bedside
-        - script.camera_flynn_living_room_tv

@@ -6,7 +6,7 @@
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
 climate.bedroom_flynn:
-  name: Thermostaat Flynn
+  name: Thermostaat
   aliases:
     - flynn slaapkamer thermostaat
     - bedroom flynn

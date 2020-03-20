@@ -6,7 +6,7 @@
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
 light.office_window:
-  name: Kantoor Raam
+  name: Raam
   aliases:
     - kantoor raam
     - kantoor ramen

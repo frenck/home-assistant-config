@@ -5,14 +5,17 @@
 #
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
-light.living_room_bar:
-  name: Woonkamer Bar
+light.living_room_bartop:
+  name: Bartop
   aliases:
     - woonkamer bar
+    - woonkamer bartop
     - bar
+    - bartop
     - barretje
     - countertop
     - living room bar
+    - living room bartop
     - onder de bar
     - under bar
   room: Woonkamer

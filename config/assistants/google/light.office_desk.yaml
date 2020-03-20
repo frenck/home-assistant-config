@@ -6,11 +6,13 @@
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
 light.office_desk:
-  name: Kantoor Bureaulamp
+  name: Bureaulamp
   aliases:
     - kantoor bureaulamp
+    - kantoor bureaulampen
     - bureau
     - bureaulamp
+    - bureaulampen
     - computer desk
     - computerlamp
     - desk

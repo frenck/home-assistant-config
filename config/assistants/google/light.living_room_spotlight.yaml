@@ -6,7 +6,7 @@
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
 light.living_room_spotlight:
-  name: Woonkamer Spotlight
+  name: Spotlight
   aliases:
     - woonkamer spotlight
     - filmspot
