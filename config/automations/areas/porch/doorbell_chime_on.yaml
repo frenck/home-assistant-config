@@ -1,9 +1,7 @@
 ---
-# Turns on the doorbell chime in the morning
-# and the later afternoon. At these times,
-# our kids are awake for sure.
-#
+description: Turns the doorbell chime on when the kids are awake.
 alias: porch_doorbell_chime_on
+id: 874e3632-6a9c-4470-9563-7fe28ce068f7
 trigger:
   - platform: template
     value_template: >-
@@ -12,13 +10,8 @@ trigger:
         ==
         states('sensor.time')+":00"
       }}
-  - platform: template
-    value_template: >-
-      {{
-        states('input_datetime.person_flynn_nap_end')
-        ==
-        states('sensor.time')+":00"
-      }}
 action:
-  service: switch.turn_on
-  entity_id: switch.porch_doorbell
+  - service: switch.turn_on
+    data:
+      entity_id: 
+        - switch.porch_doorbell_chime

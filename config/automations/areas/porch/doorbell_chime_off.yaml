@@ -1,9 +1,7 @@
 ---
-# Turns off the doorbell chime in the evening
-# and at the afternoon. At these times, we
-# have kids that sleep.
-#
+description: Turns the doorbell chime of when kids are sleeping
 alias: porch_doorbell_chime_off
+id: e7313dd1-3776-4740-9888-d7f15cf33158
 trigger:
   - platform: template
     value_template: >-
@@ -12,13 +10,8 @@ trigger:
         ==
         states('sensor.time')+":00"
       }}
-  - platform: template
-    value_template: >-
-      {{
-        states('input_datetime.person_flynn_nap_start')
-        ==
-        states('sensor.time')+":00"
-      }}
 action:
-  service: switch.turn_off
-  entity_id: switch.porch_doorbell
+  - service: switch.turn_off
+    data:
+      entity_id: 
+        - switch.porch_doorbell_chime
