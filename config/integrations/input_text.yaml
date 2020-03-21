@@ -1,0 +1,14 @@
+---
+# The input text integration allows the user to define values that can be
+# controlled via the frontend and can be used within conditions of
+# automation.
+#
+# Changes to the value stored in the text box generate state events.
+# These state events can be utilized as automation triggers as well.
+#
+# https://www.home-assistant.io/integrations/input_text/
+#
+# I don't store my input text entities in my YAML configuration,
+# instead I manage them via the Home Assistant frontend.
+#
+input_text: ~

@@ -1,0 +1,14 @@
+---
+# The input_select integration allows the user to define a list of values that
+# can be selected via the frontend and can be used within conditions of
+# automation. 
+#
+# When a user selects a new item, a state transition event is generated.
+# This state event can be used in an automation trigger.
+#
+# https://www.home-assistant.io/integrations/input_select/
+#
+# I don't store my input select entities in my YAML configuration,
+# instead I manage them via the Home Assistant frontend.
+#
+input_select: ~
