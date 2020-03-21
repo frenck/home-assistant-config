@@ -3,4 +3,9 @@
 #
 # https://www.home-assistant.io/integrations/zone/
 #
-zone: !include_dir_list ../entities/zones
+# I don't store my zones in my YAML configuration,
+# instead I manage them via the Home Assistant frontend.
+#
+# Reasoning: Removes the need for me to juggle secrets.
+#
+zone: ~
