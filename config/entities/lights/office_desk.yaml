@@ -1,12 +1,6 @@
 ---
-# My desk light is connected using a z-wave wall switch.
-# This makes the device a "switch" withing Home Assistant and therefore
-# it shows up as a switch in HomeKit and Google Assistant as well.
-#
-# This little light switch solves that issue.
-#
-# https://www.home-assistant.io/integrations/light.switch/
-#
-platform: switch
+platform: group
 name: office_desk
-entity_id: switch.office_desk
+entities:
+  - light.office_deks_right
+  - light.office_desk_left
