@@ -13,5 +13,5 @@ trigger:
 action:
   - service: switch.turn_off
     data:
-      entity_id: 
+      entity_id:
         - switch.porch_doorbell_chime
