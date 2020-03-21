@@ -4,4 +4,9 @@
 #
 # https://www.home-assistant.io/integrations/person/
 #
-person: !include_dir_list ../entities/persons
+# I don't store persons in my YAML configuration,
+# instead I manage them via the Home Assistant frontend.
+#
+# Reasoning: Removes the need for me to juggle secrets.
+#
+person: ~

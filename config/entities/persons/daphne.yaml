@@ -1,6 +1,0 @@
----
-name: Daphne
-id: daphne
-user_id: !secret user_id_daphne
-device_trackers:
-  - device_tracker.daphne_iphone
