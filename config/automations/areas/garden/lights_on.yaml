@@ -1,7 +1,7 @@
 ---
-id: 5dc7b352-589a-4ac1-b59a-009270699576
-alias: garden_lights_on
 description: Turn garden lights on
+alias: garden_lights_on
+id: 5dc7b352-589a-4ac1-b59a-009270699576
 trigger:
   - platform: homeassistant
     event: start
@@ -32,12 +32,13 @@ condition:
     below: 1.0
 action:
   - service: switch.turn_on
-    entity_id:
-      - switch.circadian_lighting_garden
-  - service: light.turn_on
-    entity_id:
-      - light.garden_wall
     data:
+      entity_id:
+        - switch.circadian_lighting_garden
+  - service: light.turn_on
+    data:
+      entity_id:
+        - light.garden_wall
       transition: 5
     data_template:
       kelvin: >-

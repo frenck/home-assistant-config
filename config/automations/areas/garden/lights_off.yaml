@@ -1,7 +1,7 @@
 ---
-id: c9c64055-42cd-41c7-99f6-dbce7e4f915d
-alias: garden_lights_off
 description: Turn garden lights off
+alias: garden_lights_off
+id: c9c64055-42cd-41c7-99f6-dbce7e4f915d
 trigger:
   - platform: homeassistant
     event: start
@@ -28,10 +28,11 @@ condition:
         above: 1.0
 action:
   - service: switch.turn_off
-    entity_id:
-      - switch.circadian_lighting_garden
-  - service: light.turn_off
-    entity_id:
-      - light.garden_wall
     data:
+      entity_id:
+        - switch.circadian_lighting_garden
+  - service: light.turn_off
+    data:
+      entity_id:
+        - light.garden_wall
       transition: 5
