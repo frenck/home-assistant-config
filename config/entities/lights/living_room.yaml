@@ -8,7 +8,8 @@
 platform: group
 name: living_room
 entities:
-  - light.living_room_bar
+  - light.living_room_bartop
+  - light.living_room_dining_table
   - light.living_room_spotlight
   - light.living_room_television
   - light.living_room_window_1
