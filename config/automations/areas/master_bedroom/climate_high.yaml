@@ -1,0 +1,27 @@
+---
+# Turns up the bedroom heating at 9PM, to ensure we have a nice temperature
+# in our bedroom when we go to sleep. It will probably never reach this
+# temperature, cause we have a single pump heating system.
+#
+description: Turn on the heating in the master bedroom
+alias: bedroom_master_climate_high
+id: 379c50b4-a782-4464-a748-1c79592c4e3e
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: zwave.network_complete
+  - platform: event
+    event_type: zwave.network_ready
+  - platform: time
+    at: "21:00:00"
+condition:
+  - condition: time
+    after: "21:00:00"
+    before: "07:00:00"
+action:
+  - service: climate.set_temperature
+    data:
+      entity_id:
+        - climate.bedroom_master
+      temperature: 19
