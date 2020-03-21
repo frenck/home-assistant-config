@@ -5,10 +5,19 @@
 # It is turned on if the kitchen ceiling light is on and
 # at a minimum brightness level. Turned off otherwise.
 #
+description: Turn off kitchen cupboard lights based on ceiling light state
 alias: kitchen_ceiling_cupboard
+id: 52e25b71-574b-40ae-b40c-69d9428f4dbe
 trigger:
-  platform: state
-  entity_id: light.kitchen_ceiling
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: zwave.network_complete
+  - platform: event
+    event_type: zwave.network_ready
+  - platform: state
+    entity_id:
+      - light.kitchen_ceiling
 action:
   service_template: >-
     {%
@@ -21,4 +30,6 @@ action:
     {% else %}
       switch.turn_off
     {% endif %}
-  entity_id: switch.kitchen_cupboard
+  data:
+    entity_id:
+      - switch.kitchen_cupboard
