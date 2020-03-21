@@ -30,10 +30,11 @@ condition:
       minutes: 10
 action:
   - service: fan.turn_on
-    entity_id:
-      - fan.attic_ventilation
-  - service: fan.set_speed
-    entity_id:
-      - fan.attic_ventilation
     data:
+      entity_id:
+        - fan.attic_ventilation
+  - service: fan.set_speed
+    data:
+      entity_id:
+        - fan.attic_ventilation
       speed: medium

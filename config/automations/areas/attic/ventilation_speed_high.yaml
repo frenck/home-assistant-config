@@ -33,7 +33,7 @@ action:
     entity_id:
       - fan.attic_ventilation
   - service: fan.set_speed
-    entity_id:
-      - fan.attic_ventilation
     data:
+      entity_id:
+        - fan.attic_ventilation
       speed: high
