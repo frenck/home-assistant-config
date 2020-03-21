@@ -1,0 +1,30 @@
+---
+description: Turn the restroom lights on when someone enters
+alias: restroom_lights_on
+id: 091756d3-b162-4d75-bc54-9b9fa1eb3ce3
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: zwave.network_complete
+  - platform: event
+    event_type: zwave.network_ready
+  - platform: state
+    entity_id:
+      - alarm_control_panel.home_alarm
+      - binary_sensor.restroom_motion
+      - light.restroom
+condition:
+  - condition: state
+    entity_id: binary_sensor.restroom_motion
+    state: 'on'
+  - condition: state
+    entity_id: light.restroom
+    state: 'off'
+action:
+  service: light.turn_on
+  data:
+    entity_id:
+      - light.restroom
+    transition: 2
+    brightness: 50

@@ -1,0 +1,44 @@
+---
+description: Turn the restroom lights off when no motion
+alias: restroom_lights_off
+id: 372ffe5b-271e-421c-b8a2-2eb9f4b2ebbb
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: zwave.network_complete
+  - platform: event
+    event_type: zwave.network_ready
+  - platform: state
+    entity_id:
+      - alarm_control_panel.home_alarm
+      - light.restroom
+  - platform: state
+    entity_id:
+      - binary_sensor.restroom_motion
+    to: 'off'
+    for:
+      minutes: 1
+condition:
+  - condition: state
+    entity_id: light.restroom
+    state: 'on'
+  - condition: or
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_away
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_home
+      - condition: state
+        entity_id: binary_sensor.restroom_motion
+        state: 'off'
+        for:
+          minutes: 1
+action:
+  service: light.turn_off
+  data:
+    entity_id:
+      - light.restroom
+    transition: 5
