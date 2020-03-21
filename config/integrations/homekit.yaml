@@ -5,9 +5,9 @@
 # https://www.home-assistant.io/integrations/homekit
 #
 homekit:
-  # Stop the HomeKit Server from starting automatically after the Home Assistant
-  # Core Setup is done. I have a Z-Wave network, which we need to wait for
-  # as well.
+  # Start the HomeKit Server automatically.
+  # I have a Z-Wave network, but since Home Assistant restores entities,
+  # we don't have to wait for it (like we did in the past).
   auto_start: true
 
   # The default: "Home Assistant Bridge", I like it to be just "Home Assistant"
