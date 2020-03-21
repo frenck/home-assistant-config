@@ -8,7 +8,7 @@ homekit:
   # Stop the HomeKit Server from starting automatically after the Home Assistant
   # Core Setup is done. I have a Z-Wave network, which we need to wait for
   # as well.
-  auto_start: false
+  auto_start: true
 
   # The default: "Home Assistant Bridge", I like it to be just "Home Assistant"
   name: Home Assistant
@@ -20,15 +20,21 @@ homekit:
   # Filters for entities to be included / excluded from HomeKit.
   filter:
     include_entities:
+      - climate.bedroom_flynn
+      - climate.bedroom_lilly
+      - climate.bedroom_master
       - climate.living_room
-      - light.living_room_bar
-      - climate.bedroom_master_thermostat
-      # - light.bedroom_master_bedside
-      # - light.bedroom_master_ceiling
+      - fan.attic_ventilation
+      - light.bathroom
+      - light.bedroom_lilly_bedside
+      - light.bedroom_master_ceiling
+      - light.garden_wall
       - light.kitchen_ceiling
       - light.kitchen_cupboard
-      - light.office_window
-      - light.office_desk
-      - light.livingroom_spotlight
+      - light.living_room_bartop
+      - light.living_room_spotlight
       - light.living_room_television
       - light.living_room_window
+      - light.office_desk
+      - light.office_window
+      - vacuum.living_room
