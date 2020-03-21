@@ -1,16 +1,24 @@
 ---
-# This automation resets the Vacuum fan
-# speed when it Docks. This to have it on
-# a general good setting when triggering it
-# manually (e.g., using Google Home).
+# This automation resets the Vacuum fan speed when it Docks. This to have it on
+# a general good setting when triggering it manually (e.g., using Google Home).
 #
+description: Reset vacuum fan speed when it gets docked
 alias: living_room_vacuum_docked
+id: 2ff12251-3105-4022-951c-44de39ecf8cd
 trigger:
-  platform: state
-  entity_id: vacuum.living_room
-  to: 'docked'
-action:
-  service: vacuum.set_fan_speed
-  data:
+  - platform: homeassistant
+    event: start
+  - platform: state
+    entity_id:
+      - vacuum.living_room
+    to: 'docked'
+condition:
+  - condition: state
     entity_id: vacuum.living_room
-    fan_speed: 'Balanced'
+    state: 'docked'
+action:
+  - service: vacuum.set_fan_speed
+    data:
+      entity_id:
+        - vacuum.living_room
+      fan_speed: 'Balanced'

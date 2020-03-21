@@ -1,0 +1,33 @@
+---
+# When the alarm gets armed away, we've left the home.
+#
+# Run the vacuum cleaner if it has not ran the past 4 hours
+#
+description: Start vacuum when we are away
+alias: living_room_vacuum
+id: 80ce1910-b205-4374-89dc-d0444dfc637d
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: state
+    entity_id:
+      - alarm_control_panel.home_alarm
+condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: 'armed_away'
+  - condition: state
+    entity_id: vacuum.living_room
+    state: 'docked'
+    for:
+      hours: 4
+action:
+  - service: vacuum.start
+    data:
+      entity_id:
+        - vacuum.living_room
+  - service: vacuum.set_fan_speed
+    data:
+      entity_id:
+        - vacuum.living_room
+      fan_speed: 'Max'

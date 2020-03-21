@@ -1,0 +1,34 @@
+---
+description: Turn lights off in our living room
+alias: living_room_lights_off
+id: d2cad90f-cc2f-43cd-aeea-b2450644e57d
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: state
+    entity_id:
+      - alarm_control_panel.home_alarm
+      - sun.sun
+condition:
+  - condition: state
+    entity_id: lights.living_room
+    state: 'on'
+  - condition: or
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_away
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_home
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: >-
+          {{ state_attr('sun.sun', 'elevation') }}
+        above: 1.0
+action:
+  - service: light.turn_off
+    data:
+      entity_id:
+        - light.living_room
+      transition: 5
