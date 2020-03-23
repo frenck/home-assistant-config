@@ -1,8 +1,0 @@
----
-path: outside
-title: Buiten
-icon: mdi:nature-people
-cards:
-  - type: custom:weather-card
-    entity: weather.dark_sky
-    icons: "/community_plugin/weather-card/icons/"
