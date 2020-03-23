@@ -5,14 +5,10 @@
 # I like to specify (whitelist) each entity to store,
 # since that keeps my InfluxDB clean and small.
 #
-- binary_sensor.attic_boiler_burner
-- binary_sensor.attic_boiler_preheating
+- fan.attic_ventilation
 - sensor.attic_boiler_current
 - sensor.attic_boiler_daily_energy
-- sensor.attic_boiler_modulation_level
 - sensor.attic_boiler_power
-- sensor.attic_boiler_uptime
-- sensor.attic_boiler_voltage
 - sensor.attic_boiler_wifi_signal
-- sensor.attic_ventilation_uptime
 - sensor.attic_ventilation_wifi_signal
+- switch.attic_ventilation_manual_mode

@@ -10,7 +10,7 @@
 influxdb:
 
   # This is the Hass.io add-on slug, allowing a direct connection to the addon.
-  host: a0d7b954-influxdb
+  host: df843657-influxdb
   port: 8086
 
   # The database name to store all the metrics in.
@@ -25,10 +25,9 @@ influxdb:
 
   # The list of attribute names which should be reported as tags
   # and not fields to InfluxDB.
-  # I've added `device_class` tag and the Z-Wave `node_id`.
+  # I've added `device_class` tag.
   tags_attributes:
-    - "device_class"
-    - "node_id"
+    - device_class
 
   # I like to specify (whitelist) each thing I'd like to put
   # into InfluxDB, to keep the database as clean as possible.

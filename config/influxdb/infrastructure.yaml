@@ -12,6 +12,7 @@
 - sensor.infrastructure_adguard_parental_control_blocked
 - sensor.infrastructure_adguard_rules_count
 - sensor.infrastructure_adguard_safe_browsing_blocked
+- sensor.network_adguard_safe_searches_enforced
 - sensor.speedtest_download
 - sensor.speedtest_ping
 - sensor.speedtest_upload

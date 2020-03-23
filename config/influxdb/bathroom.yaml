@@ -5,6 +5,6 @@
 # I like to specify (whitelist) each entity to store,
 # since that keeps my InfluxDB clean and small.
 #
-- binary_sensor.bathroom_hot_tap_water
 - sensor.bathroom_humidity
+- sensor.bathroom_multi_sensor_battery_level
 - sensor.bathroom_temperature
