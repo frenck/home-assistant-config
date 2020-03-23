@@ -5,27 +5,6 @@
 # https://www.home-assistant.io/integrations/http/
 #
 http:
-  # Contains the URL that Home Assistant is available on the internet.
-  base_url: !secret http_base_url
-
-  # Lets Home Assistant only listen on a specific IP/host.
-  # THIS SHOULD NOT BE USED ON HASS.IO!
-  #
-  # server_host: !secret http_server_host
-
-  # Sets a port number to use for Home Assistant to use (default 8123).
-  server_port: !secret http_server_port
-
-  # Home Assistant does not use SSL, I use a reverse proxy to handle that.
-  # The advantage of this method is that this allows me to access HA
-  # without SSL on my internal network, thus avoiding SSL warning.
-  #
-  # ssl_certificate: !secret http_ssl_certificate
-  # ssl_key: !secret http_ssl_key
-
-  # A list of origin domain names to allow CORS requests from.
-  cors_allowed_origins: !secret http_cors_allowed_origins
-
   # Enable parsing of the X-Forwarded-For header, passing on the client’s
   # correct IP address, since I'm using a proxied setup.
   use_x_forwarded_for: true
