@@ -8,6 +8,6 @@
 # https://github.com/claytonjn/hass-circadian_lighting
 #
 platform: circadian_lighting
-name: hall_circadian_lighting
+name: hall
 lights_ct:
   - light.hall_ceiling
