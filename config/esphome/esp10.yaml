@@ -41,8 +41,6 @@ time:
 
 # Text sensors with general information
 text_sensor:
-  - platform: version
-    name: esphome_esp10_version
   - platform: wifi_info
     ip_address:
       name: esphome_esp10_ip
@@ -52,13 +50,10 @@ text_sensor:
       name: esphome_esp10_bssid
 
 sensor:
-  # Uptime sensor
-  - platform: uptime
-    name: esphome_esp10_uptime
   # WiFi Signal sensor
   - platform: wifi_signal
     name: esphome_esp10_wifi_signal
-    update_interval: 10s
+    update_interval: 60s
   # Power sensor
   - platform: hlw8012
     sel_pin:

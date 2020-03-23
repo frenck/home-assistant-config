@@ -51,8 +51,6 @@ time:
 
 # Text Sensor with general information
 text_sensor:
-  - platform: version
-    name: esphome_esp05_version
   - platform: wifi_info
     ip_address:
       name: esphome_esp05_ip
@@ -62,13 +60,10 @@ text_sensor:
       name: esphome_esp05_bssid
 
 sensor:
-  # Uptime sensor
-  - platform: uptime
-    name: esphome_esp05_uptime
   # WiFi Signal sensor
   - platform: wifi_signal
     name: esphome_esp05_wifi_signal
-    update_interval: 10s
+    update_interval: 60s
   - platform: cse7766
     update_interval: 5s
     # Current sensor
@@ -135,4 +130,3 @@ status_led:
   pin:
     number: GPIO13
     inverted: true
-

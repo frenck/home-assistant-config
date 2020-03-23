@@ -37,9 +37,7 @@ web_server:
 sensor:
   - platform: wifi_signal
     name: esphome_esp04_wifi_signal
-    update_interval: 10s
-  - platform: uptime
-    name: esphome_esp04_uptime
+    update_interval: 60s
 
 text_sensor:
   - platform: version

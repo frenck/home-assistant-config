@@ -50,8 +50,6 @@ time:
 
 # Text sensors with general information
 text_sensor:
-  - platform: version
-    name: esphome_esp06_version
   - platform: wifi_info
     ip_address:
       name: esphome_esp06_ip
@@ -61,13 +59,10 @@ text_sensor:
       name: esphome_esp06_bssid
 
 sensor:
-  # Uptime sensor
-  - platform: uptime
-    name: esphome_esp06_uptime
   # WiFi Signal sensor
   - platform: wifi_signal
     name: esphome_esp06_wifi_signal
-    update_interval: 10s
+    update_interval: 60s
   - platform: cse7766
     update_interval: 5s
     # Current sensor

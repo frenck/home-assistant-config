@@ -46,13 +46,7 @@ web_server:
 sensor:
   - platform: wifi_signal
     name: esphome_esp03_wifi_signal
-    update_interval: 10s
-  - platform: uptime
-    name: esphome_esp03_uptime
-
-text_sensor:
-  - platform: version
-    name: esphome_esp03_esphome_version
+    update_interval: 60s
 
 binary_sensor:
   # This is the button on the SonOff Dual
