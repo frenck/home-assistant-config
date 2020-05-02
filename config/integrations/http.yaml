@@ -5,6 +5,9 @@
 # https://www.home-assistant.io/integrations/http/
 #
 http:
+  # Contains the URL that Home Assistant is available on the internet.
+  base_url: !secret http_base_url
+
   # Enable parsing of the X-Forwarded-For header, passing on the client’s
   # correct IP address, since I'm using a proxied setup.
   use_x_forwarded_for: true
