@@ -5,8 +5,8 @@
 # It controls our central ventilation system.
 #
 # It has 3 power inputs:
-# 1: Should always get 230v (base voltag): Low speed/silent mode.
-# 2: 230v input: Medium speed.
+# 1: Should always get 230v (base voltag): Low speed/silent/off mode.
+# 2: 230v input: Low speed.
 # 3: 230v input: High speed.
 #
 # 1 is always on, 2 and 3 depends on the speed.
@@ -62,16 +62,16 @@ binary_sensor:
     on_press:
       - lambda: |-
           if (id(switch_manual_mode).state) {
-            if (id(switch_speed_low).state) {
-              id(switch_speed_medium).turn_on();
-            } else if (id(switch_speed_medium).state) {
+            if (id(switch_speed_off).state) {
+              id(switch_speed_low).turn_on();
+            } else if (id(switch_speed_low).state) {
               id(switch_speed_high).turn_on();
             } else {
               id(switch_manual_mode).turn_off();
             }
           } else {
             id(switch_manual_mode).turn_on();
-            id(switch_speed_low).turn_on();
+            id(switch_speed_off).turn_on();
           }
 
 switch:
@@ -104,6 +104,26 @@ switch:
   # Exposed switch, shows switch state for low speed
   # Will ignore changes when ventilation is in manual mode
   - platform: template
+    name: attic_ventilation_speed_off
+    restore_state: false
+    turn_on_action:
+      if:
+        condition:
+          switch.is_off: switch_manual_mode
+        then:
+          - switch.turn_on: switch_speed_off
+    turn_off_action:
+      if:
+        condition:
+          switch.is_off: switch_manual_mode
+        then:
+          - switch.turn_on: switch_speed_off
+    lambda: |-
+      return id(switch_speed_off).state;
+
+  # Exposed switch, shows switch state for medium speed
+  # Will ignore changes when ventilation is in manual mode
+  - platform: template
     name: attic_ventilation_speed_low
     restore_state: false
     turn_on_action:
@@ -117,29 +137,9 @@ switch:
         condition:
           switch.is_off: switch_manual_mode
         then:
-          - switch.turn_on: switch_speed_low
+          - switch.turn_on: switch_speed_off
     lambda: |-
       return id(switch_speed_low).state;
-
-  # Exposed switch, shows switch state for medium speed
-  # Will ignore changes when ventilation is in manual mode
-  - platform: template
-    name: attic_ventilation_speed_medium
-    restore_state: false
-    turn_on_action:
-      if:
-        condition:
-          switch.is_off: switch_manual_mode
-        then:
-          - switch.turn_on: switch_speed_medium
-    turn_off_action:
-      if:
-        condition:
-          switch.is_off: switch_manual_mode
-        then:
-          - switch.turn_on: switch_speed_low
-    lambda: |-
-      return id(switch_speed_medium).state;
 
   # Exposed switch, shows switch state for high speed
   # Will ignore changes when ventilation is in manual mode
@@ -157,14 +157,14 @@ switch:
         condition:
           switch.is_off: switch_manual_mode
         then:
-          - switch.turn_on: switch_speed_medium
+          - switch.turn_on: switch_speed_low
     lambda: |-
       return id(switch_speed_high).state;
 
   # Internal switch, for switching ventilation to low speed.
   # Uses interlocking, to prevent relay 1 & 2 to be active at the same time.
   - platform: template
-    id: switch_speed_low
+    id: switch_speed_off
     restore_state: false
     turn_on_action:
       - switch.turn_off: switch_relay1
@@ -179,12 +179,12 @@ switch:
   # low speed when turned off.
   # Uses interlocking, to prevent relay 1 & 2 to be active at the same time.
   - platform: template
-    id: switch_speed_medium
+    id: switch_speed_low
     restore_state: false
     turn_on_action:
       - switch.turn_on: switch_relay1
     turn_off_action:
-      - switch.turn_on: switch_speed_low
+      - switch.turn_on: switch_speed_off
     lambda: |-
       return id(switch_relay1).state && !id(switch_relay2).state;
 
@@ -197,7 +197,7 @@ switch:
     turn_on_action:
       - switch.turn_on: switch_relay2
     turn_off_action:
-      - switch.turn_on: switch_speed_medium
+      - switch.turn_on: switch_speed_low
     lambda: |-
       return !id(switch_relay1).state && id(switch_relay2).state;
 

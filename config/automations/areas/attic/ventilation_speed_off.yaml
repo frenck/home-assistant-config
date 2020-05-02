@@ -1,7 +1,7 @@
 ---
 description: Controls the speed of the central ventilation system
-alias: attic_ventilation_speed_medium
-id: 78d0de69-fa4e-4c59-8440-31db1b708297
+alias: attic_ventilation_speed_off
+id: ca58e2f9-4803-4b23-8e46-73ce8301395e
 trigger:
   - platform: homeassistant
     event: start
@@ -16,25 +16,27 @@ trigger:
     for:
       minutes: 10
 condition:
+  - condition: numeric_state
+    entity_id: sensor.bathroom_humidity
+    below: 70
   - condition: state
     entity_id: switch.attic_ventilation_manual_mode
     state: 'off'
-  - condition: numeric_state
-    entity_id: sensor.bathroom_humidity
-    above: 70
-    below: 80
-  - condition: state
-    entity_id: light.restroom
-    state: 'off'
-    for:
-      minutes: 10
+  - condition: or
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_away
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_home
+      - condition: state
+        entity_id: light.restroom
+        state: 'off'
+        for:
+          minutes: 1
 action:
-  - service: fan.turn_on
+  - service: fan.turn_off
     data:
       entity_id:
         - fan.attic_ventilation
-  - service: fan.set_speed
-    data:
-      entity_id:
-        - fan.attic_ventilation
-      speed: medium
