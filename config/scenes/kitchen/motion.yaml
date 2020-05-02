@@ -1,0 +1,14 @@
+---
+# Scene to trigger when you walk into the kitchen
+# during the evening. It is just enough light
+# to get something to drink or get a snack.
+#
+name: Kitchen - Motion
+id: 0289c835-75a6-4b5b-8a9f-ac4dfef9d321
+entities:
+  light.kitchen_ceiling:
+    brightness: 100
+    color_temp: 400
+    state: 'on'
+  light.kitchen_cupboard:
+    state: 'off'
