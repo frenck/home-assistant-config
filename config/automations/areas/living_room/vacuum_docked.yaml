@@ -21,4 +21,4 @@ action:
     data:
       entity_id:
         - vacuum.living_room
-      fan_speed: 'Balanced'
+      fan_speed: 'Standard'
