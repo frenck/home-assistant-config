@@ -3,8 +3,6 @@ description: Turn down heating in Lilly's bedroom
 alias: bedroom_lilly_climate_low
 id: 04aeaac8-0f0e-4638-8dde-a2568b676d20
 trigger:
-  - platform: homeassistant
-    event: start
   - platform: event
     event_type: zwave.network_complete
   - platform: event
@@ -16,8 +14,8 @@ condition:
     after: "07:00:00"
     before: "17:30:00"
 action:
-  service: climate.set_temperature
-  data:
-    entity_id:
-      - climate.bedroom_lilly
-    temperature: 17.0
+  - service: climate.set_temperature
+    data:
+      entity_id:
+        - climate.bedroom_lilly
+      temperature: 17.0

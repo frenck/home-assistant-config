@@ -10,8 +10,6 @@ description: Turn off/on heating when window is opened/closed.
 alias: bedroom_master_window_climate
 id: b1a768e3-69a0-482c-a2e2-a7535e80ad55
 trigger:
-  - platform: homeassistant
-    event: start
   - platform: event
     event_type: zwave.network_complete
   - platform: event

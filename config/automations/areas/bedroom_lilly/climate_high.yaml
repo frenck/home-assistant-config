@@ -3,8 +3,6 @@ description: Turn up heating in Lilly's bedroom
 alias: bedroom_lilly_climate_high
 id: 615c9141-1b3a-4345-b8f0-96b4af1393c7
 trigger:
-  - platform: homeassistant
-    event: start
   - platform: event
     event_type: zwave.network_complete
   - platform: event

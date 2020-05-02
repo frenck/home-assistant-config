@@ -9,8 +9,6 @@ description: Turn down the heating in the master bedroom
 alias: bedroom_master_climate_low
 id: 13c25f18-9328-4065-8ec6-215eb5462e33
 trigger:
-  - platform: homeassistant
-    event: start
   - platform: event
     event_type: zwave.network_complete
   - platform: event
