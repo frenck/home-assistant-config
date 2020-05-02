@@ -1,0 +1,27 @@
+---
+# The logger integration lets you define the level of logging activities
+# in Home Assistant.
+#
+# I use this to reduce error messages for specific things,
+# so I can focus on log messages that matter to me.
+#
+logger:
+  default: info
+  logs:
+    # Just to freaking chatty
+    zigpy_deconz.zigbee.application: error
+
+    # Currently, throws warnings about:
+    # SwitchDevice is deprecated use SwitchEntity
+    # Not interested in that for even a tiny bit.
+    homeassistant.components.switch: error
+
+    # Honestly, Z-Wave + Home Assistant: not so good.
+    # Hopefully it will be better when this all gets replaced
+    # Until that time, I'm not interested in warnings.
+    homeassistant.components.zwave: error
+
+    # I don't want to see warnings about custom integrations
+    # deprecations and other stuff.
+    # Please note! This is bad practice!
+    homeassistant.loader: error
