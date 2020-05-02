@@ -10,6 +10,4 @@ name: office
 entities:
   - light.office_desk_right
   - light.office_desk_left
-  - light.office_window_1
-  - light.office_window_2
-  - light.office_window_3
+  - light.office_window

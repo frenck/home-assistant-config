@@ -12,7 +12,4 @@ entities:
   - light.living_room_dining_table
   - light.living_room_spotlight
   - light.living_room_television
-  - light.living_room_window_1
-  - light.living_room_window_2
-  - light.living_room_window_3
-  - light.living_room_window_4
+  - light.living_room_window
