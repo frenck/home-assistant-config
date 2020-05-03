@@ -21,13 +21,13 @@ fans:
             {% if speed == 'high' %}
               switch.attic_ventilation_speed_high
             {% else %}
-              switch.attic_ventilation_speed_medium
+              switch.attic_ventilation_speed_low
             {% endif %}
     turn_off:
       - service: switch.turn_on
         entity_id: switch.attic_ventilation_speed_low
     speed_template: >-
-        {% if is_state('switch.attic_ventilation_speed_medium', 'on') %}
+        {% if is_state('switch.attic_ventilation_speed_low', 'on') %}
           low
         {% elif is_state('switch.attic_ventilation_speed_high', 'on') %}
           high
@@ -44,7 +44,7 @@ fans:
         data_template:
           entity_id: >-
             {% if speed == 'low' %}
-              switch.attic_ventilation_speed_medium
+              switch.attic_ventilation_speed_low
             {% elif speed == 'high' %}
               switch.attic_ventilation_speed_high
             {% else %}
