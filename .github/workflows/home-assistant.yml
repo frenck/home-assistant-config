@@ -95,5 +95,6 @@ jobs:
       - name: ESPHome Check
         uses: "docker://esphome/esphome:latest"
         with:
+          entrypoint: ""
           args: |
             for file in $(find ./config/esphome -type f -name "*.yaml" -not -name "secrets.yaml"); do esphome $file config; done
