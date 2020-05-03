@@ -79,3 +79,28 @@ jobs:
         uses: "docker://homeassistant/home-assistant:dev"
         with:
           args: python -m homeassistant --config ./config/ --script check_config --info all
+  esphome_stable:
+    runs-on: ubuntu-latest
+    needs: [yamllint, remarklint]
+    steps:
+      - name: Getting your configuration from GitHub
+        uses: actions/checkout@v1
+      - name: Copy stub files into configuration folder
+        run: cp -R ./.stubs/* ./config/esphome/
+      - name: Home Assistant Version
+        uses: "docker://esphome/esphome:latest"
+        with:
+          args: |
+            esphome dummy.yaml version
+      - name: Home Assistant Check
+        uses: "docker://esphome/esphome:latest"
+        with:
+          args: |
+            for file in $(find \
+              ./config/esphome \
+              -type f \
+              -name "*.yaml"\
+              -not -name "secrets.yaml"
+              ); do
+              esphome $file config
+            done
