@@ -9,7 +9,7 @@ platform: template
 fans:
   attic_ventilation:
     value_template: >-
-      {% if is_state('switch.attic_ventilation_speed_low', 'off') %}
+      {% if is_state('switch.attic_ventilation_speed_off', 'off') %}
         on
       {% else %}
         off
