@@ -87,20 +87,13 @@ jobs:
         uses: actions/checkout@v1
       - name: Copy stub files into configuration folder
         run: cp -R ./.stubs/* ./config/esphome/
-      - name: Home Assistant Version
+      - name: ESPHome Version
         uses: "docker://esphome/esphome:latest"
         with:
           args: |
             esphome dummy.yaml version
-      - name: Home Assistant Check
+      - name: ESPHome Check
         uses: "docker://esphome/esphome:latest"
         with:
           args: |
-            for file in $(find \
-              ./config/esphome \
-              -type f \
-              -name "*.yaml"\
-              -not -name "secrets.yaml"
-              ); do
-              esphome $file config
-            done
+            for file in $(find ./config/esphome -type f -name "*.yaml" -not -name "secrets.yaml"); do esphome $file config; done
