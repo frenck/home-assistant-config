@@ -6,7 +6,7 @@
 # so I can focus on log messages that matter to me.
 #
 logger:
-  default: info
+  default: warning
   logs:
     # Just to freaking chatty
     zigpy_deconz.zigbee.application: error
