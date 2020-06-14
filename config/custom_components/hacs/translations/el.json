@@ -15,7 +15,7 @@
         "manage": "διαχειρίζονται",
         "netdaemon": "NetDaemon",
         "netdaemon_apps": "NetDaemon Apps",
-        "plugin": "Πρόσθετο",
+        "plugin": "Lovelace",
         "plugins": "Πρόσθετα",
         "python_script": "Πρόγραμμα Python",
         "python_scripts": "Προγράμματα Python",
@@ -142,9 +142,11 @@
         "open_repository": "Ανοίξτε το αποθετήριο",
         "reload_data": "Επαναφόρτωση δεδομένων",
         "reload_window": "Επαναφόρτωση του παραθύρου",
+        "repository_configuration": "Διαμόρφωση αποθετηρίου",
         "save": "Αποθήκευση",
         "table": "Πίνακας",
         "table_view": "Προβολή πίνακα",
+        "unhide": "αποκρύψω",
         "upgrade_all": "Αναβάθμιση όλων"
     },
     "store": {

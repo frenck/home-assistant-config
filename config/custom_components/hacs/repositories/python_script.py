@@ -17,9 +17,14 @@ class HacsPythonScript(HacsRepository):
         self.data.full_name = full_name
         self.data.category = "python_script"
         self.content.path.remote = "python_scripts"
-        self.content.path.local = f"{self.hacs.system.config_path}/python_scripts"
+        self.content.path.local = self.localpath
         self.content.single = True
         self.logger = Logger(f"hacs.repository.{self.data.category}.{full_name}")
+
+    @property
+    def localpath(self):
+        """Return localpath."""
+        return f"{self.hacs.system.config_path}/python_scripts"
 
     async def validate_repository(self):
         """Validate."""
@@ -49,26 +54,14 @@ class HacsPythonScript(HacsRepository):
                     self.logger.error(error)
         return self.validate.success
 
-    async def registration(self, ref=None):
+    async def async_post_registration(self):
         """Registration."""
-        if ref is not None:
-            self.ref = ref
-            self.force_branch = True
-        if not await self.validate_repository():
-            return False
-
-        # Run common registration steps.
-        await self.common_registration()
-
         # Set name
         find_file_name(self)
 
-    async def update_repository(self):  # lgtm[py/similar-function]
+    async def update_repository(self, ignore_issues=False):
         """Update."""
-        if self.hacs.github.ratelimits.remaining == 0:
-            return
-        # Run common update steps.
-        await self.common_update()
+        await self.common_update(ignore_issues)
 
         # Get python_script objects.
         if self.data.content_in_root:

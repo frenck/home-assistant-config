@@ -2,10 +2,9 @@
 import json
 from integrationhelper import Logger
 
-from .repository import HacsRepository
-from ..hacsbase.exceptions import HacsException
-
+from custom_components.hacs.hacsbase.exceptions import HacsException
 from custom_components.hacs.helpers.information import find_file_name
+from custom_components.hacs.repositories.repository import HacsRepository
 
 
 class HacsPlugin(HacsRepository):
@@ -18,10 +17,13 @@ class HacsPlugin(HacsRepository):
         self.data.file_name = None
         self.data.category = "plugin"
         self.information.javascript_type = None
-        self.content.path.local = (
-            f"{self.hacs.system.config_path}/www/community/{full_name.split('/')[-1]}"
-        )
+        self.content.path.local = self.localpath
         self.logger = Logger(f"hacs.repository.{self.data.category}.{full_name}")
+
+    @property
+    def localpath(self):
+        """Return localpath."""
+        return f"{self.hacs.system.config_path}/www/community/{self.data.full_name.split('/')[-1]}"
 
     async def validate_repository(self):
         """Validate."""
@@ -46,32 +48,17 @@ class HacsPlugin(HacsRepository):
                     self.logger.error(error)
         return self.validate.success
 
-    async def registration(self, ref=None):
-        """Registration."""
-        if ref is not None:
-            self.ref = ref
-            self.force_branch = True
-        if not await self.validate_repository():
-            return False
-
-        # Run common registration steps.
-        await self.common_registration()
-
-    async def update_repository(self):
+    async def update_repository(self, ignore_issues=False):
         """Update."""
-        if self.hacs.github.ratelimits.remaining == 0:
-            return
-        # Run common update steps.
-        await self.common_update()
+        await self.common_update(ignore_issues)
 
         # Get plugin objects.
         find_file_name(self)
 
-        # Get JS type
-        await self.parse_readme_for_jstype()
-
         if self.content.path.remote is None:
-            self.validate.errors.append("Repostitory structure not compliant")
+            self.validate.errors.append(
+                f"Repostitory structure for {self.ref.replace('tags/','')} is not compliant"
+            )
 
         if self.content.path.remote == "release":
             self.content.single = True
@@ -86,25 +73,3 @@ class HacsPlugin(HacsRepository):
                 self.data.authors = package["author"]
         except Exception:  # pylint: disable=broad-except
             pass
-
-    async def parse_readme_for_jstype(self):
-        """Parse the readme looking for js type."""
-        readme = None
-        readme_files = ["readme", "readme.md"]
-        root = await self.repository_object.get_contents("")
-        for file in root:
-            if file.name.lower() in readme_files:
-                readme = await self.repository_object.get_contents(file.name)
-                break
-
-        if readme is None:
-            return
-
-        readme = readme.content
-        for line in readme.splitlines():
-            if "type: module" in line:
-                self.information.javascript_type = "module"
-                break
-            elif "type: js" in line:
-                self.information.javascript_type = "js"
-                break

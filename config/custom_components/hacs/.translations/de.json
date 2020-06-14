@@ -3,25 +3,35 @@
         "about": "Über",
         "appdaemon": "AppDaemon",
         "appdaemon_apps": "AppDaemon Apps",
+        "appdaemon_plural": "AppDaemon Apps",
         "background_task": "Hintergrundprozess läuft. Diese Seite lädt neu, sobald dieser fertig ist.",
         "check_log_file": "Überprüfe die Logdatei für weitere Informationen.",
         "continue": "Fortfahren",
         "disabled": "Deaktiviert",
         "documentation": "Dokumentation",
+        "element": "Element",
         "hacs_is_disabled": "HACS ist deaktiviert",
         "installed": "Installiert",
         "integration": "Integration",
+        "integration_plural": "Integrationen",
         "integrations": "Integrationen",
+        "lovelace": "Lovelace",
+        "lovelace_element": "Lovelace-Element",
+        "lovelace_elements": "Lovelace-Elemente",
         "manage": "verwalten",
         "netdaemon": "NetDaemon",
         "netdaemon_apps": "NetDaemon Apps",
-        "plugin": "Plugin",
-        "plugins": "Plugins",
+        "netdaemon_plural": "NetDaemon Apps",
+        "plugin": "Lovelace",
+        "plugin_plural": "Lovelace-Elemente",
+        "plugins": "Lovelace-Elemente",
         "python_script": "Python Skript",
+        "python_script_plural": "Python Skripte",
         "python_scripts": "Python Skripte",
         "repositories": "Repositories",
         "settings": "Einstellungen",
         "theme": "Theme",
+        "theme_plural": "Themes",
         "themes": "Themes",
         "version": "Version"
     },
@@ -70,6 +80,35 @@
         "upgrade_all": "Hierdurch werden all diese Repositories aktualisiert. Stelle sicher, dass du die Versionshinweise vorher gelesen hast.",
         "yes": "Ja"
     },
+    "dialog_add_repo": {
+        "sort_by": "Sortiere nach"
+    },
+    "dialog_install": {
+        "restart": "Denken Sie daran, dass Sie Home Assistant neu starten müssen, bevor Änderungen an Integrationen (custom_components) angewendet werden."
+    },
+    "entry": {
+        "messages": {
+            "resources": {
+                "content": "Sie haben {number} Lovelace-Elemente, die in Lovelace nicht richtig geladen sind.",
+                "title": "Nicht in Lovelace geladen"
+            },
+            "restart": {
+                "content": "Sie haben {number} -Integrationen, die einen Neustart von Home Assistant erfordern. Dies können Sie im Abschnitt 'Server Controls' im Konfigurationsteil der Home Assistant-Benutzeroberfläche tun.",
+                "title": "Ausstehender Neustart"
+            },
+            "wrong_frontend_installed": {
+                "content": "Sie haben {running} des HACS-Frontends installiert, aber Version {expected} wurde erwartet. Wenn diese Meldung angezeigt wird, dass Home Assistant die neue Version nicht installieren konnte, starten Sie Home Assistant neu.",
+                "title": "Unerwartete Frontend-Version"
+            },
+            "wrong_frontend_loaded": {
+                "content": "Sie führen die Version {running} des HACS-Frontends aus, aber es wurde die Version {expected} erwartet. Sie sollten Ihren Browser-Cache leeren.",
+                "title": "Unerwartete Frontend-Version"
+            }
+        }
+    },
+    "menu": {
+        "dismiss": "Alle neuen Repositories ausblenden"
+    },
     "options": {
         "step": {
             "user": {
@@ -93,9 +132,16 @@
         "integration_not_loaded": "Diese Integration ist in Home Assistant nicht geladen.",
         "no_restart_required": "Kein Neustart erforderlich",
         "not_loaded": "Nicht geladen",
-        "plugin_not_loaded": "Dieses Plugin wurde deinen Lovelace-Ressourcen nicht hinzugefügt.",
+        "plugin_not_loaded": "Dieses Element wird nicht zu Ihren Lovelace-Ressourcen hinzugefügt.",
         "restart": "Du musst Home Assistant neu starten.",
         "restart_pending": "Neustart ausstehend"
+    },
+    "repository_card": {
+        "dismiss": "Ausblenden",
+        "not_loaded": "Nicht geladen",
+        "open_source": "Quelldateien öffnen",
+        "pending_restart": "Ausstehender Neustart",
+        "report": "Melden zur Entfernung des Repositorys"
     },
     "repository": {
         "add_to_lovelace": "Zu Lovelace hinzufügen",
@@ -114,7 +160,7 @@
         "installed": "Installiert",
         "lovelace_copy_example": "Beispiel in die Zwischenablage kopieren",
         "lovelace_instruction": "Zum Hinzufügen zu deinen Lovelace-Einstellungen, benutze Folgendes",
-        "lovelace_no_js_type": "Konnte die Art dieses Plugins nicht erkennen. Prüfe das Repository.",
+        "lovelace_no_js_type": "Der Typ dieses Elements konnte nicht ermittelt werden. Überprüfen Sie das Repository.",
         "newest": "neueste",
         "note_appdaemon": "du musst es dann noch in die Datei 'apps.yaml' hinzufügen",
         "note_installed": "Wird installiert nach",
@@ -122,7 +168,7 @@
         "note_plugin": "du musst es dann noch in deine Lovelace-Einstellungen ('ui-lovelace.yaml' oder im Raw-Konfigurationseditor) hinzufügen",
         "note_plugin_post_107": "Du musst es noch zu deiner Lovelace-Konfiguration hinzufügen ('configuration.yaml' oder der Ressourceneditor '\/config\/lovelace\/resources')",
         "open_issue": "Problem melden",
-        "open_plugin": "Plugin öffnen",
+        "open_plugin": "Element öffnen",
         "reinstall": "Neu installieren",
         "repository": "Repository",
         "restart_home_assistant": "Home Assistant neu starten",
@@ -130,6 +176,25 @@
         "uninstall": "Deinstallieren",
         "update_information": "Aktualisierungsinformationen",
         "upgrade": "Aktualisieren"
+    },
+    "sections": {
+        "about": {
+            "description": "Informationen zu HACS anzeigen",
+            "title": "Über"
+        },
+        "automation": {
+            "description": "Hier finden Sie python_scripts, AppDaemon-Apps und NetDaemon-Apps",
+            "title": "Automatisierung"
+        },
+        "frontend": {
+            "description": "Hier finden Sie Themen, individuelle Karten und andere Elemente für Lovelace",
+            "title": "Frontend"
+        },
+        "integrations": {
+            "description": "Hier finden Sie benutzerdefinierte Integrationen (custom_components)",
+            "title": "Integrationen"
+        },
+        "pending_repository_upgrade": "Sie verwenden Version {installed}, Version {available} ist verfügbar"
     },
     "settings": {
         "add_custom_repository": "BENUTZERDEFINIERTES REPOSITORY HINZUFÜGEN",
@@ -162,6 +227,7 @@
         "last_updated": "Zuletzt aktualisiert",
         "name": "Name",
         "new_repositories": "Neue Repositories",
+        "new_repositories_note": "Hier werden über 10 neue Repositorys angezeigt. Wenn Sie alle als gelesen markieren möchten, klicken Sie auf die 3 Punkte in der oberen rechten Ecke und blenden sie alle aus.",
         "pending_upgrades": "Ausstehende Upgrades",
         "placeholder_search": "Suchbegriff eingeben…",
         "sort": "Sortieren",

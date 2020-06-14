@@ -58,25 +58,9 @@ class HacsNetdaemon(HacsRepository):
                     self.logger.error(error)
         return self.validate.success
 
-    async def registration(self, ref=None):
-        """Registration."""
-        if ref is not None:
-            self.ref = ref
-            self.force_branch = True
-        if not await self.validate_repository():
-            return False
-
-        # Run common registration steps.
-        await self.common_registration()
-
-        # Set local path
-        self.content.path.local = self.localpath
-
-    async def update_repository(self):
+    async def update_repository(self, ignore_issues=False):
         """Update."""
-        if self.hacs.github.ratelimits.remaining == 0:
-            return
-        await self.common_update()
+        await self.common_update(ignore_issues)
 
         # Get appdaemon objects.
         if self.repository_manifest:
@@ -91,3 +75,12 @@ class HacsNetdaemon(HacsRepository):
 
         # Set local path
         self.content.path.local = self.localpath
+
+    async def async_post_installation(self):
+        """Run post installation steps."""
+        try:
+            await self.hacs.hass.services.async_call(
+                "hassio", "addon_restart", {"addon": "c6a2317c_netdaemon"}
+            )
+        except Exception:  # pylint: disable=broad-except
+            pass

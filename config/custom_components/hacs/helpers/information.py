@@ -1,6 +1,7 @@
 """Return repository information if any."""
 import json
-from aiogithubapi import AIOGitHubException, AIOGitHub
+from aiogithubapi import AIOGitHubAPIException, GitHub
+from custom_components.hacs.globals import get_hacs
 from custom_components.hacs.handler.template import render_template
 from custom_components.hacs.hacsbase.exceptions import HacsException
 
@@ -29,7 +30,7 @@ async def get_info_md_content(repository):
             return ""
         info = info.content.replace("<svg", "<disabled").replace("</svg", "</disabled")
         return render_template(info, repository)
-    except (AIOGitHubException, Exception):  # pylint: disable=broad-except
+    except (AIOGitHubAPIException, Exception):  # pylint: disable=broad-except
         if repository.hacs.action:
             raise HacsException("No info file found")
     return ""
@@ -38,10 +39,10 @@ async def get_info_md_content(repository):
 async def get_repository(session, token, repository_full_name):
     """Return a repository object or None."""
     try:
-        github = AIOGitHub(token, session)
+        github = GitHub(token, session)
         repository = await github.get_repo(repository_full_name)
         return repository
-    except AIOGitHubException as exception:
+    except (AIOGitHubAPIException, Exception) as exception:
         raise HacsException(exception)
 
 
@@ -50,7 +51,7 @@ async def get_tree(repository, ref):
     try:
         tree = await repository.get_tree(ref)
         return tree
-    except AIOGitHubException as exception:
+    except AIOGitHubAPIException as exception:
         raise HacsException(exception)
 
 
@@ -59,8 +60,30 @@ async def get_releases(repository, prerelease=False, returnlimit=5):
     try:
         releases = await repository.get_releases(prerelease, returnlimit)
         return releases
-    except AIOGitHubException as exception:
+    except AIOGitHubAPIException as exception:
         raise HacsException(exception)
+
+
+def get_frontend_version():
+    """get the frontend version from the manifest."""
+    manifest = read_hacs_manifest()
+    frontend = 0
+    for requirement in manifest.get("requirements", []):
+        if requirement.startswith("hacs_frontend"):
+            frontend = requirement.split("==")[1]
+            break
+    return frontend
+
+
+def read_hacs_manifest():
+    """Reads the HACS manifest file and returns the contents."""
+    hacs = get_hacs()
+    content = {}
+    with open(
+        f"{hacs.system.config_path}/custom_components/hacs/manifest.json"
+    ) as manifest:
+        content = json.loads(manifest.read())
+    return content
 
 
 async def get_integration_manifest(repository):
@@ -84,7 +107,7 @@ async def get_integration_manifest(repository):
         repository.data.authors = manifest["codeowners"]
         repository.data.domain = manifest["domain"]
         repository.data.manifest_name = manifest["name"]
-        repository.data.homeassistant = manifest.get("homeassistant")
+        repository.data.config_flow = manifest.get("config_flow", False)
 
         if repository.hacs.action:
             if manifest.get("documentation") is None:
@@ -93,6 +116,8 @@ async def get_integration_manifest(repository):
                 raise HacsException(
                     "The homeassistant key in manifest.json is no longer valid"
                 )
+            # if manifest.get("issue_tracker") is None:
+            #    raise HacsException("The 'issue_tracker' is missing in manifest.json")
 
         # Set local path
         repository.content.path.local = repository.localpath
@@ -113,6 +138,10 @@ def find_file_name(repository):
         get_file_name_appdaemon(repository)
     elif repository.data.category == "python_script":
         get_file_name_python_script(repository)
+
+    if repository.hacs.action:
+        repository.logger.info(f"filename {repository.data.file_name}")
+        repository.logger.info(f"location {repository.content.path.remote}")
 
 
 def get_file_name_plugin(repository):
