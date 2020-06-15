@@ -7,3 +7,5 @@
 # https://www.home-assistant.io/integrations/script/
 #
 script: ~
+# script: !include ../scripts.yaml
+# script split: !include_dir_named ../scripts
