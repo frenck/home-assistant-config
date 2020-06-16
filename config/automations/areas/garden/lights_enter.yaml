@@ -5,6 +5,8 @@ id: 69cbe9c2-a60f-486a-98d7-8ad94cf48f9a
 trigger:
   - platform: homeassistant
     event: start
+  - platform: event
+    event_type: automation_reloaded
   - platform: state
     entity_id:
       - binary_sensor.garden_door

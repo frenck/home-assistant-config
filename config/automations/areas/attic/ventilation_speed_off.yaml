@@ -5,6 +5,8 @@ id: ca58e2f9-4803-4b23-8e46-73ce8301395e
 trigger:
   - platform: homeassistant
     event: start
+  - platform: event
+    event_type: automation_reloaded
   - platform: state
     entity_id:
       - fan.attic_ventilation

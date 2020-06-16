@@ -5,6 +5,8 @@ id: c50e3d67-c377-40e6-aefa-9ea679efa603
 trigger:
   - platform: homeassistant
     event: start
+  - platform: event
+    event_type: automation_reloaded
   - platform: state
     entity_id:
       - alarm_control_panel.home_alarm

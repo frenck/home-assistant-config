@@ -8,6 +8,8 @@ id: 2ff12251-3105-4022-951c-44de39ecf8cd
 trigger:
   - platform: homeassistant
     event: start
+  - platform: event
+    event_type: automation_reloaded
   - platform: state
     entity_id:
       - vacuum.living_room

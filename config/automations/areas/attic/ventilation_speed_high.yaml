@@ -5,6 +5,8 @@ id: 0f9b97fa-9df9-4c24-988b-ffc49b1326a6
 trigger:
   - platform: homeassistant
     event: start
+  - platform: event
+    event_type: automation_reloaded
   - platform: state
     entity_id:
       - sensor.bathroom_humidity
