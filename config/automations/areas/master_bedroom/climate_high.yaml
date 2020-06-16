@@ -7,10 +7,6 @@ description: Turn on the heating in the master bedroom
 alias: bedroom_master_climate_high
 id: 379c50b4-a782-4464-a748-1c79592c4e3e
 trigger:
-  - platform: event
-    event_type: zwave.network_complete
-  - platform: event
-    event_type: zwave.network_ready
   - platform: time
     at: "21:00:00"
 condition:

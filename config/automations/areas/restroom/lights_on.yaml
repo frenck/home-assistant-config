@@ -5,10 +5,6 @@ id: 091756d3-b162-4d75-bc54-9b9fa1eb3ce3
 trigger:
   - platform: homeassistant
     event: start
-  - platform: event
-    event_type: zwave.network_complete
-  - platform: event
-    event_type: zwave.network_ready
   - platform: state
     entity_id:
       - alarm_control_panel.home_alarm

@@ -11,10 +11,6 @@ id: 52e25b71-574b-40ae-b40c-69d9428f4dbe
 trigger:
   - platform: homeassistant
     event: start
-  - platform: event
-    event_type: zwave.network_complete
-  - platform: event
-    event_type: zwave.network_ready
   - platform: state
     entity_id:
       - light.kitchen_ceiling
