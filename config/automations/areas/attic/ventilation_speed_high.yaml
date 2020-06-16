@@ -9,6 +9,7 @@ trigger:
     event_type: automation_reloaded
   - platform: state
     entity_id:
+      - alarm_control_panel.home_alarm
       - sensor.bathroom_humidity
       - switch.attic_ventilation_manual_mode
   - platform: state
@@ -20,6 +21,11 @@ condition:
   - condition: state
     entity_id: switch.attic_ventilation_manual_mode
     state: 'off'
+  - condition: not
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_home
   - condition: or
     conditions:
       - condition: numeric_state
