@@ -9,4 +9,3 @@
 toon:
   client_id: !secret toon_client_id
   client_secret: !secret toon_client_secret
-  scan_interval: 60
