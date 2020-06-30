@@ -1,9 +1,0 @@
----
-#
-# Customizes the water leakage sensor installed in the scullery.
-# It is positioned on the ground next to the washing machine.
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-binary_sensor.scullery_water_leakage:
-  device_class: moisture
