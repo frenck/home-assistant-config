@@ -11,11 +11,11 @@ trigger:
     entity_id:
       - alarm_control_panel.home_alarm
 condition:
-    - condition: state
-      entity_id: alarm_control_panel.home_alarm
-      state:
-        - armed_home
-        - armed_away
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state:
+      - armed_home
+      - armed_away
 action:
   - service: light.turn_off
     data:

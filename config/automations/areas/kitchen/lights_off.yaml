@@ -13,7 +13,7 @@ trigger:
 condition:
   - condition: state
     entity_id: alarm_control_panel.home_alarm
-    state: 
+    state:
       - armed_away
       - armed_home
 action:
