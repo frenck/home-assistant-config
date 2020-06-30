@@ -11,3 +11,6 @@ recorder:
 
   # The number of days of history to keep in the recorder database
   purge_keep_days: 3
+
+  # Disable auto purging, I'm doing this using automations instead
+  auto_purge: false
