@@ -17,10 +17,9 @@ condition:
     conditions:
       - condition: state
         entity_id: alarm_control_panel.home_alarm
-        state: armed_away
-      - condition: state
-        entity_id: alarm_control_panel.home_alarm
-        state: armed_home
+        state: 
+          - armed_away
+          - armed_home
       - condition: time
         after: "22:00:00"
 action:

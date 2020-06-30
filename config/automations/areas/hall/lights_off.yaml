@@ -25,10 +25,9 @@ condition:
     conditions:
       - condition: state
         entity_id: alarm_control_panel.home_alarm
-        state: armed_away
-      - condition: state
-        entity_id: alarm_control_panel.home_alarm
-        state: armed_home
+        state: 
+          - armed_away
+          - armed_home
       - condition: state
         entity_id: binary_sensor.hall_motion
         state: 'off'
