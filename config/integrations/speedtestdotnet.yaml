@@ -1,9 +1,0 @@
----
-# The speedtestdotnet integration uses the Speedtest.net
-# web service to measure network bandwidth performance.
-#
-# https://www.home-assistant.io/integrations/speedtestdotnet/
-#
-speedtestdotnet:
-  scan_interval:
-    minutes: 15
