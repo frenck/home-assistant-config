@@ -3,8 +3,8 @@
 #
 # https://www.home-assistant.io/integrations/light.yeelight/
 #
-!secret yeelight_bedroom_master_bedside_daphne_host:
-  name: bedroom_master_bedside_daphne
+!secret yeelight_master_bedroom_bedside_daphne_host:
+  name: master_bedroom_bedside_daphne
   transition: 2500
   use_music_mode: false
   save_on_change: false

@@ -5,7 +5,7 @@
 #
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
-climate.bedroom_master:
+climate.master_bedroom:
   name: Thermostaat
   aliases:
     - slaapkamer thermostaat

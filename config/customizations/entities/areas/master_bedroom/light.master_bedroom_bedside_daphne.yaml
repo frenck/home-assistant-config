@@ -4,6 +4,6 @@
 #
 # https://www.home-assistant.io/docs/configuration/customizing-devices/
 #
-light.bedroom_master_bedside_daphne:
+light.master_bedroom_bedside_daphne:
   friendly_name: Master Bedroom Bedside Daphne
   icon: mdi:weather-night

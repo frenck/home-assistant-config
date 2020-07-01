@@ -4,6 +4,6 @@
 #
 # https://www.home-assistant.io/docs/configuration/customizing-devices/
 #
-light.bedroom_master:
+light.master_bedroom:
   friendly_name: Master Bedroom
   icon: mdi:lightbulb-group

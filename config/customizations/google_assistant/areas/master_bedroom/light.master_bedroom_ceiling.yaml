@@ -5,7 +5,7 @@
 #
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
-light.bedroom_master_ceiling:
+light.master_bedroom_ceiling:
   name: Plafond
   aliases:
     - slaapkamer plafond

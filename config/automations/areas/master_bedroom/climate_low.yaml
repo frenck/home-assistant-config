@@ -6,7 +6,7 @@
 # on other days, we might stay in bed a little longer, so 10AM in that case.
 #
 description: Turn down the heating in the master bedroom
-alias: bedroom_master_climate_low
+alias: master_bedroom_climate_low
 id: 13c25f18-9328-4065-8ec6-215eb5462e33
 trigger:
   - platform: homeassistant
@@ -40,5 +40,5 @@ action:
   - service: climate.set_temperature
     data:
       entity_id:
-        - climate.bedroom_master
+        - climate.master_bedroom
       temperature: 15

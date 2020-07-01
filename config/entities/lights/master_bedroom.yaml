@@ -4,7 +4,7 @@
 # https://www.home-assistant.io/integrations/light.group/
 #
 platform: group
-name: bedroom_master
+name: master_bedroom
 entities:
-  - light.bedroom_master_ceiling
-  - light.bedroom_master_bedside_daphne
+  - light.master_bedroom_ceiling
+  - light.master_bedroom_bedside_daphne

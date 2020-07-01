@@ -1,6 +1,6 @@
 ---
 description: Turn lights off in our master bedroom
-alias: bedroom_master_lights_off
+alias: master_bedroom_lights_off
 id: 0f0252c0-61af-4090-9ff2-5531e089cba4
 trigger:
   - platform: homeassistant
@@ -20,5 +20,5 @@ action:
   - service: light.turn_off
     data:
       entity_id:
-        - light.bedroom_master
+        - light.master_bedroom
       transition: 5
