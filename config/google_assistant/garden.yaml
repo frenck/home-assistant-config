@@ -3,5 +3,6 @@
 # List of entities that is exposed to Google Assistant
 # From area: Garden
 #
-- light.garden_wall
+[]
+# - light.garden_wall
 
