@@ -8,6 +8,10 @@
 logger:
   default: warning
   logs:
+    # For when I experience slow startups
+    # I can enable this to check out what is going on
+    # homeassistant.setup: debug
+
     # Just to freaking chatty
     zigpy_deconz.zigbee.application: error
 
