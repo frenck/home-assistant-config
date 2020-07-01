@@ -2,7 +2,7 @@
 # Tuya Converted wallplug: Gosund SP1
 # https://frenck.link/gosund-sp1
 #
-# This plug is connected to our scullery fridge
+# This plug is connected to our garage fridge
 # and is mainly used for power monitoring.
 #
 esphome:
