@@ -11,3 +11,7 @@ platform: circadian_lighting
 name: garden
 lights_ct:
   - light.garden_wall
+lights_xy:
+  - light.garden_veranda_wall
+lights_brightness:
+  - light.garden_dinner_table

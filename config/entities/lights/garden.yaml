@@ -10,4 +10,6 @@
 platform: group
 name: garden
 entities:
+  - light.garden_dining_table
+  - light.garden_veranda_wall
   - light.garden_wall

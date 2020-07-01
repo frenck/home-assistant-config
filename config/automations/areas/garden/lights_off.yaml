@@ -10,10 +10,12 @@ trigger:
   - platform: state
     entity_id:
       - alarm_control_panel.home_alarm
-      - sun.sun
+      - input_boolean.garden_automatic_lighting
 condition:
   - condition: state
-    entity_id: light.garden_wall
+    entity_id:
+      - light.garden_wall
+      - input_boolean.garden_automatic_lighting
     state: 'on'
   - condition: or
     conditions:
@@ -23,10 +25,8 @@ condition:
           - armed_away
           - armed_home
       - condition: numeric_state
-        entity_id: sun.sun
-        value_template: >-
-          {{ state_attr('sun.sun', 'elevation') }}
-        above: 1.0
+        entity_id: sensor.garden_luminosity
+        above: 550.0
 action:
   - service: switch.turn_off
     data:
@@ -35,5 +35,7 @@ action:
   - service: light.turn_off
     data:
       entity_id:
+        - light.garden_dining_table
+        - light.garden_veranda_wall
         - light.garden_wall
       transition: 5

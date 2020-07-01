@@ -11,7 +11,7 @@ trigger:
     entity_id:
       - alarm_control_panel.home_alarm
       - binary_sensor.garden_door
-      - sun.sun
+      - input_boolean.garden_automatic_lighting
   - platform: state
     entity_id:
       - binary_sensor.garden_door
@@ -19,6 +19,9 @@ trigger:
     for:
       minutes: 5
 condition:
+  - condition: state
+    entity_id: input_boolean.garden_automatic_lighting
+    state: 'on'
   - condition: state
     entity_id: alarm_control_panel.home_alarm
     state: disarmed
@@ -28,10 +31,8 @@ condition:
     for:
       minutes: 5
   - condition: numeric_state
-    entity_id: sun.sun
-    value_template: >-
-      {{ state_attr('sun.sun', 'elevation') }}
-    below: 1.0
+    entity_id: sensor.garden_luminosity
+    below: 500.0
 action:
   - service: switch.turn_on
     data:
@@ -40,6 +41,8 @@ action:
   - service: light.turn_on
     data:
       entity_id:
+        - light.garden_dining_table
+        - light.garden_veranda_wall
         - light.garden_wall
       transition: 5
     data_template:

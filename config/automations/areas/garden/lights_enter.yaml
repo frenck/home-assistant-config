@@ -10,16 +10,15 @@ trigger:
   - platform: state
     entity_id:
       - binary_sensor.garden_door
+      - input_boolean.garden_automatic_lighting
       - light.garden_wall
 condition:
   - condition: state
-    entity_id: binary_sensor.garden_door
-    state: 'on'
-  - condition: state
-    entity_id: light.garden_wall
-    state: 'on'
-  - condition: state
-    entity_id: switch.circadian_lighting_garden
+    entity_id:
+      - binary_sensor.garden_door
+      - input_boolean.garden_automatic_lighting
+      - light.garden_wall
+      - switch.circadian_lighting_garden
     state: 'on'
 action:
   - service: switch.turn_off
