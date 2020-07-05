@@ -14,8 +14,7 @@ trigger:
 condition:
   - condition: state
     entity_id:
-      - light.garden_wall
-      - input_boolean.garden_automatic_lighting
+      - light.garden
     state: 'on'
   - condition: or
     conditions:
@@ -24,9 +23,14 @@ condition:
         state:
           - armed_away
           - armed_home
-      - condition: numeric_state
-        entity_id: sensor.garden_luminosity
-        above: 550.0
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: input_boolean.garden_automatic_lighting
+            state: 'on'
+          - condition: numeric_state
+            entity_id: sensor.garden_luminosity
+            above: 550.0
 action:
   - service: switch.turn_off
     data:

@@ -12,6 +12,7 @@ trigger:
       - alarm_control_panel.home_alarm
       - binary_sensor.garden_door
       - input_boolean.garden_automatic_lighting
+      - sensor.garden_luminosity
   - platform: state
     entity_id:
       - binary_sensor.garden_door
@@ -25,11 +26,16 @@ condition:
   - condition: state
     entity_id: alarm_control_panel.home_alarm
     state: disarmed
-  - condition: state
-    entity_id: binary_sensor.garden_door
-    state: 'off'
-    for:
-      minutes: 5
+  - condition: or
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.garden_door
+        state: 'unavailable'
+      - condition: state
+        entity_id: binary_sensor.garden_door
+        state: 'off'
+        for:
+          minutes: 5
   - condition: numeric_state
     entity_id: sensor.garden_luminosity
     below: 500.0

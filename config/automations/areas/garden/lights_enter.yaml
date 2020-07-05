@@ -28,6 +28,8 @@ action:
   - service: light.turn_on
     data:
       entity_id:
+        - light.garden_dining_table
+        - light.garden_veranda_wall
         - light.garden_wall
       brightness_pct: 75
       transition: 3
