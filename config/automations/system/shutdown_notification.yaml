@@ -2,6 +2,7 @@
 description: Send notification on Home Assistant stop
 alias: system_shutdown_notification
 id: 761953d0-50cc-4f0b-81ff-3f305223ce38
+mode: ignore
 trigger:
   - platform: homeassistant
     event: shutdown

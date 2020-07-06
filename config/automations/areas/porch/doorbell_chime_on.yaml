@@ -2,6 +2,7 @@
 description: Turns the doorbell chime on when the kids are awake.
 alias: porch_doorbell_chime_on
 id: 874e3632-6a9c-4470-9563-7fe28ce068f7
+mode: queue
 trigger:
   - platform: homeassistant
     event: start

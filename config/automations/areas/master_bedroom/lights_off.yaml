@@ -2,6 +2,7 @@
 description: Turn lights off in our master bedroom
 alias: master_bedroom_lights_off
 id: 0f0252c0-61af-4090-9ff2-5531e089cba4
+mode: ignore
 trigger:
   - platform: homeassistant
     event: start

@@ -2,6 +2,7 @@
 description: Turn lights off in our kitchen when the alarm is armed
 alias: kitchen_lights_off
 id: 158fc336-81b5-4ba1-b060-fee6192d9c7d
+mode: ignore
 trigger:
   - platform: homeassistant
     event: start

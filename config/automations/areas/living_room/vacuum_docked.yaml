@@ -5,6 +5,7 @@
 description: Reset vacuum fan speed when it gets docked
 alias: living_room_vacuum_docked
 id: 2ff12251-3105-4022-951c-44de39ecf8cd
+mode: ignore
 trigger:
   - platform: homeassistant
     event: start

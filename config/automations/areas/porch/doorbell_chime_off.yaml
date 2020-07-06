@@ -2,6 +2,7 @@
 description: Turns the doorbell chime off when kids are sleeping
 alias: porch_doorbell_chime_off
 id: e7313dd1-3776-4740-9888-d7f15cf33158
+mode: queue
 trigger:
   - platform: homeassistant
     event: start

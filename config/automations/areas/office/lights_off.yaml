@@ -2,6 +2,7 @@
 description: Turn lights off in my office when the alarm is armed
 alias: office_lights_off
 id: 0a569417-918a-471c-a17f-803ab7add1e2
+mode: ignore
 trigger:
   - platform: homeassistant
     event: start

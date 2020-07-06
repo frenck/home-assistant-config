@@ -7,6 +7,7 @@
 description: Repack recorder database
 alias: system_recorder_repack
 id: 752639e0-9527-45a6-84e8-f54537d40278
+mode: ignore
 trigger:
   - platform: time
     at: '05:55'

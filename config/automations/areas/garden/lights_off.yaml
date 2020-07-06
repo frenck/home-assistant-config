@@ -2,6 +2,7 @@
 description: Turn garden lights off
 alias: garden_lights_off
 id: c9c64055-42cd-41c7-99f6-dbce7e4f915d
+mode: ignore
 trigger:
   - platform: homeassistant
     event: start

@@ -2,6 +2,7 @@
 description: Turn hall lights off when there isn't motion detected
 alias: hall_lights_off
 id: e0c89521-b483-4ca2-ae81-4ec7a98d005d
+mode: ignore
 trigger:
   - platform: homeassistant
     event: start

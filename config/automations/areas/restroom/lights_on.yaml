@@ -2,6 +2,7 @@
 description: Turn the restroom lights on when someone enters
 alias: restroom_lights_on
 id: 091756d3-b162-4d75-bc54-9b9fa1eb3ce3
+mode: queue
 trigger:
   - platform: homeassistant
     event: start

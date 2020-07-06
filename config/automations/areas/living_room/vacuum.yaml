@@ -6,6 +6,7 @@
 description: Start vacuum when we are away
 alias: living_room_vacuum
 id: 80ce1910-b205-4374-89dc-d0444dfc637d
+mode: queue
 trigger:
   - platform: homeassistant
     event: start

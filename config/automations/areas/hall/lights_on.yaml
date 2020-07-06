@@ -2,6 +2,7 @@
 description: Turn hall lights on when motion is detected
 alias: hall_lights_on
 id: f187e31d-7bcc-4813-aff3-32444810b228
+mode: queue
 trigger:
   - platform: homeassistant
     event: start

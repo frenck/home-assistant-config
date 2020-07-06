@@ -2,6 +2,7 @@
 description: Turn lights off in our living room
 alias: living_room_lights_off
 id: d2cad90f-cc2f-43cd-aeea-b2450644e57d
+mode: ignore
 trigger:
   - platform: homeassistant
     event: start
