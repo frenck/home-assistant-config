@@ -39,7 +39,7 @@ condition:
           minutes: 5
   - condition: numeric_state
     entity_id: sensor.garden_luminosity
-    below: 500.0
+    below: 300.0
 action:
   - service: switch.turn_on
     data:

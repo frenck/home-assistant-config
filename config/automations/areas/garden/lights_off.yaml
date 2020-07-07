@@ -32,7 +32,7 @@ condition:
             state: 'on'
           - condition: numeric_state
             entity_id: sensor.garden_luminosity
-            above: 550.0
+            above: 400.0
 action:
   - service: switch.turn_off
     data:
