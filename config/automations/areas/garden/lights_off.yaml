@@ -12,6 +12,7 @@ trigger:
     entity_id:
       - alarm_control_panel.home_alarm
       - input_boolean.garden_automatic_lighting
+      - sensor.garden_luminosity
 condition:
   - condition: state
     entity_id:
