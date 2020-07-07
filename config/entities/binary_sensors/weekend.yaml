@@ -1,0 +1,15 @@
+---
+# This is the weekend sensor. This binary sensor tells me if it is
+# a weekend day today.
+#
+# This is pretty useful for a lot of automations.
+#
+# https://www.home-assistant.io/integrations/binary_sensor.workday/
+#
+platform: workday
+name: weekend
+country: NL
+workdays:
+  - sat
+  - sun
+excludes: []
