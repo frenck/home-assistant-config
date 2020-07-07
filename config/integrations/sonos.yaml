@@ -11,4 +11,5 @@
 sonos:
   media_player:
     hosts:
-      - !secret sonos_hosts_living_room_beam
+      - !secret sonos_hosts_living_room
+      - !secret sonos_hosts_office
