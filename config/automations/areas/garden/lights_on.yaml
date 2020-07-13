@@ -2,7 +2,7 @@
 description: Turn garden lights on
 alias: garden_lights_on
 id: 5dc7b352-589a-4ac1-b59a-009270699576
-mode: ignore
+mode: single
 trigger:
   - platform: homeassistant
     event: start

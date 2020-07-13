@@ -2,7 +2,7 @@
 description: Turn down heating in Lilly's bedroom
 alias: bedroom_lilly_climate_low
 id: 04aeaac8-0f0e-4638-8dde-a2568b676d20
-mode: queue
+mode: queued
 trigger:
   - platform: homeassistant
     event: start

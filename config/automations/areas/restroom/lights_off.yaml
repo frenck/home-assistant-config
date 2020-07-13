@@ -2,7 +2,7 @@
 description: Turn the restroom lights off when no motion
 alias: restroom_lights_off
 id: 372ffe5b-271e-421c-b8a2-2eb9f4b2ebbb
-mode: ignore
+mode: single
 trigger:
   - platform: homeassistant
     event: start

@@ -2,7 +2,7 @@
 description: Turn up the brigthness of the garden lights when entering
 alias: garden_lights_enter
 id: 69cbe9c2-a60f-486a-98d7-8ad94cf48f9a
-mode: queue
+mode: queued
 trigger:
   - platform: homeassistant
     event: start

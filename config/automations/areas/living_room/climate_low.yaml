@@ -2,7 +2,7 @@
 description: Turn down the heating in the living room
 alias: living_room_climate_low
 id: cc6cad10-b5ee-4362-bd7b-2a67dde9e503
-mode: queue
+mode: queued
 trigger:
   - platform: homeassistant
     event: start

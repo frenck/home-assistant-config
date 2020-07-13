@@ -2,7 +2,7 @@
 description: Controls the speed of the central ventilation system
 alias: attic_ventilation_speed_off
 id: ca58e2f9-4803-4b23-8e46-73ce8301395e
-mode: ignore
+mode: single
 trigger:
   - platform: homeassistant
     event: start

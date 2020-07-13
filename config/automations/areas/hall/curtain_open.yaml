@@ -2,7 +2,7 @@
 description: Open the hall curtain based on time and type of day
 alias: hall_curtain_open
 id: 43178d7d-b1b5-45cc-a557-a918c397708b
-mode: ignore
+mode: single
 trigger:
   - platform: homeassistant
     event: start

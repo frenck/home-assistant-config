@@ -2,7 +2,7 @@
 description: Reset garden automatic lighting when alarm is armed
 alias: garden_automatic_lighting_reset
 id: 749a9def-8eb6-461a-9c20-9552e1a2693a
-mode: queue
+mode: queued
 trigger:
   - platform: homeassistant
     event: start

@@ -8,7 +8,7 @@
 description: Turn down the heating in the master bedroom
 alias: master_bedroom_climate_low
 id: 13c25f18-9328-4065-8ec6-215eb5462e33
-mode: queue
+mode: queued
 trigger:
   - platform: homeassistant
     event: start

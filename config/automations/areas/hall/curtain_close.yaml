@@ -2,7 +2,7 @@
 description: Close the hall curtain based on time or when the alarm arms
 alias: hall_curtain_close
 id: aefaa83e-9295-4b84-b33d-d53a377c8bd8
-mode: ignore
+mode: single
 trigger:
   - platform: homeassistant
     event: start

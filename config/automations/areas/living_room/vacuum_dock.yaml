@@ -6,7 +6,7 @@
 description: Dock vacuum cleaner when we get home
 alias: living_room_vacuum_dock
 id: 36eea376-104b-4fc9-8168-b25e389afcab
-mode: queue
+mode: queued
 trigger:
   - platform: homeassistant
     event: start

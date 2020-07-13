@@ -9,7 +9,7 @@
 description: Turn off thermostat when window is opened
 alias: bedroom_flynn_window_climate
 id: 995cb631-efde-4d01-a3b0-8bca47d546fe
-mode: queue
+mode: queued
 trigger:
   - platform: homeassistant
     event: start

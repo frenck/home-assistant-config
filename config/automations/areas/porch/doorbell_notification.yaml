@@ -2,7 +2,7 @@
 description: Send notifications when doorbell is pushed
 alias: porch_doorbell_notification
 id: e91ddd71-0cd9-40d9-aee9-63ed93210013
-mode: ignore
+mode: single
 trigger:
   - platform: state
     entity_id: binary_sensor.porch_doorbell

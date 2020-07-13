@@ -2,7 +2,7 @@
 description: Turn lights off on our landing when the alarm is armed
 alias: landing_lights_off
 id: 5ba4c940-2fb0-4a87-9761-d8c00c892189
-mode: ignore
+mode: single
 trigger:
   - platform: homeassistant
     event: start

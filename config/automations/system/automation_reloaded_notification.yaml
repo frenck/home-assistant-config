@@ -2,7 +2,7 @@
 description: Send notification when automations are reloaded
 alias: system_automation_reloaded_notification
 id: 41f7aec4-17f1-480d-969d-14789cf501f5
-mode: ignore
+mode: single
 trigger:
   platform: event
   event_type: automation_reloaded

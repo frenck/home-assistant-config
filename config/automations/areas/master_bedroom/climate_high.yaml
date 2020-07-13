@@ -6,7 +6,7 @@
 description: Turn on the heating in the master bedroom
 alias: master_bedroom_climate_high
 id: 379c50b4-a782-4464-a748-1c79592c4e3e
-mode: queue
+mode: queued
 trigger:
   - platform: homeassistant
     event: start
