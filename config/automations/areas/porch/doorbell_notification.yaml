@@ -19,3 +19,8 @@ action:
     data:
       title: Deurbell
       message: Ding dong! Er staat iemand aan de deur!
+  # The delay of 15 seconds with the single mode, acts as a cooldown
+  # This prevent (childeren) to rappitly press the button, causing
+  # a flood of notifications.
+  - delay:
+      seconds: 15
