@@ -19,14 +19,19 @@ trigger:
     entity_id:
       - binary_sensor.bedroom_flynn_window
 action:
-  service: climate.set_hvac_mode
-  data:
-    entity_id:
-      - climate.bedroom_flynn
-  data_template:
-    hvac_mode: >-
-      {% if is_state('binary_sensor.bedroom_flynn_window', 'on') %}
-        off
-      {% else %}
-        heat
-      {% endif %}
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id:
+              - binary_sensor.bedroom_flynn_window
+            state: "off"
+        sequence:
+          - service: climate.set_hvac_mode
+            data:
+              entity_id: climate.bedroom_flynn
+              hvac_mode: heat
+    default:
+      - service: climate.set_hvac_mode
+        data:
+          entity_id: climate.bedroom_flynn
+          hvac_mode: "off"
