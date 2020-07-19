@@ -1,0 +1,68 @@
+---
+description: Controls the speed of the central ventilation system
+alias: attic_central_ventilation
+id: c2153826-fa86-4448-91a5-53791f86a5f5
+mode: single
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: automation_reloaded
+  - platform: state
+    entity_id:
+      - fan.attic_ventilation
+      - sensor.bathroom_humidity
+      - switch.attic_ventilation_manual_mode
+  - platform: state
+    entity_id: light.restroom
+    to: 'off'
+    for:
+      minutes: 10
+  - platform: state
+    entity_id: light.restroom
+    to: 'on'
+    for:
+      minutes: 3
+action:
+  choose:
+    # High speed
+    - conditions:
+        - condition: not
+          conditions:
+            - condition: state
+              entity_id: alarm_control_panel.home_alarm
+              state: armed_home
+        - condition: or
+          conditions:
+            - condition: numeric_state
+              entity_id: sensor.bathroom_humidity
+              above: 80
+            - condition: state
+              entity_id: light.restroom
+              state: 'on'
+              for:
+                minutes: 3
+      sequence:
+        - service: fan.turn_on
+          entity_id: fan.attic_ventilation
+        - service: fan.set_speed
+          data:
+            entity_id: fan.attic_ventilation
+            speed: high
+    # Low speed
+    - conditions:
+        - condition: numeric_state
+          entity_id: sensor.bathroom_humidity
+          above: 70
+          below: 80
+      sequence:
+        - service: fan.turn_on
+          entity_id: fan.attic_ventilation
+        - service: fan.set_speed
+          entity_id: fan.attic_ventilation
+          data:
+            speed: low
+  default:
+    # Default to off
+    - service: fan.turn_off
+      entity_id: fan.attic_ventilation
