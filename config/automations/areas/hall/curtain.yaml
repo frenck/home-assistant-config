@@ -1,0 +1,49 @@
+---
+description: Automate hall curtain based on time and type of day
+alias: hall_curtain
+id: bbc9e718-696f-43a5-af3a-3ea53701c6a7
+mode: single
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: automation_reloaded
+  - platform: state
+    entity_id:
+      - alarm_control_panel.home_alarm
+  - platform: time
+    at: "08:10:00"
+  - platform: time
+    at: "10:00:00"
+action:
+  choose:
+    - conditions:
+        - condition: state
+          entity_id: alarm_control_panel.home_alarm
+          state: disarmed
+        - condition: time
+          before: "19:00:00"
+        - condition: or
+          conditions:
+            - condition: and
+              conditions:
+                - condition: time
+                  after: "08:10:00"
+                - condition: state
+                  entity_id: binary_sensor.workday
+                  state: 'on'
+            - condition: and
+              conditions:
+                - condition: time
+                  after: "10:00:00"
+                  weekday:
+                    - sat
+                - condition: state
+                  entity_id: binary_sensor.holiday
+                  state: 'off'
+      sequence:
+        - service: cover.open_cover
+          entity_id: cover.hall_curtain
+  default:
+    - service: cover.close_cover
+      entity_id: cover.hall_curtain
