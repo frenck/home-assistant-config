@@ -5,7 +5,7 @@
  *
  */
 
-const __VERSION = "0.1.1";
+const __VERSION = "0.1.2";
 
 const LitElement = Object.getPrototypeOf(customElements.get("hui-view"));
 const html = LitElement.prototype.html;
@@ -42,6 +42,7 @@ class PowerWheelCard extends LitElement {
         padding: 4px 0 12px;
         display: flex;
         justify-content: space-between;
+        min-height: 12px;
       }
       ha-card .wheel {
         position: relative;
@@ -180,11 +181,16 @@ class PowerWheelCard extends LitElement {
       ? undefined : value * this.config.production_is_positive;
   }
 
+  _setBatteryPolarity(value) {
+    return typeof value === 'undefined'
+      ? undefined : value * this.config.charging_is_positive;
+  }
+
   // Get all entity states (view dependent) and save in this.input
   // Since battery functions this.input.grid_solo_production is not always the same as this.data.solar2grid anymore.
   _saveEntityStates(solar_entity, grid_production_entity, grid_consumption_entity, battery_entity, grid_entity, home_entity) {
     this.input.solar_production = this._getEntityState(solar_entity);
-    this.input.battery_charging = this._getEntityState(battery_entity);
+    this.input.battery_charging = this._setBatteryPolarity(this._getEntityState(battery_entity));
     this.input.home_production = this._setPolarity(this._getEntityState(home_entity));
     if (this.views[this.view].twoGridSensors) {
       this.input.grid_solo_production = this._getEntityState(grid_production_entity);
@@ -384,10 +390,7 @@ class PowerWheelCard extends LitElement {
     } else {
       PowerWheelCard._logConsole(`Version: ${__VERSION}`);
     }
-    this._validateSensors();
-    if (this.config.energy_price) {
-      this._addMessage('warn', 'Deprecated card parameter \'energy_price\' is used. Please replace it by \'energy_consumption_rate\' in your setup.');
-    }
+    // this._validateSensors(); // todo: Have to find a better trigger than firstUpdated. Disabled in version 0.1.2 because new startup order in HA 0.111.0.
   }
 
   _sensorChangeDetected(oldValue) {
@@ -416,7 +419,6 @@ class PowerWheelCard extends LitElement {
     this.views.energy.unit = this._defineUnit('energy', this.config.solar_energy_entity, this.config.grid_energy_entity,
       this.config.grid_energy_consumption_entity, this.config.grid_energy_production_entity);
     this.views.money.unit = this.config.money_unit;
-    // this.views = { ...this.views };
 
     if (this.view === 'money' && this.views.money.capable) {
       // Calculate energy values first
@@ -639,9 +641,11 @@ class PowerWheelCard extends LitElement {
     if (config.grid_power_consumption_entity && !config.grid_power_production_entity) {
       throw new Error('You need to define a grid_power_production_entity');
     }
+    config.charging_is_positive = config.charging_is_positive !== false;
+    config.charging_is_positive = config.charging_is_positive ? 1 : -1;
     config.production_is_positive = config.production_is_positive !== false;
     config.production_is_positive = config.production_is_positive ? 1 : -1;
-    config.title = config.title ? config.title : 'Power wheel';
+    config.title = config.title ? config.title : '';
     config.title_power = config.title_power ? config.title_power : config.title;
     config.title_energy = config.title_energy ? config.title_energy : config.title;
     config.title_money = config.title_money ? config.title_money : config.title;
@@ -679,9 +683,6 @@ class PowerWheelCard extends LitElement {
     }
     config.auto_toggle_view_period = config.auto_toggle_view_period ? config.auto_toggle_view_period : 10;
     config.debug = config.debug ? config.debug : false;
-    if (config.energy_price && config.energy_consumption_rate === undefined) {
-      config.energy_consumption_rate = config.energy_price;
-    }
     if (config.energy_production_rate === undefined && config.energy_consumption_rate) {
       config.energy_production_rate = config.energy_consumption_rate;
     }
