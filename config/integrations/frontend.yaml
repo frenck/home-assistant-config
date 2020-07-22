@@ -7,11 +7,5 @@ frontend:
   # Version of the JavaScript to serve to clients.
   javascript_version: auto
 
-  # List of additional resources to load (latest javascript)
-  extra_html_url: []
-
-  # List of additional resource to load (es5 javascript)
-  extra_html_url_es5: []
-
   # We can define additional/custom themes for the frontend here.
   themes: !include_dir_merge_named ../themes
