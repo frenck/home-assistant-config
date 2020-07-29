@@ -68,6 +68,3 @@ binary_sensor:
 text_sensor:
   - platform: version
     name: esphome_esp01_version
-
-esp32_ble_tracker:
-  scan_interval: 300s
