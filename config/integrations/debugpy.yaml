@@ -1,0 +1,16 @@
+---
+# The remote Python debugger integration allows you to use the
+# Visual Studio Code Python debug tooling with a remote
+# Home Assistant instance.
+#
+# This integration is probably not useful to most of you,
+# and I would not recommend on using it.
+#
+# For me it is helpful to debug issues on a production
+# machine, while I develop on the Home Assistant project.
+#
+# https://www.home-assistant.io/integrations/debugpy
+#
+debugpy:
+  start: false
+  wait: false
