@@ -12,7 +12,7 @@ trigger:
     entity_id:
       - alarm_control_panel.home_alarm
   - platform: time
-    at: 
+    at:
       - "08:10:00"
       - "10:00:00"
       - "19:00:00"

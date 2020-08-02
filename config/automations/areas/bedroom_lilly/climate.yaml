@@ -9,7 +9,7 @@ trigger:
   - platform: event
     event_type: automation_reloaded
   - platform: time
-    at: 
+    at:
       - "07:00:00"
       - "17:30:00"
 action:

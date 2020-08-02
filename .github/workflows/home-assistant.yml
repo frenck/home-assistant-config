@@ -98,6 +98,6 @@ jobs:
       - name: Copy stub files into configuration folder
         run: cp -R ./.stubs/* ./config/esphome/
       - name: Run esphome on all files
+        # yamllint disable rule:line-length
         run: |
-          # yamllint disable-line rule:line-length
           for file in $(find ./config/esphome -type f -name "*.yaml" -not -name "secrets.yaml"); do esphome "${file}" config; done
