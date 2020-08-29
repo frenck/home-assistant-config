@@ -22,7 +22,6 @@ action:
     data:
       entity_id:
         - climate.master_bedroom
-    data_template:
       hvac_mode: >-
         {% if is_state('binary_sensor.slaapkamer_raam', 'on') %}
           off

@@ -43,7 +43,6 @@ action:
       entity_id:
         - light.hall_ceiling
       transition: 2
-    data_template:
       kelvin: >-
         {{ state_attr('sensor.circadian_values', 'colortemp') | int }}
       brightness_pct: >-

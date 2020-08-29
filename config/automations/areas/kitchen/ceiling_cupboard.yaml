@@ -18,7 +18,7 @@ trigger:
     entity_id:
       - light.kitchen_ceiling
 action:
-  service_template: >-
+  service: >-
     {%
       if (
         is_state('light.kitchen_ceiling', 'on')

@@ -34,6 +34,5 @@ action:
         - light.garden_wall
       brightness_pct: 75
       transition: 3
-    data_template:
       kelvin: >-
         {{ (state_attr('sensor.circadian_values', 'colortemp') | int) }}
