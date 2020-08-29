@@ -8,13 +8,8 @@ trigger:
     event: start
   - platform: event
     event_type: automation_reloaded
-  - platform: template
-    value_template: >-
-      {{
-        states('input_datetime.house_silent_hours_end')
-        ==
-        states('sensor.time')+":00"
-      }}
+  - platform: time
+    at: input_datetime.house_silent_hours_end
 action:
   - service: switch.turn_on
     data:
