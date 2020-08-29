@@ -38,8 +38,7 @@ condition:
         conditions:
           - condition: numeric_state
             entity_id: sun.sun
-            value_template: >-
-              {{ state_attr('sun.sun', 'elevation') }}
+            attribute: elevation
             below: 3.0
           - condition: numeric_state
             entity_id: sensor.hall_luminance

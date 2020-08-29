@@ -30,8 +30,7 @@ condition:
     below: 50
   - condition: numeric_state
     entity_id: sun.sun
-    value_template: >-
-      {{ state_attr('sun.sun', 'elevation') }}
+    attribute: elevation
     below: 3.0
 action:
   - service: switch.turn_on
