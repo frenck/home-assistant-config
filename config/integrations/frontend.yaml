@@ -4,8 +4,5 @@
 # https://www.home-assistant.io/integrations/frontend/
 #
 frontend:
-  # Version of the JavaScript to serve to clients.
-  javascript_version: auto
-
   # We can define additional/custom themes for the frontend here.
   themes: !include_dir_merge_named ../themes
