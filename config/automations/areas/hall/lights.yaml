@@ -1,0 +1,47 @@
+---
+description: Controls the hall lights
+alias: hall_lights
+id: dae7c422-03ff-4ae6-a06d-65e4907872c1
+mode: queued
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: automation_reloaded
+  - platform: state
+    entity_id:
+      - alarm_control_panel.home_alarm
+      - binary_sensor.hall_motion
+      - input_boolean.hall_automatic_lighting
+      - sensor.hall_luminosity
+      - sensor.porch_luminosity
+condition:
+  - condition: state
+    entity_id: input_boolean.hall_automatic_lighting
+    state: 'on'
+action:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: alarm_control_panel.home_alarm
+            state: disarmed
+          - condition: state
+            entity_id: binary_sensor.hall_motion
+            state: 'on'
+          - condition: numeric_state
+            entity_id: sensor.hall_luminosity
+            below: 50
+          - condition: numeric_state
+            entity_id: sensor.porch_luminosity
+            below: 500
+        sequence:
+          - service: script.sunlight
+            data:
+              entities:
+                - light.hall_ceiling
+              turn_on: true
+    default:
+      - service: light.turn_off
+        entity_id: light.hall_ceiling
+        data:
+          transition: 5
