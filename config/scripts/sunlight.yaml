@@ -70,24 +70,9 @@ variables:
   red: "{{ state_attr(circadian, 'rgb_color')[0] | int }}"
   green: "{{ state_attr(circadian, 'rgb_color')[1] | int }}"
   blue: "{{ state_attr(circadian, 'rgb_color')[2] | int }}"
-  transition: >-
-    {% if transition is not defined %}
-      5
-    {% else %}
-      {{ turn_on_transition }}
-    {% endif %}
-  turn_on: >-
-    {% if turn_on is not defined %}
-      false
-    {% else %}
-      {{ turn_on }}
-    {% endif %}
-  turn_on_transition: >-
-    {% if turn_on_transition is not defined %}
-      2
-    {% else %}
-      {{ turn_on_transition }}
-    {% endif %}
+  transition: "{{ transition | default(5) }}"
+  turn_on: "{{ turn_on | default(false) }}"
+  turn_on_transition: "{{ turn_on_transition | default(2) }}"
 
 sequence:
   - repeat:
@@ -96,7 +81,7 @@ sequence:
         - variables:
             entity: "{{ entities[repeat.index-1] }}"
         - condition: template
-          value_template: "{{ turn_on or is_state(entity, 'on') }}"
+          value_template: "{{ turn_on is sameas true or is_state(entity, 'on') }}"
         - variables:
             supports_color: >-
               {{ state_attr(entity, 'supported_features') | bitwise_and(16) == 16 }}
