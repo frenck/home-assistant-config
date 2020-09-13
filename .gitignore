@@ -24,6 +24,7 @@ config/html5_push_registrations.conf
 config/image
 config/ip_bans.yaml
 config/known_devices.yaml
+config/neighbours
 config/options.xml
 config/OZW_Log.txt
 config/pyozw.sqlite
