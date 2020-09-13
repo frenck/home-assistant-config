@@ -1,0 +1,13 @@
+---
+# Silent hours card, contains the settings for the times we handle
+# silent hours, and turn of things like the doorbell.
+#
+# https://www.home-assistant.io/lovelace/entities/
+#
+type: entities
+title: Silent hours
+entities:
+  - entity: input_datetime.setting_house_silent_hours_start
+    name: Starts at
+  - entity: input_datetime.setting_house_silent_hours_end
+    name: Ends at

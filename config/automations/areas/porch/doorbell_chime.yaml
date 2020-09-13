@@ -1,0 +1,26 @@
+---
+description: Turns off the doorbell during the House its silent hours
+alias: porch_doorbell_chime
+id: e809a056-4854-4b66-840f-50b5c7f41cf2
+mode: queued
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: automation_reloaded
+  - platform: time
+    at:
+      - input_datetime.setting_house_silent_hours_start
+      - input_datetime.setting_house_silent_hours_end
+action:
+  - choose:
+    - conditions:
+        - condition: time
+          after: input_datetime.setting_house_silent_hours_start
+          before: input_datetime.setting_house_silent_hours_end
+      sequence:
+        - service: switch.turn_off
+          entity_id: switch.porch_doorbell_chime
+    default:
+      - service: switch.turn_on
+        entity_id: switch.porch_doorbell_chime
