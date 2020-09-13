@@ -3,14 +3,14 @@ description: Automate hall curtain based on time and type of day
 alias: hall_curtain
 id: bbc9e718-696f-43a5-af3a-3ea53701c6a7
 mode: single
+max_exceeded: silent
 trigger:
   - platform: homeassistant
     event: start
   - platform: event
     event_type: automation_reloaded
   - platform: state
-    entity_id:
-      - alarm_control_panel.home_alarm
+    entity_id: alarm_control_panel.home_alarm
   - platform: time
     at:
       - "08:10:00"

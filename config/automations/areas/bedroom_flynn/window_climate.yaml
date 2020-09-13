@@ -16,22 +16,20 @@ trigger:
   - platform: event
     event_type: automation_reloaded
   - platform: state
-    entity_id:
-      - binary_sensor.bedroom_flynn_window
+    entity_id: binary_sensor.bedroom_flynn_window
 action:
   - choose:
       - conditions:
           - condition: state
-            entity_id:
-              - binary_sensor.bedroom_flynn_window
+            entity_id: binary_sensor.bedroom_flynn_window
             state: "off"
         sequence:
           - service: climate.set_hvac_mode
+            entity_id: climate.bedroom_flynn
             data:
-              entity_id: climate.bedroom_flynn
               hvac_mode: heat
     default:
       - service: climate.set_hvac_mode
+        entity_id: climate.bedroom_flynn
         data:
-          entity_id: climate.bedroom_flynn
           hvac_mode: "off"

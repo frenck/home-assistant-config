@@ -20,13 +20,11 @@ action:
           before: "07:00:00"
       sequence:
         - service: climate.set_temperature
+          entity_id: climate.bedroom_lilly
           data:
-            entity_id:
-              - climate.bedroom_lilly
             temperature: 19.0
   default:
     - service: climate.set_temperature
+      entity_id: climate.bedroom_lilly
       data:
-        entity_id:
-          - climate.bedroom_lilly
         temperature: 17.0

@@ -14,13 +14,13 @@ trigger:
       - input_datetime.setting_house_silent_hours_end
 action:
   - choose:
-    - conditions:
-        - condition: time
-          after: input_datetime.setting_house_silent_hours_start
-          before: input_datetime.setting_house_silent_hours_end
-      sequence:
-        - service: switch.turn_off
-          entity_id: switch.porch_doorbell_chime
+      - conditions:
+          - condition: time
+            after: input_datetime.setting_house_silent_hours_start
+            before: input_datetime.setting_house_silent_hours_end
+        sequence:
+          - service: switch.turn_off
+            entity_id: switch.porch_doorbell_chime
     default:
       - service: switch.turn_on
         entity_id: switch.porch_doorbell_chime

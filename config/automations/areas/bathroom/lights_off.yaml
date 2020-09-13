@@ -9,8 +9,7 @@ trigger:
   - platform: event
     event_type: automation_reloaded
   - platform: state
-    entity_id:
-      - alarm_control_panel.home_alarm
+    entity_id: alarm_control_panel.home_alarm
 condition:
   - condition: state
     entity_id: alarm_control_panel.home_alarm
@@ -19,7 +18,6 @@ condition:
       - armed_away
 action:
   - service: light.turn_off
+    entity_id: light.bathroom
     data:
-      entity_id:
-        - light.bathroom
       transition: 5
