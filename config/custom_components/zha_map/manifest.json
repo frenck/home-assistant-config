@@ -1,0 +1,10 @@
+{
+  "domain": "zha_map",
+  "name": "ZHA Network Map",
+  "documentation": "https://github.com/zha-ng/zha-map",
+  "requirements": [],
+  "dependencies": ["zha"],
+  "codeowners": [
+    "@adminiuga"
+  ]
+}
