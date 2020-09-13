@@ -1,10 +1,22 @@
 ---
 # Lovelace component for confuring the UI.
 #
-# I use Lovelace in manual YAML mode. Pro: I can have my Lovelace in Git
-# with easy. Cons: I do not have access to the Lovelace UI editor.
+# I use Lovelace  in both storage mode, but I add some additional dashboards
+# manually in YAML mode. Reasoning for this is quite simple: I suck at UI stuff.
+#
+# This way, my main dashboard is controlled via the UI. This covers my main
+# needs for the house quick and easy, while I slowly learn more about the
+# purely YAML versions.
+#
+# Maybe somewhere in the future I can replace the storage managed dashboards
+# with a YAML version, or, dunno, replace everything with storage versions.
 #
 # https://www.home-assistant.io/lovelace/
-# https://www.home-assistant.io/lovelace/yaml-mode/
+# https://www.home-assistant.io/lovelace/dashboards-and-views
 #
-lovelace: ~
+lovelace:
+  # This is the default storage mode. My main Lovelace dashboard is UI managed.
+  mode: storage
+
+  # Additional YAML-based Lovelace dashboards
+  dashboards: !include ../lovelace/dashboards.yaml

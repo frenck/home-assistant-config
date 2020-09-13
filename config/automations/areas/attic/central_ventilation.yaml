@@ -3,6 +3,7 @@ description: Controls the speed of the central ventilation system
 alias: attic_central_ventilation
 id: c2153826-fa86-4448-91a5-53791f86a5f5
 mode: single
+max_exceeded: silent
 trigger:
   - platform: homeassistant
     event: start
@@ -36,7 +37,7 @@ action:
           conditions:
             - condition: numeric_state
               entity_id: sensor.bathroom_humidity
-              above: 80
+              above: input_number.setting_bathroom_humidity_high
             - condition: state
               entity_id: light.restroom
               state: 'on'
@@ -53,8 +54,8 @@ action:
     - conditions:
         - condition: numeric_state
           entity_id: sensor.bathroom_humidity
-          above: 70
-          below: 80
+          above: input_number.setting_bathroom_humidity_low
+          below: input_number.setting_bathroom_humidity_high
       sequence:
         - service: fan.turn_on
           entity_id: fan.attic_ventilation

@@ -1,0 +1,11 @@
+---
+# View for the first floor of the house.
+#
+# Contains all automations settings for the areas on the first floor.
+#
+# https://www.home-assistant.io/lovelace/dashboards-and-views/#views
+#
+title: Upstairs
+path: upstairs
+icon: mdi:stairs
+cards: !include_dir_list ../cards/upstairs

@@ -1,0 +1,9 @@
+---
+# The automations settings dashboard contains all kinds of controls
+# for tweaking the behavior of my automations at home.
+#
+# Think of this as a custom version of the Home Assistant configuration.
+# It consist mainly out of input_* helpers, that allows me to tune my
+# automations without touching the automations themselves.
+#
+views: !include_dir_list ./views
