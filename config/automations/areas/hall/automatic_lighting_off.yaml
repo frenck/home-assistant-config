@@ -20,4 +20,4 @@ condition:
   - "{{ trigger.to_state.context.user_id != None }}"
 action:
   - service: input_boolean.turn_off
-    entity_id: input_boolean.garden_automatic_lighting
+    entity_id: input_boolean.hall_automatic_lighting
