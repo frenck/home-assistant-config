@@ -103,7 +103,7 @@ sequence:
               {% else %}
                 {{ turn_on_transition }}
               {% endif %}
-        - choose:            
+        - choose:
             - conditions: "{{ supports_color_temp }}"
               sequence:
                 - service: light.turn_on
