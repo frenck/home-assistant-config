@@ -56,12 +56,12 @@ fields:
   turn_on_transition:
     description: Transition time to use when turning on the light (optional, default 2)
     example: 1.5
-  min_brightness: 
+  min_brightness:
     description: The min brightness of the entity (optional 1-100, default 1)
     example: 10
   max_brightness:
     description: The max brightness of the entity (optional 1-100, default 100)
-    example: 90  
+    example: 90
 
 variables:
   circadian: sensor.circadian_values
