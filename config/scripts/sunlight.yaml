@@ -56,15 +56,23 @@ fields:
   turn_on_transition:
     description: Transition time to use when turning on the light (optional, default 2)
     example: 1.5
+  min_brightness:
+    description: The min brightness of the entity (optional 1-100, default 1)
+    example: 10
+  max_brightness:
+    description: The max brightness of the entity (optional 1-100, default 100)
+    example: 90
 
 variables:
   circadian: sensor.circadian_values
+  min_brightness: "{{ min_brightness | default(1) }}"
+  max_brightness: "{{ max_brightness | default(100) }}"
   brightness: >-
     {% set percent = states('sensor.circadian_values') | float %}
     {% if percent > 0 %}
-      {{ percent | round }}
+      {{ max_brightness | round }}
     {% else %}
-      {{ (percent + 100) | round }}
+      {{ ((max_brightness - min_brightness) * ((100 + percent) / 100)) + min_brightness | round }}
     {% endif %}
   color_temp: "{{ state_attr(circadian, 'colortemp') | int }}"
   red: "{{ state_attr(circadian, 'rgb_color')[0] | int }}"
