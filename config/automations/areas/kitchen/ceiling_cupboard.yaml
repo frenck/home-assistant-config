@@ -9,6 +9,7 @@ description: Turn off kitchen cupboard lights based on ceiling light state
 alias: kitchen_ceiling_cupboard
 mode: single
 id: 52e25b71-574b-40ae-b40c-69d9428f4dbe
+
 trigger:
   - platform: homeassistant
     event: start
@@ -17,18 +18,20 @@ trigger:
   - platform: state
     entity_id:
       - light.kitchen_ceiling
+
 action:
-  service: >-
-    {%
-      if (
-        is_state('light.kitchen_ceiling', 'on')
-        and (state_attr('light.kitchen_ceiling', 'brightness')|int) > 115
-      )
-    %}
-      switch.turn_on
-    {% else %}
-      switch.turn_off
-    {% endif %}
-  data:
-    entity_id:
-      - switch.kitchen_cupboard
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: light.kitchen_ceiling
+            state: "on"
+          - condition: numeric_state
+            entity_id: light.kitchen_ceiling
+            attribute: brightness
+            above: 115
+        sequence:
+          - service: light.turn_on
+            entity_id: switch.kitchen_cupboard
+    default:
+      - service: light.turn_on
+        entity_id: switch.kitchen_cupboard
