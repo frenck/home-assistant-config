@@ -1,9 +1,20 @@
 ---
-description: Controls the speed of the central ventilation system
-alias: attic_central_ventilation
+alias: Central Ventilation System
+description: >-
+  Controls the speed of the central ventilation system
+
+  My central ventilation system is controlled by Sonoff Dual R2, running
+  ESPHome. The ESPHome code can be found in the `esphome` folder; `esp03.yaml`.
+
+  It handles two cases:
+    - The humidity of the bathroom.
+    - Turn on ventilation when someone visits the restroom long enough to
+      indicate it is a number 2 ;)
+
 id: c2153826-fa86-4448-91a5-53791f86a5f5
 mode: single
 max_exceeded: silent
+
 trigger:
   - platform: homeassistant
     event: start
@@ -16,14 +27,15 @@ trigger:
       - switch.attic_ventilation_manual_mode
   - platform: state
     entity_id: light.restroom
-    to: 'off'
+    to: "off"
     for:
       minutes: 10
   - platform: state
     entity_id: light.restroom
-    to: 'on'
+    to: "on"
     for:
       minutes: 3
+
 action:
   choose:
     # High speed
@@ -40,7 +52,7 @@ action:
               above: input_number.setting_bathroom_humidity_high
             - condition: state
               entity_id: light.restroom
-              state: 'on'
+              state: "on"
               for:
                 minutes: 3
       sequence:
@@ -50,6 +62,7 @@ action:
           data:
             entity_id: fan.attic_ventilation
             speed: high
+
     # Low speed
     - conditions:
         - condition: numeric_state
@@ -63,6 +76,7 @@ action:
           entity_id: fan.attic_ventilation
           data:
             speed: low
+
   default:
     # Default to off
     - service: fan.turn_off
