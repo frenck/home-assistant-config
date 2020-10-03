@@ -28,6 +28,7 @@ config/neighbours
 config/options.xml
 config/OZW_Log.txt
 config/pyozw.sqlite
+config/scripts.yaml
 config/secrets.yaml
 config/zwcfg_*
 config/zwscene.xml
