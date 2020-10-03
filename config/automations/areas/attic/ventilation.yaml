@@ -52,6 +52,9 @@ action:
               state: armed_home
         - condition: or
           conditions:
+            - condition: state
+              entity_id: binary_sensor.attic_boiler_hot_tap_water
+              state: "on"
             - condition: numeric_state
               entity_id: sensor.bathroom_humidity
               above: input_number.setting_bathroom_humidity_high
