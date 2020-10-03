@@ -1,0 +1,29 @@
+---
+alias: Automatic Ventilation On
+description: >-
+  Reset / turn back on my attic automatic ventilation when alarm is armed,
+  or early in the morning.
+
+  It gets turned off when a manual override is detected, but will reset itself
+  every night, or when the alarm gets armed.
+
+id: 6f21afca-6918-4dca-aae4-75284574f97f
+mode: queued
+
+trigger:
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to:
+      - armed_away
+      - armed_home
+  - platform: time
+    at: input_datetime.setting_automation_reset
+
+condition:
+  - condition: state
+    entity_id: input_boolean.attic_automatic_ventilation
+    state: "off"
+
+action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.attic_automatic_ventilation

@@ -3,5 +3,4 @@
 # List of entities that is exposed to HomeKit/Siri
 # From area: Attic
 #
-[]
-# - fan.attic_ventilation
+- fan.attic_ventilation

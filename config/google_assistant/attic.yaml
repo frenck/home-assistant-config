@@ -3,6 +3,4 @@
 # List of entities that is exposed to Google Assistant
 # From area: Attic
 #
-[]
-# - fan.attic_ventilation
-
+- fan.attic_ventilation

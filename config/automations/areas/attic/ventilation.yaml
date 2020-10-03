@@ -1,5 +1,5 @@
 ---
-alias: Central Ventilation System
+alias: Ventilation
 description: >-
   Controls the speed of the central ventilation system
 
@@ -35,6 +35,11 @@ trigger:
     to: "on"
     for:
       minutes: 3
+
+condition:
+  - condition: state
+    entity_id: input_boolean.attic_automatic_ventilation
+    state: "on"
 
 action:
   choose:
@@ -73,8 +78,8 @@ action:
         - service: fan.turn_on
           entity_id: fan.attic_ventilation
         - service: fan.set_speed
-          entity_id: fan.attic_ventilation
           data:
+            entity_id: fan.attic_ventilation
             speed: low
 
   default:

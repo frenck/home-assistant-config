@@ -1,0 +1,31 @@
+---
+alias: Automatic Ventilation Off
+description: >-
+  Turn off automatic ventilation controls when a user made manual changes.
+
+  It turns off a input_boolean when the light is changed by a user.
+  This allows me to know if the fan is manually overriden, so I can stop
+  automating the fan. The input_boolean resets based on other factors,
+  for example, the alarm got armed or after a certain time.
+
+id: 68b8969a-b4c7-4d67-a1ff-49cd7cb1d0eb
+mode: queued
+
+trigger:
+  - platform: state
+    entity_id:
+      - fan.attic_ventilation
+      - switch.attic_ventilation_manual_mode
+      - switch.attic_ventilation_speed_high
+      - switch.attic_ventilation_speed_low
+      - switch.attic_ventilation_speed_off
+
+condition:
+  - condition: state
+    entity_id: input_boolean.attic_automatic_ventilation
+    state: "on"
+  - "{{ trigger.to_state.context.user_id != None }}"
+
+action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.attic_automatic_ventilation

@@ -6,11 +6,11 @@
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
 fan.attic_ventilation:
-  name: Centrale Ventilatie
+  name: Ventilatie
   aliases:
+    - ventilatie
     - centrale ventilatie
     - afzuiging
     - central ventilation
-    - ventilatie
     - ventilation
   room: Zolder
