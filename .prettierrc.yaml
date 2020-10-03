@@ -1,3 +1,9 @@
+---
+# Configuration file for Prettier
+#
+# Prettier formats my Home Assistant files automatically,
+# this makes things look consistently.
+#
 printWidth: 88
 tabWidth: 2
 useTabs: true
