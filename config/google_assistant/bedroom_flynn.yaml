@@ -3,6 +3,4 @@
 # List of entities that is exposed to Google Assistant
 # From area: Bedroom Flynn
 #
-[]
-# - climate.bedroom_flynn
-# - light.bedroom_lilly_bedside
+- climate.bedroom_flynn
