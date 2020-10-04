@@ -1,8 +1,11 @@
 ---
-description: Automate Bedroom Lilly Climate
-alias: bedroom_lilly_climate
+alias: Climate
+description: >-
+  Controls the thermostat on Lilly's bedroom.
+
 id: 48fa4f17-9a3b-4085-99ad-e16cbad5131f
 mode: single
+
 trigger:
   - platform: homeassistant
     event: start
@@ -12,19 +15,23 @@ trigger:
     at:
       - "07:00:00"
       - "17:30:00"
+
 action:
-  choose:
-    - conditions:
-        - condition: time
-          after: "17:30:00"
-          before: "07:00:00"
-      sequence:
-        - service: climate.set_temperature
+  - choose:
+      - conditions:
+          - condition: time
+            after: "17:30:00"
+            before: "07:00:00"
+        sequence:
+          - service: climate.set_temperature
+            data:
+              entity_id: climate.bedroom_lilly
+              hvac_mode: heat
+              temperature: 19.0
+
+    default:
+      - service: climate.set_temperature
+        data:
           entity_id: climate.bedroom_lilly
-          data:
-            temperature: 19.0
-  default:
-    - service: climate.set_temperature
-      entity_id: climate.bedroom_lilly
-      data:
-        temperature: 17.0
+          hvac_mode: heat
+          temperature: 17.0
