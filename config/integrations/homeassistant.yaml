@@ -5,10 +5,5 @@
 # main configuration.yaml.
 #
 homeassistant:
-
   # Lets me customize individual entities
   customize: !include_dir_merge_named ../customizations/entities
-
-  # Lets me custimize all entities in a domain
-  customize_domain: !include_dir_merge_named ../customizations/domains
-
