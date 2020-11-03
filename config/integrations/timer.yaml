@@ -1,0 +1,10 @@
+---
+# The timer integration aims to simplify automations based on (dynamic)
+# durations.
+#
+# https://www.home-assistant.io/integrations/timer
+#
+# I don't store my timer entities in my YAML configuration,
+# instead I manage them via the Home Assistant frontend.
+#
+timer: ~
