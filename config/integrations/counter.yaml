@@ -1,0 +1,9 @@
+---
+# The counter integration allows one to count occurrences fired by automations.
+#
+# https://www.home-assistant.io/integrations/counter
+#
+# I don't store my counter entities in my YAML configuration,
+# instead I manage them via the Home Assistant frontend.
+#
+counter: ~
