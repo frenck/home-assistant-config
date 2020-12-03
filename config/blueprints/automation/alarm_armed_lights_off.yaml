@@ -3,10 +3,12 @@ blueprint:
   name: Turn off lights when the alarm gets armed
   description: >
     A blueprint that turns off the selected lights when the alarm get armed.
+
   domain: automation
   input:
     alarm:
       name: Alarm Control Panel
+      default: alarm_control_panel.home_alarm
       description: Alarm Control Panel to react on
       selector:
         entity:
@@ -40,6 +42,10 @@ blueprint:
             domain: light
 
 trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: automation_reloaded
   - platform: state
     entity_id: !input alarm
     to:
