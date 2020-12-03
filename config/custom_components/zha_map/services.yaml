@@ -1,4 +1,0 @@
-# Describes the format for available automation services
-
-scan_now:
-  description: "Start unscheduled topology scan, preempting one in-progress"
