@@ -5,9 +5,11 @@
  *
  */
 
-const __VERSION = "0.1.2";
+const __VERSION = "0.1.5";
 
-const LitElement = Object.getPrototypeOf(customElements.get("hui-view"));
+const LitElement = customElements.get('hui-masonry-view')
+  ? Object.getPrototypeOf(customElements.get('hui-masonry-view'))
+  : Object.getPrototypeOf(customElements.get('hui-view'));
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 
@@ -540,8 +542,8 @@ class PowerWheelCard extends LitElement {
             class="cell ${cellType} ${cellObj.hasSensor && !visibilityClass ? 'sensor' : ''} ${visibilityClass || ''}" 
             @click="${cellObj.hasSensor && !visibilityClass ? () => this._handleClick(cellObj.stateObj) : () => {}}"
             title="${cellObj.hasSensor ? `More info${cellObj.stateObj.attributes.friendly_name ? ':\n' + cellObj.stateObj.attributes.friendly_name : ''}` : ''}">
-        <ha-icon id="icon-${id}" class="${cellObj.classValue}" icon="${cellObj.icon}"></ha-icon>
-        <div id="value-${id}" class="value">
+        <ha-icon id="icon-${id}" class="icon ${cellObj.classValue} ${cellType}-icon" icon="${cellObj.icon}"></ha-icon>
+        <div id="value-${id}" class="value ${cellType}-value">
           ${cellType === 'arrow' && (cellObj.val === 0 || Math.abs(cellObj.val) === Math.abs(hideValue1) || Math.abs(cellObj.val) === Math.abs(hideValue2)) ? '' : cellObj.valueStr}
           ${cellObj.valSoC ? cellObj.valueStrSoC : ''}
         </div>
