@@ -1,7 +1,0 @@
----
-# Visualization of my Zigbee devices
-#
-# https://github.com/dmulcahey/zha-network-visualization-card
-# https://github.com/zha-ng/zha-map
-#
-zha_map: ~
