@@ -1,0 +1,19 @@
+---
+alias: Key Lights
+description: >-
+  Turns on my lights for streaming and video conferencing.
+  This include an Elgato Key Light.
+
+id: b40e9942-6766-4f0c-ae84-479c6474d29b
+mode: queued
+
+use_blueprint:
+  path: elgato_keylight_camera.yaml
+  input:
+    camera: binary_sensor.frenck_hackbook_camera
+    brightness: 75
+    temperature: 250
+    key_light:
+      device_id:
+        # Elgato Key Light device ID
+        - ab6f4521da014bf2b4cd5d725cacdfec

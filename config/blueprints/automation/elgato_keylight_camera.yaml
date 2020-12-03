@@ -1,0 +1,65 @@
+---
+blueprint:
+  name: Elgato - Activate Key Light on camera use
+  description: >
+    Automatically turn on one or more Elgato Key Lights, when camera use has
+    been detected by the Home Assistant Companion App for macOS.
+  domain: automation
+  input:
+    camera:
+      name: Camera
+      description: Camera to trigger on
+      selector:
+        entity:
+          integration: mobile_app
+          domain: binary_sensor
+    key_light:
+      name: Key Light
+      description: Select one or multiple Key Light(s) to turn on
+      selector:
+        target:
+          device:
+            integration: elgato
+          entity:
+            integration: elgato
+            domain: light
+    brightness:
+      name: Brightness
+      description: Key Light brightness when turned on
+      default: 75
+      selector:
+        number:
+          min: 0
+          max: 100
+          mode: slider
+          step: 1
+          unit_of_measurement: "%"
+    temperature:
+      name: Color temperature
+      description: Key Light color temperature when turned on
+      default: 250
+      selector:
+        number:
+          min: 143
+          max: 344
+          mode: slider
+          step: 1
+          unit_of_measurement: mired
+trigger:
+  - platform: state
+    entity_id: !input camera
+action:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: !input camera
+            state: "on"
+        sequence:
+          - service: light.turn_on
+            target: !input key_light
+            data:
+              brightness_pct: !input brightness
+              color_temp: !input temperature
+    default:
+      - service: light.turn_off
+        target: !input key_light
