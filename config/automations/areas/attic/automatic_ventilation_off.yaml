@@ -11,21 +11,13 @@ description: >-
 id: 68b8969a-b4c7-4d67-a1ff-49cd7cb1d0eb
 mode: queued
 
-trigger:
-  - platform: state
-    entity_id:
+use_blueprint:
+  path: automatic_control_off.yaml
+  input:
+    toggle: input_boolean.attic_automatic_ventilation
+    entities:
       - fan.attic_ventilation
       - switch.attic_ventilation_manual_mode
       - switch.attic_ventilation_speed_high
       - switch.attic_ventilation_speed_low
       - switch.attic_ventilation_speed_off
-
-condition:
-  - condition: state
-    entity_id: input_boolean.attic_automatic_ventilation
-    state: "on"
-  - "{{ trigger.to_state.context.user_id != None }}"
-
-action:
-  - service: input_boolean.turn_off
-    entity_id: input_boolean.attic_automatic_ventilation

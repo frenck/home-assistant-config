@@ -10,20 +10,7 @@ description: >-
 id: 6f21afca-6918-4dca-aae4-75284574f97f
 mode: queued
 
-trigger:
-  - platform: state
-    entity_id: alarm_control_panel.home_alarm
-    to:
-      - armed_away
-      - armed_home
-  - platform: time
-    at: input_datetime.setting_automation_reset
-
-condition:
-  - condition: state
-    entity_id: input_boolean.attic_automatic_ventilation
-    state: "off"
-
-action:
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.attic_automatic_ventilation
+use_blueprint:
+  path: automatic_control_on.yaml
+  input:
+    toggle: input_boolean.attic_automatic_ventilation

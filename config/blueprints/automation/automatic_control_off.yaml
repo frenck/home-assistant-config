@@ -1,0 +1,40 @@
+---
+blueprint:
+  name: Automatic Control Off
+  description: >-
+    Turn off automatic controls when a user made manual changes.
+
+    It turns off a input_boolean when the something is changed by a user.
+    This allows me to know if the something is manually overriden, so I can stop
+    automating it. The input_boolean resets based on other factors,
+    for example, the alarm got armed or after a certain time.
+
+  domain: automation
+  input:
+    toggle:
+      name: Toggle Helper
+      description: Toggle helper for saving automatic control state
+      selector:
+        entity:
+          domain: input_boolean
+    entities:
+      name: Entities
+      description: Entity to monitor for changes
+
+mode: single
+max_exceeded: silent
+
+trigger:
+  - platform: state
+    entity_id: !input entities
+
+condition:
+  - condition: state
+    entity_id: !input toggle
+    state: "on"
+  - "{{ trigger.to_state.context.user_id != None }}"
+
+action:
+  - service: input_boolean.turn_off
+    target:
+      entity_id: !input toggle

@@ -1,0 +1,54 @@
+---
+blueprint:
+  name: Automatic Control On
+  description: >-
+    Reset / turn back on my automatic controls when alarm is armed,
+    or early in the morning.
+
+    It gets turned off when a manual override is detected, but will reset itself
+    every night, or when the alarm gets armed.
+
+  domain: automation
+  input:
+    toggle:
+      name: Toggle Helper
+      description: Toggle helper for saving automatic control state
+      selector:
+        entity:
+          domain: input_boolean
+    alarm:
+      name: Alarm Control Panel
+      description: Alarm Control Panel to respond to
+      default: alarm_control_panel.home_alarm
+      selector:
+        entity:
+          domain: alarm_control_panel
+    time:
+      name: Reset time
+      description: Time helper providing the time to reset the automatic control
+      default: input_datetime.setting_automation_reset
+      selector:
+        entity:
+          domain: input_datetime
+
+mode: queued
+
+trigger:
+  - platform: state
+    entity_id: !input alarm
+    to:
+      - armed_away
+      - armed_home
+      - armed_night
+  - platform: time
+    at: !input time
+
+condition:
+  - condition: state
+    entity_id: !input toggle
+    state: "off"
+
+action:
+  - service: input_boolean.turn_on
+    target:
+      entity_id: !input toggle
