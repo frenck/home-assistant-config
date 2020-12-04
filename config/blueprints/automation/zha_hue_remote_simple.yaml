@@ -1,0 +1,152 @@
+---
+blueprint:
+  name: ZHA - Philips Hue Dimmer Remote Simple Light Control (RWL021)
+  description: |
+    A simple Hue Remote blueprint to control lights.
+
+    The "on" button, turns on the lights to the set brightness in the blueprint
+    (which defaults to 50%). Holding the "on" button for a second, turns up the
+    light to a 100% brightness instantly.
+
+    Dim up/down buttons will change the brightness smoothly and can be pressed
+    and hold until the brightness is satisfactory.
+
+    Finally, the off button, turns the light off.
+
+  domain: automation
+  input:
+    remote:
+      name: Remote
+      description: Philips Hue Remote (RWL021) to use
+      selector:
+        device:
+          integration: zha
+          manufacturer: Philips
+          model: RWL021
+    light:
+      name: Light(s)
+      description: The light(s) to control
+      selector:
+        target:
+          entity:
+            domain: light
+    force_brightness:
+      name: Force turn on brightness
+      description: >
+        Force the brightness to the set level below, when the "on" button on
+        the light is pushed
+      default: false
+      selector:
+        boolean:
+    brightness:
+      name: Brightness
+      description: Brightness of the light(s) when turning on
+      default: 50
+      selector:
+        number:
+          min: 0
+          max: 100
+          mode: slider
+          step: 1
+          unit_of_measurement: "%"
+
+mode: queued
+max_exceeded: silent
+
+variables:
+  force_brightness: !input force_brightness
+
+trigger:
+  - platform: device
+    domain: zha
+    device_id: !input remote
+    type: remote_button_short_press
+    subtype: turn_on
+  - platform: device
+    domain: zha
+    device_id: !input remote
+    type: remote_button_long_press
+    subtype: turn_on
+  - platform: device
+    domain: zha
+    device_id: !input remote
+    type: remote_button_short_press
+    subtype: dim_up
+  - platform: device
+    domain: zha
+    device_id: !input remote
+    type: remote_button_long_press
+    subtype: dim_up
+  - platform: device
+    domain: zha
+    device_id: !input remote
+    type: remote_button_short_press
+    subtype: dim_down
+  - platform: device
+    domain: zha
+    device_id: !input remote
+    type: remote_button_long_press
+    subtype: dim_down
+  - platform: device
+    domain: zha
+    device_id: !input remote
+    type: remote_button_short_press
+    subtype: turn_off
+
+action:
+  - choose:
+      - conditions:
+          - "{{ trigger.event.data.command == 'on_press' }}"
+          - "{{ force_brightness }}"
+        sequence:
+          - service: light.turn_on
+            target: !input light
+            data:
+              transition: 1
+              brightness_pct: !input brightness
+      - conditions: "{{ trigger.event.data.command == 'on_press' }}"
+        sequence:
+          - service: light.turn_on
+            target: !input light
+            data:
+              transition: 1
+      - conditions: "{{ trigger.event.data.command == 'on_hold' }}"
+        sequence:
+          - service: light.turn_on
+            target: !input light
+            data:
+              brightness_pct: 100
+      - conditions: "{{ trigger.event.data.command == 'up_press' }}"
+        sequence:
+          - service: light.turn_on
+            target: !input light
+            data:
+              brightness_step_pct: 10
+              transition: 1
+      - conditions: "{{ trigger.event.data.command == 'up_hold' }}"
+        sequence:
+          - service: light.turn_on
+            target: !input light
+            data:
+              brightness_step_pct: 5
+              transition: 1
+      - conditions: "{{ trigger.event.data.command == 'down_press' }}"
+        sequence:
+          - service: light.turn_on
+            target: !input light
+            data:
+              brightness_step_pct: -10
+              transition: 1
+      - conditions: "{{ trigger.event.data.command == 'down_hold' }}"
+        sequence:
+          - service: light.turn_on
+            target: !input light
+            data:
+              brightness_step_pct: -5
+              transition: 1
+      - conditions: "{{ trigger.event.data.command == 'off_press' }}"
+        sequence:
+          - service: light.turn_off
+            target: !input light
+            data:
+              transition: 1
