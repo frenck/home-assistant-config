@@ -131,7 +131,7 @@ action:
           - "{{ args == [0, 84] }}"
         sequence:
           - repeat:
-              count: 20
+              count: 10
               sequence:
                 - service: light.turn_on
                   target: !input light
@@ -159,7 +159,7 @@ action:
           - "{{ args == [1, 84] }}"
         sequence:
           - repeat:
-              count: 20
+              count: 10
               sequence:
                 - service: light.turn_on
                   target: !input light
