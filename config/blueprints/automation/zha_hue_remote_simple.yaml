@@ -4,9 +4,9 @@ blueprint:
   description: |
     A simple Hue Remote blueprint to control lights.
 
-    The "on" button, turns on the lights to the set brightness in the blueprint
-    (which defaults to 50%). Holding the "on" button for a second, turns up the
-    light to a 100% brightness instantly.
+    The "on" button, turns on the lights to the last set brightness (unless
+    the force brightness is toggled on in the blueprint). Holding the "on"
+    button for a second, turns up the light to a 100% brightness instantly.
 
     Dim up/down buttons will change the brightness smoothly and can be pressed
     and hold until the brightness is satisfactory.
@@ -34,7 +34,7 @@ blueprint:
       name: Force turn on brightness
       description: >
         Force the brightness to the set level below, when the "on" button on
-        the light is pushed
+        the remote is pushed
       default: false
       selector:
         boolean:
