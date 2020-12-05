@@ -1,6 +1,6 @@
 ---
-description: Turns off the doorbell during the House its silent hours
-alias: porch_doorbell_chime
+description: Turns off the doorbell during the house its silent hours
+alias: outside_doorbell_chime
 id: e809a056-4854-4b66-840f-50b5c7f41cf2
 mode: queued
 trigger:
@@ -20,7 +20,9 @@ action:
             before: input_datetime.setting_house_silent_hours_end
         sequence:
           - service: switch.turn_off
-            entity_id: switch.porch_doorbell_chime
+            target:
+              entity_id: switch.front_doorbell_chime
     default:
       - service: switch.turn_on
-        entity_id: switch.porch_doorbell_chime
+        target:
+          entity_id: switch.front_doorbell_chime
