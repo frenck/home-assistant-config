@@ -22,7 +22,6 @@ trigger:
     event_type: automation_reloaded
   - platform: state
     entity_id:
-      - fan.attic_ventilation
       - sensor.bathroom_humidity
       - switch.attic_ventilation_manual_mode
   - platform: state
