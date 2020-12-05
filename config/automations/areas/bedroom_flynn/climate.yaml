@@ -41,15 +41,17 @@ action:
             before: "07:00:00"
         sequence:
           - service: climate.set_temperature
-            data:
+            target:
               entity_id: climate.bedroom_flynn
+            data:
               hvac_mode: heat
               temperature: 19.0
 
     # Default low
     default:
       - service: climate.set_temperature
-        data:
+        target:
           entity_id: climate.bedroom_flynn
+        data:
           hvac_mode: heat
           temperature: 15.0
