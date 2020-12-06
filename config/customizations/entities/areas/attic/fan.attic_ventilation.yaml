@@ -1,8 +1,0 @@
----
-#
-# Customizes the central ventilation name in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-fan.attic_ventilation:
-  friendly_name: Central Ventilation
