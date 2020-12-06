@@ -6,7 +6,7 @@
 # https://www.home-assistant.io/integrations/google_assistant/#entity_config
 #
 light.living_room_bartop:
-  name: Bartop
+  name: Bar
   aliases:
     - woonkamer bar
     - woonkamer bartop
