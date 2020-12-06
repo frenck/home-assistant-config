@@ -1,0 +1,40 @@
+---
+alias: Lights when entering the garden
+description: >-
+  Turn up the brigthness of the garden lights when entering.
+
+  This ensures good light when walking into the garden.
+
+id: 69cbe9c2-a60f-486a-98d7-8ad94cf48f9a
+mode: queued
+
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: automation_reloaded
+  - platform: state
+    entity_id:
+      - binary_sensor.garden_door
+      - input_boolean.garden_automatic_lighting
+
+condition:
+  - condition: state
+    entity_id:
+      - binary_sensor.garden_door
+      - input_boolean.garden_automatic_lighting
+    state: "on"
+
+action:
+  - service: script.sunlight
+    data:
+      entity_id:
+        - light.garden_border_back_left
+        - light.garden_border_back_right
+        - light.garden_border_front
+        - light.garden_veranda_wall_left
+        - light.garden_veranda_wall_right
+        - light.garden_veranda_wall_shed
+        - light.garden_wall_left
+        - light.garden_wall_right
+      brightness: 75

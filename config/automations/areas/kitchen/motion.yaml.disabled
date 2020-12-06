@@ -1,0 +1,38 @@
+---
+description: Turn kitchen lights to occupancy scene when motion/occupancy is detected
+alias: kitchen_motion
+id: 62127853-30de-4385-a9c6-a4031d28ab42
+mode: queued
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: event
+    event_type: automation_reloaded
+  - platform: state
+    entity_id:
+      - alarm_control_panel.home_alarm
+      - binary_sensor.kitchen_motion
+      - binary_sensor.kitchen_occupancy
+      - light.kitchen_ceiling
+      - sensor.kitchen_luminosity
+      - sun.sun
+condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: disarmed
+  - condition: state
+    entity_id: binary_sensor.kitchen_motion
+    state: 'on'
+  - condition: numeric_state
+    entity_id: sensor.kitchen_luminosity
+    below: 50
+  - condition: numeric_state
+    entity_id: sun.sun
+    attribute: elevation
+    below: 3.0
+action:
+  - service: scene.turn_on
+    data:
+      transition: 2.5
+      entity_id:
+        - scene.kitchen_motion

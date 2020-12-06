@@ -39,11 +39,8 @@ action:
             entity_id: binary_sensor.hall_motion
             state: "on"
           - condition: numeric_state
-            entity_id: sensor.hall_luminosity
-            below: 50
-          - condition: numeric_state
-            entity_id: sensor.porch_luminosity
-            below: 500
+            entity_id: sensor.outside_luminosity
+            below: 400
         sequence:
           - service: script.sunlight
             data:
