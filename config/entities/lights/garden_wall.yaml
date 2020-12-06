@@ -1,0 +1,12 @@
+---
+# Light group: Garden Wall
+#
+# Combines all lights wall lights in the garden into a single light.
+#
+# https://www.home-assistant.io/integrations/light.group/
+#
+platform: group
+name: garden_wall
+entities:
+  - light.garden_wall_left
+  - light.garden_wall_right

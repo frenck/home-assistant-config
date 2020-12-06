@@ -1,8 +1,17 @@
 ---
-description: Turn garden lights on
-alias: garden_lights_on
+alias: Garden Lights On
+description: >-
+  Turn garden lights on.
+
+  It turns on the garden lights, when it gets dark. It also turns them
+  back to automatic lighting, when the door is closed for some time again.
+
+  Every 5 minutes, this automation is triggered as well. If all conditions match
+  it will adjust the lights.
+
 id: 5dc7b352-589a-4ac1-b59a-009270699576
 mode: single
+
 trigger:
   - platform: homeassistant
     event: start
@@ -17,13 +26,16 @@ trigger:
   - platform: state
     entity_id:
       - binary_sensor.garden_door
-    to: 'off'
+    to: "off"
     for:
       minutes: 5
+  - platform: time_pattern
+    minutes: 5
+
 condition:
   - condition: state
     entity_id: input_boolean.garden_automatic_lighting
-    state: 'on'
+    state: "on"
   - condition: state
     entity_id: alarm_control_panel.home_alarm
     state: disarmed
@@ -31,28 +43,26 @@ condition:
     conditions:
       - condition: state
         entity_id: binary_sensor.garden_door
-        state: 'unavailable'
+        state: "unavailable"
       - condition: state
         entity_id: binary_sensor.garden_door
-        state: 'off'
+        state: "off"
         for:
           minutes: 5
   - condition: numeric_state
     entity_id: sensor.garden_luminosity
     below: 300.0
+
 action:
-  - service: switch.turn_on
+  - service: script.sunlight
     data:
-      entity_id:
-        - switch.circadian_lighting_garden
-  - service: light.turn_on
-    data:
-      entity_id:
-        - light.garden_dining_table
-        - light.garden_veranda_wall
-        - light.garden_wall
-      transition: 5
-      kelvin: >-
-        {{ state_attr('sensor.circadian_values', 'colortemp') | int }}
-      brightness_pct: >-
-        {{ state_attr('switch.circadian_lighting_garden', 'brightness') | int }}
+      entities:
+        - light.garden_border_back_left
+        - light.garden_border_back_right
+        - light.garden_border_front
+        - light.garden_veranda_wall_left
+        - light.garden_veranda_wall_right
+        - light.garden_veranda_wall_shed
+        - light.garden_wall_left
+        - light.garden_wall_right
+      turn_on: true

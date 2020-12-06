@@ -1,23 +1,18 @@
 ---
-# This automation needs a bit of explaination.
-#
-# It turns off a input_boolean when the light is changed by a user.
-# This allows me to know if the light is manually overriden, so I can stop
-# automating that light. The input_boolean resets based on other factors,
-# for example, the alarm got armed or after a certain time.
-#
-description: Turn off automatic hall lighting when a user made manual changes
-alias: hall_automatic_lighting_off
+alias: Hall Automatic Lighting Off
+description: >-
+  Turn off automatic haal lighting when a user made manual changes
+
+  It turns off a input_boolean when the lights are changed by a user.
+  This allows me to know if the lights are manually overriden, so I can stop
+  automating those lights. The input_boolean resets based on other factors,
+  for example, the alarm got armed or after a certain time.
+
 id: 2a92864d-2ff3-4888-9569-d0267303e9ff
-mode: queued
-trigger:
-  - platform: state
-    entity_id: light.hall_ceiling
-condition:
-  - condition: state
-    entity_id: input_boolean.hall_automatic_lighting
-    state: 'on'
-  - "{{ trigger.to_state.context.user_id != None }}"
-action:
-  - service: input_boolean.turn_off
-    entity_id: input_boolean.hall_automatic_lighting
+
+use_blueprint:
+  path: automatic_control_off.yaml
+  input:
+    toggle: input_boolean.hall_automatic_lighting
+    entities:
+      - light.hall_ceiling

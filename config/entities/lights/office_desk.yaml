@@ -1,6 +1,0 @@
----
-platform: group
-name: office_desk
-entities:
-  - light.office_deks_right
-  - light.office_desk_left

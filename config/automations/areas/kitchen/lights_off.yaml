@@ -1,25 +1,12 @@
 ---
-description: Turn lights off in our kitchen when the alarm is armed
-alias: kitchen_lights_off
+alias: Kitchen Lights Off
+description: >-
+  Turn lights off in our kitchen when the alarm is armed.
+
 id: 158fc336-81b5-4ba1-b060-fee6192d9c7d
-mode: single
-trigger:
-  - platform: homeassistant
-    event: start
-  - platform: event
-    event_type: automation_reloaded
-  - platform: state
-    entity_id:
-      - alarm_control_panel.home_alarm
-condition:
-  - condition: state
-    entity_id: alarm_control_panel.home_alarm
-    state:
-      - armed_away
-      - armed_home
-action:
-  - service: light.turn_off
-    data:
-      entity_id:
-        - light.kitchen
-      transition: 5
+
+use_blueprint:
+  path: alarm_armed_lights_off.yaml
+  input:
+    lights:
+      area_id: kitchen

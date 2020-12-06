@@ -1,8 +1,11 @@
 ---
-description: Turn the restroom lights off when no motion
-alias: restroom_lights_off
+alias: Restroom Lights Off
+description: >-
+  Turn the restroom lights off when no motion.
+
 id: 372ffe5b-271e-421c-b8a2-2eb9f4b2ebbb
 mode: single
+
 trigger:
   - platform: homeassistant
     event: start
@@ -15,13 +18,14 @@ trigger:
   - platform: state
     entity_id:
       - binary_sensor.restroom_motion
-    to: 'off'
+    to: "off"
     for:
       minutes: 1
+
 condition:
   - condition: state
     entity_id: light.restroom
-    state: 'on'
+    state: "on"
   - condition: or
     conditions:
       - condition: state
@@ -31,12 +35,13 @@ condition:
           - armed_home
       - condition: state
         entity_id: binary_sensor.restroom_motion
-        state: 'off'
+        state: "off"
         for:
           minutes: 1
+
 action:
   service: light.turn_off
+  target:
+    area_id: restroom
   data:
-    entity_id:
-      - light.restroom
     transition: 5

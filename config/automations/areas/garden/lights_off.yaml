@@ -1,8 +1,12 @@
 ---
-description: Turn garden lights off
-alias: garden_lights_off
+alias: Garden Lights off
+description: >-
+  Turns off the lights in the garden based on the state of the alarm,
+  or based on luminosity.
+
 id: c9c64055-42cd-41c7-99f6-dbce7e4f915d
 mode: single
+
 trigger:
   - platform: homeassistant
     event: start
@@ -13,11 +17,8 @@ trigger:
       - alarm_control_panel.home_alarm
       - input_boolean.garden_automatic_lighting
       - sensor.garden_luminosity
+
 condition:
-  - condition: state
-    entity_id:
-      - light.garden
-    state: 'on'
   - condition: or
     conditions:
       - condition: state
@@ -29,19 +30,14 @@ condition:
         conditions:
           - condition: state
             entity_id: input_boolean.garden_automatic_lighting
-            state: 'on'
+            state: "on"
           - condition: numeric_state
             entity_id: sensor.garden_luminosity
             above: 400.0
+
 action:
-  - service: switch.turn_off
-    data:
-      entity_id:
-        - switch.circadian_lighting_garden
   - service: light.turn_off
+    target:
+      area_id: garden
     data:
-      entity_id:
-        - light.garden_dining_table
-        - light.garden_veranda_wall
-        - light.garden_wall
       transition: 5

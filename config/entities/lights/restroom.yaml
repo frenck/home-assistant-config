@@ -1,0 +1,12 @@
+---
+# Light group: Restroom
+#
+# This light group combines the restroom lights into a single light.
+#
+# https://www.home-assistant.io/integrations/light.group/
+#
+platform: group
+name: restroom
+entities:
+  - light.restroom_1
+  - light.restroom_2

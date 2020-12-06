@@ -1,12 +1,16 @@
 ---
-description: Send notifications when doorbell is pushed
-alias: outside_doorbell_notification
+alias: Outside Doorbell Notification
+description: >-
+  Send notifications when doorbell is pushed.
+
 id: e91ddd71-0cd9-40d9-aee9-63ed93210013
 mode: single
+
 trigger:
   - platform: state
-    entity_id: binary_sensor.front_doorbell
+    entity_id: binary_sensor.outside_doorbell
     to: "on"
+
 action:
   - service: notify.frenck_iphone
     data:

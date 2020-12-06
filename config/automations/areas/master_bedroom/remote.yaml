@@ -1,0 +1,17 @@
+---
+alias: Master Bedroom Remote
+description: >-
+  The master bedroom remote, using the Philips Hue Remote (RWL021).
+
+  It allows for manually change the lights in the master bedroom.
+
+id: feb16b7a-e39a-4976-a3d1-bb437da2851e
+
+use_blueprint:
+  path: zha_hue_remote_simple.yaml
+  input:
+    remote: 5110fba3545944be8e22d984e578b55d
+    light:
+      entity_id: light.master_bedroom_ceiling
+    force_brightness: true
+    brightness: 40

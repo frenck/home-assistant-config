@@ -1,5 +1,5 @@
 ---
-alias: Climate
+alias: Bedroom Flynn Climate
 description: >-
   Controls the thermostat in Flynn's bedroom.
 
@@ -51,7 +51,7 @@ action:
     default:
       - service: climate.set_temperature
         target:
-          entity_id: climate.bedroom_flynn
+          area_id: bedroom_flynn
         data:
           hvac_mode: heat
           temperature: 15.0

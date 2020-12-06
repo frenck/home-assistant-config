@@ -1,0 +1,17 @@
+---
+alias: Kitchen Remote
+description: >-
+  The kitchen remote, using the Philips Hue Remote (RWL021).
+
+  It allows for manually change the lights in the kitchen.
+
+id: 52d4f6b3-744c-4d87-81df-6acc80e9121c
+
+use_blueprint:
+  path: zha_hue_remote_simple.yaml
+  input:
+    remote: f8db158a0edf4f2db144c947af227c3e
+    light:
+      entity_id: light.kitchen_ceiling
+    force_brightness: true
+    brightness: 50

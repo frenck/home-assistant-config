@@ -1,0 +1,26 @@
+---
+alias: Living Room Automatic Lighting Off
+description: >-
+  Turn off automatic living room lighting when a user made manual changes.
+
+  It turns off a input_boolean when the lights are changed by a user.
+  This allows me to know if the lights are manually overriden, so I can stop
+  automating those lights. The input_boolean resets based on other factors,
+  for example, the alarm got armed or after a certain time.
+
+id: 9de175d5-ee21-4cb1-88a3-e2ad65d6394f
+
+use_blueprint:
+  path: automatic_control_off.yaml
+  input:
+    toggle: input_boolean.living_room_automatic_lighting
+    entities:
+      - light.living_room_bartop
+      - light.living_room_dining_table
+      - light.living_room_spotlight
+      - light.living_room_television
+      - light.living_room_window_1
+      - light.living_room_window_2
+      - light.living_room_window_3
+      - light.living_room_window_4
+      - light.living_room_window_5

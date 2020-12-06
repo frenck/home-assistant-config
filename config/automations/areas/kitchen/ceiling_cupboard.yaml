@@ -1,12 +1,13 @@
 ---
-# This automation turns on/off the cupboard lights based
-# on the state of the kitchen ceiling light.
-#
-# It is turned on if the kitchen ceiling light is on and
-# at a minimum brightness level. Turned off otherwise.
-#
-description: Turn off kitchen cupboard lights based on ceiling light state
-alias: kitchen_ceiling_cupboard
+alias: Kitchen Cupboard Light
+description: >-
+  Controls the light of the kitchen cupboard, based on the state of the
+  kitchen ceiling light.
+
+  If the kitchen ceiling light is set up brighter; it means something is going
+  on in the kitchen (e.g., cooking, walk-in motions). In those cases, the
+  lights of the cupboard can be switched on as well.
+
 mode: single
 id: 52e25b71-574b-40ae-b40c-69d9428f4dbe
 
@@ -30,8 +31,10 @@ action:
             attribute: brightness
             above: 115
         sequence:
-          - service: light.turn_on
-            entity_id: switch.kitchen_cupboard
+          - service: switch.turn_on
+            target:
+              entity_id: switch.kitchen_cupboard
     default:
-      - service: light.turn_off
-        entity_id: switch.kitchen_cupboard
+      - service: switch.turn_off
+        target:
+          entity_id: switch.kitchen_cupboard

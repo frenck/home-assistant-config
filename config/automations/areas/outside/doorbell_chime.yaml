@@ -1,8 +1,11 @@
 ---
-description: Turns off the doorbell during the house its silent hours
-alias: outside_doorbell_chime
+alias: Outside Doorbell Chime
+description: >-
+  Turns off the doorbell during the house its silent hours.
+
 id: e809a056-4854-4b66-840f-50b5c7f41cf2
 mode: queued
+
 trigger:
   - platform: homeassistant
     event: start
@@ -12,6 +15,7 @@ trigger:
     at:
       - input_datetime.setting_house_silent_hours_start
       - input_datetime.setting_house_silent_hours_end
+
 action:
   - choose:
       - conditions:
@@ -21,8 +25,8 @@ action:
         sequence:
           - service: switch.turn_off
             target:
-              entity_id: switch.front_doorbell_chime
+              entity_id: switch.outside_doorbell_chime
     default:
       - service: switch.turn_on
         target:
-          entity_id: switch.front_doorbell_chime
+          entity_id: switch.outside_doorbell_chime

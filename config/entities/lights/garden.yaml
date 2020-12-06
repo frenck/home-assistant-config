@@ -10,6 +10,12 @@
 platform: group
 name: garden
 entities:
+  - light.garden_border_back_left
+  - light.garden_border_back_right
+  - light.garden_border_front
   - light.garden_dining_table
-  - light.garden_veranda_wall
-  - light.garden_wall
+  - light.garden_veranda_wall_left
+  - light.garden_veranda_wall_right
+  - light.garden_veranda_wall_shed
+  - light.garden_wall_left
+  - light.garden_wall_right

@@ -1,12 +1,12 @@
 ---
-# When the alarm gets disarmed, ensure the vacuum cleaner is docked.
-#
-# We don't want that thing to be in our way when home.
-#
-description: Dock vacuum cleaner when we get home
-alias: living_room_vacuum_dock
+alias: Living Room Vacuum Dock
+description: >-
+  If the alarm gets disarmed, it means we are getting home. In those cases
+  the running vacuum cleaner should run back for its dock.
+
 id: 36eea376-104b-4fc9-8168-b25e389afcab
 mode: queued
+
 trigger:
   - platform: homeassistant
     event: start
@@ -15,13 +15,14 @@ trigger:
   - platform: state
     entity_id:
       - alarm_control_panel.home_alarm
-    to: 'disarmed'
+    to: "disarmed"
+
 condition:
   - condition: state
     entity_id: vacuum.living_room
-    state: 'cleaning'
+    state: "cleaning"
+
 action:
   - service: vacuum.return_to_base
-    data:
-      entity_id:
-        - vacuum.living_room
+    target:
+      entity_id: vacuum.living_room
