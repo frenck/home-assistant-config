@@ -6,7 +6,7 @@
 # ZHA is configured via the UI. These are some advanced configuration option
 # that are currently not available via the UI.
 #
-# https://www.home-assistant.io/integration/zha
+# https://www.home-assistant.io/integrations/zha
 #
 zha:
   zigpy_config:
