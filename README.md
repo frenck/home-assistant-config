@@ -51,7 +51,7 @@ check [the contributor's page][contributors].
 
 MIT License
 
-Copyright (c) 2018-2020 Franck Nijhof
+Copyright (c) 2018-2021 Franck Nijhof
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -80,7 +80,7 @@ SOFTWARE.
 [home-assistant]: https://home-assistant.io
 [issue]: https://github.com/frenck/home-assistant-config/issues
 [license-shield]: https://img.shields.io/github/license/frenck/home-assistant-config.svg
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2021.svg
 [last-commit-shield]: https://img.shields.io/github/last-commit/frenck/home-assistant-config.svg
 [stars-shield]: https://img.shields.io/github/stars/frenck/home-assistant-config.svg?style=social&label=Stars
 [forks-shield]: https://img.shields.io/github/forks/frenck/home-assistant-config.svg?style=social&label=Forks
