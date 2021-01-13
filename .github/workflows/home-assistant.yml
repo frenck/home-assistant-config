@@ -31,6 +31,7 @@ jobs:
 
   home-assistant:
     name: "Home Assistant Core ${{ matrix.version }} Configuration Check"
+    needs: [yamllint]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -39,7 +40,7 @@ jobs:
       - name: ⤵️ Check out configuration from GitHub
         uses: actions/checkout@v2
       - name: 🚀 Run Home Assistant Configuration Check
-        uses: frenck/action-home-assistant@main
+        uses: frenck/action-home-assistant@v1.0.0
         with:
           path: "./config"
           secrets: ./.stubs/secrets.yaml
