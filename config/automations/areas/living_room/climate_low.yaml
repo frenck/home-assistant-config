@@ -33,6 +33,6 @@ condition:
 action:
   - service: climate.set_temperature
     target:
-      are_id: living_room
+      area_id: living_room
     data:
       temperature: 15
