@@ -1,9 +1,9 @@
 """Class for appdaemon apps in HACS."""
 from aiogithubapi import AIOGitHubAPIException
 
+from custom_components.hacs.enums import HacsCategory
 from custom_components.hacs.helpers.classes.exceptions import HacsException
 from custom_components.hacs.helpers.classes.repository import HacsRepository
-from custom_components.hacs.enums import HacsCategory
 
 
 class HacsAppdaemon(HacsRepository):
@@ -50,9 +50,10 @@ class HacsAppdaemon(HacsRepository):
                     self.logger.error("%s %s", self, error)
         return self.validate.success
 
-    async def update_repository(self, ignore_issues=False):
+    async def update_repository(self, ignore_issues=False, force=False):
         """Update."""
-        await self.common_update(ignore_issues)
+        if not await self.common_update(ignore_issues, force):
+            return
 
         # Get appdaemon objects.
         if self.repository_manifest:

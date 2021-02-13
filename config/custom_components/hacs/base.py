@@ -1,13 +1,14 @@
 """Base HACS class."""
 import logging
 from typing import List, Optional
-import attr
+import pathlib
 
+import attr
 from aiogithubapi.github import AIOGitHubAPI
 from aiogithubapi.objects.repository import AIOGitHubAPIRepository
 from homeassistant.core import HomeAssistant
 
-from .enums import HacsStage
+from .enums import HacsDisabledReason, HacsStage
 from .helpers.functions.logger import getLogger
 from .models.core import HacsCore
 from .models.frontend import HacsFrontend
@@ -106,3 +107,20 @@ class HacsBase(HacsBaseAttributes):
     def hass(self, value: HomeAssistant) -> None:
         """Set the value for the default property."""
         self._hass = value
+
+    @property
+    def integration_dir(self) -> pathlib.Path:
+        """Return the HACS integration dir."""
+        return pathlib.Path(__file__).parent
+
+    def disable(self, reason: HacsDisabledReason) -> None:
+        """Disable HACS."""
+        self.system.disabled = True
+        self.system.disabled_reason = reason
+        self.log.error("HACS is disabled - %s", reason)
+
+    def enable(self) -> None:
+        """Enable HACS."""
+        self.system.disabled = False
+        self.system.disabled_reason = None
+        self.log.info("HACS is enabled")

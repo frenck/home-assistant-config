@@ -1,8 +1,9 @@
 """Data handler for HACS."""
 import os
+
 from queueman import QueueManager
 
-from custom_components.hacs.const import VERSION
+from custom_components.hacs.const import INTEGRATION_VERSION
 from custom_components.hacs.helpers.classes.manifest import HacsManifest
 from custom_components.hacs.helpers.functions.logger import getLogger
 from custom_components.hacs.helpers.functions.register_repository import (
@@ -67,6 +68,7 @@ class HacsData:
             "description": repository.data.description,
             "domain": repository.data.domain,
             "downloads": repository.data.downloads,
+            "etag_repository": repository.data.etag_repository,
             "full_name": repository.data.full_name,
             "first_install": repository.status.first_install,
             "installed_commit": repository.data.installed_commit,
@@ -167,6 +169,7 @@ class HacsData:
             "downloads"
         )
         repository.data.last_updated = repository_data.get("last_updated")
+        repository.data.etag_repository = repository_data.get("etag_repository")
         repository.data.topics = repository_data.get("topics", [])
         repository.data.domain = repository_data.get("domain", None)
         repository.data.stargazers_count = repository_data.get("stars", 0)
@@ -189,7 +192,7 @@ class HacsData:
             repository.status.first_install = False
 
         if repository_data["full_name"] == "hacs/integration":
-            repository.data.installed_version = VERSION
+            repository.data.installed_version = INTEGRATION_VERSION
             repository.data.installed = True
 
         restored = store_exists and await store.async_load() or {}

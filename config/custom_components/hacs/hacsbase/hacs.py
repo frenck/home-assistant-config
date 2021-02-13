@@ -7,7 +7,6 @@ from queueman import QueueManager
 from queueman.exceptions import QueueManagerExecutionStillInProgress
 
 from custom_components.hacs.helpers import HacsHelpers
-
 from custom_components.hacs.helpers.functions.get_list_from_default import (
     async_get_list_from_default,
 )
@@ -32,8 +31,8 @@ from custom_components.hacs.share import (
     list_removed_repositories,
 )
 
-from ..enums import HacsCategory, HacsStage
 from ..base import HacsBase
+from ..enums import HacsCategory, HacsStage
 
 
 class HacsStatus:
@@ -255,6 +254,11 @@ class Hacs(HacsBase, HacsHelpers):
             return
 
         can_update = await get_fetch_updates_for(self.github)
+        self.log.debug(
+            "Can update %s repositories, items in queue %s",
+            can_update,
+            self.queue.pending_tasks,
+        )
         if can_update == 0:
             self.log.info("HACS is ratelimited, repository updates will resume later.")
         else:

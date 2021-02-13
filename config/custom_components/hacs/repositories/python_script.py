@@ -1,7 +1,7 @@
 """Class for python_scripts in HACS."""
+from custom_components.hacs.enums import HacsCategory
 from custom_components.hacs.helpers.classes.exceptions import HacsException
 from custom_components.hacs.helpers.classes.repository import HacsRepository
-from custom_components.hacs.enums import HacsCategory
 from custom_components.hacs.helpers.functions.information import find_file_name
 from custom_components.hacs.helpers.functions.logger import getLogger
 
@@ -59,9 +59,10 @@ class HacsPythonScript(HacsRepository):
         # Set name
         find_file_name(self)
 
-    async def update_repository(self, ignore_issues=False):
+    async def update_repository(self, ignore_issues=False, force=False):
         """Update."""
-        await self.common_update(ignore_issues)
+        if not await self.common_update(ignore_issues, force):
+            return
 
         # Get python_script objects.
         if self.data.content_in_root:
