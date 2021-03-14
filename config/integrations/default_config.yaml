@@ -1,0 +1,13 @@
+---
+# The default configuration integration.
+#
+# https://www.home-assistant.io/integrations/default_config
+#
+# This integration is merely a meta-integration. By itself, it does nothing,
+# however, it dependent on a lot of integrations that should be loaded by
+# default.
+#
+# For example: history, frontend, cloud, logbook, map, my, script, sun,
+# zeroconf, person, scene, system_healt, and a lot more.
+#
+default_config:

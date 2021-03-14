@@ -1,8 +1,0 @@
----
-# Home Assistant allows using tags to automate anything. Home Assistant is
-# compatible with any type of tag. Our mobile apps work out of the box with
-# NFC tags, but anything that can read IDs from something can be used.
-#
-# https://www.home-assistant.io/integrations/tag
-#
-tag: ~
