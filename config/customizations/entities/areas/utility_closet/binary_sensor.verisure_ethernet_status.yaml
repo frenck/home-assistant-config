@@ -1,3 +1,0 @@
----
-binary_sensor.verisure_ethernet_status:
-  friendly_name: Verisure Ethernet Status
