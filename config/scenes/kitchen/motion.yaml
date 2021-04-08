@@ -7,8 +7,8 @@ name: Kitchen - Motion
 id: 0289c835-75a6-4b5b-8a9f-ac4dfef9d321
 entities:
   light.kitchen_ceiling:
-    brightness: 100
+    brightness: 75
     color_temp: 400
-    state: 'on'
+    state: "on"
   light.kitchen_cupboard:
-    state: 'off'
+    state: "off"
