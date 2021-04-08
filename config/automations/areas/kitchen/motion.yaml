@@ -41,9 +41,9 @@ condition:
 action:
   - choose:
       - conditions: >
-          {{ 
+          {{
             trigger.entity_id == 'sensor.kitchen_remote_action'
-            and 
+            and
             not trigger.to_state.attributes.action
           }}
         sequence:

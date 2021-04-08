@@ -11,6 +11,6 @@ logger:
   filters:
     homeassistant.helpers.template:
       # Zigbee2MQTT template warnings, supress for now
-      - "Template variable warning: 'dict object' has no attribute 'action' when rendering '{{ value_json.action }}'"
-      - "Template variable warning: 'dict object' has no attribute 'linkquality' when rendering '{{ value_json.linkquality }}'"
-      - "Template variable warning: 'dict object' has no attribute 'sensitivity' when rendering '{{ value_json.sensitivity }}'"
+      - "'action' when rendering '{{ value_json.action }}'"
+      - "linkquality' when rendering '{{ value_json.linkquality }}'"
+      - "'sensitivity' when rendering '{{ value_json.sensitivity }}'"

@@ -18,7 +18,7 @@ blueprint:
       selector:
         target:
           entity:
-            domain: 
+            domain:
     force_brightness:
       name: Force turn on brightness
       description: >
