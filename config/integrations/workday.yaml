@@ -1,0 +1,33 @@
+---
+# This is the holiday sensor. This binary sensor tells me if it is
+# a national holiday today.
+#
+# This is pretty useful for a lot of automations.
+#
+# https://www.home-assistant.io/integrations/workday/
+#
+binary_sensor:
+  - platform: workday
+    name: holiday
+    country: NL
+    workdays:
+      - holiday
+    excludes: []
+  # TODO: Move to template sensor
+  - platform: workday
+    name: weekend
+    country: NL
+    workdays:
+      - sat
+      - sun
+    excludes: []
+  # TODO: Move to template sensor
+  - platform: workday
+    name: workday
+    country: NL
+    workdays:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri

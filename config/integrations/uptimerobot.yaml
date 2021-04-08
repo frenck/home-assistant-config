@@ -6,5 +6,6 @@
 # https://www.home-assistant.io/integrations/uptimerobot/
 # https://uptimerobot.com/
 #
-platform: uptimerobot
-api_key: !secret uptimerobot_api_key
+binary_sensor:
+  - platform: uptimerobot
+    api_key: !secret uptimerobot_api_key

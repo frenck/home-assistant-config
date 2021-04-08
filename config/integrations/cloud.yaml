@@ -5,10 +5,8 @@
 # https://www.home-assistant.io/integrations/cloud/
 #
 cloud:
-
   # Customize the Google Assistant integration with the Nabu Casa Cloud
   google_actions:
-
     # Entity specific configuration for Google Assistant.
     # These are loaded from a separate directory.
     entity_config: !include_dir_merge_named ../customizations/google_assistant
