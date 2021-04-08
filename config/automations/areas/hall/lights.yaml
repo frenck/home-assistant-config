@@ -18,7 +18,7 @@ trigger:
     event_type: automation_reloaded
   - platform: state
     entity_id:
-      - alarm_control_panel.home_alarm
+      - alarm_control_panel.house_alarm
       - binary_sensor.hall_motion
       - input_boolean.hall_automatic_lighting
       - sensor.hall_luminosity
@@ -33,7 +33,7 @@ action:
   - choose:
       - conditions:
           - condition: state
-            entity_id: alarm_control_panel.home_alarm
+            entity_id: alarm_control_panel.house_alarm
             state: disarmed
           - condition: state
             entity_id: binary_sensor.hall_motion

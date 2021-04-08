@@ -37,7 +37,7 @@ condition:
     conditions:
       - condition: state
         entity_id:
-          - alarm_control_panel.home_alarm
+          - alarm_control_panel.house_alarm
         state: disarmed
       - condition: state
         entity_id:

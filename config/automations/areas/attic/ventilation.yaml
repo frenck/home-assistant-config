@@ -47,7 +47,7 @@ action:
         - condition: not
           conditions:
             - condition: state
-              entity_id: alarm_control_panel.home_alarm
+              entity_id: alarm_control_panel.house_alarm
               state: armed_home
         - condition: or
           conditions:

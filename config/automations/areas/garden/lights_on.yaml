@@ -19,7 +19,7 @@ trigger:
     event_type: automation_reloaded
   - platform: state
     entity_id:
-      - alarm_control_panel.home_alarm
+      - alarm_control_panel.house_alarm
       - binary_sensor.garden_door
       - input_boolean.garden_automatic_lighting
       - sensor.garden_luminosity
@@ -37,7 +37,7 @@ condition:
     entity_id: input_boolean.garden_automatic_lighting
     state: "on"
   - condition: state
-    entity_id: alarm_control_panel.home_alarm
+    entity_id: alarm_control_panel.house_alarm
     state: disarmed
   - condition: or
     conditions:

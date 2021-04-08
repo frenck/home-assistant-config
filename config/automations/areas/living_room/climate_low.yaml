@@ -15,7 +15,7 @@ trigger:
     event_type: automation_reloaded
   - platform: state
     entity_id:
-      - alarm_control_panel.home_alarm
+      - alarm_control_panel.house_alarm
   - platform: time
     at: "22:00:00"
 
@@ -23,7 +23,7 @@ condition:
   - condition: or
     conditions:
       - condition: state
-        entity_id: alarm_control_panel.home_alarm
+        entity_id: alarm_control_panel.house_alarm
         state:
           - armed_away
           - armed_home

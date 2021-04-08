@@ -8,7 +8,7 @@ blueprint:
   input:
     alarm:
       name: Alarm Control Panel
-      default: alarm_control_panel.home_alarm
+      default: alarm_control_panel.house_alarm
       description: Alarm Control Panel to react on
       selector:
         entity:

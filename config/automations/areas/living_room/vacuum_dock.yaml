@@ -14,7 +14,7 @@ trigger:
     event_type: automation_reloaded
   - platform: state
     entity_id:
-      - alarm_control_panel.home_alarm
+      - alarm_control_panel.house_alarm
     to: "disarmed"
 
 condition:

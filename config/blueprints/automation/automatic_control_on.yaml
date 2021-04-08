@@ -19,7 +19,7 @@ blueprint:
     alarm:
       name: Alarm Control Panel
       description: Alarm Control Panel to respond to
-      default: alarm_control_panel.home_alarm
+      default: alarm_control_panel.house_alarm
       selector:
         entity:
           domain: alarm_control_panel

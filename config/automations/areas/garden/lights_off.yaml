@@ -14,7 +14,7 @@ trigger:
     event_type: automation_reloaded
   - platform: state
     entity_id:
-      - alarm_control_panel.home_alarm
+      - alarm_control_panel.house_alarm
       - input_boolean.garden_automatic_lighting
       - sensor.garden_luminosity
 
@@ -22,7 +22,7 @@ condition:
   - condition: or
     conditions:
       - condition: state
-        entity_id: alarm_control_panel.home_alarm
+        entity_id: alarm_control_panel.house_alarm
         state:
           - armed_away
           - armed_home

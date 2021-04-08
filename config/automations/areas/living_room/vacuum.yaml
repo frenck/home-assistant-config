@@ -14,11 +14,11 @@ trigger:
     event_type: automation_reloaded
   - platform: state
     entity_id:
-      - alarm_control_panel.home_alarm
+      - alarm_control_panel.house_alarm
 
 condition:
   - condition: state
-    entity_id: alarm_control_panel.home_alarm
+    entity_id: alarm_control_panel.house_alarm
     state: "armed_away"
   - condition: state
     entity_id: vacuum.living_room
