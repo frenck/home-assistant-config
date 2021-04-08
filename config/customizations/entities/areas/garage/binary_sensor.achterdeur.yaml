@@ -1,5 +1,0 @@
----
-binary_sensor.achterdeur:
-  friendly_name: Back Door
-  device_class: door
-  icon: mdi:door

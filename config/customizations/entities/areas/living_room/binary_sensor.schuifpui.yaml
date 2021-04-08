@@ -1,4 +1,0 @@
----
-binary_sensor.schuifpui:
-  friendly_name: Sliding Door
-  device_class: door
