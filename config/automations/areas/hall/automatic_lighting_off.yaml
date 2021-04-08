@@ -1,7 +1,7 @@
 ---
 alias: Hall Automatic Lighting Off
 description: >-
-  Turn off automatic haal lighting when a user made manual changes
+  Turn off automatic hall lighting when a user made manual changes
 
   It turns off a input_boolean when the lights are changed by a user.
   This allows me to know if the lights are manually overriden, so I can stop
