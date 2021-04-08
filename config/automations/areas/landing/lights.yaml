@@ -1,11 +1,11 @@
 ---
-alias: Hall Lights
+alias: Landing Lights
 description: >-
-  Controls the hall lights.
+  Controls the landing lights.
 
   They mainly respond on motion; but also when the alarm arms.
 
-id: dae7c422-03ff-4ae6-a06d-65e4907872c1
+id: 8a8bfc2d-a679-4605-a181-56a7dc7d1435
 mode: queued
 
 trigger:
@@ -16,14 +16,12 @@ trigger:
   - platform: state
     entity_id:
       - alarm_control_panel.house_alarm
-      - binary_sensor.hall_motion
-      - input_boolean.hall_automatic_lighting
-      - sensor.hall_luminosity
-      - sensor.porch_luminosity
+      - binary_sensor.landing_motion
+      - input_boolean.landing_automatic_lighting
 
 condition:
   - condition: state
-    entity_id: input_boolean.hall_automatic_lighting
+    entity_id: input_boolean.landing_automatic_lighting
     state: "on"
 
 action:
@@ -31,23 +29,22 @@ action:
       - conditions:
           - condition: state
             entity_id: alarm_control_panel.house_alarm
-            state: disarmed
+            state:
+              - disarmed
+              - armed_home
           - condition: state
-            entity_id: binary_sensor.hall_motion
+            entity_id: binary_sensor.landing_motion
             state: "on"
-          - condition: numeric_state
-            entity_id: sensor.outside_luminosity
-            below: 400
         sequence:
           - service: light.turn_on
             target:
               entity_id:
-                - light.hall_ceiling
+                - light.landing_ceiling
             data:
               transition: 1
     default:
       - service: light.turn_off
         target:
-          entity_id: light.hall_ceiling
+          area_id: landing
         data:
           transition: 5

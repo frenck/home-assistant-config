@@ -19,7 +19,7 @@ fans:
       - service: switch.turn_on
         data:
           entity_id: >-
-            {% if speed == 'high' %}
+            {% if preset_mode == 'high' %}
               switch.attic_ventilation_speed_high
             {% else %}
               switch.attic_ventilation_speed_low
@@ -27,7 +27,7 @@ fans:
     turn_off:
       - service: switch.turn_on
         entity_id: switch.attic_ventilation_speed_off
-    speed_template: >-
+    preset_mode_template: >-
       {% if is_state('switch.attic_ventilation_speed_low', 'on') %}
         low
       {% elif is_state('switch.attic_ventilation_speed_high', 'on') %}
@@ -35,18 +35,18 @@ fans:
       {% else %}
         off
       {% endif %}
-    set_speed:
+    set_preset_mode:
       - service: switch.turn_on
         data:
           entity_id: >-
-            {% if speed == 'low' %}
+            {% if preset_mode == 'low' %}
               switch.attic_ventilation_speed_low
-            {% elif speed == 'high' %}
+            {% elif preset_mode == 'high' %}
               switch.attic_ventilation_speed_high
             {% else %}
               fan.attic_ventilation
             {% endif %}
-    speeds:
+    preset_modes:
       - "off"
       - "low"
       - "high"

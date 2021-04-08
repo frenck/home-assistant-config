@@ -8,5 +8,5 @@
 platform: group
 name: restroom
 entities:
-  - light.restroom_1
-  - light.restroom_2
+  - light.restroom_ceiling_1
+  - light.restroom_ceiling_2

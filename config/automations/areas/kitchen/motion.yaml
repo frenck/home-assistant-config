@@ -1,0 +1,75 @@
+---
+description: Turn kitchen lights to occupancy scene when motion/occupancy is detected
+alias: kitchen_motion
+id: 62127853-30de-4385-a9c6-a4031d28ab42
+
+mode: restart
+max_exceeded: silent
+
+trigger:
+  - platform: state
+    entity_id:
+      - alarm_control_panel.house_alarm
+      - binary_sensor.kitchen_motion
+      - sensor.kitchen_remote_action
+
+condition:
+  - condition: state
+    entity_id: alarm_control_panel.house_alarm
+    state: disarmed
+  - condition: or
+    conditions:
+      - condition: state
+        entity_id:
+          - light.kitchen_ceiling
+          - input_boolean.variable_kitchen_motion_triggered
+        state: "off"
+      - condition: state
+        entity_id:
+          - light.kitchen_ceiling
+          - input_boolean.variable_kitchen_motion_triggered
+        state: "on"
+  - condition: or
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.kitchen_luminosity
+        below: 50
+      - condition: numeric_state
+        entity_id: sensor.outside_luminosity
+        below: 400
+
+action:
+  - choose:
+      - conditions: >
+          {{ 
+            trigger.entity_id == 'sensor.kitchen_remote_action'
+            and 
+            not trigger.to_state.attributes.action
+          }}
+        sequence:
+          - service: input_boolean.turn_off
+            target:
+              entity_id: input_boolean.variable_kitchen_motion_triggered
+    default:
+      - service: scene.turn_on
+        target:
+          entity_id: scene.kitchen_motion
+        data:
+          transition: 2
+      - service: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.variable_kitchen_motion_triggered
+      - wait_for_trigger:
+          platform: state
+          entity_id: sensor.kitchen_motion
+          from: "on"
+          to: "off"
+      - delay: 15
+      - service: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.variable_kitchen_motion_triggered
+      - service: light.turn_off
+        target:
+          area_id: kitchen
+        data:
+          transition: 5

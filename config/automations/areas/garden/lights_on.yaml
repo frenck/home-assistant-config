@@ -54,9 +54,9 @@ condition:
     below: 300.0
 
 action:
-  - service: script.sunlight
-    data:
-      entities:
+  - service: light.turn_on
+    target:
+      entity_id:
         - light.garden_border_back_left
         - light.garden_border_back_right
         - light.garden_border_front
@@ -65,4 +65,3 @@ action:
         - light.garden_veranda_wall_shed
         - light.garden_wall_left
         - light.garden_wall_right
-      turn_on: true

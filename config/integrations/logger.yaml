@@ -7,20 +7,10 @@
 #
 logger:
   default: warning
-  logs:
-    # For when I experience slow startups
-    # I can enable this to check out what is going on
-    # homeassistant.setup: debug
 
-    # Just to freaking chatty
-    zigpy_deconz.zigbee.application: error
-
-    # Currently, throws warnings about:
-    # SwitchDevice is deprecated use SwitchEntity
-    # Not interested in that for even a tiny bit.
-    homeassistant.components.switch: error
-
-    # I don't want to see warnings about custom integrations
-    # deprecations and other stuff.
-    # Please note! This is bad practice!
-    homeassistant.loader: error
+  filters:
+    homeassistant.helpers.template:
+      # Zigbee2MQTT template warnings, supress for now
+      - "Template variable warning: 'dict object' has no attribute 'action' when rendering '{{ value_json.action }}'"
+      - "Template variable warning: 'dict object' has no attribute 'linkquality' when rendering '{{ value_json.linkquality }}'"
+      - "Template variable warning: 'dict object' has no attribute 'sensitivity' when rendering '{{ value_json.sensitivity }}'"

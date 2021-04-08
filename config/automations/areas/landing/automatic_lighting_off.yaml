@@ -1,0 +1,18 @@
+---
+alias: Landing Automatic Lighting Off
+description: >-
+  Turn off automatic landing lighting when a user made manual changes
+
+  It turns off a input_boolean when the lights are changed by a user.
+  This allows me to know if the lights are manually overriden, so I can stop
+  automating those lights. The input_boolean resets based on other factors,
+  for example, the alarm got armed or after a certain time.
+
+id: c0cb402f-07ef-4918-a5e4-ba327296e19b
+
+use_blueprint:
+  path: automatic_control_off.yaml
+  input:
+    toggle: input_boolean.landing_automatic_lighting
+    entities:
+      - light.landing_ceiling

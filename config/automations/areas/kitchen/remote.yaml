@@ -8,9 +8,9 @@ description: >-
 id: 52d4f6b3-744c-4d87-81df-6acc80e9121c
 
 use_blueprint:
-  path: zha_hue_remote_simple.yaml
+  path: zigbee2mqtt_hue_remote_simple.yaml
   input:
-    remote: f8db158a0edf4f2db144c947af227c3e
+    remote: sensor.kitchen_remote_action
     light:
       entity_id: light.kitchen_ceiling
     force_brightness: true
