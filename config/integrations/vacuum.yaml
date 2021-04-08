@@ -1,8 +1,0 @@
----
-#
-# The vacuum component enables the ability to control home cleaning robots
-# within Home Assistant.
-#
-# https://www.home-assistant.io/integrations/vacuum/
-#
-vacuum: !include_dir_list ../entities/vacuums
