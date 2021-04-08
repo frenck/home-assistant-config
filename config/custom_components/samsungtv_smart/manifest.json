@@ -1,0 +1,14 @@
+{
+  "domain": "samsungtv_smart",
+  "name": "SamsungTV Smart",
+  "documentation": "https://github.com/ollo69/ha-samsungtv-smart",
+  "requirements": [
+    "websocket-client==0.56.0",
+    "wakeonlan==1.1.6"
+  ],
+  "dependencies": [],
+  "codeowners": ["@ollo69"],
+  "homeassistant": "0.99.3",
+  "config_flow": true,
+  "version": "0.3.30"
+}
