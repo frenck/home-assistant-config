@@ -60,6 +60,7 @@
                 "data": {
                     "app_load_method": "Modalità caricamento lista applicazioni all'avvio",
                     "app_launch_method": "Metodo usato per lanciare le applicazioni",
+                    "dump_apps": "Mostra lista apps nel file di log all'avvio (se possibile)",
                     "use_st_status_info": "Usa informazioni Stato TV da SmartThings",
                     "use_st_channel_info": "Usa informazioni Canale TV da SmartThings",
                     "show_channel_number": "Usa informazioni Numero Canale TV da SmartThings",

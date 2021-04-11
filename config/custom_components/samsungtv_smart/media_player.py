@@ -2,7 +2,6 @@
 import asyncio
 import json
 import logging
-import os
 from datetime import datetime, timedelta
 from socket import error as socketError
 from time import sleep
@@ -18,12 +17,12 @@ from .api.samsungws import SamsungTVWS, ArtModeStatus
 from .api.smartthings import SmartThingsTV, STStatus
 from .api.upnp import upnp
 
+from homeassistant.components.media_player import DEVICE_CLASS_TV
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import config_validation as cv, entity_platform
 from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 from homeassistant.helpers.service import async_call_from_config, CONF_SERVICE_ENTITY_ID
 from homeassistant.util import dt as dt_util, Throttle
-from homeassistant.components.media_player import DEVICE_CLASS_TV
 
 from homeassistant.components.media_player.const import (
     MEDIA_TYPE_APP,
@@ -71,6 +70,7 @@ from .const import (
     CONF_DEVICE_MODEL,
     CONF_DEVICE_NAME,
     CONF_DEVICE_OS,
+    CONF_DUMP_APPS,
     CONF_POWER_ON_DELAY,
     CONF_POWER_ON_METHOD,
     CONF_SHOW_CHANNEL_NR,
@@ -95,6 +95,7 @@ from .const import (
     AppLaunchMethod,
     PowerOnMethod,
 )
+from . import get_token_file
 
 try:
     from homeassistant.components.media_player import MediaPlayerEntity
@@ -168,9 +169,12 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     for attr, value in add_conf.items():
         if value:
             config[attr] = value
-    _LOGGER.debug(config)
 
-    async_add_entities([SamsungTVDevice(config, entry_id, session)], True)
+    hostname = config.get(CONF_HOST)
+    port = config.get(CONF_PORT)
+    token_file = get_token_file(hass, hostname, port)
+
+    async_add_entities([SamsungTVDevice(config, entry_id, session, token_file)], True)
 
     # register services
     platform = entity_platform.current_platform.get()
@@ -187,8 +191,8 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     _LOGGER.info(
         "Samsung TV %s:%d added as '%s'",
-        config.get(CONF_HOST),
-        config.get(CONF_PORT),
+        hostname,
+        port,
         config.get(CONF_NAME),
     )
 
@@ -196,7 +200,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 class SamsungTVDevice(MediaPlayerEntity):
     """Representation of a Samsung TV."""
 
-    def __init__(self, config, entry_id, session: ClientSession):
+    def __init__(self, config, entry_id, session: ClientSession, token_file):
         """Initialize the Samsung device."""
 
         # Save a reference to the imported classes
@@ -262,12 +266,6 @@ class SamsungTVDevice(MediaPlayerEntity):
         self._delayed_set_source_time = None
         self._st_conn_error_count = 0
 
-        self._token_file = None
-
-        # Generate token file only for WS + SSL + Token connection
-        if port == 8002:
-            self._gen_token_file()
-
         ws_name = config.get(CONF_WS_NAME, self._name)
         self._ws = SamsungTVWS(
             name=WS_PREFIX
@@ -277,7 +275,7 @@ class SamsungTVDevice(MediaPlayerEntity):
             port=port,
             timeout=self._timeout,
             key_press_delay=KEYPRESS_DEFAULT_DELAY,
-            token_file=self._token_file,
+            token_file=token_file,
             app_list=self._app_list,
         )
 
@@ -330,42 +328,6 @@ class SamsungTVDevice(MediaPlayerEntity):
     def _get_option(self, param, default=None):
         options = self.hass.data[DOMAIN][self._entry_id].get("options", {})
         return options.get(param, default)
-
-    def _gen_token_file(self):
-        self._token_file = (
-            os.path.dirname(os.path.realpath(__file__))
-            + "/token-"
-            + self._host
-            + ".txt"
-        )
-
-        if os.path.isfile(self._token_file) is False:
-            # For correct auth
-            self._timeout = 45
-
-            # Create token file for catch possible errors
-            try:
-                handle = open(self._token_file, "w+")
-                handle.close()
-            except:
-                _LOGGER.error(
-                    "Samsung TV - Error creating token file: %s", self._token_file
-                )
-
-    def _delete_token_file(self):
-
-        if not self._token_file:
-            return
-
-        if os.path.isfile(self._token_file) is True:
-
-            # delete token file for catch possible errors
-            try:
-                os.remove(self._token_file)
-            except:
-                _LOGGER.error(
-                    "Samsung TV - Error deleting token file: %s", self._token_file
-                )
 
     def _power_off_in_progress(self):
         return (
@@ -560,20 +522,11 @@ class SamsungTVDevice(MediaPlayerEntity):
 
         self._app_list = clean_app_list
         self._app_list_ST = clean_app_list_ST
-        try:
-            dump_file_name = (
-                os.path.dirname(os.path.realpath(__file__))
-                + "/applist-"
-                + self._host
-                + ".txt"
+        dump_apps = self._get_option(CONF_DUMP_APPS, False)
+        if dump_apps:
+            _LOGGER.info(
+                "List of available apps for SamsungTV %s: %s", self._name, dump_app_list
             )
-            with open(dump_file_name, "w") as dump_file:
-                dump_file.write('app_list: "' + str(dump_app_list) + '"')
-        except OSError:
-            _LOGGER.error("Failed to write dump apps file")
-            pass
-
-        _LOGGER.debug("Dump of available apps:%s", dump_app_list)
 
     def _get_source(self):
         """Return the current input source."""
@@ -1389,12 +1342,9 @@ class SamsungTVDevice(MediaPlayerEntity):
 
         return data
 
-    def _will_remove_from_hass(self):
-        self._ws.stop_client()
-        self._delete_token_file()
-
     async def async_will_remove_from_hass(self):
-        await self.hass.async_add_executor_job(self._will_remove_from_hass)
+        """Run when entity will be removed from hass."""
+        await self.hass.async_add_executor_job(self._ws.stop_client)
 
     async def _async_switch_entity(self, power_on: bool):
 

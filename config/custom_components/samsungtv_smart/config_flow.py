@@ -29,6 +29,7 @@ from .const import (
     CONF_DEVICE_NAME,
     CONF_DEVICE_MODEL,
     CONF_DEVICE_OS,
+    CONF_DUMP_APPS,
     CONF_POWER_ON_DELAY,
     CONF_POWER_ON_METHOD,
     CONF_USE_ST_CHANNEL_INFO,
@@ -368,6 +369,12 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
                         CONF_APP_LAUNCH_METHOD, AppLaunchMethod.Standard.value
                     ),
                 ): vol.In(APP_LAUNCH_METHODS),
+                vol.Optional(
+                    CONF_DUMP_APPS,
+                    default=self.config_entry.options.get(
+                        CONF_DUMP_APPS, False
+                    ),
+                ): bool,
             }
         )
 

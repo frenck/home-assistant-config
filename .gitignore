@@ -42,8 +42,5 @@ config/notebooks
 .theia
 .Trash*
 
-# Custom integrations
-config/custom_components/samsungtv_smart/*.txt
-
 # Specific keeps
 !.gitkeep
