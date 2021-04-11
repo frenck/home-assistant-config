@@ -4,7 +4,10 @@
 # It respects almost all design choices and colors from Home Assistant, except
 # one... the border/layering of the cards.
 #
-# This theme makes everything just a little tiny bit more modern and tight.
+# This theme makes everything just a little tiny bit more modern, consistent
+# and tight.
+#
+# https://github.com/frenck/home-assistant-theme-outline
 #
 outline:
   border-color: "#E8E8E8"
