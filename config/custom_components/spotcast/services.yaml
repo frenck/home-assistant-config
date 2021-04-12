@@ -1,0 +1,36 @@
+start:
+  description: Starts spotify playback on chromecast devices
+  fields:
+    device_name:
+      description: "The friendly name of the chromecast device (not used together with entity_id and spotify_device_name)."
+      example: "Livingroom"
+    spotify_device_id:
+      description: "The spotify device id (not used together with entity_id or device_name)."
+      example: "4363634563457346xcyvydgf3qwa"
+    entity_id:
+      description: "The entity_id of the chromecast mediaplayer (not used together with device_name and spotify_device_name)."
+      example:  "media_player.vardagsrum"
+    uri:
+      description: "Supported Spotify URI as string. None or empty uri will transfer the current/last playback (see parameter force_playback)."
+      example: "spotify:playlist:37i9dQZF1DX3yvAYDslnv8"
+    account:
+      description: "Optionally starts Spotify using an alternative account specified in config."
+      example: "my_wifes"
+    force_playback:
+      description: "In case of transfering playback: If true starts playing the user's last playback even if nothing is currently playing. Default: false"
+      example: true
+    random_song:
+      description: "Starts the playback at a random position in the playlist or album."
+      example: true
+    repeat:
+      description: Set repeat mode for playback. Available options are track, context and off.
+      example: "track"
+    shuffle:
+      description: "Set shuffle mode for playback. Available options are true and false."
+      example: true
+    offset:
+      description: "Set offset mode for playback. 0 is the first song."
+      example: 1
+    start_volume:
+      description: "Set the volume for playback in percentage."
+      example: 50

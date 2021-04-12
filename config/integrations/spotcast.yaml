@@ -1,0 +1,10 @@
+---
+# Home Assistant custom component to start Spotify playback on an idle
+# chromecast device or a Spotify Connect device which means that you can
+# target your automation for chromecast as well as connect devices.
+#
+# https://github.com/fondberg/spotcast
+#
+spotcast:
+  sp_dc: !secret spotcast_sp_dc
+  sp_key: !secret spotcast_sp_key
