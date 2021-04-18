@@ -9,8 +9,7 @@ logger:
   default: warning
 
   filters:
-    homeassistant.helpers.template:
-      # Zigbee2MQTT template warnings, supress for now
-      - "'action' when rendering '{{ value_json.action }}'"
-      - "linkquality' when rendering '{{ value_json.linkquality }}'"
-      - "'sensitivity' when rendering '{{ value_json.sensitivity }}'"
+    pychromecast.socket_client:
+      # Surpress to chatty Cast integration
+      - "Failed to connect to service ServiceInfo"
+      - "Error communicating with socket, resetting connection"
