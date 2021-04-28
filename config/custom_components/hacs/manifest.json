@@ -16,11 +16,11 @@
     "name": "HACS",
     "requirements": [
         "aiofiles>=0.6.0",
-        "aiogithubapi>=21.2.0",
+        "aiogithubapi>=21.4.0",
         "awesomeversion>=21.2.2",
         "backoff>=1.10.0",
-        "hacs_frontend==20210214110032",
+        "hacs_frontend==20210214181913",
         "queueman==0.5"
     ],
-    "version": "1.11.3"
+    "version": "1.12.1"
 }
