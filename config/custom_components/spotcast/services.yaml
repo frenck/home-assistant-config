@@ -2,35 +2,106 @@ start:
   description: Starts spotify playback on chromecast devices
   fields:
     device_name:
+      name: "Device Name"
       description: "The friendly name of the chromecast device (not used together with entity_id and spotify_device_name)."
       example: "Livingroom"
+      required: false
+      selector:
+        text:
     spotify_device_id:
+      name: "Spotify Device ID"
       description: "The spotify device id (not used together with entity_id or device_name)."
       example: "4363634563457346xcyvydgf3qwa"
+      required: false
+      selector:
+        text:
     entity_id:
+      name: "Entity ID"
       description: "The entity_id of the chromecast mediaplayer (not used together with device_name and spotify_device_name)."
       example:  "media_player.vardagsrum"
+      required: false
+      selector:
+        entity:
+          domain: media_player
+          integration: cast
     uri:
+      name: "URI"
       description: "Supported Spotify URI as string. None or empty uri will transfer the current/last playback (see parameter force_playback)."
       example: "spotify:playlist:37i9dQZF1DX3yvAYDslnv8"
+      required: false
+      selector:
+        text:
     account:
+      name: "Account"
       description: "Optionally starts Spotify using an alternative account specified in config."
       example: "my_wifes"
+      required: false
+      selector:
+        text:
     force_playback:
-      description: "In case of transfering playback: If true starts playing the user's last playback even if nothing is currently playing. Default: false"
+      name: "Force Playback"
+      description: "In case of transfering playback: If true starts playing the user's last playback even if nothing is currently playing."
       example: true
+      required: false
+      default: false
+      selector:
+        boolean:
     random_song:
+      name: "Random Song"
       description: "Starts the playback at a random position in the playlist or album."
       example: true
+      required: false
+      default: false
+      selector:
+        boolean:
     repeat:
-      description: Set repeat mode for playback. Available options are track, context and off.
+      name: "Repeat"
+      description: "Set repeat mode for playback."
       example: "track"
+      required: false
+      default: "off"
+      selector:
+        select:
+          options:
+            - "track"
+            - "context"
+            - "off"
     shuffle:
-      description: "Set shuffle mode for playback. Available options are true and false."
+      name: "Shuffle"
+      description: "Set shuffle mode for playback."
       example: true
+      required: false
+      default: false
+      selector:
+        boolean:
     offset:
+      name: "Offset"
       description: "Set offset mode for playback. 0 is the first song."
       example: 1
+      required: false
+      default: 0
+      selector:
+        number:
+          mode: box
+          step: 1
+          min: 0
+          max: 999999
     start_volume:
+      name: "Start Volume"
       description: "Set the volume for playback in percentage."
       example: 50
+      required: false
+      selector:
+        number:
+          mode: slider
+          step: 1
+          min: 0
+          max: 100
+
+    ignore_fully_played:
+      description: "Set to ignore or not already played episodes in a podcast playlist"
+      example: true
+      required: false
+      default: false
+      selector:
+        boolean:
