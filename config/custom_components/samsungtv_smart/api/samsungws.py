@@ -234,9 +234,9 @@ class SamsungTVWS:
             return self.token
 
     def _set_token(self, token):
-        _LOGGING.info("New token %s", token)
+        _LOGGING.debug("New token %s", token)
         if self.token_file is not None:
-            _LOGGING.debug("Save token to file", token)
+            _LOGGING.debug("Save new token to file %s", self.token_file)
             with open(self.token_file, "w") as token_file:
                 token_file.write(token)
         else:
@@ -380,7 +380,6 @@ class SamsungTVWS:
             _LOGGING.debug("Message remote: received connect")
             token = conn_data.get("token")
             if token:
-                _LOGGING.debug("Got token %s", token)
                 self._set_token(token)
             self._is_connected = True
             self._request_apps_list()
@@ -745,16 +744,15 @@ class SamsungTVWS:
         for iteration in range(3):
             response = self._process_api_response(connection.recv())
             _LOGGING.debug(response)
-            if response.get("event", "") == "ms.channel.connect":
-                conn_data = response.get("data")
-                if self._check_conn_id(conn_data):
-                    completed = True
-                    token = conn_data.get("token")
-                    if token:
-                        _LOGGING.debug("Got token %s", token)
-                        self._set_token(token)
-                    break
-            else:
+            event = response.get("event", "-")
+            if event != "ms.channel.connect":
+                break
+            conn_data = response.get("data")
+            if self._check_conn_id(conn_data):
+                completed = True
+                token = conn_data.get("token")
+                if token:
+                    self._set_token(token)
                 break
 
         if not completed:

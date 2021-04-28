@@ -10,5 +10,5 @@
   "dependencies": [],
   "codeowners": ["@ollo69"],
   "config_flow": true,
-  "version": "0.3.32"
+  "version": "0.3.34"
 }

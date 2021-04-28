@@ -200,7 +200,11 @@ class SamsungTVInfo:
         for port in (8001, 8002):
 
             try:
-                _LOGGER.debug("Try config with port: %s", str(port))
+                _LOGGER.info(
+                    "Try to configure SamsungTV %s using port %s",
+                    self._hostname,
+                    str(port),
+                )
                 token_file = get_token_file(self._hass, self._hostname, port, True)
                 with SamsungTVWS(
                     name=WS_PREFIX
@@ -212,12 +216,13 @@ class SamsungTVInfo:
                     timeout=45,  # We need this high timeout because waiting for auth popup is just an open socket
                 ) as remote:
                     remote.open()
-                _LOGGER.debug("Working config with port: %s", str(port))
+                _LOGGER.info("Found working configuration using port %s", str(port))
                 self._port = port
                 return RESULT_SUCCESS
             except (OSError, ConnectionFailure, WebSocketException) as err:
-                _LOGGER.debug("Failing config with port: %s, error: %s", str(port), err)
+                _LOGGER.info("Configuration failed using port %s, error: %s", str(port), err)
 
+        _LOGGER.error("Web socket connection to SamsungTV %s failed", self._hostname)
         return RESULT_NOT_SUCCESSFUL
 
     async def _try_connect_st(self, api_key, device_id, session: ClientSession):
@@ -225,7 +230,7 @@ class SamsungTVInfo:
 
         try:
             with timeout(10):
-                _LOGGER.debug(
+                _LOGGER.info(
                     "Try connection to SmartThings TV with id [%s]", device_id
                 )
                 with SmartThingsTV(
@@ -233,17 +238,17 @@ class SamsungTVInfo:
                 ) as st:
                     result = await st.async_device_health()
                 if result:
-                    _LOGGER.debug("Connection completed successfully.")
+                    _LOGGER.info("Connection completed successfully.")
                     return RESULT_SUCCESS
                 else:
-                    _LOGGER.debug("Connection not available.")
+                    _LOGGER.error("Connection to SmartThings TV not available.")
                     return RESULT_ST_DEVICE_NOT_FOUND
         except ClientResponseError as err:
-            _LOGGER.debug("Failed connecting to SmartThings deviceID, error: %s", err)
+            _LOGGER.error("Failed connecting to SmartThings TV, error: %s", err)
             if err.status == 400:  # Bad request, means that token is valid
                 return RESULT_ST_DEVICE_NOT_FOUND
         except Exception as err:
-            _LOGGER.debug("Failed connecting with SmartThings, error: %s", err)
+            _LOGGER.error("Failed connecting with SmartThings, error: %s", err)
 
         return RESULT_WRONG_APIKEY
 
@@ -257,7 +262,7 @@ class SamsungTVInfo:
                     api_key, session, st_device_label
                 )
         except Exception as err:
-            _LOGGER.debug("Failed connecting with SmartThings, error: %s", err)
+            _LOGGER.error("Failed connecting with SmartThings, error: %s", err)
             return None
 
         return devices
@@ -309,20 +314,15 @@ async def async_setup(hass: HomeAssistantType, config: ConfigEntry):
     """Set up the Samsung TV integration."""
     if DOMAIN in config:
         hass.data[DOMAIN] = {}
+        entries_list = hass.config_entries.async_entries(DOMAIN)
         for entry_config in config[DOMAIN]:
 
             # get ip address
             ip_address = entry_config[CONF_HOST]
 
             # check if already configured
-            entry_found = False
-            entries_list = hass.config_entries.async_entries(DOMAIN)
-            for entry in entries_list:
-                if entry.unique_id == ip_address:
-                    entry_found = True
-                    break
-
-            if not entry_found:
+            valid_entries = [entry for entry in entries_list if entry.unique_id == ip_address]
+            if not valid_entries:
                 _LOGGER.warning(
                     "Found yaml configuration for not configured device %s. Please use UI to configure",
                     ip_address

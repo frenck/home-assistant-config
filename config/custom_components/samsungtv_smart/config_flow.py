@@ -116,36 +116,6 @@ class SamsungTVConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self._ws_name = None
         self._use_default_name = False
 
-    def _get_entry(self):
-        """Generate new entry."""
-        data = {
-            CONF_HOST: self._host,
-            CONF_NAME: self._name,
-            CONF_ID: self._tvinfo._uuid,
-            CONF_MAC: self._tvinfo._macaddress or self._mac,
-            CONF_DEVICE_NAME: self._tvinfo._device_name,
-            CONF_DEVICE_MODEL: self._tvinfo._device_model,
-            CONF_PORT: self._tvinfo._port,
-        }
-
-        if self._ws_name:
-            data[CONF_WS_NAME] = self._ws_name
-
-        title = self._name if not self._use_default_name else self._tvinfo._device_name
-        if self._api_key and self._device_id:
-            data[CONF_API_KEY] = self._api_key
-            data[CONF_DEVICE_ID] = self._device_id
-            title += " (SmartThings)"
-            self.CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
-        else:
-            self.CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
-
-        if self._tvinfo._device_os:
-            data[CONF_DEVICE_OS] = self._tvinfo._device_os
-
-        _LOGGER.info("Configured new entity %s with host %s", title, self._host)
-        return self.async_create_entry(title=title, data=data,)
-
     def _stdev_already_used(self, devices_id):
         """Check if a device_id is in HA config."""
         for entry in self._async_current_entries():
@@ -263,12 +233,17 @@ class SamsungTVConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         elif self._device_id and self._stdev_already_used(self._device_id):
             result = RESULT_ST_DEVICE_USED
 
-        return await self._async_save_entry(result, is_import)
+        if result == RESULT_SUCCESS:
+            result = await self._try_connect()
+
+        return self._manage_result(result, is_import)
 
     async def async_step_stdevice(self, user_input=None):
         """Handle a flow to select ST device."""
         self._device_id = user_input.get(CONF_ST_DEVICE)
-        return await self._async_save_entry()
+
+        result = await self._try_connect()
+        return self._manage_result(result)
 
     async def async_step_stdeviceid(self, user_input=None):
         """Handle a flow to manual input a ST device."""
@@ -279,13 +254,13 @@ class SamsungTVConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             )
 
         self._device_id = device_id
-        return await self._async_save_entry()
 
-    async def _async_save_entry(self, result=RESULT_SUCCESS, is_import=False):
-        """Save the new config entry."""
+        result = await self._try_connect()
+        return self._manage_result(result)
 
-        if result == RESULT_SUCCESS:
-            result = await self._try_connect()
+    @callback
+    def _manage_result(self, result, is_import=False):
+        """Manage the previous result."""
 
         if result != RESULT_SUCCESS:
             if is_import:
@@ -301,7 +276,38 @@ class SamsungTVConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
                 return self._show_form({"base": result}, step_id)
 
-        return self._get_entry()
+        return self._save_entry()
+
+    @callback
+    def _save_entry(self):
+        """Generate new entry."""
+        data = {
+            CONF_HOST: self._host,
+            CONF_NAME: self._name,
+            CONF_ID: self._tvinfo._uuid,
+            CONF_MAC: self._tvinfo._macaddress or self._mac,
+            CONF_DEVICE_NAME: self._tvinfo._device_name,
+            CONF_DEVICE_MODEL: self._tvinfo._device_model,
+            CONF_PORT: self._tvinfo._port,
+        }
+
+        if self._ws_name:
+            data[CONF_WS_NAME] = self._ws_name
+
+        title = self._name if not self._use_default_name else self._tvinfo._device_name
+        if self._api_key and self._device_id:
+            data[CONF_API_KEY] = self._api_key
+            data[CONF_DEVICE_ID] = self._device_id
+            title += " (SmartThings)"
+            self.CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
+        else:
+            self.CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
+
+        if self._tvinfo._device_os:
+            data[CONF_DEVICE_OS] = self._tvinfo._device_os
+
+        _LOGGER.info("Configured new entity %s with host %s", title, self._host)
+        return self.async_create_entry(title=title, data=data)
 
     def _get_init_schema(self):
         data = self._user_data or {}
