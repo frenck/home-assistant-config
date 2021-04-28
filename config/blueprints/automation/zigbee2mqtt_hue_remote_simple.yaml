@@ -69,10 +69,6 @@ trigger:
       - "up-press"
 
 action:
-  - service: system_log.write
-    data:
-      message: "Remote state changed: '{{ trigger.to_state.state }}'"
-      level: warning
   - choose:
       - conditions:
           - "{{ action == 'on-press' }}"
