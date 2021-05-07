@@ -20,7 +20,10 @@ wifi:
     password: "${wifi_ap_password}"
 
 sensor:
+  - <<: !include ../sensors/wifi_signal_percentage.yaml
   - <<: !include ../sensors/wifi_signal.yaml
+    on_value:
+      - component.update: sensor_wifi_signal_percentage
 
 text_sensor:
   - <<: !include ../text_sensors/wifi_info.yaml
