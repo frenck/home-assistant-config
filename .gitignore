@@ -30,7 +30,7 @@ config/secrets.yaml
 
 # ESPHome ignores
 config/esphome/secrets.yaml
-config/esphome/**/
+config/esphome/.*/
 
 # Ignore add-on files
 config/aircast.xml
