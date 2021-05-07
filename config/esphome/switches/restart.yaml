@@ -1,0 +1,14 @@
+---
+#
+# SHTCx Temperature+Humidity Sensor
+#
+# The restart switch platform allows you to restart your node remotely through
+# Home Assistant.
+#
+# I wish there was a single service for this, by default...
+#
+# https://esphome.io/components/sensor/shtcx.html
+#
+platform: restart
+id: switch_restart
+name: "${name} Restart"

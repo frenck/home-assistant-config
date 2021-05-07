@@ -1,0 +1,54 @@
+---
+# Water Meter
+#
+# This is device that is attached to my water meter. It has a little rotating
+# indicator, that rotates exactly once for each liter of water used.
+#
+# Using an inductive sensor, it can determine the water usage, as each pulse
+# now becomes a liter of water. Providing me current usage flow in L/min and
+# the total usage registered (in M3).
+#
+# Originally bought on: https://watermeterkit.nl
+# But created my own ESPHome firmware for it (which is what you are looking at).
+#
+# The blue LED tells the device is powered on (built-in on the Wemos D1 mini).
+# The green LED blinks when a pulse is measures (each liter of water used).
+# The red LED shows if there is a problem:
+# - Blinks slow (once a second): Connection disrupted
+# - Blinks fast: ESPHome has an error settings up
+# - Off: All fine!
+#
+substitutions:
+  slug: water_meter
+  name: Water Meter
+  description: Small pulse sensor attached to the water meter of my home.
+  api_password: !secret esphome_water_meter_api_password
+  ota_password: !secret esphome_water_meter_ota_password
+
+packages:
+  <<: !include_dir_named common
+  board: !include boards/wemos_d1_mini.yaml
+  i2c: !include components/i2c_esp8266.yaml
+
+status_led:
+  pin: D3
+
+output:
+  - platform: esp8266_pwm
+    id: output_led_green
+    pin: D4
+
+light:
+  - platform: monochromatic
+    id: light_led_green
+    output: output_led_green
+
+sensor:
+  - <<: !include sensors/shtcx.yaml
+  - <<: !include sensors/pulse_meter_water.yaml
+    pin: D5
+    on_value:
+      then:
+        - light.turn_on:
+            id: light_led_green
+            flash_length: 1s

@@ -1,0 +1,10 @@
+---
+# SNTP Time Source
+#
+# A way to get time in ESPHome is using SNTP. It will
+# be used to periodically synchronize the current time.
+#
+# https://esphome.io/components/time.html#sntp-time-source
+#
+platform: sntp
+id: time_sntp
