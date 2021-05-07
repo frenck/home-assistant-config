@@ -1,0 +1,10 @@
+---
+# I²C Bus
+#
+# This component sets up the I²C bus for the ESP32.
+#
+# https://esphome.io/components/i2c.html
+#
+i2c:
+  sda: GPIO21
+  scl: GPIO22
