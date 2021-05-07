@@ -6,7 +6,7 @@
 # a lot.
 #
 substitutions:
-  slug: office_playground 
+  slug: office_playground
   name: Office Playground
   description: Small test device for fiddling
   api_password: !secret esphome_office_playground_api_password
