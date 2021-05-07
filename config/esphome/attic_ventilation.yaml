@@ -18,35 +18,16 @@
 # - Manual control. Pushing the Sonoff button multple times, changes speed.
 # - LED on the sonoff indicates if manual mode has been switch on.
 #
-esphome:
-  name: esp03
-  platform: ESP8266
-  board: esp01_1m
-  board_flash_mode: dout
+substitutions:
+  slug: attic_ventilation
+  name: Attic Ventilation
+  description: Control the central ventilation system of my home.
+  api_password: !secret esphome_attic_ventilation_api_password
+  ota_password: !secret esphome_attic_ventilation_ota_password
 
-wifi:
-  ssid: !secret wifi_iot_ssid
-  password: !secret wifi_iot_password
-  ap:
-    ssid: esp03
-
-captive_portal:
-
-logger:
-
-api:
-  password: !secret esphome_esp03_api_password
-
-ota:
-  password: !secret esphome_esp03_ota_password
-
-web_server:
-  port: 80
-
-sensor:
-  - platform: wifi_signal
-    name: esphome_esp03_wifi_signal
-    update_interval: 60s
+packages:
+  <<: !include_dir_named common
+  board: !include boards/esp01s.yaml
 
 binary_sensor:
   # This is the button on the SonOff Dual
@@ -75,8 +56,6 @@ binary_sensor:
           }
 
 switch:
-  - platform: restart
-    name: attic_ventilation_restart
   - platform: gpio
     id: switch_relay1
     pin: GPIO12
