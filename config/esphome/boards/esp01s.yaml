@@ -1,0 +1,9 @@
+---
+# Generic ESP-01, with 1MB memory (ESP-01S)
+#
+# https://docs.platformio.org/en/latest/boards/espressif8266/esp01_1m.html#board-espressif8266-esp01-1m
+#
+esphome:
+  <<: !include .esphome.yaml
+  platform: ESP8266
+  board: esp01_1m

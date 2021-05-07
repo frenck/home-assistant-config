@@ -1,4 +1,6 @@
 ---
+# Doorbell
+#
 # This is my old/original wired doorbell,
 # which I converted for just 2$!
 #
@@ -6,55 +8,16 @@
 # on how I did it:
 # https://frenck.link/doorbell
 #
-esphome:
-  name: esp19
-  platform: ESP8266
-  board: esp01_1m
+substitutions:
+  slug: outside_doorbell
+  name: Outside Doorbell
+  description: Made my old fashioned doorbell smart!
+  api_password: !secret esphome_outside_doorbell_api_password
+  ota_password: !secret esphome_outside_doorbell_ota_password
 
-# WiFi connection
-wifi:
-  ssid: !secret wifi_iot_ssid
-  password: !secret wifi_iot_password
-  ap:
-    ssid: esp19
-
-captive_portal:
-
-# Enable logging
-logger:
-
-# Enable Home Assistant API
-api:
-  password: !secret esphome_esp19_api_password
-
-# Enable over-the-air updates
-ota:
-  password: !secret esphome_esp19_ota_password
-
-# Enable Web server
-web_server:
-  port: 80
-
-# Sync time with Home Assistant
-time:
-  - platform: homeassistant
-    id: homeassistant_time
-
-# Text sensors with general information
-text_sensor:
-  - platform: wifi_info
-    ip_address:
-      name: esphome_esp19_ip
-    ssid:
-      name: esphome_esp19_ssid
-    bssid:
-      name: esphome_esp19_bssid
-
-sensor:
-  # WiFi Signal sensor
-  - platform: wifi_signal
-    name: esphome_esp19_wifi_signal
-    update_interval: 60s
+packages:
+  <<: !include_dir_named common
+  board: !include boards/esp01s.yaml
 
 globals:
   - id: chime
@@ -63,10 +26,6 @@ globals:
     initial_value: 'true'
 
 switch:
-  # Switch to restart the plug
-  - platform: restart
-    name: esphome_esp19_restart
-  # Switch to toggle the relay
   - platform: gpio
     id: relay
     inverted: true
