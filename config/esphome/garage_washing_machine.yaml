@@ -10,6 +10,7 @@
 # state of the machine is.
 #
 substitutions:
+  label: esp05
   slug: garage_washing_machine
   name: Garage Washing Machine
   description: The washing machine, mainly for power monitoring

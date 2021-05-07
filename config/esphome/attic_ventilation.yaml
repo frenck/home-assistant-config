@@ -19,6 +19,7 @@
 # - LED on the sonoff indicates if manual mode has been switch on.
 #
 substitutions:
+  label: esp03
   slug: attic_ventilation
   name: Attic Ventilation
   description: Control the central ventilation system of my home.

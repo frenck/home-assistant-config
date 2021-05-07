@@ -9,6 +9,7 @@
 # https://frenck.link/doorbell
 #
 substitutions:
+  label: esp19
   slug: outside_doorbell
   name: Outside Doorbell
   description: Made my old fashioned doorbell smart!

@@ -8,6 +8,7 @@
 # it running.
 #
 substitutions:
+  label: esp06
   slug: garage_dryer
   name: Garage Dryer
   description: Monitors or dryer. It can also tell if it is running or not.

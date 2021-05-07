@@ -6,6 +6,7 @@
 # a lot.
 #
 substitutions:
+  label: esp01
   slug: office_playground
   name: Office Playground
   description: Small test device for fiddling
