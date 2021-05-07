@@ -22,6 +22,7 @@ packages:
 binary_sensor:
   # This binary sensor tells if the Washing Machine is powered on itself (display)
   - platform: template
+    id: powered_on
     name: "${name} On"
     filters:
       - delayed_off: 10s
