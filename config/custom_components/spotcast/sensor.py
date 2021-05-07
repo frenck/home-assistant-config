@@ -1,11 +1,12 @@
-import logging
 import json
+import logging
 from datetime import timedelta
-from homeassistant.helpers.entity import Entity
-from homeassistant.util import dt
+
+from homeassistant.components.spotify.media_player import SpotifyMediaPlayer
 from homeassistant.const import STATE_OK, STATE_UNKNOWN
 from homeassistant.helpers import entity_platform
-from homeassistant.components.spotify.media_player import SpotifyMediaPlayer
+from homeassistant.helpers.entity import Entity
+from homeassistant.util import dt
 
 from . import DOMAIN, get_cast_devices
 
