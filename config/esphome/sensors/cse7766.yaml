@@ -1,0 +1,37 @@
+---
+# CSE7766 Power Sensor
+#
+# The cse7766 sensor platform allows you to use your CSE7766 voltage/current
+# and power sensors sensors with ESPHome. This sensor is commonly found
+# in the Sonoff POW R2.
+#
+# https://esphome.io/components/sensor/cse7766.html
+#
+platform: cse7766
+
+# Current sensor
+current:
+  id: sensor_cse7766_current
+  name: "${name} Current"
+  unit_of_measurement: "A"
+  accuracy_decimals: 2
+  filters:
+    # Make everything below 0.01A appear as just 0A.
+    - lambda: if (x < 0.01) return 0; else return x;
+
+# Voltage sensor
+voltage:
+  id: sensor_cse7766_voltage
+  name: "${name} Voltage"
+  unit_of_measurement: "V"
+  accuracy_decimals: 1
+
+# Power sensor
+power:
+  id: sensor_cse7766_power
+  name: "${name} Power"
+  unit_of_measurement: "W"
+  accuracy_decimals: 0
+  filters:
+    # Make everything below 1W appear as just 0W.
+    - lambda: if (x < 2) return 0; else return x;
