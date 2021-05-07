@@ -1,0 +1,11 @@
+---
+# Wemos LOLIN32
+#
+# An ESP32-based board with 4MB flash, Wi-Fi & Bluetooth
+#
+# https://www.wemos.cc/en/latest/d32/d32.html
+#
+esphome:
+  <<: !include .esphome.yaml
+  platform: ESP32
+  board: lolin32
