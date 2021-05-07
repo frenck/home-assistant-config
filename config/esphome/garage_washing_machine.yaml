@@ -1,12 +1,13 @@
 ---
-# esp05: Yet unused Sonoff POW R2
+# Garage Washing Machine
 #
-# This ESPHome code is used on a Sonoff POW R2.
+# The washing machine in my garage is hooked up to an Sonoff POW R2.
 #
-# This ESP chip checks my Washing Machine.
-# Currently it only sends out values to Home Assistant.
-# Before doing anything "smart", I need to know its
-# power profile.
+# Right now, it just sends out power data to Home Assistant. I do have a
+# small binary sensor, that can tell if the machine is "on"/standby.
+#
+# In the future I want to get power profiles and actually tell what the
+# state of the machine is.
 #
 substitutions:
   slug: garage_washing_machine
