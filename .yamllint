@@ -1,16 +1,17 @@
 ---
 ignore: |
-  config/custom_components/
-  config/ip_bans.yaml
-  config/esphomeyaml/*/
-  config/notebooks/
   config/automations.yaml
+  config/blueprints/*/homeassistant/*.yaml
+  config/custom_components/
+  config/esphomeyaml/*/
+  config/ip_bans.yaml
+  config/notebooks/
   config/scenes.yaml
-  config/themes/clear.yaml
-  config/themes/slate.yaml
   config/themes/clear-dark.yaml
-  config/themes/synthwave.yaml
+  config/themes/clear.yaml
   config/themes/purple.yaml
+  config/themes/slate.yaml
+  config/themes/synthwave.yaml
 rules:
   braces:
     level: error
