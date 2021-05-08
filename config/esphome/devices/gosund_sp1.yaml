@@ -100,7 +100,7 @@ switch:
   # Switch to toggle the relay
   - platform: gpio
     id: device_relay
-    name: device_replay
+    name: "${name}"
     restore_mode: RESTORE_DEFAULT_ON
     pin: GPIO14
     on_turn_on:
