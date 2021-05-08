@@ -1,0 +1,17 @@
+---
+# Kitchen Cupboard
+#
+# Controls the lights under the kitchen cupboard.
+# Using a Gosund SP1
+# https://frenck.link/gosund-sp1
+#
+substitutions:
+  label: esp14
+  slug: kitchen_cupboard
+  name: Kitchen Cupboard
+  description: Controls the lights under the kitchen cupboard.
+  api_password: !secret esphome_kitchen_cupboard_api_password
+  ota_password: !secret esphome_kitchen_cupboard_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
