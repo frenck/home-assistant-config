@@ -1,0 +1,18 @@
+---
+# Garage Freezer
+#
+# Our freezer is hooked up to a Gosund SP1.
+# https://frenck.link/gosund-sp1
+#
+# It just sends out power data to Home Assistant.
+#
+substitutions:
+  label: esp08
+  slug: garage_freezer
+  name: Garage Freezer
+  description: Monitors our freezer located in the garage.
+  api_password: !secret esphome_garage_freezer_api_password
+  ota_password: !secret esphome_garage_freezer_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
