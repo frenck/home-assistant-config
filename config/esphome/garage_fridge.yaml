@@ -1,0 +1,18 @@
+---
+# Garage Fridge
+#
+# Our fridge in the garage is hooked up to a Gosund SP1.
+# https://frenck.link/gosund-sp1
+#
+# It just sends out power data to Home Assistant.
+#
+substitutions:
+  label: esp10
+  slug: garage_fridge
+  name: Garage Fridge
+  description: Monitors our fridge located in the garage.
+  api_password: !secret esphome_garage_fridge_api_password
+  ota_password: !secret esphome_garage_fridge_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
