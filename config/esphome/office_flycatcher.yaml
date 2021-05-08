@@ -1,0 +1,18 @@
+---
+# Attic Boiler
+#
+# Our boiler is hooked up to a Gosund SP1.
+# https://frenck.link/gosund-sp1
+#
+# It just sends out power data to Home Assistant.
+#
+substitutions:
+  label: esp12
+  slug: office_flycatcher
+  name: Office Flycatcher
+  description: Allow me to control the Flycatcher in the office.
+  api_password: !secret esphome_office_flycatcher_api_password
+  ota_password: !secret esphome_office_flycatcher_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
