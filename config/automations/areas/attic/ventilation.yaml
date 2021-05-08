@@ -4,7 +4,8 @@ description: >-
   Controls the speed of the central ventilation system
 
   My central ventilation system is controlled by Sonoff Dual R2, running
-  ESPHome. The ESPHome code can be found in the `esphome` folder; `esp03.yaml`.
+  ESPHome. The ESPHome code can be found in the `esphome` folder, file:
+  `attic_ventilation.yaml`.
 
   It handles two cases:
     - The humidity of the bathroom.
@@ -23,7 +24,6 @@ trigger:
   - platform: state
     entity_id:
       - sensor.bathroom_humidity
-      - switch.attic_ventilation_manual_mode
   - platform: state
     entity_id: light.restroom
     to: "off"
@@ -64,12 +64,10 @@ action:
                 minutes: 3
       sequence:
         - service: fan.turn_on
-          entity_id: fan.attic_ventilation
-        - service: fan.set_speed
           target:
             entity_id: fan.attic_ventilation
           data:
-            speed: high
+            percentage: 100
 
     # Low speed
     - conditions:
@@ -81,11 +79,8 @@ action:
         - service: fan.turn_on
           target:
             entity_id: fan.attic_ventilation
-        - service: fan.set_speed
-          target:
-            entity_id: fan.attic_ventilation
           data:
-            speed: low
+            percentage: 50
 
   default:
     # Default to off

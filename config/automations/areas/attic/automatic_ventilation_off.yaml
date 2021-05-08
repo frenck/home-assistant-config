@@ -3,7 +3,7 @@ alias: Attic Automatic Ventilation Off
 description: >-
   Turn off automatic ventilation controls when a user made manual changes.
 
-  It turns off a input_boolean when the light is changed by a user.
+  It turns off a input_boolean when the fan is changed by a user.
   This allows me to know if the fan is manually overriden, so I can stop
   automating the fan. The input_boolean resets based on other factors,
   for example, the alarm got armed or after a certain time.
@@ -17,7 +17,3 @@ use_blueprint:
     toggle: input_boolean.attic_automatic_ventilation
     entities:
       - fan.attic_ventilation
-      - switch.attic_ventilation_manual_mode
-      - switch.attic_ventilation_speed_high
-      - switch.attic_ventilation_speed_low
-      - switch.attic_ventilation_speed_off
