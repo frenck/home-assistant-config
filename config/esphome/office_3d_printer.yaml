@@ -1,0 +1,20 @@
+---
+# Office 3D Printer
+#
+# Hooked up my 3D printer to an Gosund SP1.
+# https://frenck.link/gosund-sp1
+#
+# It sends out power data to Home Assistant, but nothing
+# beats the feeling by shouting: "Hey Google, turn on the 3D printer".
+# It is a bit of a double futuristic feeling kinda thing.
+#
+substitutions:
+  label: esp16
+  slug: office_3d_printer
+  name: Office 3D Printer
+  description: Control and monitors the power of my 3D Printer
+  api_password: !secret esphome_office_3d_printer_api_password
+  ota_password: !secret esphome_office_3d_printer_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
