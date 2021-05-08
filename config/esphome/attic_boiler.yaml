@@ -1,0 +1,18 @@
+---
+# Attic Boiler
+#
+# Our boiler is hooked up to a Gosund SP1.
+# https://frenck.link/gosund-sp1
+#
+# It just sends out power data to Home Assistant.
+#
+substitutions:
+  label: esp09
+  slug: attic_boiler
+  name: Attic Boiler
+  description: Monitors our boiler located in the attic.
+  api_password: !secret esphome_attic_boiler_api_password
+  ota_password: !secret esphome_attic_boiler_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
