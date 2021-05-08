@@ -1,0 +1,19 @@
+---
+# Unused; esp17
+#
+# Currently not in use, but here to be able to set it up
+# again easily when needed.
+#
+# Its a Gosund SP1.
+# https://frenck.link/gosund-sp1
+#
+substitutions:
+  label: esp17
+  slug: unused_esp17
+  name: Unused esp17
+  description: Unused Gosund SP1.
+  api_password: !secret esphome_unused_esp17_api_password
+  ota_password: !secret esphome_unused_esp17_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
