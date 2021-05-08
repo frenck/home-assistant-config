@@ -1,0 +1,18 @@
+---
+# Attic Homelab Server
+#
+# This is my Homelab server. It runs all this stuff!
+# https://frenck.link/gosund-sp1
+#
+# It just sends out power data to Home Assistant.
+#
+substitutions:
+  label: esp11
+  slug: attic_homelab_server
+  name: Attic Homelab Server
+  description: Monitors the brains of the home.
+  api_password: !secret esphome_attic_homelab_server_api_password
+  ota_password: !secret esphome_attic_homelab_server_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
