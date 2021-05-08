@@ -12,5 +12,23 @@ substitutions:
 time:
   - <<: !include ../time/homeassistant.yaml
     timezone: "${time_timezone}"
+    on_time_sync:
+      - component.update: sensor_uptime_timestamp
+
   - <<: !include ../time/sntp.yaml
     timezone: "${time_timezone}"
+
+sensor:
+  - <<: !include ../sensors/uptime.yaml
+  - platform: template
+    id: sensor_uptime_timestamp
+    name: "${name} Uptime"
+    icon: "mdi:clock"
+    device_class: "timestamp"
+    accuracy_decimals: 0
+    update_interval: never
+    lambda: |-
+      static float timestamp = (
+        id(time_homeassistant).utcnow().timestamp - id(sensor_uptime).state
+      );
+      return timestamp;
