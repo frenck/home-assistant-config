@@ -1,14 +1,13 @@
+"""Sensor platform for Chromecast devices."""
 import json
 import logging
 from datetime import timedelta
 
-from homeassistant.components.spotify.media_player import SpotifyMediaPlayer
+from homeassistant.components.sensor import SensorEntity
 from homeassistant.const import STATE_OK, STATE_UNKNOWN
-from homeassistant.helpers import entity_platform
-from homeassistant.helpers.entity import Entity
 from homeassistant.util import dt
 
-from . import DOMAIN, get_cast_devices
+from . import get_cast_devices
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -20,7 +19,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     add_devices([ChromecastDevicesSensor(hass)])
 
 
-class ChromecastDevicesSensor(Entity):
+class ChromecastDevicesSensor(SensorEntity):
     def __init__(self, hass):
         self.hass = hass
         self._state = STATE_UNKNOWN

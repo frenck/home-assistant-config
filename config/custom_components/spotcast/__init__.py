@@ -126,16 +126,21 @@ def get_spotify_devices(hass, spotify_user_id):
             continue
 
         for entity in platform.entities.values():
-            if isinstance(entity, SpotifyMediaPlayer) and entity.unique_id == spotify_user_id:
+            if (
+                isinstance(entity, SpotifyMediaPlayer)
+                and entity.unique_id == spotify_user_id
+            ):
                 _LOGGER.debug(
-                    f"get_spotify_devices: {entity.entity_id}: {entity.name} HH: %s",
+                    f"get_spotify_devices: {entity.entity_id}: {entity.name}: %s",
                     entity._devices,
                 )
                 spotify_media_player = entity
                 break
     if spotify_media_player:
         # Need to come from media_player spotify's sp client due to token issues
-        return spotify_media_player._spotify.devices()
+        resp = spotify_media_player._spotify.devices()
+        _LOGGER.debug("get_spotify_devices: %s", resp)
+        return resp
 
 
 def get_cast_devices(hass):
@@ -241,7 +246,7 @@ def setup(hass, config):
             account = msg.get("account", None)
             client = spotipy.Spotify(auth=get_token_instance(account).access_token)
             me_resp = client._get("me")
-            resp = get_spotify_devices(hass, me_resp['id'])
+            resp = get_spotify_devices(hass, me_resp["id"])
             connection.send_message(websocket_api.result_message(msg["id"], resp))
 
         hass.async_add_job(get_devices())
@@ -392,7 +397,7 @@ def setup(hass, config):
             me_resp = client._get("me")
             spotify_cast_device.startSpotifyController(access_token, expires)
             spotify_device_id = spotify_cast_device.getSpotifyDeviceId(
-                get_spotify_devices(hass, me_resp['id'])
+                get_spotify_devices(hass, me_resp["id"])
             )
 
         if uri is None or uri.strip() == "":
@@ -488,7 +493,7 @@ class SpotifyToken:
             )
             expires = self._token_expires - int(time.time())
             return self._access_token, expires
-        except:
+        except:  # noqa: E722
             raise HomeAssistantError("Could not get spotify token")
 
 
