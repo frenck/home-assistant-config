@@ -357,7 +357,7 @@ def setup(hass, config):
             client.start_playback(**kwargs)
 
     def getSpotifyConnectDeviceId(client, device_name):
-        devices_available = client.devices()
+        devices_available = get_spotify_devices(hass, client._get("me")["id"])
         for device in devices_available["devices"]:
             if device["name"] == device_name:
                 return device["id"]
