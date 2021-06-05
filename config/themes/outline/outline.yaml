@@ -10,5 +10,9 @@
 # https://github.com/frenck/home-assistant-theme-outline
 #
 outline:
-  border-color: "#E8E8E8"
   ha-card-box-shadow: "inset 0px 0px 0px 1px var(--border-color)"
+  modes:
+    light:
+      border-color: "#E8E8E8"
+    dark:
+      border-color: "#1F1B24"
