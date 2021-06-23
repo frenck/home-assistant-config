@@ -1,0 +1,28 @@
+---
+# DSMR Smart Reader (Slimme lezer)
+#
+# This is a DSMR reader for the P1 port of my Dutch smart meter.
+# It is a pre-assemled device from Marcel Zuidwijk, which I can
+# highly recommend.
+#
+# https://www.zuidwijk.com
+#
+# This is my version of the configuration, which has been partly
+# contributed back to the original configuration of Marcel.
+#
+substitutions:
+  label: none
+  slug: dsmr_reader
+  name: DSMR Reader
+  description: Exposes my DSMR port as ESPHome sensors.
+  api_password: !secret esphome_dsmr_reader_api_password
+  ota_password: !secret esphome_dsmr_reader_ota_password
+
+packages:
+  <<: !include_dir_named common
+  board: !include boards/wemos_d1_mini.yaml
+  dsmr: !include components/dsmr.yaml
+
+uart:
+  baud_rate: 115200
+  rx_pin: D7
