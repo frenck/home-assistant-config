@@ -40,4 +40,50 @@ condition:
     entity_id: input_boolean.attic_automatic_ventilation
     state: "on"
 
-action: haha broken
+action:
+  choose:
+    # High speed
+    - conditions:
+        - condition: not
+          conditions:
+            - condition: state
+              entity_id: alarm_control_panel.house_alarm
+              state: armed_home
+        - condition: or
+          conditions:
+            - condition: state
+              entity_id: binary_sensor.attic_boiler_hot_tap_water
+              state: "on"
+            - condition: numeric_state
+              entity_id: sensor.bathroom_humidity
+              above: input_number.setting_bathroom_humidity_high
+            - condition: state
+              entity_id: light.restroom
+              state: "on"
+              for:
+                minutes: 3
+      sequence:
+        - service: fan.turn_on
+          target:
+            entity_id: fan.attic_ventilation
+          data:
+            percentage: 100
+
+    # Low speed
+    - conditions:
+        - condition: numeric_state
+          entity_id: sensor.bathroom_humidity
+          above: input_number.setting_bathroom_humidity_low
+          below: input_number.setting_bathroom_humidity_high
+      sequence:
+        - service: fan.turn_on
+          target:
+            entity_id: fan.attic_ventilation
+          data:
+            percentage: 50
+
+  default:
+    # Default to off
+    - service: fan.turn_off
+      target:
+        entity_id: fan.attic_ventilation
