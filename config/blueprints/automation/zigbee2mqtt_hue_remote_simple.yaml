@@ -54,7 +54,7 @@ max_exceeded: silent
 
 variables:
   force_brightness: !input force_brightness
-  action: "{{ trigger.to_state.attributes.action }}"
+  action: "{{ trigger.to_state.state }}"
 
 trigger:
   - platform: state
