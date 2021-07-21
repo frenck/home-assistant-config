@@ -3,21 +3,21 @@ start:
   fields:
     device_name:
       name: "Device Name"
-      description: "The friendly name of the chromecast device (not used together with entity_id and spotify_device_name)."
+      description: "The friendly name of the chromecast or spotify connect device. First checks spotify device list for name (not used together with entity_id and spotify_device_id)."
       example: "Livingroom"
       required: false
       selector:
         text:
     spotify_device_id:
       name: "Spotify Device ID"
-      description: "The spotify device id (not used together with entity_id or device_name)."
+      description: "Advanced users only. The spotify device id (not used together with entity_id or device_name)."
       example: "4363634563457346xcyvydgf3qwa"
       required: false
       selector:
         text:
     entity_id:
       name: "Entity ID"
-      description: "The entity_id of the chromecast mediaplayer (not used together with device_name and spotify_device_name)."
+      description: "The entity_id of the chromecast mediaplayer. Friendly name MUST match the spotify connect device name (not used together with device_name and spotify_device_id)."
       example:  "media_player.vardagsrum"
       required: false
       selector:
