@@ -7,6 +7,7 @@
 #
 platform: group
 name: garden_wall
+unique_id: d458fb3a-c30b-4b54-8bff-2dcd5d628e79
 entities:
   - light.garden_wall_left
   - light.garden_wall_right

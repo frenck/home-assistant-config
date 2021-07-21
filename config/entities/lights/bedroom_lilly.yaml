@@ -5,5 +5,6 @@
 #
 platform: group
 name: bedroom_lilly
+unique_id: b8e7cb96-8f79-4461-930e-d73d6830f68c
 entities:
   - light.bedroom_lilly_bedside

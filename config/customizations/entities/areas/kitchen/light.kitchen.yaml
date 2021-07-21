@@ -1,9 +1,0 @@
----
-#
-# Customizes the kitchen light group in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-light.kitchen:
-  friendly_name: Kitchen
-  icon: mdi:lightbulb-group

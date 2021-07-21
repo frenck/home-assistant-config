@@ -5,6 +5,7 @@
 #
 platform: group
 name: bathroom
+unique_id: 89e0b395-1c3b-4646-b0bb-101d77e1d867
 entities:
   - light.bathroom_ceiling_1
   - light.bathroom_ceiling_2

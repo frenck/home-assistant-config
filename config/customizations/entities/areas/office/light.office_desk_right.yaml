@@ -1,9 +1,0 @@
----
-#
-# Customizes the office desklight in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-light.office_desk_right:
-  friendly_name: Office Desk Right
-  icon: mdi:desk-lamp

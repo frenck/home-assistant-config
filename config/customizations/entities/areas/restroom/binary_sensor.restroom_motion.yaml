@@ -1,8 +1,0 @@
----
-#
-# Customizes the PIR sensor installed in the restroom
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-binary_sensor.restroom_motion:
-  device_class: occupancy

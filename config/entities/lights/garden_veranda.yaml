@@ -7,6 +7,7 @@
 #
 platform: group
 name: garden_veranda
+unique_id: d7ab745b-19a6-4651-9c0f-9f2901866f5c
 entities:
   - light.garden_veranda_wall_left
   - light.garden_veranda_wall_right

@@ -1,9 +1,0 @@
----
-#
-# Customizes the office window lights in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-light.office:
-  friendly_name: Office
-  icon: mdi:lightbulb-group

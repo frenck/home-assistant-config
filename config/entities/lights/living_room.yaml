@@ -7,6 +7,7 @@
 #
 platform: group
 name: living_room
+unique_id: b864d903-0da1-4635-a776-62deb7c42107
 entities:
   - light.living_room_bartop
   - light.living_room_dining_table

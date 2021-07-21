@@ -5,6 +5,7 @@
 #
 platform: group
 name: master_bedroom
+unique_id: adc949db-cc4d-4260-9489-ef56013b1556
 entities:
   - light.master_bedroom_ceiling
   - light.master_bedroom_bedside_daphne

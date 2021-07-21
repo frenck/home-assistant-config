@@ -1,9 +1,0 @@
----
-#
-# Customizes the master bedroom light group in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-light.master_bedroom:
-  friendly_name: Master Bedroom
-  icon: mdi:lightbulb-group

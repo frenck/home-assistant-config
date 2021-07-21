@@ -9,10 +9,9 @@
 #
 platform: group
 name: garden
+unique_id: 61d4b804-7a6a-4b37-b71b-72a9e2432a6c
 entities:
-  - light.garden_border_back_left
-  - light.garden_border_back_right
-  - light.garden_border_front
+  - light.garden_border
   - light.garden_dining_table
   - light.garden_veranda_wall_left
   - light.garden_veranda_wall_right

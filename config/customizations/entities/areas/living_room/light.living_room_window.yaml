@@ -1,9 +1,0 @@
----
-#
-# Customizes the living window lights in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-light.living_room_window:
-  friendly_name: Living Room Window
-  icon: mdi:lightbulb-group

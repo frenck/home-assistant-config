@@ -1,9 +1,0 @@
----
-#
-# Customizes the bathroom ceiling name in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-light.bathroom_ceiling:
-  friendly_name: Bathroom Ceiling
-  icon: mdi:alarm-light

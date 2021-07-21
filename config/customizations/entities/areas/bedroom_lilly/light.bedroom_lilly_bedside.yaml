@@ -1,9 +1,0 @@
----
-#
-# Customizes the bedside light for Lilly in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-light.bedroom_lilly_bedside:
-  friendly_name: Bedroom Lilly Bedside
-  icon: mdi:weather-night

@@ -1,9 +1,0 @@
----
-#
-# Customizes the living room light group in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-light.living_room:
-  friendly_name: Living Room
-  icon: mdi:lightbulb-group

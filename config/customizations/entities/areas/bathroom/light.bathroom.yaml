@@ -1,9 +1,0 @@
----
-#
-# Customizes the bathroom lights in Home Assistant
-#
-# https://www.home-assistant.io/docs/configuration/customizing-devices/
-#
-light.bathroom:
-  friendly_name: Bathroom
-  icon: mdi:lightbulb-group
