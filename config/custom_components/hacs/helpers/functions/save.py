@@ -5,7 +5,7 @@ import shutil
 
 import aiofiles
 
-from custom_components.hacs.helpers.functions.logger import getLogger
+from custom_components.hacs.utils.logger import getLogger
 
 _LOGGER = getLogger()
 
@@ -23,9 +23,7 @@ async def async_save_file(location, content):
         errors = None
 
     try:
-        async with aiofiles.open(
-            location, mode=mode, encoding=encoding, errors=errors
-        ) as outfile:
+        async with aiofiles.open(location, mode=mode, encoding=encoding, errors=errors) as outfile:
             await outfile.write(content)
             outfile.close()
 

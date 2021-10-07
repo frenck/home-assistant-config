@@ -1,12 +1,12 @@
 """Class for plugins in HACS."""
 import json
 
-from custom_components.hacs.helpers.classes.exceptions import HacsException
+from custom_components.hacs.exceptions import HacsException
 from custom_components.hacs.helpers.classes.repository import HacsRepository
 from custom_components.hacs.helpers.functions.information import find_file_name
 
 
-class HacsPlugin(HacsRepository):
+class HacsPluginRepository(HacsRepository):
     """Plugins in HACS."""
 
     def __init__(self, full_name):
@@ -66,9 +66,7 @@ class HacsPlugin(HacsRepository):
     async def get_package_content(self):
         """Get package content."""
         try:
-            package = await self.repository_object.get_contents(
-                "package.json", self.ref
-            )
+            package = await self.repository_object.get_contents("package.json", self.ref)
             package = json.loads(package.content)
 
             if package:

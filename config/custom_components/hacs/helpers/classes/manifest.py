@@ -7,7 +7,7 @@ from typing import List
 
 import attr
 
-from custom_components.hacs.helpers.classes.exceptions import HacsException
+from custom_components.hacs.exceptions import HacsException
 
 
 @attr.s(auto_attribs=True)
@@ -37,6 +37,10 @@ class HacsManifest:
         manifest_data = HacsManifest()
 
         manifest_data.manifest = manifest
+
+        if country := manifest.get("country"):
+            if isinstance(country, str):
+                manifest["country"] = [country]
 
         for key in manifest:
             setattr(manifest_data, key, manifest[key])

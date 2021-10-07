@@ -2,18 +2,15 @@
 # pylint: disable=broad-except, no-member
 import json
 import os
+import shutil
 import tempfile
 import zipfile
-import shutil
 
 from aiogithubapi import AIOGitHubAPIException
 from queueman import QueueManager
 
+from custom_components.hacs.exceptions import HacsException, HacsNotModifiedException
 from custom_components.hacs.helpers import RepositoryHelpers
-from custom_components.hacs.helpers.classes.exceptions import (
-    HacsException,
-    HacsNotModifiedException,
-)
 from custom_components.hacs.helpers.classes.manifest import HacsManifest
 from custom_components.hacs.helpers.classes.repositorydata import RepositoryData
 from custom_components.hacs.helpers.classes.validate import Validate
@@ -23,7 +20,6 @@ from custom_components.hacs.helpers.functions.information import (
     get_repository,
 )
 from custom_components.hacs.helpers.functions.is_safe_to_remove import is_safe_to_remove
-from custom_components.hacs.helpers.functions.logger import getLogger
 from custom_components.hacs.helpers.functions.misc import get_repository_name
 from custom_components.hacs.helpers.functions.save import async_save_file
 from custom_components.hacs.helpers.functions.store import async_remove_store
@@ -35,6 +31,7 @@ from custom_components.hacs.helpers.functions.version_to_install import (
     version_to_install,
 )
 from custom_components.hacs.share import get_hacs
+from custom_components.hacs.utils.logger import getLogger
 
 
 class RepositoryVersions:
@@ -143,6 +140,19 @@ class HacsRepository(RepositoryHelpers):
     def display_name(self):
         """Return display name."""
         return get_repository_name(self)
+
+    @property
+    def ignored_by_country_configuration(self) -> bool:
+        """Return True if hidden by country."""
+        if self.data.installed:
+            return False
+        configuration = self.hacs.configuration.country.lower()
+        manifest = [entry.lower() for entry in self.repository_manifest.country or []]
+        if configuration == "all":
+            return False
+        if not manifest:
+            return False
+        return configuration not in manifest
 
     @property
     def display_status(self):
@@ -259,14 +269,8 @@ class HacsRepository(RepositoryHelpers):
         # Attach repository
         current_etag = self.data.etag_repository
         await common_update_data(self, ignore_issues, force)
-        if (
-            not self.data.installed
-            and (current_etag == self.data.etag_repository)
-            and not force
-        ):
-            self.logger.debug(
-                "Did not update %s, content was not modified", self.data.full_name
-            )
+        if not self.data.installed and (current_etag == self.data.etag_repository) and not force:
+            self.logger.debug("Did not update %s, content was not modified", self.data.full_name)
             return False
 
         # Update last updated
@@ -291,9 +295,7 @@ class HacsRepository(RepositoryHelpers):
             contents = False
 
             for release in self.releases.objects:
-                self.logger.info(
-                    "%s ref: %s ---  tag: %s.", self, self.ref, release.tag_name
-                )
+                self.logger.info("%s ref: %s ---  tag: %s.", self, self.ref, release.tag_name)
                 if release.tag_name == self.ref.split("/")[1]:
                     contents = release.assets
 
@@ -353,9 +355,7 @@ class HacsRepository(RepositoryHelpers):
         """Get the content of the hacs.json file."""
         if not "hacs.json" in [x.filename for x in self.tree]:
             if self.hacs.system.action:
-                raise HacsException(
-                    "::error:: No hacs.json file in the root of the repository."
-                )
+                raise HacsException("::error:: No hacs.json file in the root of the repository.")
             return
         if self.hacs.system.action:
             self.logger.info("%s Found hacs.json", self)
@@ -364,9 +364,7 @@ class HacsRepository(RepositoryHelpers):
 
         try:
             manifest = await self.repository_object.get_contents("hacs.json", self.ref)
-            self.repository_manifest = HacsManifest.from_dict(
-                json.loads(manifest.content)
-            )
+            self.repository_manifest = HacsManifest.from_dict(json.loads(manifest.content))
             self.data.update_data(json.loads(manifest.content))
         except (AIOGitHubAPIException, Exception) as exception:  # Gotta Catch 'Em All
             if self.hacs.system.action:
@@ -399,9 +397,7 @@ class HacsRepository(RepositoryHelpers):
                 self.pending_restart = True
         elif self.data.category == "theme":
             try:
-                await self.hacs.hass.services.async_call(
-                    "frontend", "reload_themes", {}
-                )
+                await self.hacs.hass.services.async_call("frontend", "reload_themes", {})
             except (Exception, BaseException):  # pylint: disable=broad-except
                 pass
         if self.data.full_name in self.hacs.common.installed:
@@ -441,9 +437,7 @@ class HacsRepository(RepositoryHelpers):
 
             if os.path.exists(local_path):
                 if not is_safe_to_remove(local_path):
-                    self.logger.error(
-                        "%s Path %s is blocked from removal", self, local_path
-                    )
+                    self.logger.error("%s Path %s is blocked from removal", self, local_path)
                     return False
                 self.logger.debug("%s Removing %s", self, local_path)
 
@@ -460,8 +454,6 @@ class HacsRepository(RepositoryHelpers):
                 )
 
         except (Exception, BaseException) as exception:
-            self.logger.debug(
-                "%s Removing %s failed with %s", self, local_path, exception
-            )
+            self.logger.debug("%s Removing %s failed with %s", self, local_path, exception)
             return False
         return True

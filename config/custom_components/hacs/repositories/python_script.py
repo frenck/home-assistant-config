@@ -1,11 +1,11 @@
 """Class for python_scripts in HACS."""
 from custom_components.hacs.enums import HacsCategory
-from custom_components.hacs.helpers.classes.exceptions import HacsException
+from custom_components.hacs.exceptions import HacsException
 from custom_components.hacs.helpers.classes.repository import HacsRepository
 from custom_components.hacs.helpers.functions.information import find_file_name
 
 
-class HacsPythonScript(HacsRepository):
+class HacsPythonScriptRepository(HacsRepository):
     """python_scripts in HACS."""
 
     category = "python_script"
@@ -36,9 +36,7 @@ class HacsPythonScript(HacsRepository):
 
         compliant = False
         for treefile in self.treefiles:
-            if treefile.startswith(f"{self.content.path.remote}") and treefile.endswith(
-                ".py"
-            ):
+            if treefile.startswith(f"{self.content.path.remote}") and treefile.endswith(".py"):
                 compliant = True
                 break
         if not compliant:
@@ -69,9 +67,7 @@ class HacsPythonScript(HacsRepository):
 
         compliant = False
         for treefile in self.treefiles:
-            if treefile.startswith(f"{self.content.path.remote}") and treefile.endswith(
-                ".py"
-            ):
+            if treefile.startswith(f"{self.content.path.remote}") and treefile.endswith(".py"):
                 compliant = True
                 break
         if not compliant:
