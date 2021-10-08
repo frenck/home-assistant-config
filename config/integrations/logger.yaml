@@ -9,6 +9,23 @@ logger:
   default: warning
 
   filters:
+    homeassistant:
+      # This can happen during restart having Ingress tabs open.
+      # I really don't care about it.
+      - "Error doing job: Task exception was never retrieved"
+
+    homeassistant.components.zeroconf:
+      # Yes I am aware, I develop on the thing, I don't rely on it...
+      # Don't bother me about it again.
+      - "instance with identical name present in the local network"
+
+    homeassistant.util.yaml.loader:
+      # I use YAML anchors and aliasses, causing duplicate keys in YAML.
+      # For this use-case, that is on purpose, as an alias is used, but
+      # with some overrides.
+      # While a good warning, I'm going to disable it.
+      - "contains duplicate key"
+
     pychromecast.socket_client:
       # Surpress to chatty Cast integration
       - "Failed to connect to service ServiceInfo"
