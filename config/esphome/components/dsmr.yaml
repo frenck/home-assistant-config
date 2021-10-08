@@ -1,22 +1,11 @@
 ---
 # DSMR for ESPHome
 #
-# DSMR is a custom component that is in fact a DSMR (P1 Port) reader that runs
-# fully within ESPHome.
-#
-# It allows you to expose data from your energy meter directly from ESPHome
-# as sensors, or use them within ESPHome for further processing.
-#
-# https://github.com/zuidwijk/dsmr
-#
 # This component has been tested and used with DSMR reader boards created
 # and sold by Marcel Zuidwijk, which I can highly recommend.
 #
 # Get yours at: https://www.zuidwijk.com
 #
-external_components:
-  - source: github://zuidwijk/dsmr
-
 esphome:
   esp8266_restore_from_flash: true
   on_boot:
