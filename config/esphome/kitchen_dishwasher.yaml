@@ -1,0 +1,18 @@
+---
+# Kitchen Dishwasher
+#
+# Monitors the power usage of our dishwasher that is located in the kitchen.
+#
+# Its a Gosund SP1.
+# https://frenck.link/gosund-sp1
+#
+substitutions:
+  label: esp18
+  slug: kitchen_dishwasher
+  name: Kitchen Dishwasher
+  description: Monitors the power/energy usage of our Kitchen diswasher.
+  api_password: !secret esphome_kitchen_dishwasher_api_password
+  ota_password: !secret esphome_kitchen_dishwasher_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
