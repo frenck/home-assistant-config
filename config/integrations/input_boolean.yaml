@@ -1,0 +1,11 @@
+---
+# The Input Boolean helper integration allows you to define boolean values
+# that can be controlled via the user interface and can be used within
+# conditions of automation.
+#
+# In the UI these can be found as "Helpers". The input boolean would be known
+# as the Toggle helper.
+#
+# https://www.home-assistant.io/integrations/input_boolean/
+#
+input_boolean: !include_dir_named ../entities/input_booleans

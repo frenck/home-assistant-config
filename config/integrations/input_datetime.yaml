@@ -1,0 +1,11 @@
+---
+# The Input Date Time helper integration allows you to define date, times or
+# date & time values that can be controlled via the user interface and can be
+# used within conditions of automation.
+#
+# In the UI these can be found as "Helpers". The input date time would be known
+# as the Date/Time helper.
+#
+# https://www.home-assistant.io/integrations/input_datetime/
+#
+input_datetime: !include_dir_named ../entities/input_datetimes

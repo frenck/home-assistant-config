@@ -1,0 +1,11 @@
+---
+# The Input Number helper integration allows you to define number values
+# that can be controlled via the user interface and can be used within
+# conditions of automations.
+#
+# In the UI these can be found as "Helpers". The input number would be known
+# as the Number helper.
+#
+# https://www.home-assistant.io/integrations/input_number/
+#
+input_number: !include_dir_named ../entities/input_numbers
