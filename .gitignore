@@ -26,7 +26,6 @@ config/image
 config/ip_bans.yaml
 config/known_devices.yaml
 config/neighbours
-config/scripts.yaml
 config/secrets.yaml
 
 # ESPHome ignores
