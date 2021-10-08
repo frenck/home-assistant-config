@@ -12,23 +12,27 @@ description: >-
     - Turn on ventilation when someone visits the restroom long enough to
       indicate it is a number 2 ;)
 
-id: c2153826-fa86-4448-91a5-53791f86a5f5
+id: "c2153826-fa86-4448-91a5-53791f86a5f5"
 mode: single
 max_exceeded: silent
 
 trigger:
   - platform: homeassistant
     event: start
+
   - platform: event
     event_type: automation_reloaded
+
   - platform: state
     entity_id:
       - sensor.bathroom_humidity
+
   - platform: state
     entity_id: light.restroom
     to: "off"
     for:
       minutes: 10
+
   - platform: state
     entity_id: light.restroom
     to: "on"
