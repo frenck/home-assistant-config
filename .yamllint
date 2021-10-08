@@ -4,6 +4,7 @@ ignore: |
   config/blueprints/*/homeassistant/*.yaml
   config/custom_components/
   config/esphomeyaml/*/
+  config/esphome/.esphome/
   config/ip_bans.yaml
   config/notebooks/
   config/scenes.yaml
