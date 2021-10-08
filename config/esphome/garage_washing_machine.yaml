@@ -26,6 +26,6 @@ binary_sensor:
     id: powered_on
     name: "${name} On"
     filters:
-      - delayed_off: 10s
+      - delayed_off: 20s
     lambda: |-
       return id(sensor_cse7766_power).state > 2;
