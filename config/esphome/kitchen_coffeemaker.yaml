@@ -1,0 +1,20 @@
+---
+# Kitchen Coffeemaker
+#
+# This wallplug sits behind my coffeemaker/expresso machine.
+# Right now, just for monitoring energy usage, but I could do some
+# smarter things with it in the feature.
+#
+# Its a Gosund SP1.
+# https://frenck.link/gosund-sp1
+#
+substitutions:
+  label: esp13
+  slug: kitchen_coffeemaker
+  name: Kitchen Coffeemaker
+  description: Monitors our coffeemaker located in the kitchen.
+  api_password: !secret esphome_kitchen_coffeemaker_api_password
+  ota_password: !secret esphome_kitchen_coffeemaker_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
