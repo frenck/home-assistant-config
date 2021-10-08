@@ -1,0 +1,20 @@
+---
+# Kitchen Water Heater
+#
+# Monitors and controls the kitchen water heater.
+# As they can use quite a bit of energy, this allows me to monitor and safe
+# a little bit (e.g., when not needing hot water).
+#
+# Its a Gosund SP1.
+# https://frenck.link/gosund-sp1
+#
+substitutions:
+  label: esp15
+  slug: kitchen_water_heater
+  name: Kitchen Water Heater
+  description: Controls and monitors our water heater located in the kitchen.
+  api_password: !secret esphome_kitchen_water_heater_api_password
+  ota_password: !secret esphome_kitchen_water_heater_ota_password
+
+packages:
+  device: !include devices/gosund_sp1.yaml
