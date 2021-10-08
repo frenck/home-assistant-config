@@ -30,11 +30,12 @@ switch:
   - platform: gpio
     id: relay
     inverted: true
-    name: esphome_esp19_switch
     pin: GPIO0
+
   - platform: template
-    name: esphome_esp19_chime
+    name: "${name} Chime"
     id: chime_switch
+    icon: "mdi:alarm-bell"
     restore_state: false
     turn_on_action:
       - globals.set:
@@ -67,7 +68,7 @@ binary_sensor:
   # Binary sensor for the button press
   - platform: gpio
     id: button
-    name: esphome_esp19_button
+    name: "${name}"
     pin:
       number: GPIO2
       mode: INPUT_PULLUP
@@ -80,14 +81,7 @@ binary_sensor:
         if:
           condition:
             - switch.is_on: chime_switch
-            - switch.is_off: relay
           then:
             - switch.turn_on: relay
     on_release:
-      then:
-        if:
-          condition:
-            - switch.is_on: chime_switch
-            - switch.is_on: relay
-          then:
-            - switch.turn_off: relay
+      - switch.turn_off: relay
