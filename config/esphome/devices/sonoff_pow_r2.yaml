@@ -19,11 +19,15 @@ uart:
 
 sensor:
   - <<: !include ../sensors/cse7766.yaml
+    update_interval: 10s
+  - <<: !include ../sensors/total_daily_energy.yaml
+    power_id: sensor_cse7766_power
 
 switch:
   # This is the actual exposed power switch
   - platform: gpio
-    name: "${name} Switch"
+    name: "${name}"
+    restore_mode: RESTORE_DEFAULT_ON
     id: device_relay
     pin: GPIO12
 
