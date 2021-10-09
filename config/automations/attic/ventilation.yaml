@@ -15,6 +15,10 @@ description: >-
   Additionally, it:
     - Doesn't automatically interfere is the central ventilation is manually
       overridden.
+    - Turns on the ventilation at high speed if shower use is detected
+      (hot tap water is asked from the boiler).
+    - When the house is in cleaning mode, ventilation is turned up to help
+      when the floor is mopped.
     - Turns off the central ventilation when we go to sleep. We do want to
       be able to sleep in silence :)
 
