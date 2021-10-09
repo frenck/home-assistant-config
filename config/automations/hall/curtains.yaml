@@ -90,7 +90,7 @@ action:
           - *manual_override_off
           - &close_curtains
             alias: "Close curtains"
-            service: cover.open_close
+            service: cover.close_cover
             target:
               area_id: hall
 
