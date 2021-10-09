@@ -49,7 +49,9 @@ trigger:
     event: start
 
   - platform: event
-    event_type: automations_reloaded
+    event_type:
+      - automations_reloaded
+      - scene_reloaded
 
   - platform: state
     entity_id:
