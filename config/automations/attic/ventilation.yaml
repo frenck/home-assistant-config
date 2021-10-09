@@ -135,7 +135,7 @@ action:
         conditions:
           - alias: "Attic ventilation has changed"
             condition: trigger
-            id: "lights"
+            id: "ventilation"
 
           - alias: "It was changed by a user"
             condition: template
