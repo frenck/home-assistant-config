@@ -98,8 +98,7 @@ trigger:
 
   - platform: time
     id: "reset"
-    at:
-      - 04:00
+    at: input_datetime.house_setting_reset
 
 action:
   - choose:
