@@ -15,14 +15,6 @@ binary_sensor:
     excludes: []
   # TODO: Move to template sensor
   - platform: workday
-    name: weekend
-    country: NL
-    workdays:
-      - sat
-      - sun
-    excludes: []
-  # TODO: Move to template sensor
-  - platform: workday
     name: workday
     country: NL
     workdays:
