@@ -103,6 +103,19 @@ trigger:
 
 action:
   - choose:
+      - alias: "Reset manual override before the new day starts"
+        conditions:
+          - alias: "When triggerd by the reset time"
+            condition: trigger
+            id: time
+
+        sequence:
+          - &manual_override_off
+            alias: "Reset manual override on kitchen lights"
+            service: input_boolean.turn_off
+            target:
+              entity_id: input_boolean.kitchen_variable_lights_manual_override
+
       - alias: "Activate cleaning mode"
         conditions:
           - alias: "When cleaning mode is on"
@@ -111,18 +124,13 @@ action:
             state: "on"
 
         sequence:
+          - *manual_override_off
           - alias: "Activate restroom cleaning scene"
             service: scene.turn_on
             target:
               entity_id: scene.kitchen_cleaning
             data:
               transition: 2.5
-
-          - &manual_override_off
-            alias: "Reset manual override on kitchen lights"
-            service: input_boolean.turn_off
-            target:
-              entity_id: input_boolean.kitchen_variable_lights_manual_override
 
       - alias: "Turn off when sleep or away mode is active"
         conditions:
@@ -147,15 +155,6 @@ action:
               area_id: kitchen
             data:
               transition: 5
-
-      - alias: "Reset manual override before the new starts"
-        conditions:
-          - alias: "When triggerd by the reset time"
-            condition: trigger
-            id: time
-
-        sequence:
-          - *manual_override_off
 
       - alias: "The kitchen remote was used"
         conditions:
