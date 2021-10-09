@@ -40,8 +40,8 @@ trigger:
       - input_boolean.attic_variable_ventilation_manual_override
       - input_boolean.house_mode_cleaning
       - input_boolean.house_mode_sleep
-      - input_number.setting_bathroom_humidity_high
-      - input_number.setting_bathroom_humidity_low
+      - input_number.bathroom_setting_humidity_high
+      - input_number.bathroom_setting_humidity_low
       - sensor.bathroom_humidity
 
   - platform: state
