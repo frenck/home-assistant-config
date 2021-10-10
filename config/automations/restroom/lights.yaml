@@ -50,10 +50,22 @@ action:
 
       - alias: "Activate motion scene when motion is detected"
         conditions:
-          - alias: "When motion detector is on"
-            condition: state
-            entity_id: binary_sensor.restroom_motion
-            state: "on"
+          - condition: or
+            conditions:
+              - alias: "When motion detector is on"
+                condition: state
+                entity_id: binary_sensor.restroom_motion
+                state: "on"
+
+              - alias: "When motion detector isn't off for more than 1.5 min"
+                condition: not
+                conditions:
+                  - alias: "When motion dector is off for more than 1.5 min"
+                    condition: state
+                    entity_id: binary_sensor.restroom_motion
+                    state: "off"
+                    for:
+                      minutes: 1
 
         sequence:
           - alias: "Activate restroom motion scene"
