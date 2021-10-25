@@ -26,6 +26,7 @@ from homeassistant.components.telegram_bot import (
     EVENT_TELEGRAM_TEXT,
     SERVICE_SEND_MESSAGE,
 )
+from telegram.utils.helpers import escape_markdown
 
 DOMAIN = "telegram_bot_conversation"
 
@@ -47,7 +48,7 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
             TELEGRAM_DOMAIN,
             SERVICE_SEND_MESSAGE,
             {
-                ATTR_MESSAGE: response.speech["plain"]["speech"],
+                ATTR_MESSAGE: escape_markdown(response.speech["plain"]["speech"]),
                 ATTR_TARGET: event.data[ATTR_USER_ID],
             },
         )
