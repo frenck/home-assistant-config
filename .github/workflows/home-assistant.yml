@@ -16,7 +16,7 @@ jobs:
       - name: ⤵️ Check out configuration from GitHub
         uses: actions/checkout@v2.4.0
       - name: 🚀 Run yamllint
-        uses: frenck/action-yamllint@v1.1.1
+        uses: frenck/action-yamllint@v1.1.2
 
   remarklint:
     runs-on: ubuntu-18.04
