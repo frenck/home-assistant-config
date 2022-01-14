@@ -40,7 +40,7 @@ jobs:
       - name: ⤵️ Check out configuration from GitHub
         uses: actions/checkout@v2.4.0
       - name: 🚀 Run Home Assistant Configuration Check
-        uses: frenck/action-home-assistant@v1.1.1
+        uses: frenck/action-home-assistant@v1.2
         with:
           path: "./config"
           secrets: ./.stubs/secrets.yaml
