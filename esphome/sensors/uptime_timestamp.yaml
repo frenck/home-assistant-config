@@ -1,0 +1,26 @@
+---
+# Uptime Timestamp Sensor
+#
+# This sensor is an alternative for the uptime sensor, which only sends the
+# startup timestamp of the device ONCE! Instead of sending updates to
+# Home Assistant constantly.
+#
+# This saves you tons of updates to be processed and, if recorded/stored in the
+# Home Assistant database, many many less rows.
+#
+# This sensor can be triggered manually and will only update the status once!
+# This package needs `time/homeassistant.yaml` and `sensor/uptime.yaml` to work.
+# See `common/time.yaml` for an example usage.
+#
+platform: template
+id: sensor_uptime_timestamp
+name: "${name} Uptime"
+device_class: timestamp
+entity_category: diagnostic
+accuracy_decimals: 0
+update_interval: never
+lambda: |-
+  static float timestamp = (
+    id(time_homeassistant).utcnow().timestamp - id(sensor_uptime).state
+  );
+  return timestamp;

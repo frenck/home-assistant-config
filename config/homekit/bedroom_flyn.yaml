@@ -1,6 +1,0 @@
----
-#
-# List of entities that is exposed to HomeKit/Siri
-# From area: Bedroom Flynn
-#
-- climate.bedroom_flynn

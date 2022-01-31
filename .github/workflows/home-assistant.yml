@@ -42,8 +42,8 @@ jobs:
       - name: 🚀 Run Home Assistant Configuration Check
         uses: frenck/action-home-assistant@v1.3
         with:
-          path: "./config"
-          secrets: ./.stubs/secrets.yaml
+          path: "."
+          secrets: ./secrets.fake.yaml
           version: "${{ matrix.version }}"
 
   esphome:
@@ -62,8 +62,8 @@ jobs:
           pip install esphome
           pip list
           esphome version
-      - name: Copy stub files into configuration folder
-        run: cp -R ./.stubs/* ./config/esphome/
+      - name: Copy secrets stub into configuration folder
+        run: cp ./secrets.fake.yaml ./esphome/secrets.yaml
       - name: Run esphome on all files
         # yamllint disable rule:line-length
         run: |

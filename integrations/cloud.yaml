@@ -1,0 +1,28 @@
+---
+# The Home Assistant Cloud allows you to quickly integrate your local
+# Home Assistant with various cloud services like Amazon Alexa and Google Home.
+#
+# https://www.home-assistant.io/integrations/cloud/
+#
+cloud:
+  # Customize the Google Assistant integration with the Nabu Casa Cloud
+  google_actions:
+    # Entity specific configuration for Google Assistant.
+    # These are loaded from a separate directory.
+    entity_config: !include_dir_named ../customizations/google
+
+    # Filters for entities to include/exclude from Google Assistant.
+    # These are loaded from a separate directory.
+    filter:
+      include_entities: !include_dir_merge_list ../assistants/google
+
+  # Customize the Amazon Alexa integration with the Nabu Casa Cloud
+  alexa:
+    # Entity specific configuration for Amazon Alexa.
+    # These are loaded from a separate directory.
+    entity_config: !include_dir_named ../customizations/alexa
+
+    # Filters for entities to include/exclude from Google Assistant.
+    # These are loaded from a separate directory.
+    filter:
+      include_entities: !include_dir_merge_list ../assistants/alexa

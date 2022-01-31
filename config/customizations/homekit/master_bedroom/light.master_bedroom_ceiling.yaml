@@ -1,8 +1,0 @@
----
-# Entity configuration for HomeKit.
-#
-# I use this to customize how the device shows up in HomeKit.
-#
-# https://www.home-assistant.io/integrations/homekit/#entity_config
-#
-name: Slaapkamer Plafond

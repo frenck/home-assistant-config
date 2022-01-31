@@ -9,33 +9,23 @@
 __pycache__
 
 # Directory (contents) ignores
-config/.cloud
-config/.storage
-config/deps
+.cloud
+.storage
+deps
 
 # Specific file ignores
-config/.config_entries.json
-config/.homekit.state
-config/.ios.conf
-config/.spotify-token-cache
-config/.tradfri_psk.conf
-config/.uuid
-config/core
-config/html5_push_registrations.conf
-config/image
-config/ip_bans.yaml
-config/known_devices.yaml
-config/neighbours
-config/secrets.yaml
+core
+image
+ip_bans.yaml
+secrets.yaml
 
 # ESPHome ignores
-config/esphome/secrets.yaml
-config/esphome/.*/
+esphome/.*/
 
 # Ignore add-on files
-config/aircast.xml
-config/airsonos.xml
-config/notebooks
+aircast.xml
+airsonos.xml
+notebooks
 
 # Ignore files created by IDE's
 .vscode
@@ -44,3 +34,6 @@ config/notebooks
 
 # Specific keeps
 !.gitkeep
+
+# Temporary ignores
+.old_config

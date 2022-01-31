@@ -1,0 +1,227 @@
+---
+# DSMR for ESPHome
+#
+# This component has been tested and used with DSMR reader boards created
+# and sold by Marcel Zuidwijk, which I can highly recommend.
+#
+# Get yours at: https://www.zuidwijk.com
+#
+esphome:
+  esp8266_restore_from_flash: true
+  on_boot:
+    then:
+      - if:
+          condition:
+            lambda: return id(has_key);
+          then:
+            - lambda: |-
+                std::string key(id(stored_decryption_key), 32);
+                id(dsmr_instance).set_decryption_key(key);
+          else:
+            - logger.log:
+                level: info
+                format: >-
+                  Not using decryption key. If you need to set a key use
+                  Home Assistant service 'ESPHome:  ${slug}_set_dsmr_key'
+
+api:
+  services:
+    - service: set_dsmr_key
+      variables:
+        private_key: string
+      then:
+        - logger.log:
+            format: Setting private key %s. Set to empty string to disable
+            args: [private_key.c_str()]
+        - globals.set:
+            id: has_key
+            value: !lambda "return private_key.length() == 32;"
+        - lambda: |-
+            if (private_key.length() == 32)
+              private_key.copy(id(stored_decryption_key), 32);
+            id(dsmr_instance).set_decryption_key(private_key);
+
+globals:
+  - id: has_key
+    type: bool
+    restore_value: true
+    initial_value: "false"
+  - id: stored_decryption_key
+    type: char[32]
+    restore_value: true
+
+dsmr:
+  id: dsmr_instance
+
+sensor:
+  - platform: dsmr
+    energy_delivered_lux:
+      id: dsmr_energy_delivered_lux
+      name: "${name} Energy Consumed Luxembourg"
+      disabled_by_default: true
+    energy_delivered_tariff1:
+      id: dsrm_energy_delivered_tariff1
+      name: "${name} Energy Consumed Tariff 1"
+      disabled_by_default: true
+    energy_delivered_tariff2:
+      id: dsmr_energy_delivered_tariff2
+      name: "${name} Energy Consumed Tariff 2"
+      disabled_by_default: true
+    energy_returned_lux:
+      id: dsmr_energy_returned_lux
+      name: "${name} Energy Produced Luxembourg"
+      disabled_by_default: true
+    energy_returned_tariff1:
+      id: dsmr_energy_returned_tariff1
+      name: "${name} Energy Produced Tariff 1"
+    energy_returned_tariff2:
+      id: dsmr_energy_returned_tariff2
+      name: "${name} Energy Produced Tariff 2"
+    power_delivered:
+      id: dsmr_power_delivered
+      name: "${name} Power Consumption"
+      unit_of_measurement: W
+      accuracy_decimals: 0
+      filters:
+        - multiply: 1000
+    power_returned:
+      id: dsmr_power_returned
+      name: "${name} Power Production"
+      unit_of_measurement: W
+      accuracy_decimals: 0
+      filters:
+        - multiply: 1000
+    electricity_failures:
+      id: electricity_failures
+      name: "${name} Electricity Failures"
+      icon: mdi:alert
+      entity_category: diagnostic
+    electricity_long_failures:
+      id: dsmr_electricity_long_failures
+      name: "${name} Long Electricity Failures"
+      icon: mdi:alert
+      entity_category: diagnostic
+    voltage_l1:
+      id: dsmr_voltage_l1
+      name: "${name} Voltage Phase 1"
+      disabled_by_default: true
+      entity_category: diagnostic
+    voltage_l2:
+      id: dsmr_voltage_l2
+      name: "${name} Voltage Phase 2"
+      disabled_by_default: true
+      entity_category: diagnostic
+    voltage_l3:
+      id: dsmr_voltage_l3
+      name: "${name} Voltage Phase 3"
+      disabled_by_default: true
+      entity_category: diagnostic
+    current_l1:
+      id: dsmr_current_l1
+      name: "${name} Current Phase 1"
+      disabled_by_default: true
+      entity_category: diagnostic
+    current_l2:
+      id: dsmr_current_l2
+      name: "${name} Current Phase 2"
+      disabled_by_default: true
+      entity_category: diagnostic
+    current_l3:
+      id: dsmr_current_l3
+      name: "${name} Current Phase 3"
+      entity_category: diagnostic
+    power_delivered_l1:
+      id: dsmr_power_delivered_l1
+      name: "${name} Power Consumption Phase 1"
+      disabled_by_default: true
+      unit_of_measurement: W
+      accuracy_decimals: 0
+      filters:
+        - multiply: 1000
+      entity_category: diagnostic
+    power_delivered_l2:
+      id: dsmr_power_delivered_l2
+      name: "${name} Power Consumption Phase 2"
+      disabled_by_default: true
+      unit_of_measurement: W
+      accuracy_decimals: 0
+      filters:
+        - multiply: 1000
+      entity_category: diagnostic
+    power_delivered_l3:
+      id: dsmr_power_delivered_l3
+      name: "${name} Power Consumption Phase 3"
+      disabled_by_default: true
+      unit_of_measurement: W
+      accuracy_decimals: 0
+      filters:
+        - multiply: 1000
+      entity_category: diagnostic
+    power_returned_l1:
+      id: dsmr_power_returned_l1
+      name: "${name} Power Production Phase 1"
+      disabled_by_default: true
+      unit_of_measurement: W
+      accuracy_decimals: 0
+      filters:
+        - multiply: 1000
+      entity_category: diagnostic
+    power_returned_l2:
+      id: dsmr_power_returned_l2
+      name: "${name} Power Production Phase 2"
+      disabled_by_default: true
+      unit_of_measurement: W
+      accuracy_decimals: 0
+      filters:
+        - multiply: 1000
+      entity_category: diagnostic
+    power_returned_l3:
+      id: dsmr_power_returned_l3
+      name: "${name} Power Production Phase 3"
+      disabled_by_default: true
+      unit_of_measurement: W
+      accuracy_decimals: 0
+      filters:
+        - multiply: 1000
+      entity_category: diagnostic
+    gas_delivered:
+      id: dsmr_gas_delivered
+      name: "${name} Gas Consumed"
+    gas_delivered_be:
+      id: dsmr_gas_delivered_be
+      name: "${name} Gas Consumed Belgium"
+      disabled_by_default: true
+
+text_sensor:
+  - platform: dsmr
+    electricity_failure_log:
+      id: dsmr_electricity_failure_log
+      name: "${name} DSMR Electricity Failure Log"
+      disabled_by_default: true
+      entity_category: diagnostic
+    electricity_tariff:
+      id: dsmr_electricity_tariff
+      name: "${name} DSMR Electricity Tariff"
+    identification:
+      id: dsmr_identification
+      name: "${name} DSMR Identification"
+      entity_category: diagnostic
+    message_short:
+      id: dsmr_message_short
+      name: "${name} DSMR Message Short"
+      entity_category: diagnostic
+      disabled_by_default: true
+    message_long:
+      id: dsmr_message_long
+      name: "${name} DSMR Message Long"
+      entity_category: diagnostic
+      disabled_by_default: true
+    p1_version:
+      id: dsmr_p1_version
+      name: "${name} DSMR Version"
+      entity_category: diagnostic
+    p1_version_be:
+      id: dsmr_p1_version_belgium
+      name: "${name} DSMR Version Belgium"
+      disabled_by_default: true
+      entity_category: diagnostic

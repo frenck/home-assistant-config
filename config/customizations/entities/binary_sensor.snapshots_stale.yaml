@@ -1,4 +1,0 @@
----
-binary_sensor.snapshots_stale:
-  icon: mdi:cloud-upload-outline
-  device_class: problem

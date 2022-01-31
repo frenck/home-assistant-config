@@ -1,8 +1,0 @@
----
-# This integrations fetches data for various health products by Withings.
-#
-# https://www.home-assistant.io/integrations/withings/
-#
-withings:
-  client_id: !secret withings_client_id
-  client_secret: !secret withings_client_secret

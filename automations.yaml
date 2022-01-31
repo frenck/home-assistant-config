@@ -1,0 +1,13 @@
+---
+# This file is used by the automations editor
+# in the Home Assistant frontend.
+#
+# I personally do not use it, mainly because I like doing this in YAML.
+# However, from time to time, it is helpful to click a bit and see
+# what the frontend makes of it.
+#
+# This file must exist for the frontend Automation editor to work.
+# Hence, it is here, empty.
+#
+# If you are looking for my automations: See automations folder.
+[]

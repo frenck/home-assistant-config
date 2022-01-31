@@ -1,0 +1,17 @@
+---
+# WiFi Info Text Sensor
+#
+# The wifi_info text sensor platform exposes different WiFi information via
+# text sensors.
+#
+#
+platform: wifi_info
+ip_address:
+  name: "${name} IP Address"
+  icon: mdi:ip-network
+ssid:
+  name: "${name} SSID"
+  icon: mdi:wifi-settings
+bssid:
+  name: "${name} BSSID"
+  icon: mdi:identifier

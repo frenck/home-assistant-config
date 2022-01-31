@@ -1,8 +1,0 @@
----
-#
-# List of entities that is exposed to HomeKit/Siri
-# From area: Office
-#
-[]
-# - light.office_desk
-# - light.office_window

@@ -1,0 +1,30 @@
+---
+# WiFi Signal Percentage Sensor
+#
+# A template sensor that calculates the Wi-Fi Signal Strength as a percentage.
+#
+# This template doesn't update by itself. It is used by:
+# common/wifi.yaml
+#
+# https://esphome.io/components/sensor/wifi_signal.html
+#
+platform: template
+id: sensor_wifi_signal_percentage
+name: "${name} Wi-Fi Signal Percentage"
+entity_category: diagnostic
+state_class: measurement
+icon: "mdi:wifi"
+unit_of_measurement: "%"
+update_interval: never
+lambda: |-
+  if (id(sensor_wifi_signal).state) {
+    if (id(sensor_wifi_signal).state <= -100 ) {
+      return 0;
+    } else if (id(sensor_wifi_signal).state >= -50) {
+      return 100;
+    } else {
+      return 2 * (id(sensor_wifi_signal).state + 100);
+    }
+  } else {
+    return NAN;
+  }
