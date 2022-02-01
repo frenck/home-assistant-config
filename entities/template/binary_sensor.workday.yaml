@@ -3,7 +3,7 @@
 # Small binary sensor to tell me if it is currently a workday or not.
 #
 binary_sensor:
-  - name: "Weekend"
+  - name: "Workday"
     unique_id: "64f9e951-bc1b-4541-8160-ee1f4b688a00"
     icon: "mdi:briefcase"
     state: >-
