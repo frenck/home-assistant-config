@@ -1,11 +1,11 @@
 ---
-alias: Living Room Climate
+alias: "Living Room Climate"
 description: >-
-  Manages the climate in hour living room
+  Manages the climate in our living room
 
   Gotta save the environment a bit, right? Also, the wallet likes it as well :)
 
-id: cc6cad10-b5ee-4362-bd7b-2a67dde9e503
+id: "cc6cad10-b5ee-4362-bd7b-2a67dde9e503"
 mode: queued
 
 trigger:
@@ -60,5 +60,3 @@ action:
 
         sequence:
           - *turn_down
-
-    default: [] # Nothing yet
