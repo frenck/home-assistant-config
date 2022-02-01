@@ -1,0 +1,64 @@
+---
+alias: Living Room Climate
+description: >-
+  Manages the climate in hour living room
+
+  Gotta save the environment a bit, right? Also, the wallet likes it as well :)
+
+id: cc6cad10-b5ee-4362-bd7b-2a67dde9e503
+mode: queued
+
+trigger:
+  - platform: homeassistant
+    event: start
+
+  - platform: event
+    event_type: automation_reloaded
+
+  - platform: state
+    entity_id:
+      - input_boolean.house_mode_away
+      - input_boolean.house_mode_sleep
+
+  - platform: time
+    at: &time "22:00:00"
+
+variables:
+  # Common YAML anchors for this automation
+  anchors:
+    - &turn_down
+      alias: "Turn down living room climate"
+      service: climate.set_temperature
+      target:
+        area_id: living_room
+      data:
+        temperature: 15
+
+action:
+  - choose:
+      - alias: "When house is sleep or away mode"
+        conditions:
+          - condition: or
+            conditions:
+              - alias: "When the house is in away mode"
+                condition: state
+                entity_id: input_boolean.house_mode_away
+                state: "on"
+
+              - alias: "When the house is in sleep mode"
+                condition: state
+                entity_id: input_boolean.house_mode_sleep
+                state: "on"
+
+        sequence:
+          - *turn_down
+
+      - alias: "Turn down the heating before bedtime"
+        conditions:
+          - condition: time
+            after: *time
+
+        sequence:
+          - *turn_down
+
+    default: [] # Nothing yet
