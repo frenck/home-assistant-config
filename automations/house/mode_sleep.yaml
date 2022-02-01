@@ -1,0 +1,52 @@
+---
+alias: "House Sleep Mode Detection"
+description: >-
+  Automation to control the sleep mode of the house automatically.
+
+  This is mostly based on our alarm system at this point.
+
+id: "5584f3c7-1419-423e-88a9-338501b7c75f"
+mode: queued
+
+trigger:
+  - platform: homeassistant
+    event: start
+
+  - platform: event
+    event_type: automation_reloaded
+
+  - platform: state
+    entity_id:
+      - alarm_control_panel.house
+
+condition:
+  - alias: "Ensure the alarm system is available and has a known state"
+    condition: not
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.house
+        state:
+          - "unavailable"
+          - "unknown"
+
+action:
+  - alias: "Decide if house should be in sleep mode or not"
+    choose:
+      - alias: "Turn on sleep mode"
+        conditions:
+          - alias: "When the alarm is armed home"
+            condition: state
+            entity_id: alarm_control_panel.house
+            state: "armed_home"
+
+        sequence:
+          - alias: "Turn on house sleep mode"
+            service: input_boolean.turn_on
+            target:
+              entity_id: input_boolean.house_mode_sleep
+
+    default:
+      - alias: "Turn off sleep mode"
+        service: input_boolean.turn_off
+        target:
+          entity_id: input_boolean.house_mode_sleep
