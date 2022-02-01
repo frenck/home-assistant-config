@@ -59,7 +59,7 @@ interval:
             for:
               time: 1.5s
               condition:
-                - binary_sensor.is_on: button
+                - binary_sensor.is_on: push_button
                 - switch.is_on: relay
           then:
             - switch.turn_off: relay
@@ -67,7 +67,7 @@ interval:
 binary_sensor:
   # Binary sensor for the button press
   - platform: gpio
-    id: button
+    id: push_button
     name: "${name}"
     pin:
       number: GPIO2
