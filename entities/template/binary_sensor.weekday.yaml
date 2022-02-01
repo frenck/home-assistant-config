@@ -1,0 +1,10 @@
+---
+#
+# Small binary sensor to tell me if it is currently a weekday or not.
+#
+binary_sensor:
+  - name: "Weekday"
+    unique_id: "cc02ec50-9735-4e47-b4d4-847b25641174"
+    icon: "mdi:calendar-week"
+    state: >-
+      {{ now().weekday() < 5 }}

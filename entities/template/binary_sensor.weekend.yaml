@@ -1,13 +1,7 @@
 ---
 #
-# Small binary sensot to tell me if it is currently weekend or not.
+# Small binary sensor to tell me if it is currently weekend or not.
 #
-trigger:
-  - platform: homeassistant
-    event: start
-  - platform: time
-    at: "00:00:00"
-
 binary_sensor:
   - name: "Weekend"
     unique_id: "910ddeb9-e2a6-4227-bed0-40859817e55d"
