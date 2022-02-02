@@ -19,6 +19,8 @@ trigger:
     entity_id:
       - input_boolean.house_mode_away
       - input_boolean.house_mode_sleep
+      - input_boolean.house_mode_vacation
+    from: ~
 
   - platform: time
     at: &time "22:00:00"
@@ -32,24 +34,31 @@ variables:
       target:
         area_id: living_room
       data:
-        temperature: 15
+        temperature: 15.0
 
 action:
   - choose:
-      - alias: "When house is sleep or away mode"
-        conditions:
-          - condition: or
-            conditions:
-              - alias: "When the house is in away mode"
-                condition: state
-                entity_id: input_boolean.house_mode_away
-                state: "on"
+      - conditions:
+          - alias: "When the house is in away mode"
+            condition: state
+            entity_id: input_boolean.house_mode_away
+            state: "on"
+        sequence:
+          - *turn_down
 
-              - alias: "When the house is in sleep mode"
-                condition: state
-                entity_id: input_boolean.house_mode_sleep
-                state: "on"
+      - conditions:
+          - alias: "When the house is in sleep mode"
+            condition: state
+            entity_id: input_boolean.house_mode_sleep
+            state: "on"
+        sequence:
+          - *turn_down
 
+      - conditions:
+          - alias: "When the house is in vacation mode"
+            condition: state
+            entity_id: input_boolean.house_mode_vacation
+            state: "on"
         sequence:
           - *turn_down
 
@@ -57,6 +66,5 @@ action:
         conditions:
           - condition: time
             after: *time
-
         sequence:
           - *turn_down
