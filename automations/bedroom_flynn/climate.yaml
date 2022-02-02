@@ -43,6 +43,13 @@ variables:
       data:
         hvac_mode: "off"
 
+    - &turn_on
+      <<: *target
+      alias: "Turn on heating"
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: "heat"
+
     - &turn_down
       <<: *target
       alias: "Turn down heating"
@@ -81,7 +88,9 @@ action:
             after: *time_start
             before: *time_end
         sequence:
+          - *turn_on
           - *turn_up
 
     default:
+      - *turn_on
       - *turn_down
