@@ -1,0 +1,87 @@
+---
+alias: Bedroom Flynn Climate
+description: >-
+  Controls the thermostat in Flynn's bedroom.
+
+  Besides normal temperature handling, this automation turns off the thermostat
+  in Flynn's bedroom in case the window is open, and on again when its closed.
+
+  When the house is in vacation mode or in away mode, turn off the heating.
+
+id: "995cb631-efde-4d01-a3b0-8bca47d546fe"
+mode: queued
+
+trigger:
+  - platform: homeassistant
+    event: start
+
+  - platform: event
+    event_type: automation_reloaded
+
+  - platform: state
+    entity_id:
+      - binary_sensor.bedroom_flynn_window
+      - input_boolean.house_mode_away
+      - input_boolean.house_mode_vacation
+    from: ~
+
+  - platform: time
+    at:
+      - &time_start "17:30:00"
+      - &time_end "07:00:00"
+
+variables:
+  anchors:
+    - &target
+      target:
+        area_id: bedroom_flynn
+
+    - &turn_off
+      <<: *target
+      alias: "Turn off heating"
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: "off"
+
+    - &turn_down
+      <<: *target
+      alias: "Turn down heating"
+      service: climate.set_temperature
+      data:
+        temperature: 15.0
+
+    - &turn_up
+      <<: *target
+      alias: "Turn up heating"
+      service: climate.set_temperature
+      data:
+        temperature: 19.0
+
+action:
+  - choose:
+      - conditions:
+          - alias: "When house is in vacation mode"
+            condition: state
+            entity_id: input_boolean.house_mode_vacation
+            state: "on"
+        sequence:
+          - *turn_off
+
+      - conditions:
+          - alias: "When the window is open"
+            condition: state
+            entity_id: binary_sensor.bedroom_flynn_window
+            state: "on"
+        sequence:
+          - *turn_off
+
+      - conditions:
+          - alias: "When evening/night"
+            condition: time
+            after: *time_start
+            before: *time_end
+        sequence:
+          - *turn_up
+
+    default:
+      - *turn_down
