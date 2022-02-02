@@ -1,0 +1,73 @@
+---
+alias: "Living Room Vacuum"
+description: >-
+  Controls the living room vacuum.
+
+id: "cf185370-31db-42d7-b782-38a38b3fa67f"
+mode: queued
+
+trigger:
+  - platform: homeassistant
+    event: start
+
+  - platform: event
+    event_type: automation_reloaded
+
+  - platform: state
+    entity_id:
+      - input_boolean.house_mode_away
+      - vacuum.living_room
+    from: ~
+
+condition:
+  - alias: "When house not in vacation mode"
+    condition: state
+    entity_id: input_boolean.house_mode_vacation
+    state: "off"
+
+action:
+  - choose:
+      - alias: "Start vacuuming automatically"
+        conditions:
+          - alias: "When the house is in away mode"
+            condition: state
+            entity_id: input_boolean.house_mode_away
+            state: "on"
+
+          - alias: "When last run was at least 4 hours ago"
+            condition: template
+            value_template: >-
+              {{
+                (
+                  now() - as_datetime(
+                    states("sensor.living_room_vacuum_last_clean_end")
+                  )
+                ).seconds // 3600 >= 4
+              }}
+
+        sequence:
+          - alias: "Nobody is at home, max fanspeed!"
+            service: vacuum.set_fan_speed
+            target:
+              area_id: living_room
+            data:
+              fan_speed: "Max"
+
+          - alias: "Start cleaning already!"
+            service: vacuum.start
+            target:
+              area_id: living_room
+
+      - alias: "Reset the fan speed when docked"
+        conditions:
+          - alias: "When the vacuum is docked"
+            condition: state
+            entity_id: vacuum.living_room
+            state: "docked"
+        sequence:
+          - alias: "Reset the fan speed when it gets docked"
+            service: vacuum.set_fan_speed
+            target:
+              area_id: living_room
+            data:
+              fan_speed: "Standard"
