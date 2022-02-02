@@ -1,0 +1,29 @@
+---
+# Pre-commit configuration
+#
+# This will help ensure everything I commit is kinda clean and neat.
+#
+exclude: ^(custom_components|www/community)/
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: check-json
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        exclude: ^.HA_VERSION
+      - id: forbid-new-submodules
+      - id: trailing-whitespace
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.26.3
+    hooks:
+      - id: yamllint
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.5.1
+    hooks:
+      - id: prettier

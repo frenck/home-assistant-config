@@ -19,7 +19,6 @@ packages:
   device: !include devices/sonoff_pow_r2.yaml
 
 binary_sensor:
-
   # This binary sensor tells if the dryer is powered on itself (display)
   - platform: template
     id: powered_on

@@ -24,7 +24,7 @@ globals:
   - id: chime
     type: bool
     restore_value: true
-    initial_value: 'true'
+    initial_value: "true"
 
 switch:
   - platform: gpio
@@ -40,11 +40,11 @@ switch:
     turn_on_action:
       - globals.set:
           id: chime
-          value: 'true'
+          value: "true"
     turn_off_action:
       - globals.set:
           id: chime
-          value: 'false'
+          value: "false"
     lambda: |-
       return id(chime);
 
