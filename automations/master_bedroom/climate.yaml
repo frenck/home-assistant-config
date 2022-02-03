@@ -1,0 +1,96 @@
+---
+alias: Master Bedroom Climate
+description: >-
+  Controls the thermostat the master bedroom.
+
+  Besides normal temperature handling, this automation turns off the thermostat
+  in the master bedroom in case the window is open, and on again when its closed.
+
+  When the house is in vacation mode or in away mode, turn off the heating.
+
+id: "d447ee50-4b58-4cf8-bb79-cf64cd8d1b13"
+mode: queued
+
+trigger:
+  - platform: homeassistant
+    event: start
+
+  - platform: event
+    event_type: automation_reloaded
+
+  - platform: state
+    entity_id:
+      - binary_sensor.master_bedroom_window
+      - input_boolean.house_mode_away
+      - input_boolean.house_mode_vacation
+    from: ~
+
+  - platform: time
+    at:
+      - &time_start "20:00:00"
+      - &time_end "07:00:00"
+
+variables:
+  anchors:
+    - &target
+      target:
+        area_id: master_bedroom
+
+    - &turn_off
+      <<: *target
+      alias: "Turn off heating"
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: "off"
+
+    - &turn_on
+      <<: *target
+      alias: "Turn on heating"
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: "heat"
+
+    - &turn_down
+      <<: *target
+      alias: "Turn down heating"
+      service: climate.set_temperature
+      data:
+        temperature: 15.0
+
+    - &turn_up
+      <<: *target
+      alias: "Turn up heating"
+      service: climate.set_temperature
+      data:
+        temperature: 19.0
+
+action:
+  - choose:
+      - conditions:
+          - alias: "When house is in vacation mode"
+            condition: state
+            entity_id: input_boolean.house_mode_vacation
+            state: "on"
+        sequence:
+          - *turn_off
+
+      - conditions:
+          - alias: "When the window is open"
+            condition: state
+            entity_id: binary_sensor.master_bedroom_window
+            state: "on"
+        sequence:
+          - *turn_off
+
+      - conditions:
+          - alias: "When evening/night"
+            condition: time
+            after: *time_start
+            before: *time_end
+        sequence:
+          - *turn_on
+          - *turn_up
+
+    default:
+      - *turn_on
+      - *turn_down
