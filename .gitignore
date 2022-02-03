@@ -19,6 +19,9 @@ image
 ip_bans.yaml
 secrets.yaml
 
+# Build-in blueprints ignores
+blueprints/*/homeassistant
+
 # ESPHome ignores
 esphome/.*/
 
