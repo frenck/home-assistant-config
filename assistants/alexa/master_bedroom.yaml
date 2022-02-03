@@ -1,0 +1,7 @@
+---
+#
+# List of entities that is exposed to Alexa
+# Area: Master Bedroom
+#
+# entities:
+- climate.master_bedroom

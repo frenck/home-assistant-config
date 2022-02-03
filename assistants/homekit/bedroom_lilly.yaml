@@ -1,0 +1,7 @@
+---
+#
+# List of entities that is exposed to HomeKit/Siri
+# Area: Bedroom Lilly
+#
+# entities:
+- climate.bedroom_lilly
