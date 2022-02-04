@@ -1,0 +1,171 @@
+---
+alias: "Hall Lights"
+description: >-
+  Controls the hall lights.
+
+  They mainly respond on motion; but also when the alarm arms.
+
+id: "dae7c422-03ff-4ae6-a06d-65e4907872c1"
+mode: queued
+max_exceeded: silent
+trace:
+  stored_traces: 25
+
+trigger:
+  - platform: homeassistant
+    event: start
+
+  - platform: event
+    event_type:
+      - automation_reloaded
+      - scene_reloaded
+
+  - platform: state
+    entity_id:
+      - input_boolean.house_mode_away
+      - input_boolean.house_mode_cleaning
+      - input_boolean.house_mode_eco
+      - input_boolean.house_mode_sleep
+      - input_boolean.house_mode_guest
+      - sensor.hall_illuminance
+      - sensor.outside_illuminance
+      - binary_sensor.hall_motion
+    from: ~
+
+variables:
+  anchors:
+    - &scene
+      service: scene.turn_on
+      data:
+        transition: 2.5
+
+    - &turn_off
+      alias: "Turn off all the hall lights"
+      service: light.turn_off
+      target:
+        area_id: hall
+      data:
+        transition: 5
+
+    - &condition_low_light
+      alias: "When light conditions are low"
+      condition: or
+      conditions:
+        - alias: "When light from outside is low"
+          condition: numeric_state
+          entity_id: sensor.outside_illuminance
+          below: 500
+        - alias: "When light condition in the hall are low"
+          condition: numeric_state
+          entity_id: sensor.hall_illuminance
+          below: 50
+
+    - &choose_scene
+      choose:
+        - alias: "Activate hall sleep scene when in sleep mode"
+          conditions:
+            - alias: "When house is in sleep mode"
+              condition: state
+              entity_id: input_boolean.house_mode_sleep
+              state: "on"
+          sequence:
+            - alias: "Activate hall sleep scene"
+              <<: *scene
+              target:
+                entity_id: scene.hall_sleep
+
+        - alias: "Activate hall night scene when it's pitch-dark outside"
+          conditions:
+            - alias: "When it is pitch-dark outside"
+              condition: numeric_state
+              entity_id: sensor.outside_luminosity
+              below: 100
+          sequence:
+            - alias: "Activate hall night scene"
+              <<: *scene
+              target:
+                entity_id: scene.hall_night
+
+        - alias: "Activate hall sunrise/sunset scene otherwise"
+          conditions:
+            - *condition_low_light
+          sequence:
+            - choose:
+                - alias: "Activate sunrise scene until the late aternoon"
+                  conditions:
+                    - condition: time
+                      before: "15:00:00"
+                  sequence:
+                    - alias: "Activate hall sunrise scene"
+                      <<: *scene
+                      target:
+                        entity_id: scene.hall_sunrise
+              default:
+                - alias: "Activate hall sunset scene"
+                  <<: *scene
+                  target:
+                    entity_id: scene.hall_sunset
+
+action:
+  - choose:
+      - alias: "Activate cleaning mode"
+        conditions:
+          - alias: "When cleaning mode is on"
+            condition: state
+            entity_id: input_boolean.house_mode_cleaning
+            state: "on"
+
+        sequence:
+          - alias: "Activate hall cleaning scene"
+            <<: *scene
+            target:
+              entity_id: scene.hall_cleaning
+
+      - alias: "Turn off when sleep or away mode is active"
+        conditions:
+          - condition: or
+            conditions:
+              - alias: "When the house is in away mode"
+                condition: state
+                entity_id: input_boolean.house_mode_away
+                state: "on"
+
+              - alias: "When the house is in sleep mode"
+                condition: state
+                entity_id: input_boolean.house_mode_sleep
+                state: "on"
+
+        sequence:
+          - *turn_off
+
+      - alias: "Activate scene when motion is detected"
+        conditions:
+          - *condition_low_light
+          - alias: "When motion detector is on"
+            condition: state
+            entity_id: binary_sensor.hall_motion
+            state: "on"
+
+        sequence:
+          - *choose_scene
+
+      - alias: "When guest mode is active, keep lights on"
+        conditions:
+          - alias: "When house is in guest mode"
+            condition: state
+            entity_id: input_boolean.house_mode_guest
+            state: "on"
+        sequence:
+          - *choose_scene
+
+      - alias: "When house not in eco mode, keep lights on"
+        conditions:
+          - alias: "When house is not in "
+            condition: state
+            entity_id: input_boolean.house_mode_eco
+            state: "off"
+        sequence:
+          - *choose_scene
+
+    default:
+      - *turn_off
