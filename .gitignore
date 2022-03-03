@@ -35,7 +35,13 @@ notebooks
 .theia
 .Trash*
 
+# Ignore vendored stuff
+custom_components
+themes
+www/community
+
 # Specific keeps
+!custom_components/telegram_bot_conversation
 !.gitkeep
 
 # Temporary ignores
