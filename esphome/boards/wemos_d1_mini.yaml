@@ -5,7 +5,5 @@
 #
 # https://www.wemos.cc/en/latest/d1/d1_mini.html
 #
-esphome:
-  <<: !include .esphome.yaml
-  platform: ESP8266
+esp8266:
   board: d1_mini

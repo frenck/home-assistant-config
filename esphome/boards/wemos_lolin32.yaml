@@ -5,7 +5,5 @@
 #
 # https://www.wemos.cc/en/latest/d32/d32.html
 #
-esphome:
-  <<: !include .esphome.yaml
-  platform: ESP32
+esp32:
   board: lolin32

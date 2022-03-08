@@ -5,6 +5,7 @@
 #
 # https://esphome.io/components/esphome.html
 #
-name: "${slug}"
-comment: "${description}"
-build_path: "./.build/${slug}/"
+esphome:
+  name: "${slug}"
+  comment: "${description}"
+  build_path: "./.build/${slug}/"
