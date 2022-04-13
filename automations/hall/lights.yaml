@@ -90,17 +90,16 @@ variables:
           conditions:
             - *condition_low_light
           sequence:
-            - choose:
+            - if:
                 - alias: "Activate sunrise scene until the late aternoon"
-                  conditions:
-                    - condition: time
-                      before: "15:00:00"
-                  sequence:
-                    - alias: "Activate hall sunrise scene"
-                      <<: *scene
-                      target:
-                        entity_id: scene.hall_sunrise
-              default:
+                  condition: time
+                  before: "15:00:00"
+              then:
+                - alias: "Activate hall sunrise scene"
+                  <<: *scene
+                  target:
+                    entity_id: scene.hall_sunrise
+              else:
                 - alias: "Activate hall sunset scene"
                   <<: *scene
                   target:
