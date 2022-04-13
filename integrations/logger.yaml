@@ -14,6 +14,10 @@ logger:
       # I really don't care about it.
       - "Error doing job: Task exception was never retrieved"
 
+    homeassistant.loader:
+      # Really? Cool... I know... I installed them...
+      - "We found a custom integration"
+
     homeassistant.components.zeroconf:
       # Yes I am aware, I develop on the thing, I don't rely on it...
       # Don't bother me about it again.
