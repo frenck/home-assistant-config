@@ -122,17 +122,12 @@ action:
 
       - alias: "Turn off when sleep or away mode is active"
         conditions:
-          - condition: or
-            conditions:
-              - alias: "When the house is in away mode"
-                condition: state
-                entity_id: input_boolean.house_mode_away
-                state: "on"
-
-              - alias: "When the house is in sleep mode"
-                condition: state
-                entity_id: input_boolean.house_mode_sleep
-                state: "on"
+          - condition: state
+            entity_id:
+              - input_boolean.house_mode_away
+              - input_boolean.house_mode_sleep
+            match: any
+            state: "on"
 
         sequence:
           - *turn_off
