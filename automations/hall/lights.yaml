@@ -49,8 +49,7 @@ variables:
 
     - &condition_low_light
       alias: "When light conditions are low"
-      condition: or
-      conditions:
+      or:
         - alias: "When light from outside is low"
           condition: numeric_state
           entity_id: sensor.outside_illuminance

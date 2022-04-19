@@ -54,8 +54,7 @@ action:
             state: "off"
 
           - alias: "When any of the following is true"
-            condition: or
-            conditions:
+            or:
               - alias: "When the house is in away mode"
                 condition: state
                 entity_id: input_boolean.house_mode_away
