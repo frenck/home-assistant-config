@@ -152,7 +152,8 @@ action:
             state: "on"
 
         # Do nothing, beyond this point, because of the manual override
-        sequence: []
+        sequence:
+          - stop: "Ventilation was manually overriden"
 
       - alias: "Manual attic ventilation override detected"
         conditions:
