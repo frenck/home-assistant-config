@@ -1,0 +1,51 @@
+---
+alias: "Living Room Window Switch"
+description: >-
+  This is an pyhical switch controller our living room / office
+  window down lights.
+
+  The switch is a Shelly 1L, that is been programmed to
+  only control the relay when Home Assistant isn't available.
+
+  The switch controls power to Zigbee based lights, so, while Home Assistant
+  is online, we are controlling those ourselves.
+
+id: "cbf76821-96b6-437a-940f-64caf4ffbec4"
+mode: queued
+
+trigger:
+  - platform: event
+    id: switch_1
+    event_type: esphome.switch_pressed
+    event_data:
+      slug: "living_room_window_switch"
+      switch: "1"
+
+  - platform: event
+    id: switch_2
+    event_type: esphome.switch_pressed
+    event_data:
+      slug: "living_room_window_switch"
+      switch: "2"
+
+action:
+  choose:
+    - conditions:
+        alias: "When switch 1 is pressed"
+        condition: trigger
+        id: switch_1
+      sequence:
+        alias: "Toggle on office window lights"
+        service: light.toggle
+        target:
+          entity_id: light.office_window
+
+    - conditions:
+        alias: "When switch 2 is pressed"
+        condition: trigger
+        id: switch_2
+      sequence:
+        alias: "Toggle living room window lights"
+        service: light.toggle
+        target:
+          entity_id: light.living_room_window

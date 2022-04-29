@@ -1,0 +1,139 @@
+---
+# Living Room Window Switch
+#
+# Switches the power of the spots across our living room window.
+#
+# It is a Shelly 1L (no neutral wire).
+#
+# Those spots are Ikea Zigbee GU10 spots, which should always be powered (as
+# they are controlled via Zigbee). This configuration is made in a way,
+# that if Home Assistant is not connected, the Shelly takes over the relay.
+#
+# Even if Home Assistant is down, we can control the lights; using the regular
+# wall switch.
+#
+substitutions:
+  label: esp20
+  slug: living_room_window_switch
+  name: Living Room Window Switch
+  description: Physical switch controlling our living room window lights
+  api_password: !secret esphome_living_room_window_switch_api_password
+  ota_password: !secret esphome_living_room_window_switch_ota_password
+
+esp8266:
+  board: esp01_1m
+
+packages:
+  <<: !include_dir_named common
+
+button:
+  # IKEA Zigbee Reset & Pair Sequence
+  - platform: template
+    name: "${name} Pair"
+    id: ikea_reset
+    icon: "mdi:zigbee"
+    entity_category: config
+    on_press:
+      - switch.turn_on: device_relay
+      - delay: 2s
+      - repeat:
+          count: 6
+          then:
+            - switch.turn_off: device_relay
+            - delay: 1000ms
+            - switch.turn_on: device_relay
+            - delay: 250ms
+
+switch:
+  # Switch to toggle the relay
+  - platform: gpio
+    name: "${name} Relay"
+    id: device_relay
+    pin:
+      number: GPIO5
+
+# Momentary wall switches
+binary_sensor:
+  - platform: gpio
+    id: device_switch_1
+    name: "${name} Switch 1"
+    pin:
+      number: GPIO14
+    filters:
+      - delayed_on_off: 50ms
+    on_press:
+      if:
+        condition:
+          - wifi.connected: ~
+          - api.connected: ~
+        then:
+          - homeassistant.event:
+              event: esphome.switch_pressed
+              data:
+                slug: "${slug}"
+                switch: "1"
+        else:
+          if:
+            condition:
+              not:
+                sensor.in_range:
+                  id: device_temperature_reading
+                  above: 75.0
+            then:
+              - switch.toggle: device_relay
+
+  - platform: gpio
+    id: device_switch_2
+    name: "${name} Switch 2"
+    pin:
+      number: GPIO4
+    filters:
+      - delayed_on_off: 50ms
+    on_press:
+      if:
+        condition:
+          - wifi.connected: ~
+          - api.connected: ~
+        then:
+          - homeassistant.event:
+              event: esphome.switch_pressed
+              data:
+                slug: "${slug}"
+                switch: "2"
+        else:
+          if:
+            condition:
+              not:
+                sensor.in_range:
+                  id: device_temperature_reading
+                  above: 75.0
+            then:
+              - switch.toggle: device_relay
+
+sensor:
+  - platform: ntc
+    id: device_temperature_reading
+    sensor: device_temperature_resistance_reading
+    name: "${name} Temperature"
+    icon: "mdi:thermometer"
+    entity_category: config
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    calibration:
+      b_constant: 3350
+      reference_resistance: 10kOhm
+      reference_temperature: 298.15K
+    on_value_range:
+      - above: 75.0
+        then:
+          - switch.turn_off: device_relay
+
+  - platform: resistance
+    id: device_temperature_resistance_reading
+    sensor: device_temperature_analog_reading
+    configuration: DOWNSTREAM
+    resistor: 32kOhm
+
+  - platform: adc
+    id: device_temperature_analog_reading
+    pin: A0
