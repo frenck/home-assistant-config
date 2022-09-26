@@ -6,3 +6,7 @@
 frontend:
   # We can define additional/custom themes for the frontend here.
   themes: !include_dir_merge_named ../themes
+
+  # Extra Javascript module to load.
+  extra_module_url:
+    - /hacsfiles/hass-hue-icons/hass-hue-icons.js
