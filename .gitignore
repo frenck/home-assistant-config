@@ -41,7 +41,6 @@ themes
 www/community
 
 # Specific keeps
-!custom_components/telegram_bot_conversation
 !.gitkeep
 
 # Temporary ignores
