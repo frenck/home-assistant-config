@@ -1,8 +1,0 @@
----
-# Input boolean: House Vacation Mode
-#
-# This boolean indicates if we are out for multiple days, e.g., on a holiday.
-# Helpful for disabling automations, saving energy and more of those things.
-#
-name: "House Vacation Mode"
-icon: "mdi:beach"

@@ -1,9 +1,0 @@
----
-# Input boolean: House Eco Mode
-#
-# In general, we want to save energy. Its good for the environment and also
-# saves a buck or two. Hower, some days, you want to enjoy life with a bit more
-# comfort. Switching between those, is what this boolean is for.
-#
-name: "House Eco Mode"
-icon: "mdi:leaf"

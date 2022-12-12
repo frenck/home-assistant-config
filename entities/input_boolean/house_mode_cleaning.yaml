@@ -1,8 +1,0 @@
----
-# Input boolean: House Cleaning Mode
-#
-# When cleaning the house, having a lot of light helps. This toggle can
-# help setting everything up for cleaning!
-#
-name: "House Cleaning Mode"
-icon: "mdi:broom"
