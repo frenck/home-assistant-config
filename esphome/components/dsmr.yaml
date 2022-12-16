@@ -6,8 +6,11 @@
 #
 # Get yours at: https://www.zuidwijk.com
 #
+
+esp8266:
+  restore_from_flash: true
+
 esphome:
-  esp8266_restore_from_flash: true
   on_boot:
     then:
       - if:

@@ -31,6 +31,7 @@ binary_sensor:
   # This binary sensor tells if the dryer is running or not
   - platform: template
     id: running
+    device_class: running
     name: "${name} Running"
     filters:
       - delayed_off: 40s

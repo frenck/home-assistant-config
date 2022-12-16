@@ -13,6 +13,7 @@ platform: cse7766
 current:
   id: sensor_cse7766_current
   name: "${name} Current"
+  entity_category: diagnostic
   unit_of_measurement: "A"
   accuracy_decimals: 2
   filters:
@@ -23,6 +24,7 @@ current:
 voltage:
   id: sensor_cse7766_voltage
   name: "${name} Voltage"
+  entity_category: diagnostic
   unit_of_measurement: "V"
   accuracy_decimals: 1
 
@@ -30,6 +32,7 @@ voltage:
 power:
   id: sensor_cse7766_power
   name: "${name} Power"
+  entity_category: diagnostic
   unit_of_measurement: "W"
   accuracy_decimals: 0
   filters:

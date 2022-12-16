@@ -1,0 +1,73 @@
+---
+# Garden Switch
+#
+# Needs documentation
+#
+substitutions:
+  label: esp02
+  slug: garden_switch
+  name: Garden Switch
+  description: Switch we have indoors, to be able to switch on/off everything in our garden.
+  api_password: !secret esphome_garden_switch_api_password
+  ota_password: !secret esphome_garden_switch_ota_password
+
+esp8266:
+  board: esp01_1m
+
+packages:
+  <<: !include_dir_named common
+
+switch:
+  # Switch to toggle the relay
+  - platform: gpio
+    name: "${name} Relay"
+    id: device_relay
+    pin:
+      number: GPIO5
+
+binary_sensor:
+  - platform: gpio
+    id: device_switch_1
+    name: "${name} Switch 1"
+    pin:
+      number: GPIO4
+    filters:
+      - delayed_on_off: 50ms
+    on_state:
+      then:
+        - switch.toggle: device_relay
+
+  - platform: gpio
+    id: device_switch_2
+    name: "${name} Switch 2"
+    pin:
+      number: GPIO14
+
+sensor:
+  - platform: ntc
+    sensor: temp_resistance_reading
+    name: "${name} Temperature"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    icon: "mdi:thermometer"
+    calibration:
+      b_constant: 3350
+      reference_resistance: 10kOhm
+      reference_temperature: 298.15K
+    on_value_range:
+      - above: "80.0"
+        then:
+          - switch.turn_off: device_relay
+
+  - platform: resistance
+    id: temp_resistance_reading
+    sensor: temp_analog_reading
+    configuration: DOWNSTREAM
+    resistor: 32kOhm
+
+  - platform: adc
+    id: temp_analog_reading
+    pin: A0
+
+status_led:
+  pin: GPIO0
