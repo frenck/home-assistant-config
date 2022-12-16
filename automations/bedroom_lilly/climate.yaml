@@ -1,0 +1,84 @@
+---
+alias: "Bedroom Lilly Climate"
+description: >-
+  Controls the thermostat in Lilly's bedroom.
+
+  When the house is in vacation mode or in away mode, turn off the heating.
+
+id: "fcfe60e3-a69a-4361-b5fe-2d8b7f374dfd"
+mode: queued
+
+trigger:
+  - platform: homeassistant
+    event: start
+
+  - platform: event
+    event_type: automation_reloaded
+
+  - platform: state
+    entity_id:
+      - input_boolean.house_mode_away
+      - input_boolean.house_mode_vacation
+    from: ~
+
+  - platform: time
+    at:
+      - &time_start "17:30:00"
+      - &time_end "07:00:00"
+
+variables:
+  anchors:
+    - &target
+      target:
+        area_id: bedroom_lilly
+
+    - &turn_off
+      <<: *target
+      alias: "Turn off heating"
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: "off"
+
+    - &turn_on
+      <<: *target
+      alias: "Turn on heating"
+      service: climate.set_hvac_mode
+      data:
+        hvac_mode: "heat"
+
+    - &turn_down
+      <<: *target
+      alias: "Turn down heating"
+      service: climate.set_temperature
+      data:
+        temperature: 17.0
+
+    - &turn_up
+      <<: *target
+      alias: "Turn up heating"
+      service: climate.set_temperature
+      data:
+        temperature: 19.5
+
+action:
+  - choose:
+      - conditions:
+          - alias: "When house is in vacation mode"
+            condition: state
+            entity_id: input_boolean.house_mode_vacation
+            state: "on"
+        sequence:
+          - *turn_off
+
+      - conditions:
+          - alias: "When evening/night"
+            condition: time
+            after: *time_start
+            before: *time_end
+        sequence:
+          - *turn_on
+          - *turn_up
+
+    default:
+      - *turn_on
+      - *turn_down

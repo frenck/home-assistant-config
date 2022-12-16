@@ -29,42 +29,48 @@ trace:
   stored_traces: 25
 
 trigger:
-  - platform: homeassistant
+  - alias: "When Home Assistant starts"
+    platform: homeassistant
     event: start
 
-  - platform: event
+  - alias: "When automations are reloaded"
+    platform: event
     event_type: automation_reloaded
 
   - platform: state
     entity_id:
-      - input_boolean.attic_variable_ventilation_manual_override
-      - input_boolean.house_mode_cleaning
-      - input_boolean.house_mode_sleep
-      - input_number.bathroom_setting_humidity_high
-      - input_number.bathroom_setting_humidity_low
-      - sensor.bathroom_humidity
+      - input_boolean.mode_cleaning_house
+      - input_boolean.mode_sleep_house
+      - input_boolean.variable_manual_override_attic_ventilation
+      - input_number.setting_humidity_high_bathroom
+      - input_number.setting_humidity_low_bathroom
+      - sensor.humidity_bathroom
     from: ~
 
-  - platform: state
+  - alias: "When attic ventilation state changes"
+    platform: state
     id: &ventilation "ventilation"
     entity_id:
       - fan.attic_ventilation
 
-  - platform: state
+  - alias: "When restroom light is off for 10 minutes"
+    platform: state
     entity_id: light.restroom
     to: "off"
     for:
       minutes: 10
 
-  - platform: state
+  - alias: "When restroom light is on for 3 minutes"
+    platform: state
     entity_id: light.restroom
     to: "on"
     for:
       minutes: 3
 
-  - platform: time
+  - alias: "When it is house reset time"
+    platform: time
     id: &reset "reset"
-    at: input_datetime.house_setting_reset
+    at: input_datetime.setting_reset_house
 
 variables:
   anchors:
@@ -94,114 +100,103 @@ variables:
       alias: "Reset manual override on attic ventilation"
       service: input_boolean.turn_off
       target:
-        entity_id: input_boolean.attic_variable_ventilation_manual_override
+        entity_id: input_boolean.variable_manual_override_attic_ventilation
 
     - &manual_override_on
       alias: "Set attic ventilation as manually overriden"
       service: input_boolean.turn_on
       target:
-        entity_id: input_boolean.attic_variable_ventilation_manual_override
+        entity_id: input_boolean.variable_manual_override_attic_ventilation
 
     - &hot_tap_water_used
       alias: "When hot tap water is used"
       condition: state
-      entity_id: binary_sensor.attic_boiler_hot_tap_water
+      entity_id: binary_sensor.dhw_attic_boiler
       state: "on"
 
 action:
-  - choose:
-      - alias: "Reset manual override before the new day starts"
-        conditions:
-          - alias: "When triggerd by the reset time"
-            condition: trigger
-            id: *reset
-        sequence:
-          - *manual_override_off
+  choose:
+    - alias: "Reset manual override before the new day starts"
+      conditions:
+        alias: "When triggerd by the reset time"
+        condition: trigger
+        id: *reset
+      sequence: *manual_override_off
 
-      - alias: "Activate cleaning mode"
-        conditions:
-          alias: "When cleaning mode is on"
+    - alias: "Activate cleaning mode"
+      conditions:
+        alias: "When cleaning mode is on"
+        condition: state
+        entity_id: input_boolean.mode_cleaning_house
+        state: "on"
+      sequence:
+        - *manual_override_off
+        - *high_speed
+
+    - alias: "Turn off when sleep mode is active and no hot tap water is used"
+      conditions:
+        - alias: "When the house is in sleep mode"
           condition: state
-          entity_id: input_boolean.house_mode_cleaning
+          entity_id: input_boolean.mode_sleep_house
           state: "on"
-        sequence:
-          - *manual_override_off
-          - *high_speed
 
-      - alias: "Turn off when sleep mode is active and no hot tap water is used"
-        conditions:
-          - alias: "When the house is in sleep mode"
-            condition: state
-            entity_id: input_boolean.house_mode_sleep
-            state: "on"
+        - alias: "When hot tap water is not used"
+          condition: not
+          conditions: *hot_tap_water_used
 
-          - alias: "When hot tap water is not used"
-            condition: not
-            conditions:
-              - *hot_tap_water_used
+      sequence:
+        - *manual_override_off
+        - *turn_off
 
-        sequence:
-          - *manual_override_off
-          - *turn_off
+    - alias: "Ensure attic ventilation was not manually overriden"
+      conditions:
+        - alias: "When manually overriden"
+          condition: state
+          entity_id: input_boolean.variable_manual_override_attic_ventilation
+          state: "on"
+      sequence:
+        - stop: "Ventilation was manually overriden"
 
-      - alias: "Ensure attic ventilation was not manually overriden"
-        conditions:
-          - alias: "When manually overriden"
-            condition: state
-            entity_id: input_boolean.attic_variable_ventilation_manual_override
-            state: "on"
+    - alias: "Manual attic ventilation override detected"
+      conditions:
+        - alias: "Attic ventilation has changed"
+          condition: trigger
+          id: *ventilation
 
-        # Do nothing, beyond this point, because of the manual override
-        sequence:
-          - stop: "Ventilation was manually overriden"
+        - alias: "It was changed by a user"
+          condition: template
+          value_template: "{{ trigger.to_state.context.user_id != None }}"
 
-      - alias: "Manual attic ventilation override detected"
-        conditions:
-          - alias: "Attic ventilation has changed"
-            condition: trigger
-            id: *ventilation
+      sequence: *manual_override_on
 
-          - alias: "It was changed by a user"
-            condition: template
-            value_template: "{{ trigger.to_state.context.user_id != None }}"
+    - alias: "When the shower is used"
+      conditions: *hot_tap_water_used
+      sequence: *high_speed
 
-        sequence:
-          - *manual_override_on
+    - alias: "Humidity in the bathroom is above the high threshold"
+      conditions:
+        - alias: "When the bathroom humidity is above the high threshold"
+          condition: numeric_state
+          entity_id: sensor.humidity_bathroom
+          above: input_number.setting_humidity_high_bathroom
+      sequence: *high_speed
 
-      - alias: "When the shower is used"
-        conditions:
-          - *hot_tap_water_used
-        sequence:
-          - *high_speed
+    - alias: "Humidity in the bathroom is above the low threshold"
+      conditions:
+        - alias: "When the bathroom humidity is above the low threshold"
+          condition: numeric_state
+          entity_id: sensor.humidity_bathroom
+          above: input_number.setting_humidity_low_bathroom
+      sequence: *low_speed
 
-      - alias: "Humidity in the bathroom is above the high threshold"
-        conditions:
-          - alias: "When the bathroom humidity is above the high threshold"
-            condition: numeric_state
-            entity_id: sensor.bathroom_humidity
-            above: input_number.bathroom_setting_humidity_high
-        sequence:
-          - *high_speed
+    - alias: "When there is a number 2 action in the restroom"
+      conditions:
+        - alias: "When the restoom lights are on for longer than 3 minutes"
+          condition: state
+          entity_id: light.restroom
+          state: "on"
+          for:
+            minutes: 3
+      sequence: *low_speed
 
-      - alias: "Humidity in the bathroom is above the low threshold"
-        conditions:
-          - alias: "When the bathroom humidity is above the low threshold"
-            condition: numeric_state
-            entity_id: sensor.bathroom_humidity
-            above: input_number.bathroom_setting_humidity_low
-        sequence:
-          - *low_speed
-
-      - alias: "When there is a number 2 action in the restroom"
-        conditions:
-          - alias: "When the restoom lights are on for longer than 3 minutes"
-            condition: state
-            entity_id: light.restroom
-            state: "on"
-            for:
-              minutes: 3
-        sequence:
-          - *low_speed
-
-    default:
-      - *turn_off
+  default: *turn_off

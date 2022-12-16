@@ -18,6 +18,7 @@ trigger:
     id: switch_1
     event_type: esphome.switch_pressed
     event_data:
+      device_id: "eea6424e5f1affb4bc5498a924754aaa"
       slug: "living_room_window_switch"
       switch: "1"
 
@@ -25,6 +26,7 @@ trigger:
     id: switch_2
     event_type: esphome.switch_pressed
     event_data:
+      device_id: "eea6424e5f1affb4bc5498a924754aaa"
       slug: "living_room_window_switch"
       switch: "2"
 

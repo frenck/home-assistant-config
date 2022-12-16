@@ -52,7 +52,7 @@ variables:
 
     - &turn_up
       <<: *target
-      alias: "Turn down living room climate"
+      alias: "Turn up living room climate"
       service: climate.set_temperature
       data:
         temperature: 18.5

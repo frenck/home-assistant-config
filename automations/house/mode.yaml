@@ -1,0 +1,138 @@
+---
+alias: "House Mode Detection"
+description: >-
+  Automation to (partially) determine house modes automatically.
+
+  This is mostly based on our alarm system at this point.
+
+id: "5ecc1c60-f366-4f00-ba1e-5dd580d02702"
+mode: queued
+
+trigger:
+  - alias: "When Home Assistant starts"
+    platform: homeassistant
+    event: start
+
+  - alias: "When automations are reloaded"
+    platform: event
+    event_type: automation_reloaded
+
+  - alias: "When the state of the house alarm changes"
+    platform: state
+    entity_id: alarm_control_panel.house
+    not_to:
+      - "unavailable"
+      - "unknown"
+
+  - alias: "When one of the house modes changed"
+    platform: state
+    entity_id:
+      - input_boolean.mode_away_house
+      - input_boolean.mode_cleaning_house
+      - input_boolean.mode_eco_house
+      - input_boolean.mode_guest_house
+      - input_boolean.mode_sleep_house
+      - input_boolean.mode_vacation_house
+
+variables:
+  anchors:
+    - &mode_away_off
+      alias: "Turn off house away mode"
+      service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.mode_away_house
+    - &mode_away_on
+      alias: "Turn on house away mode"
+      service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.mode_away_house
+    - &mode_cleaning_off
+      alias: "Turn off house cleaning mode"
+      service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.mode_cleaning_house
+    - &mode_cleaning_on
+      alias: "Turn on house cleaning mode"
+      service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.mode_cleaning_house
+    - &mode_eco_off
+      alias: "Turn off house eco mode"
+      service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.mode_eco_house
+    - &mode_eco_on
+      alias: "Turn on house eco mode"
+      service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.mode_eco_house
+    - &mode_guest_off
+      alias: "Turn off house guest mode"
+      service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.mode_guest_house
+    - &mode_guest_on
+      alias: "Turn on house guest mode"
+      service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.mode_guest_house
+    - &mode_sleep_off
+      alias: "Turn off house sleep mode"
+      service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.mode_sleep_house
+    - &mode_sleep_on
+      alias: "Turn on house sleep mode"
+      service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.mode_sleep_house
+    - &mode_vacation_off
+      alias: "Turn off house vacation mode"
+      service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.mode_vacation_house
+    - &mode_vacation_on
+      alias: "Turn on house vacation mode"
+      service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.mode_vacation_house
+
+action:
+  choose:
+    - alias: "When vacation mode is turned on"
+      conditions:
+        - condition: state
+          entity_id: input_boolean.mode_vacation_house
+          state: "on"
+      sequence:
+        - *mode_eco_on
+        - *mode_away_off
+        - *mode_cleaning_off
+        - *mode_guest_off
+        - *mode_sleep_off
+
+    - alias: "When the alarm is armed away"
+      conditions:
+        - condition: state
+          entity_id: alarm_control_panel.house
+          state: "armed_away"
+      sequence:
+        - *mode_away_on
+        - *mode_cleaning_off
+        - *mode_guest_off
+        - *mode_sleep_off
+
+    - alias: "When the alarm is armed home"
+      conditions:
+        - condition: state
+          entity_id: alarm_control_panel.house
+          state: "armed_home"
+      sequence:
+        - *mode_sleep_on
+        - *mode_away_off
+        - *mode_cleaning_off
+        - *mode_vacation_off
+
+  default:
+    - *mode_away_off
+    - *mode_sleep_off
