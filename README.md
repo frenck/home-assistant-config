@@ -36,7 +36,7 @@ I consider my personal Home Assistant configuration an active open-source projec
 So if you feel like adding an improvement, feel free to contribute.
 
 We have set up a separate document containing our
-[contribution guidelines](CONTRIBUTING.md).
+[contribution guidelines](.github/CONTRIBUTING.md).
 
 Thank you for being involved! :heart_eyes:
 
