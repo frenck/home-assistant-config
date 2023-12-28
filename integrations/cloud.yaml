@@ -15,14 +15,3 @@ cloud:
     # These are loaded from a separate directory.
     filter:
       include_entities: !include_dir_merge_list ../assistants/google
-
-  # Customize the Amazon Alexa integration with the Nabu Casa Cloud
-  alexa:
-    # Entity specific configuration for Amazon Alexa.
-    # These are loaded from a separate directory.
-    entity_config: !include_dir_named ../customizations/alexa
-
-    # Filters for entities to include/exclude from Google Assistant.
-    # These are loaded from a separate directory.
-    filter:
-      include_entities: !include_dir_merge_list ../assistants/alexa

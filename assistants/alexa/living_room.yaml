@@ -1,8 +1,0 @@
----
-#
-# List of entities that is exposed to Alexa
-# Area: Living Room
-#
-# entities:
-- climate.living_room
-- vacuum.living_room

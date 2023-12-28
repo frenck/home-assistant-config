@@ -1,9 +1,0 @@
----
-# Entity configuration for Alexa.
-#
-# I use this to customize how the device shows up in Alexa.
-#
-# https://www.nabucasa.com/config/amazon_alexa/
-#
-name: Bedroom Lilly Thermostat
-description: Bedroom Lilly Thermostat
