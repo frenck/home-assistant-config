@@ -11,7 +11,7 @@ substitutions:
   slug: garage_fridge
   name: Garage Fridge
   description: Monitors our fridge located in the garage.
-  api_password: !secret esphome_garage_fridge_api_password
+  encryption_key: !secret esphome_garage_fridge_encryption_key
   ota_password: !secret esphome_garage_fridge_ota_password
 
 packages:

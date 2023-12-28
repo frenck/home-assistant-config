@@ -13,7 +13,7 @@ substitutions:
   slug: outside_doorbell
   name: Outside Doorbell
   description: Made my old fashioned doorbell smart!
-  api_password: !secret esphome_outside_doorbell_api_password
+  encryption_key: !secret esphome_outside_doorbell_encryption_key
   ota_password: !secret esphome_outside_doorbell_ota_password
 
 packages:
@@ -36,7 +36,6 @@ switch:
     name: "${name} Chime"
     id: chime_switch
     icon: "mdi:alarm-bell"
-    restore_state: false
     turn_on_action:
       - globals.set:
           id: chime

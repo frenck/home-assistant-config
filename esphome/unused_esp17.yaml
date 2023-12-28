@@ -12,7 +12,7 @@ substitutions:
   slug: unused_esp17
   name: Unused esp17
   description: Unused Gosund SP1.
-  api_password: !secret esphome_unused_esp17_api_password
+  encryption_key: !secret esphome_unused_esp17_encryption_key
   ota_password: !secret esphome_unused_esp17_ota_password
 
 packages:

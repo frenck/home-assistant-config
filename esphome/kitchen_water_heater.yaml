@@ -13,7 +13,7 @@ substitutions:
   slug: kitchen_water_heater
   name: Kitchen Water Heater
   description: Controls and monitors our water heater located in the kitchen.
-  api_password: !secret esphome_kitchen_water_heater_api_password
+  encryption_key: !secret esphome_kitchen_water_heater_encryption_key
   ota_password: !secret esphome_kitchen_water_heater_ota_password
 
 packages:

@@ -7,8 +7,9 @@ substitutions:
   label: esp02
   slug: garden_switch
   name: Garden Switch
-  description: Switch we have indoors, to be able to switch on/off everything in our garden.
-  api_password: !secret esphome_garden_switch_api_password
+  description: >
+    Switch we have indoors, to be able to switch on/off everything in our garden.
+  encryption_key: !secret esphome_garden_switch_encryption_key
   ota_password: !secret esphome_garden_switch_ota_password
 
 esp8266:

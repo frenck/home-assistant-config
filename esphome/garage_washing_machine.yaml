@@ -14,7 +14,7 @@ substitutions:
   slug: garage_washing_machine
   name: Garage Washing Machine
   description: The washing machine, mainly for power monitoring
-  api_password: !secret esphome_garage_washing_machine_api_password
+  encryption_key: !secret esphome_garage_washing_machine_encryption_key
   ota_password: !secret esphome_garage_washing_machine_ota_password
 
 packages:

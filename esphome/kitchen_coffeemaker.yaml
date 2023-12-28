@@ -13,7 +13,7 @@ substitutions:
   slug: kitchen_coffeemaker
   name: Kitchen Coffeemaker
   description: Monitors our coffeemaker located in the kitchen.
-  api_password: !secret esphome_kitchen_coffeemaker_api_password
+  encryption_key: !secret esphome_kitchen_coffeemaker_encryption_key
   ota_password: !secret esphome_kitchen_coffeemaker_ota_password
 
 packages:

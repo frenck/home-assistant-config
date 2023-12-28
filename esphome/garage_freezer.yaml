@@ -11,7 +11,7 @@ substitutions:
   slug: garage_freezer
   name: Garage Freezer
   description: Monitors our freezer located in the garage.
-  api_password: !secret esphome_garage_freezer_api_password
+  encryption_key: !secret esphome_garage_freezer_encryption_key
   ota_password: !secret esphome_garage_freezer_ota_password
 
 packages:

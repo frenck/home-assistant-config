@@ -17,7 +17,7 @@ substitutions:
   slug: living_room_window_switch
   name: Living Room Window Switch
   description: Physical switch controlling our living room window lights
-  api_password: !secret esphome_living_room_window_switch_api_password
+  encryption_key: !secret esphome_living_room_window_switch_encryption_key
   ota_password: !secret esphome_living_room_window_switch_ota_password
 
 esp8266:
@@ -116,7 +116,7 @@ sensor:
     sensor: device_temperature_resistance_reading
     name: "${name} Temperature"
     icon: "mdi:thermometer"
-    entity_category: config
+    entity_category: diagnostic
     unit_of_measurement: "°C"
     accuracy_decimals: 1
     calibration:

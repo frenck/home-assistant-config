@@ -13,7 +13,7 @@ substitutions:
   slug: office_3d_printer
   name: Office 3D Printer
   description: Control and monitors the power of my 3D Printer
-  api_password: !secret esphome_office_3d_printer_api_password
+  encryption_key: !secret esphome_office_3d_printer_encryption_key
   ota_password: !secret esphome_office_3d_printer_ota_password
 
 packages:

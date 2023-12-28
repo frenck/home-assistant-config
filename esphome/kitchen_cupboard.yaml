@@ -10,7 +10,7 @@ substitutions:
   slug: kitchen_cupboard
   name: Kitchen Cupboard
   description: Controls the lights under the kitchen cupboard.
-  api_password: !secret esphome_kitchen_cupboard_api_password
+  encryption_key: !secret esphome_kitchen_cupboard_encryption_key
   ota_password: !secret esphome_kitchen_cupboard_ota_password
 
 packages:

@@ -11,7 +11,7 @@ substitutions:
   slug: office_flycatcher
   name: Office Flycatcher
   description: Allow me to control the Flycatcher in the office.
-  api_password: !secret esphome_office_flycatcher_api_password
+  encryption_key: !secret esphome_office_flycatcher_encryption_key
   ota_password: !secret esphome_office_flycatcher_ota_password
 
 packages:

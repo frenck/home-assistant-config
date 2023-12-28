@@ -15,7 +15,7 @@ substitutions:
   slug: dsmr_reader
   name: DSMR Reader
   description: Exposes my DSMR port as ESPHome sensors.
-  api_password: !secret esphome_dsmr_reader_api_password
+  encryption_key: !secret esphome_dsmr_reader_encryption_key
   ota_password: !secret esphome_dsmr_reader_ota_password
 
 packages:

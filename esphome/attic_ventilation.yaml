@@ -17,7 +17,7 @@ substitutions:
   slug: attic_ventilation
   name: Attic Ventilation
   description: Control the central ventilation system of my home.
-  api_password: !secret esphome_attic_ventilation_api_password
+  encryption_key: !secret esphome_attic_ventilation_encryption_key
   ota_password: !secret esphome_attic_ventilation_ota_password
 
 packages:

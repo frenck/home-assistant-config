@@ -11,7 +11,7 @@ substitutions:
   slug: kitchen_dishwasher
   name: Kitchen Dishwasher
   description: Monitors the power/energy usage of our Kitchen diswasher.
-  api_password: !secret esphome_kitchen_dishwasher_api_password
+  encryption_key: !secret esphome_kitchen_dishwasher_encryption_key
   ota_password: !secret esphome_kitchen_dishwasher_ota_password
 
 packages:

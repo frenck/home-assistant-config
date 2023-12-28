@@ -11,7 +11,7 @@ substitutions:
   slug: attic_homelab_server
   name: Attic Homelab Server
   description: Monitors the brains of the home.
-  api_password: !secret esphome_attic_homelab_server_api_password
+  encryption_key: !secret esphome_attic_homelab_server_encryption_key
   ota_password: !secret esphome_attic_homelab_server_ota_password
 
 packages:
