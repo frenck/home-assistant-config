@@ -53,7 +53,7 @@ jobs:
       - name: ⤵️ Check out configuration from GitHub
         uses: actions/checkout@v5.0.0
       - name: Set up Python 3.7
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: 3.7
       - name: Install dependencies
