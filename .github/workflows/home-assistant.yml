@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out configuration from GitHub
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
       - name: 🚀 Run yamllint
         uses: frenck/action-yamllint@v1.5.0
 
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: ⤵️ Check out configuration from GitHub
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
       - name: Running Remark lint
         uses: "docker://pipelinecomponents/remark-lint:latest"
         continue-on-error: true
@@ -38,7 +38,7 @@ jobs:
         version: ["stable", "beta", "dev"]
     steps:
       - name: ⤵️ Check out configuration from GitHub
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
       - name: 🚀 Run Home Assistant Configuration Check
         uses: frenck/action-home-assistant@v1.4
         with:
@@ -51,7 +51,7 @@ jobs:
     needs: [yamllint]
     steps:
       - name: ⤵️ Check out configuration from GitHub
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
       - name: Set up Python 3.7
         uses: actions/setup-python@v6
         with:
