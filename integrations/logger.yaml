@@ -24,13 +24,13 @@ logger:
       - "instance with identical name present in the local network"
 
     homeassistant.util.yaml.loader:
-      # I use YAML anchors and aliasses, causing duplicate keys in YAML.
+      # I use YAML anchors and aliases, causing duplicate keys in YAML.
       # For this use-case, that is on purpose, as an alias is used, but
       # with some overrides.
       # While a good warning, I'm going to disable it.
       - "contains duplicate key"
 
     pychromecast.socket_client:
-      # Surpress to chatty Cast integration
+      # Suppress too chatty Cast integration
       - "Failed to connect to service ServiceInfo"
       - "Error communicating with socket, resetting connection"
