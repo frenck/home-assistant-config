@@ -3,7 +3,6 @@ ignore: |
   automations.yaml
   blueprints/*/homeassistant/*.yaml
   custom_components/
-  esphomeyaml/*/
   esphome/.esphome/
   ip_bans.yaml
   notebooks/
@@ -44,8 +43,6 @@ rules:
   document-start:
     level: error
     present: true
-    ignore: |
-      config/known_devices.yaml
   empty-lines:
     level: error
     max: 1
@@ -62,11 +59,8 @@ rules:
   key-duplicates:
     level: error
   line-length:
-    ignore: |
-      .github/support.yml
-      .github/settings.yml
     level: warning
-    max: 88
+    max: 120
     allow-non-breakable-words: true
     allow-non-breakable-inline-mappings: true
   new-line-at-end-of-file:
