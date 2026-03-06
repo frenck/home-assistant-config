@@ -1,9 +1,0 @@
----
-# Wemos LOLIN D1 mini
-#
-# A small board based on a ESP-8266EX with 4MB flash.
-#
-# https://www.wemos.cc/en/latest/d1/d1_mini.html
-#
-esp8266:
-  board: d1_mini

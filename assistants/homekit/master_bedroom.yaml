@@ -1,7 +1,0 @@
----
-#
-# List of entities that is exposed to HomeKit/Siri
-# Area: Master Bedroom
-#
-# entities:
-- climate.master_bedroom

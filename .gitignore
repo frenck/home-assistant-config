@@ -6,9 +6,12 @@
 *.db-wal
 *.pyc
 ._*
+.ha_run.lock
+.HA_VERSION
 __pycache__
 
 # Directory (contents) ignores
+.cache
 .cloud
 .storage
 deps
@@ -32,7 +35,6 @@ notebooks
 
 # Ignore files created by IDE's
 .vscode
-.theia
 .Trash*
 
 # Ignore vendored stuff
