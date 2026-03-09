@@ -1,0 +1,77 @@
+---
+name: Linting
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  yamllint:
+    name: 🧹 yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out configuration from GitHub
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+      - name: 🚀 Run yamllint
+        uses: frenck/action-yamllint@34b4bbcaeabedcfefad6adea8c5bbc42af0e2d47  # v1.5.0
+
+  remarklint:
+    name: 🧹 remarklint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out configuration from GitHub
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Running Remark lint
+        uses: "docker://pipelinecomponents/remark-lint:latest"
+        continue-on-error: true
+        with:
+          args: "remark --no-stdout --color --frail --use preset-lint-recommended ."
+
+  prettier:
+    name: 🧹 Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+      - name: 🚀 Run Prettier
+        uses: creyD/prettier_action@8c18391fdc98ed0d884c6345f03975edac71b8f0  # v4.6
+        with:
+          prettier_options: --check .
+
+  actionlint:
+    name: 🧹 actionlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+      - name: 🚀 Run actionlint
+        uses: raven-actions/actionlint@205b530c5d9fa8f44ae9ed59f341a0db994aa6f8  # v2.1.2
+
+  zizmor:
+    name: zizmor
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+      - name: 🚀 Run zizmor
+        uses: zizmorcore/zizmor-action@135698455da5c3b3e55f73f4419e481ab68cdd95  # v0.4.1

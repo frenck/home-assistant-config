@@ -1,0 +1,39 @@
+---
+name: ESPHome CI
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["**"]
+  schedule:
+    - cron: "0 6 * * *"
+
+permissions: {}
+
+jobs:
+  esphome:
+    name: ESPHome Configuration Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out configuration from GitHub
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.13
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405  # v6.2.0
+        with:
+          python-version: 3.13
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          pip install esphome
+          pip list
+          esphome version
+      - name: Copy secrets stub into configuration folder
+        run: cp ./secrets.fake.yaml ./esphome/secrets.yaml
+      - name: Run esphome on all files
+        # yamllint disable rule:line-length
+        run: |
+          for file in $(find ./esphome -type f -name "*.yaml" -maxdepth 1 -not -name "secrets.yaml"); do esphome "${file}" config; done
