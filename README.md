@@ -4,6 +4,7 @@
 [![License][license-shield]](LICENSE.md)
 
 [![GitHub Actions][actions-shield]][actions]
+[![Linting][linting-shield]][linting]
 [![GitHub Activity][commits-shield]][commits]
 [![GitHub Last Commit][last-commit-shield]][commits]
 
@@ -11,24 +12,68 @@
 ![GitHub Watchers][watchers-shield]
 ![GitHub Forks][forks-shield]
 
+## What is Home Assistant?
+
+Not familiar with [Home Assistant][home-assistant]? Oh, you're in for a
+treat! :wink: It's an open source smart home platform that runs locally on,
+for example, a Raspberry Pi. It connects to over 2,000 different devices
+and services, from lights and sensors to media players and EVs, all
+without relying on some cloud. It's one of the most active open source
+projects on GitHub and is backed by the
+[Open Home Foundation](https://www.openhomefoundation.org/).
+
 ## About
 
-This is my personal Home Assistant configuration, running my home automations.
+Hey! :wave: This is my personal [Home Assistant][home-assistant]
+configuration. I'm [Frenck][frenck], the lead of the Home Assistant project
+and Chair of the Leader Committee at the
+[Open Home Foundation](https://www.openhomefoundation.org/).
 
-Blablabla... I'm bad at introductions :wink:
+I like to keep things tidy, so the whole configuration is modular using
+Home Assistant's
+[packages](https://www.home-assistant.io/docs/configuration/packages/)
+pattern. Every integration gets its own file in the `integrations/`
+directory. No giant `configuration.yaml` here :sweat_smile:
 
-Follow me on my journey and be sure to hit the GitHub :star2:
+Feel free to poke around, steal ideas, or get inspired.
+Be sure to hit the :star2: if you find it useful!
 
-## Where are all the other docs?
+## Key Features
 
-> Yo! Frenck! Bro!
->
-> Where are all the other docs? What hardware are you using?
-> What add-ons do you have installed?
-> How is your network set up?
+- **Fully modular.** Each integration lives in its own YAML file under
+  `integrations/`, loaded as
+  [packages](https://www.home-assistant.io/docs/configuration/packages/).
+  Clean, organized, easy to find stuff.
+- **Tested every night.** This config is validated daily against the
+  `stable`, `beta`, and `dev` versions of Home Assistant Core. If something
+  is going to break, I'll know before it hits a release :muscle:
+- **ESPHome ready.** Got a dedicated directory and CI workflow for
+  [ESPHome](https://esphome.io/) device configurations.
+- **Linted to the bone.** yamllint, remarklint, Prettier, actionlint,
+  and zizmor all run on every commit. Yes, I take my YAML seriously.
+- **Automations, scripts & scenes.** All split into their own directories,
+  making it easy to manage as things grow.
 
-Yeah yeah... I know...
-I need to figure out how to document that all...
+## Repository Structure
+
+```txt
+.
+├── configuration.yaml        # Minimal bootstrap, loads packages
+├── integrations/             # Modular integration configs (packages)
+├── automations/              # Split automation YAML files
+├── scripts/                  # Split script YAML files
+├── scenes/                   # Split scene YAML files
+├── blueprints/               # Automation & script blueprints
+├── esphome/                  # ESPHome device configurations
+├── secrets.yaml              # Secrets (not in repo)
+└── secrets.fake.yaml         # Fake secrets for CI testing
+```
+
+The `configuration.yaml` is intentionally minimal. It only loads the
+`integrations/` directory as
+[packages](https://www.home-assistant.io/docs/configuration/packages/).
+Each integration gets its own file, keeping things clean and easy to
+navigate.
 
 ## Contributing
 
@@ -39,6 +84,17 @@ We have set up a separate document containing our
 [contribution guidelines](.github/CONTRIBUTING.md).
 
 Thank you for being involved! :heart_eyes:
+
+## Useful Links
+
+Want to learn more or get involved? Here are some good starting points:
+
+- [Home Assistant Website](https://www.home-assistant.io/)
+- [Home Assistant Documentation](https://www.home-assistant.io/docs/)
+- [Home Assistant Community Forums](https://community.home-assistant.io/)
+- [Home Assistant Discord](https://www.home-assistant.io/join-chat/)
+- [ESPHome Website](https://esphome.io/)
+- [Open Home Foundation](https://www.openhomefoundation.org/)
 
 ## Authors & contributors
 
@@ -75,8 +131,10 @@ SOFTWARE.
 [commits]: https://github.com/frenck/home-assistant-config/commits/master
 [contributors]: https://github.com/frenck/home-assistant-config/graphs/contributors
 [frenck]: https://github.com/frenck
-[actions-shield]: https://github.com/frenck/home-assistant-config/workflows/Home%20Assistant%20CI/badge.svg
+[actions-shield]: https://github.com/frenck/home-assistant-config/actions/workflows/home-assistant.yml/badge.svg
 [actions]: https://github.com/frenck/home-assistant-config/actions
+[linting-shield]: https://github.com/frenck/home-assistant-config/actions/workflows/linting.yaml/badge.svg
+[linting]: https://github.com/frenck/home-assistant-config/actions/workflows/linting.yaml
 [home-assistant]: https://home-assistant.io
 [issue]: https://github.com/frenck/home-assistant-config/issues
 [license-shield]: https://img.shields.io/github/license/frenck/home-assistant-config.svg
